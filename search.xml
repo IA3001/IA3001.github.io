@@ -4,16 +4,208 @@
   
     
     <entry>
-      <title>A</title>
+      <title>算法竞赛入门指南</title>
+      <link href="/2026/07/21/%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/"/>
+      <url>/2026/07/21/%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>算法竞赛是锻炼编程能力和逻辑思维的最佳方式之一。无论你是准备参加 ACM-ICPC、Codeforces 还是蓝桥杯，掌握基础算法都是第一步。</p><h2 id="数据结构基础"><a href="#数据结构基础" class="headerlink" title="数据结构基础"></a>数据结构基础</h2><h3 id="数组与链表"><a href="#数组与链表" class="headerlink" title="数组与链表"></a>数组与链表</h3><p>数组是最基本的数据结构，支持 O(1) 的随机访问。但在中间插入和删除元素时需要 O(n) 的时间。</p><p>链表则相反，插入和删除只需 O(1)，但访问第 k 个元素需要 O(k)。</p><h3 id="栈与队列"><a href="#栈与队列" class="headerlink" title="栈与队列"></a>栈与队列</h3><p>栈是后进先出（LIFO）的数据结构，常用于括号匹配、表达式求值、DFS 等场景。</p><p>队列是先进先出（FIFO）的结构，BFS 中的核心数据结构就是队列。</p><h4 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h4><p>单调栈在 O(n) 时间内解决”下一个更大元素”类问题，是竞赛中的高频考点。</p><h4 id="单调队列"><a href="#单调队列" class="headerlink" title="单调队列"></a>单调队列</h4><p>滑动窗口最大值是单调队列的经典应用。</p><h3 id="树与图"><a href="#树与图" class="headerlink" title="树与图"></a>树与图</h3><p>树是一种特殊的图，没有环。二叉树、BST、堆、并查集都是树的应用。</p><p>图由顶点和边组成，分为有向图和无向图，存储方式有邻接矩阵和邻接表。</p><h2 id="基础算法"><a href="#基础算法" class="headerlink" title="基础算法"></a>基础算法</h2><h3 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h3><h4 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h4><p>平均时间复杂度 O(n log n)，基于分治思想。选择一个 pivot，将数组分为两部分递归排序。</p><h4 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h4><p>稳定排序，时间复杂度 O(n log n)，同样基于分治。归并排序的另一大用途是求逆序对。</p><h3 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h3><p>在有序序列中查找目标值，每次将搜索范围减半，时间复杂度 O(log n)。二分答案也是常见题型。</p><h3 id="前缀和与差分"><a href="#前缀和与差分" class="headerlink" title="前缀和与差分"></a>前缀和与差分</h3><p>一维&#x2F;二维前缀和可以在 O(1) 时间内求区间和。差分数组则用于频繁的区间修改操作。</p><h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><h3 id="线性-DP"><a href="#线性-DP" class="headerlink" title="线性 DP"></a>线性 DP</h3><h4 id="最长上升子序列-LIS"><a href="#最长上升子序列-LIS" class="headerlink" title="最长上升子序列 (LIS)"></a>最长上升子序列 (LIS)</h4><p>经典 DP 问题，朴素 O(n²)，贪心+二分优化到 O(n log n)。</p><h4 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h4><p>01 背包、完全背包、多重背包，是 DP 中最经典的模型。</p><h3 id="区间-DP"><a href="#区间-DP" class="headerlink" title="区间 DP"></a>区间 DP</h3><p>从小区间推到大区间，常见于合并石子、矩阵链乘等问题。</p><h3 id="树形-DP"><a href="#树形-DP" class="headerlink" title="树形 DP"></a>树形 DP</h3><p>在树上进行 DP，通常用 DFS 实现。典型问题：树的直径、树上最大独立集。</p><h2 id="图论算法"><a href="#图论算法" class="headerlink" title="图论算法"></a>图论算法</h2><h3 id="最短路"><a href="#最短路" class="headerlink" title="最短路"></a>最短路</h3><h4 id="Dijkstra-算法"><a href="#Dijkstra-算法" class="headerlink" title="Dijkstra 算法"></a>Dijkstra 算法</h4><p>适用于非负权图，使用优先队列优化后复杂度 O((V+E) log V)。</p><h4 id="Floyd-Warshall"><a href="#Floyd-Warshall" class="headerlink" title="Floyd-Warshall"></a>Floyd-Warshall</h4><p>多源最短路，O(n³)，适用于稠密图或需要全部点对距离的场景。</p><h3 id="最小生成树"><a href="#最小生成树" class="headerlink" title="最小生成树"></a>最小生成树</h3><h4 id="Kruskal-算法"><a href="#Kruskal-算法" class="headerlink" title="Kruskal 算法"></a>Kruskal 算法</h4><p>基于并查集，按边权排序后贪心选取。时间复杂度 O(E log E)。</p><h3 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h3><p>用于 DAG，可以判断图中是否有环，也常用于 DP 的状态转移顺序。</p><h2 id="字符串算法"><a href="#字符串算法" class="headerlink" title="字符串算法"></a>字符串算法</h2><h3 id="字符串哈希"><a href="#字符串哈希" class="headerlink" title="字符串哈希"></a>字符串哈希</h3><p>将字符串映射为整数，快速判断子串是否相等。常用的有自然溢出和双哈希。</p><h3 id="KMP-算法"><a href="#KMP-算法" class="headerlink" title="KMP 算法"></a>KMP 算法</h3><p>单模式串匹配，通过前缀函数避免重复比较，时间复杂度 O(n+m)。</p><h2 id="数学基础"><a href="#数学基础" class="headerlink" title="数学基础"></a>数学基础</h2><h3 id="数论"><a href="#数论" class="headerlink" title="数论"></a>数论</h3><p>快速幂、GCD&#x2F;LCM、素数筛（埃氏筛、欧拉筛）、乘法逆元都是必备技能。</p><h3 id="组合数学"><a href="#组合数学" class="headerlink" title="组合数学"></a>组合数学</h3><p>排列组合、容斥原理、卡特兰数、Lucas 定理在竞赛中频繁出现。</p><h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>算法学习没有捷径，多刷题、多总结、多看题解是最好的方法。祝你在竞赛中取得好成绩！</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>demo</title>
+      <link href="/2026/07/21/demo/"/>
+      <url>/2026/07/21/demo/</url>
+      
+        <content type="html"><![CDATA[<h1 id="哈哈哈"><a href="#哈哈哈" class="headerlink" title="哈哈哈"></a>哈哈哈</h1><p>欧俄农夫说呢佛i和哦i你哦而非弄i说呢</p><p>而非瑟夫se<br>的阿瓦达wa</p><p> 啊伟大伟大aw<br> wd</p><ul><li>23123</li><li>23123211312</li><li>123123</li></ul><h2 id="哈哈哈-1"><a href="#哈哈哈-1" class="headerlink" title="哈哈哈"></a>哈哈哈</h2><p>12312312 321 312</p><h3 id="哈哈哈-2"><a href="#哈哈哈-2" class="headerlink" title="哈哈哈"></a>哈哈哈</h3>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>a</title>
       <link href="/2026/07/21/test/a/"/>
       <url>/2026/07/21/test/a/</url>
       
-        <content type="html"><![CDATA[<h1 id="A"><a href="#A" class="headerlink" title="A"></a>A</h1>]]></content>
+        <content type="html"><![CDATA[<h1 id="A"><a href="#A" class="headerlink" title="A"></a>A</h1><h2 id="aaa"><a href="#aaa" class="headerlink" title="aaa"></a>aaa</h2>]]></content>
       
       
       <categories>
           
           <category> test </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>cycling</title>
+      <link href="/2026/07/21/%E7%94%9F%E6%B4%BB/cycling/"/>
+      <url>/2026/07/21/%E7%94%9F%E6%B4%BB/cycling/</url>
+      
+        <content type="html"><![CDATA[<h1 id="周末骑行"><a href="#周末骑行" class="headerlink" title="周末骑行"></a>周末骑行</h1><p>骑了 30 公里。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 生活 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>python-data</title>
+      <link href="/2026/07/21/%E6%8A%80%E6%9C%AF/%E5%90%8E%E7%AB%AF/python-data/"/>
+      <url>/2026/07/21/%E6%8A%80%E6%9C%AF/%E5%90%8E%E7%AB%AF/python-data/</url>
+      
+        <content type="html"><![CDATA[<hr><hr><h1 id="Python-数据"><a href="#Python-数据" class="headerlink" title="Python 数据"></a>Python 数据</h1><p>Pandas 真好用。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术 </category>
+          
+          <category> 后端 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>node-express</title>
+      <link href="/2026/07/21/%E6%8A%80%E6%9C%AF/%E5%90%8E%E7%AB%AF/node-express/"/>
+      <url>/2026/07/21/%E6%8A%80%E6%9C%AF/%E5%90%8E%E7%AB%AF/node-express/</url>
+      
+        <content type="html"><![CDATA[<hr><hr><h1 id="Express-API"><a href="#Express-API" class="headerlink" title="Express API"></a>Express API</h1><p>从零搭一个 RESTful API。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术 </category>
+          
+          <category> 后端 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>react-pitfalls</title>
+      <link href="/2026/07/21/%E6%8A%80%E6%9C%AF/%E5%89%8D%E7%AB%AF/react-pitfalls/"/>
+      <url>/2026/07/21/%E6%8A%80%E6%9C%AF/%E5%89%8D%E7%AB%AF/react-pitfalls/</url>
+      
+        <content type="html"><![CDATA[<hr><hr><h1 id="React-踩坑"><a href="#React-踩坑" class="headerlink" title="React 踩坑"></a>React 踩坑</h1><p>Hook 真难学。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术 </category>
+          
+          <category> 前端 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>vue-intro</title>
+      <link href="/2026/07/21/%E6%8A%80%E6%9C%AF/%E5%89%8D%E7%AB%AF/vue-intro/"/>
+      <url>/2026/07/21/%E6%8A%80%E6%9C%AF/%E5%89%8D%E7%AB%AF/vue-intro/</url>
+      
+        <content type="html"><![CDATA[<hr><hr><h1 id="Vue-入门"><a href="#Vue-入门" class="headerlink" title="Vue 入门"></a>Vue 入门</h1><p>一些前端学习笔记。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术 </category>
+          
+          <category> 前端 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>fsdfsfsefs</title>
+      <link href="/2026/07/21/aaa/bbb/svsdvsdvs/fsdfsfsefs/"/>
+      <url>/2026/07/21/aaa/bbb/svsdvsdvs/fsdfsfsefs/</url>
+      
+        <content type="html"><![CDATA[<h1 id="ahlsehofihsoefhsoe"><a href="#ahlsehofihsoefhsoe" class="headerlink" title="ahlsehofihsoefhsoe"></a>ahlsehofihsoefhsoe</h1>]]></content>
+      
+      
+      <categories>
+          
+          <category> aaa </category>
+          
+          <category> bbb </category>
+          
+          <category> svsdvsdvs </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>123123</title>
+      <link href="/2026/07/21/aaa/bbb/123123/"/>
+      <url>/2026/07/21/aaa/bbb/123123/</url>
+      
+        <content type="html"><![CDATA[<h1 id="啊啊啊啊啊啊啊"><a href="#啊啊啊啊啊啊啊" class="headerlink" title="啊啊啊啊啊啊啊"></a>啊啊啊啊啊啊啊</h1>]]></content>
+      
+      
+      <categories>
+          
+          <category> aaa </category>
+          
+          <category> bbb </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>bbb</title>
+      <link href="/2026/07/21/test2/bbb/"/>
+      <url>/2026/07/21/test2/bbb/</url>
+      
+        <content type="html"><![CDATA[<h1 id="哈哈哈"><a href="#哈哈哈" class="headerlink" title="哈哈哈"></a>哈哈哈</h1>]]></content>
+      
+      
+      <categories>
+          
+          <category> test2 </category>
           
       </categories>
       
