@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Title -->
+<title>算法竞赛入门指南 - IA3001&#39;s Blog</title>
+
+<!-- Icon -->
+<link rel="icon" href="/img/favicon.ico">
+
+<!-- Fonts -->
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@0;1&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" as="style" onload="this.onload=null, this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@0;1&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"></noscript>
+
+
+
+<!-- Style -->
+
+<link rel="stylesheet" href="/styles/main.css">
+
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
+
+
+
+
+
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+
+    <meta name="generator" content="Hexo 8.1.2"></head>
+    <body>
+        <div class="main gt-bg-theme-color-first">
+            <div class="main-content">
+                <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <div class="site-name gt-c-content-color-first">
+            IA3001&#39;s Blog
+        </div>
+    </a>
+    <button aria-label="Navbar Toggler" class="navbar-toggler" type="button" id="changeNavbar">
+        <i class="gt-c-content-color-first" style="font-size: 18px;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="18px" fill="currentColor">
+                <path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z" />
+            </svg>
+        </i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center; ">
+            
+                <div class="nav-item">
+                    <a href="/" class="menu gt-a-link" target="_self">首页</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/archives/" class="menu gt-a-link" target="_self">归档</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/categories/" class="menu gt-a-link" target="_self">分类</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/tags/" class="menu gt-a-link" target="_self">标签</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/friends/" class="menu gt-a-link" target="_self">友链</a>
+                </div>
+            
+        </div>
+    </div>
+</nav>
+
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = function() {
+        let element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else { 
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+                
+
+<div class="post-wrapper">
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second gt-c-content-color-first">
+            <article class="gt-post-content">
+                
+                <h1 class="post-title">算法竞赛入门指南</h1>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2026-07-22 ·</time>
+                    <span class="post-wordcount gt-c-content-color-second">
+                        1.1 千字 ·</span>
+                    
+                        
+                    
+                </div>
+                <hr>
+                
+                <div class="post-content gt-c-content-color-first">
+                    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>算法竞赛是锻炼编程能力和逻辑思维的最佳方式之一。无论你是准备参加 ACM-ICPC、Codeforces 还是蓝桥杯，掌握基础算法都是第一步。</p>
+<h2 id="数据结构基础"><a href="#数据结构基础" class="headerlink" title="数据结构基础"></a>数据结构基础</h2><h3 id="数组与链表"><a href="#数组与链表" class="headerlink" title="数组与链表"></a>数组与链表</h3><p>数组是最基本的数据结构，支持 O(1) 的随机访问。但在中间插入和删除元素时需要 O(n) 的时间。</p>
+<p>链表则相反，插入和删除只需 O(1)，但访问第 k 个元素需要 O(k)。</p>
+<h3 id="栈与队列"><a href="#栈与队列" class="headerlink" title="栈与队列"></a>栈与队列</h3><p>栈是后进先出（LIFO）的数据结构，常用于括号匹配、表达式求值、DFS 等场景。</p>
+<p>队列是先进先出（FIFO）的结构，BFS 中的核心数据结构就是队列。</p>
+<h4 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h4><p>单调栈在 O(n) 时间内解决”下一个更大元素”类问题，是竞赛中的高频考点。</p>
+<h4 id="单调队列"><a href="#单调队列" class="headerlink" title="单调队列"></a>单调队列</h4><p>滑动窗口最大值是单调队列的经典应用。</p>
+<h3 id="树与图"><a href="#树与图" class="headerlink" title="树与图"></a>树与图</h3><p>树是一种特殊的图，没有环。二叉树、BST、堆、并查集都是树的应用。</p>
+<p>图由顶点和边组成，分为有向图和无向图，存储方式有邻接矩阵和邻接表。</p>
+<h2 id="基础算法"><a href="#基础算法" class="headerlink" title="基础算法"></a>基础算法</h2><h3 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h3><h4 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h4><p>平均时间复杂度 O(n log n)，基于分治思想。选择一个 pivot，将数组分为两部分递归排序。</p>
+<h4 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h4><p>稳定排序，时间复杂度 O(n log n)，同样基于分治。归并排序的另一大用途是求逆序对。</p>
+<h3 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h3><p>在有序序列中查找目标值，每次将搜索范围减半，时间复杂度 O(log n)。二分答案也是常见题型。</p>
+<h3 id="前缀和与差分"><a href="#前缀和与差分" class="headerlink" title="前缀和与差分"></a>前缀和与差分</h3><p>一维&#x2F;二维前缀和可以在 O(1) 时间内求区间和。差分数组则用于频繁的区间修改操作。</p>
+<h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><h3 id="线性-DP"><a href="#线性-DP" class="headerlink" title="线性 DP"></a>线性 DP</h3><h4 id="最长上升子序列-LIS"><a href="#最长上升子序列-LIS" class="headerlink" title="最长上升子序列 (LIS)"></a>最长上升子序列 (LIS)</h4><p>经典 DP 问题，朴素 O(n²)，贪心+二分优化到 O(n log n)。</p>
+<h4 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h4><p>01 背包、完全背包、多重背包，是 DP 中最经典的模型。</p>
+<h3 id="区间-DP"><a href="#区间-DP" class="headerlink" title="区间 DP"></a>区间 DP</h3><p>从小区间推到大区间，常见于合并石子、矩阵链乘等问题。</p>
+<h3 id="树形-DP"><a href="#树形-DP" class="headerlink" title="树形 DP"></a>树形 DP</h3><p>在树上进行 DP，通常用 DFS 实现。典型问题：树的直径、树上最大独立集。</p>
+<h2 id="图论算法"><a href="#图论算法" class="headerlink" title="图论算法"></a>图论算法</h2><h3 id="最短路"><a href="#最短路" class="headerlink" title="最短路"></a>最短路</h3><h4 id="Dijkstra-算法"><a href="#Dijkstra-算法" class="headerlink" title="Dijkstra 算法"></a>Dijkstra 算法</h4><p>适用于非负权图，使用优先队列优化后复杂度 O((V+E) log V)。</p>
+<h4 id="Floyd-Warshall"><a href="#Floyd-Warshall" class="headerlink" title="Floyd-Warshall"></a>Floyd-Warshall</h4><p>多源最短路，O(n³)，适用于稠密图或需要全部点对距离的场景。</p>
+<h3 id="最小生成树"><a href="#最小生成树" class="headerlink" title="最小生成树"></a>最小生成树</h3><h4 id="Kruskal-算法"><a href="#Kruskal-算法" class="headerlink" title="Kruskal 算法"></a>Kruskal 算法</h4><p>基于并查集，按边权排序后贪心选取。时间复杂度 O(E log E)。</p>
+<h3 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h3><p>用于 DAG，可以判断图中是否有环，也常用于 DP 的状态转移顺序。</p>
+<h2 id="字符串算法"><a href="#字符串算法" class="headerlink" title="字符串算法"></a>字符串算法</h2><h3 id="字符串哈希"><a href="#字符串哈希" class="headerlink" title="字符串哈希"></a>字符串哈希</h3><p>将字符串映射为整数，快速判断子串是否相等。常用的有自然溢出和双哈希。</p>
+<h3 id="KMP-算法"><a href="#KMP-算法" class="headerlink" title="KMP 算法"></a>KMP 算法</h3><p>单模式串匹配，通过前缀函数避免重复比较，时间复杂度 O(n+m)。</p>
+<h2 id="数学基础"><a href="#数学基础" class="headerlink" title="数学基础"></a>数学基础</h2><h3 id="数论"><a href="#数论" class="headerlink" title="数论"></a>数论</h3><p>快速幂、GCD&#x2F;LCM、素数筛（埃氏筛、欧拉筛）、乘法逆元都是必备技能。</p>
+<h3 id="组合数学"><a href="#组合数学" class="headerlink" title="组合数学"></a>组合数学</h3><p>排列组合、容斥原理、卡特兰数、Lucas 定理在竞赛中频繁出现。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>算法学习没有捷径，多刷题、多总结、多看题解是最好的方法。祝你在竞赛中取得好成绩！</p>
+
+                </div>
+            </article>
+        </div>
+        <br>
+        
+            <div class="next-prev-post">
+                
+                    <div class="prev-post">
+                        <div class="prev gt-c-content-color-first">
+                            上一篇：<a href="/2026/07/22/hello-world/"
+                                class="post-title gt-a-link">Hello World</a>
+                        </div>
+                    </div>
+                
+                
+                    <div class="next-post">
+                        <div class="next gt-c-content-color-first">
+                            下一篇：<a href="/2026/07/22/test/a/"
+                                class="post-title gt-a-link">a</a>
+                        </div>
+                    </div>
+                
+            </div>
+        
+        
+
+        
+    <script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.18.0/js/md5.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+
+    <div id="gitalk-container"></div>
+
+    <script>
+    var gitalk = new Gitalk({
+        clientID: 'Ov23liZH3OYalvv7HzKX',
+        clientSecret: 'b8f25b093a363f12c0bfb88d7aa057a0f6b8b043',
+        repo: 'IA3001.github.io',
+        owner: 'IA3001',
+        admin: ['IA3001'],
+        id: md5(location.pathname),
+        distractionFreeMode: false,
+        proxy: 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token'
+    });
+    gitalk.render('gitalk-container');
+    </script>
+
+
+        
+    </div>
+
+    
+    <aside class="post-outline" id="post-outline">
+        <div class="outline-title">OUTLINE</div>
+        <nav class="outline-nav">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80"><span class="toc-text">数据结构基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E4%B8%8E%E9%93%BE%E8%A1%A8"><span class="toc-text">数组与链表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97"><span class="toc-text">栈与队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%91%E4%B8%8E%E5%9B%BE"><span class="toc-text">树与图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95"><span class="toc-text">基础算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95"><span class="toc-text">排序算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE"><span class="toc-text">二分查找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BC%80%E5%92%8C%E4%B8%8E%E5%B7%AE%E5%88%86"><span class="toc-text">前缀和与差分</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92"><span class="toc-text">动态规划</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7-DP"><span class="toc-text">线性 DP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%BA%E9%97%B4-DP"><span class="toc-text">区间 DP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%91%E5%BD%A2-DP"><span class="toc-text">树形 DP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E8%AE%BA%E7%AE%97%E6%B3%95"><span class="toc-text">图论算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E7%9F%AD%E8%B7%AF"><span class="toc-text">最短路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91"><span class="toc-text">最小生成树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F"><span class="toc-text">拓扑排序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%AE%97%E6%B3%95"><span class="toc-text">字符串算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%93%88%E5%B8%8C"><span class="toc-text">字符串哈希</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#KMP-%E7%AE%97%E6%B3%95"><span class="toc-text">KMP 算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80"><span class="toc-text">数学基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E8%AE%BA"><span class="toc-text">数论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6"><span class="toc-text">组合数学</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-text">结语</span></a></li></ol>
+        </nav>
+    </aside>
+    
+</div>
+
+<style>
+.post-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    padding: 20px;
+    align-items: flex-start;
+}
+.post-wrapper.typst-page {
+    display: block;
+    padding: 0;
+}
+.post-wrapper.typst-page .post-container {
+    width: auto;
+    max-width: none;
+}
+.post-wrapper.typst-page .post-detail {
+    background: transparent !important;
+    padding: 0;
+    margin: 0 auto;
+    width: fit-content;
+    max-width: 100%;
+    overflow-x: auto;
+}
+.post-container { width: 1000px; flex-shrink: 0; }
+
+.post-outline {
+    width: 200px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 24px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    font-size: 13px;
+    border-left: 1px solid var(--border);
+    padding-left: 20px;
+}
+.outline-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--content-second);
+    margin-bottom: 12px;
+}
+.outline-nav { position: relative; }
+.outline-nav .toc { list-style: none; padding: 0; margin: 0; }
+.outline-nav .toc-item { position: relative; }
+.outline-nav .toc-link {
+    display: block;
+    padding: 4px 0 4px 0;
+    color: var(--content-second);
+    text-decoration: none;
+    transition: color .15s;
+    line-height: 1.5;
+}
+.outline-nav .toc-link:hover { color: var(--content-first); }
+.outline-nav .toc-link.active {
+    color: var(--content-first);
+    font-weight: 600;
+}
+.outline-nav .toc-child { padding-left: 16px; }
+.outline-nav .toc-child .toc-link { font-size: 12px; }
+.outline-nav .toc-child .toc-child { padding-left: 16px; }
+.outline-nav .toc-child .toc-child .toc-link { font-size: 11px; }
+.outline-empty { color: var(--content-second); font-size: 12px; padding-left: 12px; }
+
+/* Typst */
+.typst-app { --typst-dom-scale: 1.5; }
+
+.post-outline.visible {
+    display: block;
+    position: fixed;
+    right: 20px;
+    top: 80px;
+    z-index: 999;
+    background: var(--theme-first);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.12);
+    max-height: 70vh;
+    width: 260px;
+}
+@media (max-width: 992px) { .post-outline { display: none; } }
+</style>
+
+<script>
+(function(){
+    var tocBtn = document.getElementById('toc-btn');
+    var outline = document.querySelector('.post-outline');
+    if (tocBtn && outline) {
+        tocBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (window.innerWidth <= 992) {
+                outline.classList.toggle('visible');
+            } else {
+                outline.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    }
+
+    var container = document.querySelector('.post-outline');
+    if (!container) return;
+    var links = [].slice.call(container.querySelectorAll('.toc-link'));
+    var headings = links.map(function(a) {
+        return document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
+    }).filter(Boolean);
+
+    var activeLink = null;
+    function update() {
+        var top = 0;
+        for (var i = headings.length - 1; i >= 0; i--) {
+            if (headings[i].getBoundingClientRect().top < 120) {
+                top = i; break;
+            }
+        }
+        var current = links[top];
+        if (current !== activeLink) {
+            if (activeLink) activeLink.classList.remove('active');
+            current.classList.add('active');
+            var rect = current.getBoundingClientRect();
+            var cr = container.getBoundingClientRect();
+            if (rect.bottom > cr.bottom || rect.top < cr.top) {
+                current.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            }
+            activeLink = current;
+        }
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+})();
+</script>
+
+                <div class="site-footer gt-c-content-color-first">
+    <div class="footer-main">
+        <!-- 建议保留版权信息或者添加主题信息到友链，感谢您的理解 -->
+        <!-- 文件位置：layout/_includes/footer.ejs -->
+        <span style="text-align: right; float: right;">Theme <a 
+            href="https://github.com/renbaoshuo/hexo-theme-pure" target="_blank">Pure</a> | Powered by <a 
+            href="https://hexo.io" target="_blank">Hexo</a></span>
+        <span style="text-align: left;">Footer HTML
+</span>
+    </div>
+</div>
+
+<!-- Buttons -->
+<div class="fab">
+    
+    <a aria-label="文章目录" class="fab-btn" id="toc-btn" href="javascript:;" title="文章目录">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            focusable="false"
+            data-icon="list-ul"
+            class="svg-inline--fa fa-list-ul fa-w-16"
+            role="img"
+            viewBox="0 0 512 512"
+            height="20"
+            width="20"
+        >
+            <path
+                fill="currentColor"
+                d="M48 48a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm448 16H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 160H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z"
+            />
+        </svg>
+    </a>
+    
+    <a aria-label="回到顶部" class="fab-btn" href="#" title="回到顶部">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            focusable="false"
+            role="img"
+            viewBox="0 0 320 512"
+            height="20"
+            width="20"
+        >
+            <path
+                fill="currentColor"
+                d="M168.5 164.2l148 146.8c4.7 4.7 4.7 12.3 0 17l-19.8 19.8c-4.7 4.7-12.3 4.7-17 0L160 229.3 40.3 347.8c-4.7 4.7-12.3 4.7-17 0L3.5 328c-4.7-4.7-4.7-12.3 0-17l148-146.8c4.7-4.7 12.3-4.7 17 0z"
+            />
+        </svg>
+    </a>
+</div>
+
+            </div>
+        </div>
+    </body>
+</html>
