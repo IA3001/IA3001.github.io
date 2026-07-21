@@ -422,7 +422,8 @@
             id: decodeURI(location.pathname),
             distractionFreeMode: 'true',
             language: 'zh-CN',
-            perPage: parseInt('10',10)
+            perPage: parseInt('10',10),
+            proxy: 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token'
         })
         gitalk.render('comments')
     })
