@@ -507,7 +507,7 @@
   color: #f00;
 }
 .nav-left {
-  width: 90px;
+  width: 120px;
   height: 100%;
   background: #2a2935;
   box-shadow: inset -15px 0 15px -15px #222;
@@ -520,13 +520,13 @@
   user-select: none;
 }
 .nav-left .avatar {
-  width: 75px;
-  height: 75px;
-  margin: 41px auto 11px;
+  width: 100px;
+  height: 100px;
+  margin: 55px auto 15px;
   border-radius: 50%;
-  box-shadow: 0 0 0 3px #fff, 0 0 3px 3px #eee;
+  box-shadow: 0 0 0 4px #fff, 0 0 4px 4px #eee;
   background-repeat: no-repeat;
-  background-size: 75px 75px;
+  background-size: 100px 100px;
   display: block;
 }
 .nav-left .avatar:hover {
@@ -658,7 +658,7 @@
   display: block;
 }
 .nav-right {
-  width: 315px;
+  width: 420px;
   height: 100%;
   background: #fff;
   border-right: 1px solid #e5e8ec;
@@ -676,7 +676,7 @@
   transition: margin-left 0.5s;
 }
 .nav-right .title-list.friend {
-  margin-left: 316px;
+  margin-left: 421px;
 }
 .nav-right .title-list .right-top {
   background-color: transparent;
@@ -1016,7 +1016,7 @@
 }
 .nav-right .friends-area {
   height: 100%;
-  margin-left: -316px;
+  margin-left: -421px;
   transition: margin-left 0.5s;
   position: absolute;
 }
@@ -1028,7 +1028,7 @@
   text-align: center;
   vertical-align: middle;
   display: table-cell;
-  width: 315px;
+  width: 420px;
   font-size: 18px;
   position: relative;
 }
@@ -1652,14 +1652,14 @@ h2 {
 }
 .nav {
   position: relative;
-  width: 406px;
+  width: 542px;
   height: 100%;
   float: left;
   background-color: #fff;
   transition: margin-left 0.5s cubic-bezier(0.77, 0, 0.175, 1);
 }
 .nav.fullscreen {
-  margin-left: -406px;
+  margin-left: -542px;
 }
 .nav:hover .semicircle {
   margin-left: 0;
