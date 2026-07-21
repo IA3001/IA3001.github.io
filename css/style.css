@@ -520,13 +520,13 @@
   user-select: none;
 }
 .nav-left .avatar {
-  width: 100px;
-  height: 100px;
-  margin: 55px auto 15px;
+  width: 75px;
+  height: 75px;
+  margin: 41px auto 11px;
   border-radius: 50%;
-  box-shadow: 0 0 0 4px #fff, 0 0 4px 4px #eee;
+  box-shadow: 0 0 0 3px #fff, 0 0 3px 3px #eee;
   background-repeat: no-repeat;
-  background-size: 100px 100px;
+  background-size: 75px 75px;
   display: block;
 }
 .nav-left .avatar:hover {
