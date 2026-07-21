@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>A</title>
+      <link href="/2026/07/21/test/a/"/>
+      <url>/2026/07/21/test/a/</url>
+      
+        <content type="html"><![CDATA[<h1 id="A"><a href="#A" class="headerlink" title="A"></a>A</h1>]]></content>
+      
+      
+      <categories>
+          
+          <category> test </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Hello World</title>
       <link href="/2026/07/21/hello-world/"/>
       <url>/2026/07/21/hello-world/</url>
@@ -19,19 +38,6 @@
             <tag> 博客 </tag>
             
         </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
-      <link href="/2026/07/21/test/a/"/>
-      <url>/2026/07/21/test/a/</url>
-      
-        <content type="html"><![CDATA[<h1 id="A"><a href="#A" class="headerlink" title="A"></a>A</h1>]]></content>
-      
-      
       
     </entry>
     
