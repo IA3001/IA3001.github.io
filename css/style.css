@@ -658,7 +658,7 @@
   display: block;
 }
 .nav-right {
-  width: 420px;
+  width: 315px;
   height: 100%;
   background: #fff;
   border-right: 1px solid #e5e8ec;
@@ -676,7 +676,7 @@
   transition: margin-left 0.5s;
 }
 .nav-right .title-list.friend {
-  margin-left: 421px;
+  margin-left: 316px;
 }
 .nav-right .title-list .right-top {
   background-color: transparent;
@@ -1016,7 +1016,7 @@
 }
 .nav-right .friends-area {
   height: 100%;
-  margin-left: -421px;
+  margin-left: -316px;
   transition: margin-left 0.5s;
   position: absolute;
 }
@@ -1028,7 +1028,7 @@
   text-align: center;
   vertical-align: middle;
   display: table-cell;
-  width: 420px;
+  width: 315px;
   font-size: 18px;
   position: relative;
 }
