@@ -698,6 +698,8 @@ hr {
   -moz-tab-size: 4;
 }
 .gt-post-content pre > code {
+  tab-size: 4;
+  -moz-tab-size: 4;
   letter-spacing: 0px;
   font-size: 14px;
   font-family: 'Roboto Mono', Consolas, Menlo, Monaco, 'Source Code Pro', 'Courier New', monospace;
