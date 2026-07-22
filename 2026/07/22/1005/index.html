@@ -1082,7 +1082,7 @@ AGbSFECuBtgAbga0oHwHHAGYATYH2QByAexAojJzAHCxRWERQAsAFZsCAYw4NQCxwDAAkgeGB/f7qeRR
                 
                     <div class="next-post">
                         <div class="next gt-c-content-color-first">
-                            下一篇：<a href="/2026/07/contest01/"
+                            下一篇：<a href="/2026/07/22/2026%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A5/"
                                 class="post-title gt-a-link">2026牛客暑期多校训练营</a>
                         </div>
                     </div>
@@ -1234,6 +1234,19 @@ AGbSFECuBtgAbga0oHwHHAGYATYH2QByAexAojJzAHCxRWERQAsAFZsCAYw4NQCxwDAAkgeGB/f7qeRR
         return document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
     }).filter(Boolean);
 
+    // Intercept TOC clicks: smooth scroll + replaceState (no history pollution)
+    links.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            var id = decodeURIComponent(link.getAttribute('href').slice(1));
+            var target = document.getElementById(id);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                history.replaceState(null, '', '#' + id);
+            }
+        });
+    });
+
     var activeLink = null;
     function update() {
         var top = 0;
@@ -1252,6 +1265,9 @@ AGbSFECuBtgAbga0oHwHHAGYATYH2QByAexAojJzAHCxRWERQAsAFZsCAYw4NQCxwDAAkgeGB/f7qeRR
                 current.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
             }
             activeLink = current;
+            // Update URL hash without pushing history entry
+            var id = decodeURIComponent(current.getAttribute('href').slice(1));
+            history.replaceState(null, '', '#' + id);
         }
     }
     window.addEventListener('scroll', update, { passive: true });
