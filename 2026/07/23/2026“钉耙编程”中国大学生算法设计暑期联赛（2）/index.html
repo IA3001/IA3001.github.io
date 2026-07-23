@@ -101,7 +101,7 @@
                     <time class="post-time gt-c-content-color-first">
                         · 2026-07-23 ·</time>
                     <span class="post-wordcount gt-c-content-color-second">
-                        3.8 千字 ·</span>
+                        4.3 千字 ·</span>
                     
                         
                             <a href="/tags/%E6%9D%AD%E7%94%B5%E5%A4%9A%E6%A0%A1/" class="post-tag">
@@ -201,22 +201,43 @@ hhhddduuu</code></pre>
 <h3 id="Code">Code</h3>
 <pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
 <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">check</span><span class="hljs-params">(string s, <span class="hljs-type">int</span> ans)</span> </span>&#123;
+    <span class="hljs-type">int</span> a = <span class="hljs-number">0</span>, b = <span class="hljs-number">0</span>, c = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> _: s) &#123;
+        <span class="hljs-keyword">if</span> (_ == <span class="hljs-string">&#x27;h&#x27;</span>) a++;
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (_ == <span class="hljs-string">&#x27;d&#x27;</span>) b += a;
+        <span class="hljs-keyword">else</span> c += b;
+    &#125;
+    <span class="hljs-comment">// cout &lt;&lt; a &lt;&lt; &quot; &quot; &lt;&lt; b &lt;&lt; &quot; &quot; &lt;&lt; c &lt;&lt; &quot;\n&quot;;</span>
+    <span class="hljs-keyword">return</span> c == ans &amp;&amp; s.<span class="hljs-built_in">size</span>() &lt;= <span class="hljs-number">3001</span>;
+&#125;
+
 <span class="hljs-function">string <span class="hljs-title">cal1</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;
 	<span class="hljs-comment">// n &lt;= 1e6</span>
 	<span class="hljs-type">int</span> B = <span class="hljs-number">1500</span>;
 	<span class="hljs-type">int</span> q = n / B, r = n % B;
 	<span class="hljs-keyword">return</span> <span class="hljs-built_in">string</span>(r, <span class="hljs-string">&#x27;h&#x27;</span>) + <span class="hljs-string">&quot;d&quot;</span> + <span class="hljs-built_in">string</span>(B - r, <span class="hljs-string">&#x27;h&#x27;</span>) + <span class="hljs-built_in">string</span>(q, <span class="hljs-string">&#x27;d&#x27;</span>) + <span class="hljs-string">&quot;u&quot;</span>;
 &#125;
+
 <span class="hljs-function">string <span class="hljs-title">cal2</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;
 	<span class="hljs-comment">// n &gt; 1e6</span>
 	<span class="hljs-type">int</span> B = <span class="hljs-number">1000</span>, C = <span class="hljs-number">999</span>;
 	<span class="hljs-type">int</span> r = B - n % B, m = (n - C * r) / B, q = m / C, s = m % C;
+    <span class="hljs-comment">// ??? 神秘特判，要不然 999999999 的时候 q = 1001, s = 0</span>
+    <span class="hljs-keyword">if</span> (!s &amp;&amp; q) q--, s+=C; 
 	<span class="hljs-keyword">return</span> <span class="hljs-built_in">string</span>(r, <span class="hljs-string">&#x27;h&#x27;</span>) + <span class="hljs-string">&quot;d&quot;</span> + <span class="hljs-built_in">string</span>(B - r, <span class="hljs-string">&#x27;h&#x27;</span>) + <span class="hljs-built_in">string</span>(q, <span class="hljs-string">&#x27;d&#x27;</span>) + <span class="hljs-built_in">string</span>(C - s, <span class="hljs-string">&#x27;u&#x27;</span>) + <span class="hljs-string">&quot;d&quot;</span> + <span class="hljs-built_in">string</span>(s, <span class="hljs-string">&#x27;u&#x27;</span>);
 &#125;
+
 <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span> </span>&#123;
 	<span class="hljs-type">int</span> n;
 	cin &gt;&gt; n;
-	cout &lt;&lt; (n &lt;= <span class="hljs-number">1e6</span> ? <span class="hljs-built_in">cal1</span>(n) : <span class="hljs-built_in">cal2</span>(n)) &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+    string res = (n &lt;= <span class="hljs-number">1e6</span> + <span class="hljs-number">5</span>? <span class="hljs-built_in">cal1</span>(n) : <span class="hljs-built_in">cal2</span>(n));
+    <span class="hljs-comment">// if (!check(res, n)) &#123;</span>
+        <span class="hljs-comment">// cout &lt;&lt; n &lt;&lt; &quot;:&quot;;</span>
+        <span class="hljs-comment">// cout &lt;&lt; res.size() &lt;&lt; &quot;\n&quot;;</span>
+    <span class="hljs-comment">// &#125;</span>
+    cout &lt;&lt; res &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
 &#125;
 <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
 	ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
