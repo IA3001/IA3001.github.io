@@ -162,11 +162,11 @@ NO</code></pre>
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.7167em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace"> </span><span class="mord mathnormal">o</span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.0572em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace"> </span><span class="mord mathnormal" style="margin-right:0.0359em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.044em;">z</span></span></span></span></span></p>
 <p>其中 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">x_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mi mathvariant="normal">/</mi><mn>1</mn></mrow><annotation encoding="application/x-tex">0/1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">0/1</span></span></span></span>，这部分天然是布尔变量。真正恶心的是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>o</mi><msub><mi>p</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">op_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.7167em;vertical-align:-0.2861em;"></span><span class="mord mathnormal">o</span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.0572em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span>，因为它有三种取值：<code>&amp;|^</code></p>
 <p>如果朴素地开三个变量：</p>
-<pre><code class="hljs avrasm"><span class="hljs-symbol">a:</span> op 是 &amp;
-<span class="hljs-symbol">b:</span> op 是 |
-<span class="hljs-symbol">c:</span> op 是 ^</code></pre>
+<pre><code class="hljs txt">a: op 是 &amp;
+b: op 是 |
+c: op 是 ^</code></pre>
 <p>那我们很容易写出“最多选一个”：</p>
-<pre><code class="hljs erlang-repl">a -&gt; !b, a -&gt; !c
+<pre><code class="hljs txt">a -&gt; !b, a -&gt; !c
 b -&gt; !a, b -&gt; !c
 c -&gt; !a, c -&gt; !b</code></pre>
 <p>但是“三个里面至少选一个”是：</p>
@@ -177,42 +177,42 @@ c -&gt; !a, c -&gt; !b</code></pre>
 <strong>你排除了所有不合法的，却没有保证它一定选了一个合法的。</strong></p>
 <p>关键就在于重新编码运算符。</p>
 <p>我们用两个布尔变量 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo separator="true">,</mo><mi>Q</mi></mrow><annotation encoding="application/x-tex">P,Q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.1389em;">P</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">Q</span></span></span></span> 表示一个运算符：</p>
-<pre><code class="hljs apache"><span class="hljs-attribute">P</span> Q   op
-<span class="hljs-attribute">0</span> <span class="hljs-number">0</span>   &amp;
-<span class="hljs-attribute">0</span> <span class="hljs-number">1</span>   |
-<span class="hljs-attribute">1</span> <span class="hljs-number">1</span>   ^
-<span class="hljs-attribute">1</span> <span class="hljs-number">0</span>   禁用</code></pre>
+<pre><code class="hljs txt">P Q   op
+0 0   &amp;
+0 1   |
+1 1   ^
+1 0   禁用</code></pre>
 <p>这个编码很神秘，但妙就妙在：三个合法状态不是随便摆的。</p>
 <p>它有两个非常好用的性质：</p>
-<pre><code class="hljs ini"><span class="hljs-attr">Q</span> = <span class="hljs-number">0</span> 时，只可能是 &amp;
-<span class="hljs-attr">Q</span> = <span class="hljs-number">1</span> 时，可能是 | 或 ^
-<span class="hljs-attr">P</span> = <span class="hljs-number">1</span> 且 Q = <span class="hljs-number">1</span> 时，是 ^
-<span class="hljs-attr">P</span> = <span class="hljs-number">0</span> 且 Q = <span class="hljs-number">0</span> 时，是 &amp;</code></pre>
+<pre><code class="hljs txt">Q = 0 时，只可能是 &amp;
+Q = 1 时，可能是 | 或 ^
+P = 1 且 Q = 1 时，是 ^
+P = 0 且 Q = 0 时，是 &amp;</code></pre>
 <p>唯一非法状态是：</p>
-<pre><code class="hljs apache"><span class="hljs-attribute">P</span>=<span class="hljs-number">1</span>,Q=<span class="hljs-number">0</span></code></pre>
+<pre><code class="hljs txt">P=1,Q=0</code></pre>
 <p>所以全局加：</p>
 <p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi mathvariant="normal">¬</mi><mi>P</mi><mo>∨</mo><mi>Q</mi></mrow><annotation encoding="application/x-tex">\neg P \lor Q 
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord">¬</span><span class="mord mathnormal" style="margin-right:0.1389em;">P</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∨</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">Q</span></span></span></span></span></p>
 <p>建边：</p>
-<pre><code class="hljs perl">add(p[j], <span class="hljs-string">q[j]</span>);
-add(n<span class="hljs-string">q[j]</span>, np[j]);</code></pre>
+<pre><code class="hljs cpp"><span class="hljs-built_in">add</span>(p[j], q[j]);
+<span class="hljs-built_in">add</span>(nq[j], np[j]);</code></pre>
 <p>这一步相当于把“三选一”硬塞进了两个变量里。</p>
 <p>接下来对每个限制分类讨论。</p>
 <p>设：</p>
-<pre><code class="hljs abnf"><span class="hljs-attribute">X</span> <span class="hljs-operator">=</span> x_i
-<span class="hljs-attribute">P</span> <span class="hljs-operator">=</span> p_j
-<span class="hljs-attribute">Q</span> <span class="hljs-operator">=</span> q_j</code></pre>
+<pre><code class="hljs txt">X = x_i
+P = p_j
+Q = q_j</code></pre>
 <h4 id="1-y-0-z-0">1. y=0,z=0</h4>
 <p>也就是：</p>
 <p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>X</mi><mtext> </mtext><mi>o</mi><mi>p</mi><mtext> </mtext><mn>0</mn><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">X\ op\ 0 = 0
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0785em;">X</span><span class="mspace"> </span><span class="mord mathnormal">o</span><span class="mord mathnormal">p</span><span class="mspace"> </span><span class="mord">0</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span></span></p>
 <p>真值表：</p>
-<pre><code class="hljs apache"><span class="hljs-attribute">X</span>=<span class="hljs-number">0</span>: <span class="hljs-number">0</span>&amp;<span class="hljs-number">0</span>=<span class="hljs-number">0</span>, <span class="hljs-number">0</span>|<span class="hljs-number">0</span>=<span class="hljs-number">0</span>, <span class="hljs-number">0</span>^<span class="hljs-number">0</span>=<span class="hljs-number">0</span>   全部可以
-<span class="hljs-attribute">X</span>=<span class="hljs-number">1</span>: <span class="hljs-number">1</span>&amp;<span class="hljs-number">0</span>=<span class="hljs-number">0</span>, <span class="hljs-number">1</span>|<span class="hljs-number">0</span>=<span class="hljs-number">1</span>, <span class="hljs-number">1</span>^<span class="hljs-number">0</span>=<span class="hljs-number">1</span>   只能 &amp;</code></pre>
+<pre><code class="hljs txt">X=0: 0&amp;0=0, 0|0=0, 0^0=0   全部可以
+X=1: 1&amp;0=0, 1|0=1, 1^0=1   只能 &amp;</code></pre>
 <p>所以唯一不合法的情况是：</p>
-<pre><code class="hljs ini"><span class="hljs-attr">X</span>=<span class="hljs-number">1</span> 且 op 不是 &amp;</code></pre>
+<pre><code class="hljs txt">X=1 且 op 不是 &amp;</code></pre>
 <p>在这个神秘编码里，<code>op 不是 &amp;</code> 等价于：</p>
-<pre><code class="hljs abnf"><span class="hljs-attribute">Q</span><span class="hljs-operator">=</span><span class="hljs-number">1</span></code></pre>
+<pre><code class="hljs txt">Q=1</code></pre>
 <p>因为 <code>&amp;</code> 是 <code>00</code>，另外两个合法运算符都是 <code>Q=1</code>。</p>
 <p>所以禁止：</p>
 <p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>X</mi><mo>∧</mo><mi>Q</mi></mrow><annotation encoding="application/x-tex">X \land Q
@@ -221,77 +221,77 @@ add(n<span class="hljs-string">q[j]</span>, np[j]);</code></pre>
 <p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi mathvariant="normal">¬</mi><mi>X</mi><mo>∨</mo><mi mathvariant="normal">¬</mi><mi>Q</mi></mrow><annotation encoding="application/x-tex">\neg X \lor \neg Q
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord">¬</span><span class="mord mathnormal" style="margin-right:0.0785em;">X</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∨</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord">¬</span><span class="mord mathnormal">Q</span></span></span></span></span></p>
 <p>建边：</p>
-<pre><code class="hljs perl">add(<span class="hljs-keyword">x</span>[u], n<span class="hljs-string">q[v]</span>);
-add(<span class="hljs-string">q[v]</span>, nx[u]);</code></pre>
+<pre><code class="hljs cpp"><span class="hljs-built_in">add</span>(x[u], nq[v]);
+<span class="hljs-built_in">add</span>(q[v], nx[u]);</code></pre>
 <h4 id="2-y-0-z-1">2. y=0,z=1</h4>
 <p>也就是：</p>
 <p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>X</mi><mtext> </mtext><mi>o</mi><mi>p</mi><mtext> </mtext><mn>0</mn><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">X\ op\ 0 = 1
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0785em;">X</span><span class="mspace"> </span><span class="mord mathnormal">o</span><span class="mord mathnormal">p</span><span class="mspace"> </span><span class="mord">0</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></span></p>
 <p>真值表：</p>
-<pre><code class="hljs apache"><span class="hljs-attribute">X</span>=<span class="hljs-number">0</span>: <span class="hljs-number">0</span>&amp;<span class="hljs-number">0</span>=<span class="hljs-number">0</span>, <span class="hljs-number">0</span>|<span class="hljs-number">0</span>=<span class="hljs-number">0</span>, <span class="hljs-number">0</span>^<span class="hljs-number">0</span>=<span class="hljs-number">0</span>   全部不行
-<span class="hljs-attribute">X</span>=<span class="hljs-number">1</span>: <span class="hljs-number">1</span>&amp;<span class="hljs-number">0</span>=<span class="hljs-number">0</span>, <span class="hljs-number">1</span>|<span class="hljs-number">0</span>=<span class="hljs-number">1</span>, <span class="hljs-number">1</span>^<span class="hljs-number">0</span>=<span class="hljs-number">1</span>   只能 | 或 ^</code></pre>
+<pre><code class="hljs txt">X=0: 0&amp;0=0, 0|0=0, 0^0=0   全部不行
+X=1: 1&amp;0=0, 1|0=1, 1^0=1   只能 | 或 ^</code></pre>
 <p>所以只有一种合法情况：</p>
-<pre><code class="hljs ini"><span class="hljs-attr">X</span>=<span class="hljs-number">1</span> 且 op 不是 &amp;</code></pre>
+<pre><code class="hljs txt">X=1 且 op 不是 &amp;</code></pre>
 <p>而 <code>op 不是 &amp;</code> 仍然等价于：</p>
-<pre><code class="hljs abnf"><span class="hljs-attribute">Q</span><span class="hljs-operator">=</span><span class="hljs-number">1</span></code></pre>
+<pre><code class="hljs txt">Q=1</code></pre>
 <p>所以直接强制：</p>
 <p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>X</mi><mo separator="true">,</mo><mspace width="1em"/><mi>Q</mi></mrow><annotation encoding="application/x-tex">X,\quad Q
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0785em;">X</span><span class="mpunct">,</span><span class="mspace" style="margin-right:1em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">Q</span></span></span></span></span></p>
 <p>建边：</p>
-<pre><code class="hljs perl">add(nx[u], <span class="hljs-keyword">x</span>[u]);
-add(n<span class="hljs-string">q[v]</span>, <span class="hljs-string">q[v]</span>);</code></pre>
+<pre><code class="hljs cpp"><span class="hljs-built_in">add</span>(nx[u], x[u]);
+<span class="hljs-built_in">add</span>(nq[v], q[v]);</code></pre>
 <h4 id="3-y-1-z-0">3. y=1,z=0</h4>
 <p>也就是：</p>
 <p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>X</mi><mtext> </mtext><mi>o</mi><mi>p</mi><mtext> </mtext><mn>1</mn><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">X\ op\ 1 = 0
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0785em;">X</span><span class="mspace"> </span><span class="mord mathnormal">o</span><span class="mord mathnormal">p</span><span class="mspace"> </span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span></span></p>
 <p>真值表：</p>
-<pre><code class="hljs apache"><span class="hljs-attribute">X</span>=<span class="hljs-number">0</span>: <span class="hljs-number">0</span>&amp;<span class="hljs-number">1</span>=<span class="hljs-number">0</span>, <span class="hljs-number">0</span>|<span class="hljs-number">1</span>=<span class="hljs-number">1</span>, <span class="hljs-number">0</span>^<span class="hljs-number">1</span>=<span class="hljs-number">1</span>   只能 &amp;
-<span class="hljs-attribute">X</span>=<span class="hljs-number">1</span>: <span class="hljs-number">1</span>&amp;<span class="hljs-number">1</span>=<span class="hljs-number">1</span>, <span class="hljs-number">1</span>|<span class="hljs-number">1</span>=<span class="hljs-number">1</span>, <span class="hljs-number">1</span>^<span class="hljs-number">1</span>=<span class="hljs-number">0</span>   只能 ^</code></pre>
+<pre><code class="hljs txt">X=0: 0&amp;1=0, 0|1=1, 0^1=1   只能 &amp;
+X=1: 1&amp;1=1, 1|1=1, 1^1=0   只能 ^</code></pre>
 <p>所以：</p>
-<pre><code class="hljs ini"><span class="hljs-attr">X</span>=<span class="hljs-number">0</span> 时，op 必须是 &amp;
-<span class="hljs-attr">X</span>=<span class="hljs-number">1</span> 时，op 必须是 ^</code></pre>
+<pre><code class="hljs txt">X=0 时，op 必须是 &amp;
+X=1 时，op 必须是 ^</code></pre>
 <p>根据编码：</p>
-<pre><code class="hljs 1c"><span class="hljs-meta">&amp; = 00</span>
-^ <span class="hljs-punctuation">=</span> <span class="hljs-number">11</span></code></pre>
+<pre><code class="hljs txt">&amp; = 00
+^ = 11</code></pre>
 <p>所以这一下变成了非常舒服的：</p>
 <p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>P</mi><mo>=</mo><mi>X</mi><mo separator="true">,</mo><mspace width="1em"/><mi>Q</mi><mo>=</mo><mi>X</mi></mrow><annotation encoding="application/x-tex">P=X,\quad Q=X
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.1389em;">P</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0785em;">X</span><span class="mpunct">,</span><span class="mspace" style="margin-right:1em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">Q</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0785em;">X</span></span></span></span></span></p>
 <p>这里就是这个编码最 adhoc 的地方。<br>
 如果 <code>&amp;</code> 和 <code>^</code> 没有放在 <code>00</code> 和 <code>11</code>，这一类条件就会变得非常难看。</p>
 <p>建边就是两个等价关系：</p>
-<pre><code class="hljs perl">// P == X
-add(<span class="hljs-keyword">x</span>[u], p[v]);
-add(p[v], <span class="hljs-keyword">x</span>[u]);
-add(nx[u], np[v]);
-add(np[v], nx[u]);
+<pre><code class="hljs cpp"><span class="hljs-comment">// P == X</span>
+<span class="hljs-built_in">add</span>(x[u], p[v]);
+<span class="hljs-built_in">add</span>(p[v], x[u]);
+<span class="hljs-built_in">add</span>(nx[u], np[v]);
+<span class="hljs-built_in">add</span>(np[v], nx[u]);
 
-<span class="hljs-regexp">//</span> Q == X
-add(<span class="hljs-keyword">x</span>[u], <span class="hljs-string">q[v]</span>);
-add(<span class="hljs-string">q[v]</span>, <span class="hljs-keyword">x</span>[u]);
-add(nx[u], n<span class="hljs-string">q[v]</span>);
-add(n<span class="hljs-string">q[v]</span>, nx[u]);</code></pre>
+<span class="hljs-comment">// Q == X</span>
+<span class="hljs-built_in">add</span>(x[u], q[v]);
+<span class="hljs-built_in">add</span>(q[v], x[u]);
+<span class="hljs-built_in">add</span>(nx[u], nq[v]);
+<span class="hljs-built_in">add</span>(nq[v], nx[u]);</code></pre>
 <h4 id="4-y-1-z-1">4. y=1,z=1</h4>
 <p>也就是：</p>
 <p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>X</mi><mtext> </mtext><mi>o</mi><mi>p</mi><mtext> </mtext><mn>1</mn><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">X\ op\ 1 = 1
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0785em;">X</span><span class="mspace"> </span><span class="mord mathnormal">o</span><span class="mord mathnormal">p</span><span class="mspace"> </span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></span></p>
 <p>真值表：</p>
-<pre><code class="hljs apache"><span class="hljs-attribute">X</span>=<span class="hljs-number">0</span>: <span class="hljs-number">0</span>&amp;<span class="hljs-number">1</span>=<span class="hljs-number">0</span>, <span class="hljs-number">0</span>|<span class="hljs-number">1</span>=<span class="hljs-number">1</span>, <span class="hljs-number">0</span>^<span class="hljs-number">1</span>=<span class="hljs-number">1</span>   不能 &amp;
-<span class="hljs-attribute">X</span>=<span class="hljs-number">1</span>: <span class="hljs-number">1</span>&amp;<span class="hljs-number">1</span>=<span class="hljs-number">1</span>, <span class="hljs-number">1</span>|<span class="hljs-number">1</span>=<span class="hljs-number">1</span>, <span class="hljs-number">1</span>^<span class="hljs-number">1</span>=<span class="hljs-number">0</span>   不能 ^</code></pre>
+<pre><code class="hljs txt">X=0: 0&amp;1=0, 0|1=1, 0^1=1   不能 &amp;
+X=1: 1&amp;1=1, 1|1=1, 1^1=0   不能 ^</code></pre>
 <p>非法情况是：</p>
-<pre><code class="hljs routeros"><span class="hljs-attribute">X</span>=0 且 <span class="hljs-attribute">op</span>=&amp;
-<span class="hljs-attribute">X</span>=1 且 <span class="hljs-attribute">op</span>=^</code></pre>
+<pre><code class="hljs txt">X=0 且 op=&amp;
+X=1 且 op=^</code></pre>
 <p>编码后：</p>
-<pre><code class="hljs routeros"><span class="hljs-attribute">op</span>=&amp;  是 <span class="hljs-attribute">P</span>=0,Q=0
-<span class="hljs-attribute">op</span>=^  是 <span class="hljs-attribute">P</span>=1,Q=1</code></pre>
+<pre><code class="hljs txt">op=&amp;  是 P=0,Q=0
+op=^  是 P=1,Q=1</code></pre>
 <p>看起来会出现三元限制：</p>
-<pre><code class="hljs routeros"><span class="hljs-attribute">X</span>=0 且 <span class="hljs-attribute">P</span>=0 且 <span class="hljs-attribute">Q</span>=0
-<span class="hljs-attribute">X</span>=1 且 <span class="hljs-attribute">P</span>=1 且 <span class="hljs-attribute">Q</span>=1</code></pre>
+<pre><code class="hljs txt">X=0 且 P=0 且 Q=0
+X=1 且 P=1 且 Q=1</code></pre>
 <p>但是因为我们已经有全局合法编码，所以可以压成二元子句：</p>
 <ul>
 <li>禁止 <code>X=0 且 op=&amp;</code></li>
 </ul>
 <p>由于合法状态里，<code>Q=0</code> 只可能是 <code>&amp;</code>，所以禁止：</p>
-<pre><code class="hljs routeros"><span class="hljs-attribute">X</span>=0 且 <span class="hljs-attribute">Q</span>=0</code></pre>
+<pre><code class="hljs txt">X=0 且 Q=0</code></pre>
 <p>也就是：</p>
 <p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>X</mi><mo>∨</mo><mi>Q</mi></mrow><annotation encoding="application/x-tex">X \lor Q
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0785em;">X</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∨</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">Q</span></span></span></span></span></p>
@@ -299,22 +299,22 @@ add(n<span class="hljs-string">q[v]</span>, nx[u]);</code></pre>
 <li>禁止 <code>X=1 且 op=^</code></li>
 </ul>
 <p>由于 <code>^</code> 是 <code>P=1,Q=1</code>，并且非法状态 <code>10</code> 已经被禁掉，所以 <code>P=1</code> 时合法状态只能是 <code>^</code>，所以禁止：</p>
-<pre><code class="hljs routeros"><span class="hljs-attribute">X</span>=1 且 <span class="hljs-attribute">P</span>=1</code></pre>
+<pre><code class="hljs txt">X=1 且 P=1</code></pre>
 <p>也就是：</p>
 <p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi mathvariant="normal">¬</mi><mi>X</mi><mo>∨</mo><mi mathvariant="normal">¬</mi><mi>P</mi></mrow><annotation encoding="application/x-tex">\neg X \lor \neg P
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord">¬</span><span class="mord mathnormal" style="margin-right:0.0785em;">X</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∨</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord">¬</span><span class="mord mathnormal" style="margin-right:0.1389em;">P</span></span></span></span></span></p>
 <p>建边：</p>
-<pre><code class="hljs css">add(nx<span class="hljs-selector-attr">[u]</span>, <span class="hljs-selector-tag">q</span><span class="hljs-selector-attr">[v]</span>);
-add(nq<span class="hljs-selector-attr">[v]</span>, <span class="hljs-attribute">x</span><span class="hljs-selector-attr">[u]</span>);
+<pre><code class="hljs cpp"><span class="hljs-built_in">add</span>(nx[u], q[v]);
+<span class="hljs-built_in">add</span>(nq[v], x[u]);
 
-add(<span class="hljs-attribute">x</span><span class="hljs-selector-attr">[u]</span>, np<span class="hljs-selector-attr">[v]</span>);
-add(<span class="hljs-selector-tag">p</span><span class="hljs-selector-attr">[v]</span>, nx<span class="hljs-selector-attr">[u]</span>);</code></pre>
+<span class="hljs-built_in">add</span>(x[u], np[v]);
+<span class="hljs-built_in">add</span>(p[v], nx[u]);</code></pre>
 <p>于是完整编码表就是：</p>
-<pre><code class="hljs apache"><span class="hljs-attribute">P</span> Q   op
-<span class="hljs-attribute">0</span> <span class="hljs-number">0</span>   &amp;
-<span class="hljs-attribute">0</span> <span class="hljs-number">1</span>   |
-<span class="hljs-attribute">1</span> <span class="hljs-number">1</span>   ^
-<span class="hljs-attribute">1</span> <span class="hljs-number">0</span>   禁用</code></pre>
+<pre><code class="hljs txt">P Q   op
+0 0   &amp;
+0 1   |
+1 1   ^
+1 0   禁用</code></pre>
 <p>完整条件表：</p>
 <table>
 <thead>
@@ -351,12 +351,12 @@ add(<span class="hljs-selector-tag">p</span><span class="hljs-selector-attr">[v]
 <p>Tarjan 只是收尾，编码才是真正的构造。</p>
 <p>最后跑 SCC。</p>
 <p>如果变量和它的反变量在同一个 SCC 中，无解：</p>
-<pre><code class="hljs inform7">scc<span class="hljs-comment">[x<span class="hljs-comment">[i]</span>]</span> == scc<span class="hljs-comment">[nx<span class="hljs-comment">[i]</span>]</span>
-scc<span class="hljs-comment">[p<span class="hljs-comment">[j]</span>]</span> == scc<span class="hljs-comment">[np<span class="hljs-comment">[j]</span>]</span>
-scc<span class="hljs-comment">[q<span class="hljs-comment">[j]</span>]</span> == scc<span class="hljs-comment">[nq<span class="hljs-comment">[j]</span>]</span></code></pre>
+<pre><code class="hljs cpp">scc[x[i]] == scc[nx[i]]
+scc[p[j]] == scc[np[j]]
+scc[q[j]] == scc[nq[j]]</code></pre>
 <p>否则有解。</p>
 <p>取值时注意 SCC 编号方向。对于当前这种 Tarjan 写法，应该用：</p>
-<pre><code class="hljs abnf"><span class="hljs-attribute">value</span> <span class="hljs-operator">=</span> scc[var] &lt; scc[not_var]</code></pre>
+<pre><code class="hljs cpp">value = scc[var] &lt; scc[not_var]</code></pre>
 <p><code>P=1,Q=0</code> 已经被全局限制禁掉，所以不会出现。</p>
 <p>复杂度：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo>+</mo><mi>m</mi><mo>+</mo><mi>k</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n+m+k)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0315em;">k</span><span class="mclose">)</span></span></span></span></p>
 <h3 id="Code">Code</h3>
