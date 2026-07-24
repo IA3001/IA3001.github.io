@@ -101,7 +101,7 @@
                     <time class="post-time gt-c-content-color-first">
                         · 2026-07-24 ·</time>
                     <span class="post-wordcount gt-c-content-color-second">
-                        3 千字 ·</span>
+                        4.8 千字 ·</span>
                     
                         
                             <a href="/tags/%E7%89%9B%E5%AE%A2%E5%A4%9A%E6%A0%A1/" class="post-tag">
@@ -216,7 +216,99 @@
 <h3 id="Hint-2">Hint</h3>
 <p>在样例中，第 1 行第 3 列的格子和第 2 行第 4 列的格子都含有数字 3，因此它们标记了两行中第 3 列到第 4 列的所有格子。</p>
 <p>第 1 行第 4 列的格子和第 2 行第 5 列的格子都含有数字 4，因此它们标记了两行中第 4 列到第 5 列的所有格子。两个矩形的并集即为最终答案。</p>
+<h3 id="Solution-2">Solution</h3>
+<p><strong>与取值个数相关的网格问题：链表式存储NB！</strong></p>
+<p><img src="assets/contest03/file-20260724224944164.png" alt=""></p>
+<h3 id="Code-2">Code</h3>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-keyword">using</span> LL = <span class="hljs-type">long</span> <span class="hljs-type">long</span>;
 
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e6</span> <span class="hljs-number">+5</span>;
+<span class="hljs-type">int</span> n, m;
+
+vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; a;
+vector&lt;vector&lt;LL&gt;&gt; mat;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">Node</span> &#123;
+    <span class="hljs-type">int</span> mny, mxy, sufx, sufy;
+&#125;;
+
+<span class="hljs-comment">// 这里代表的是数字 x 在 第 i 行的 最大/小 y 值</span>
+map&lt;<span class="hljs-type">int</span>, Node&gt; Y[N];
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> a,<span class="hljs-type">int</span> b,<span class="hljs-type">int</span> c,<span class="hljs-type">int</span> d)</span> </span>&#123;
+    <span class="hljs-comment">// 【特别注意】由于是沿着 x 方向扫的，所以允许一行，但不允许一列</span>
+    <span class="hljs-keyword">if</span>(a&gt;c||b&gt;=d) <span class="hljs-keyword">return</span>;
+    <span class="hljs-comment">// cout &lt;&lt; a &lt;&lt; &quot; &quot; &lt;&lt; b &lt;&lt; &quot; &quot; &lt;&lt; c &lt;&lt; &quot; &quot; &lt;&lt; d &lt;&lt; &quot;\n&quot;;</span>
+    mat[a][b]++;
+    mat[c<span class="hljs-number">+1</span>][b]--;
+    mat[a][d<span class="hljs-number">+1</span>]--;
+    mat[c<span class="hljs-number">+1</span>][d<span class="hljs-number">+1</span>]++;
+&#125;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span> </span>&#123;
+    cin &gt;&gt; n &gt;&gt; m;
+    mat.<span class="hljs-built_in">assign</span>(n<span class="hljs-number">+1</span>, <span class="hljs-built_in">vector</span>&lt;LL&gt;(m<span class="hljs-number">+1</span>));
+    a.<span class="hljs-built_in">assign</span>(n<span class="hljs-number">+1</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(m<span class="hljs-number">+1</span>));
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; m;j ++) &#123;
+            cin &gt;&gt; a[i][j];
+            <span class="hljs-keyword">if</span> (!Y[a[i][j]].<span class="hljs-built_in">count</span>(i)) &#123;
+                Y[a[i][j]][i] = &#123;j, j, i, j&#125;;
+            &#125; <span class="hljs-keyword">else</span> &#123;
+                Y[a[i][j]][i].mxy = j;
+                Y[a[i][j]][i].sufy = j;
+            &#125;
+        &#125;
+    &#125;
+    <span class="hljs-type">int</span> tot = n * m;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= tot; i++) &#123;
+        <span class="hljs-type">int</span> sufx = <span class="hljs-number">-1</span>;
+        <span class="hljs-type">int</span> sufy = <span class="hljs-number">-1</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> it = Y[i].<span class="hljs-built_in">rbegin</span>(); it!=Y[i].<span class="hljs-built_in">rend</span>();it++) &#123;
+            <span class="hljs-type">int</span> tmpx = it-&gt;second.sufx;
+            <span class="hljs-type">int</span> tmpy = it-&gt;second.sufy;
+            it-&gt;second.sufx = sufx;
+            it-&gt;second.sufy = sufy;
+            <span class="hljs-keyword">if</span>(tmpy &gt; sufy) &#123;
+                sufx = tmpx;
+                sufy = tmpy;
+            &#125;
+        &#125;
+        <span class="hljs-type">int</span> mny = <span class="hljs-number">1e9</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> it = Y[i].<span class="hljs-built_in">begin</span>(); it!=Y[i].<span class="hljs-built_in">end</span>();it++) &#123;
+            <span class="hljs-keyword">if</span>(it-&gt;second.mny &lt; mny) &#123;
+                mny = it-&gt;second.mny;
+            &#125;
+            it-&gt;second.mny = mny;
+        &#125;
+    &#125;
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= tot; i++) &#123;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> [row, node]: Y[i]) &#123;
+            <span class="hljs-keyword">auto</span> [mny, mxy, sufx, sufy] = node;
+            <span class="hljs-built_in">add</span>(row, mny, sufx, sufy);
+        &#125;
+    &#125;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; m ;j++) &#123;
+            mat[i<span class="hljs-number">+1</span>][j] += mat[i][j];
+            mat[i][j<span class="hljs-number">+1</span>] += mat[i][j];
+            mat[i<span class="hljs-number">+1</span>][j<span class="hljs-number">+1</span>] -= mat[i][j];
+            cout &lt;&lt; (mat[i][j] &gt; <span class="hljs-number">0</span>);
+        &#125;
+        cout &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+    &#125;
+
+&#125;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>);
+    cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-type">int</span> T = <span class="hljs-number">1</span>;
+    <span class="hljs-comment">// cin &gt;&gt; T;</span>
+    <span class="hljs-keyword">while</span> (T--) <span class="hljs-built_in">solve</span>();
+&#125;</code></pre>
                 </div>
             </article>
         </div>
@@ -265,7 +357,7 @@
     <aside class="post-outline" id="post-outline">
         <div class="outline-title">OUTLINE</div>
         <nav class="outline-nav">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#B-%E5%86%8D%E4%B9%B0%E4%B8%80%E7%93%B6"><span class="toc-text">B 再买一瓶</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hint"><span class="toc-text">Hint</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#G-%E7%9F%A9%E9%98%B5%E6%A0%87%E8%AE%B0"><span class="toc-text">G 矩阵标记</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description-2"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input-2"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output-2"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input-2"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output-2"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hint-2"><span class="toc-text">Hint</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#B-%E5%86%8D%E4%B9%B0%E4%B8%80%E7%93%B6"><span class="toc-text">B 再买一瓶</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hint"><span class="toc-text">Hint</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#G-%E7%9F%A9%E9%98%B5%E6%A0%87%E8%AE%B0"><span class="toc-text">G 矩阵标记</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description-2"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input-2"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output-2"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input-2"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output-2"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hint-2"><span class="toc-text">Hint</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution-2"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-2"><span class="toc-text">Code</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
