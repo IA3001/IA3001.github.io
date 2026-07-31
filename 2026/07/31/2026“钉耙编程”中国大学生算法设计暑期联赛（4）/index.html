@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- Title -->
-<title>2026“钉耙编程”中国大学生算法设计暑期联赛（2） - IA3001&#39;s Blog</title>
+<title>2026“钉耙编程”中国大学生算法设计暑期联赛（4） - IA3001&#39;s Blog</title>
 
 <!-- Icon -->
 <link rel="icon" href="/img/favicon.ico">
@@ -96,12 +96,12 @@
         <div class="post-detail gt-bg-theme-color-second gt-c-content-color-first">
             <article class="gt-post-content">
                 
-                <h1 class="post-title">2026“钉耙编程”中国大学生算法设计暑期联赛（2）</h1>
+                <h1 class="post-title">2026“钉耙编程”中国大学生算法设计暑期联赛（4）</h1>
                 <div class="post-info">
                     <time class="post-time gt-c-content-color-first">
                         · 2026-07-31 ·</time>
                     <span class="post-wordcount gt-c-content-color-second">
-                        3.1 千字 ·</span>
+                        3.4 千字 ·</span>
                     
                         
                             <a href="/tags/%E6%9D%AD%E7%94%B5%E5%A4%9A%E6%A0%A1/" class="post-tag">
@@ -187,6 +187,27 @@
 2
 1</code></pre>
 <h3 id="Solution">Solution</h3>
+<p><strong>像这种，笛卡尔树，非平衡的树，在上面做文章的话</strong></p>
+<ul>
+<li>除了 <strong>启发式合并</strong> 以外</li>
+<li><strong>ST 表</strong> 维护信息是一个不错的选择</li>
+</ul>
+<p><strong>本题着重考察了：中序遍历 与 跳父链 的关系，即</strong></p>
+<ul>
+<li>左儿子跳父链时，其父亲的右儿子必然序号较大</li>
+<li>右儿子跳父链是，其父亲的左儿子必然序号较小</li>
+</ul>
+<p>据此，借鉴 <strong>猫树</strong> 的思想，将一次查询划分为：<strong>左子树的后缀+右子树的前缀</strong></p>
+<ul>
+<li>通过限定中间，向两边延伸的方式，天然的卡住了区间</li>
+</ul>
+<p>此外，借鉴 <strong>线段树维护区间矩阵乘法（结合律）</strong> ， <strong>ST 表</strong> 同样可以维护以一个点为起始点，压缩倍增式的结合律操作（但是静态的）</p>
+<ul>
+<li>结合律需要自己根据当前题目特性，寻找结合律运算关系</li>
+<li>并且，切记不要弄反运算结合顺序</li>
+<li>要注意：op（Fn） 结构体到底存储在父亲还是儿子上面，何时停止结合，初始值是多少</li>
+<li>在树上，尤其需要基础的 <code>st[N][__lg(N) + 1]</code> jump 表</li>
+</ul>
 <h3 id="Code">Code</h3>
 <pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
 <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
