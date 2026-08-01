@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "typst-writing-document": {
+      "source": "myriad-dreamin/tinymist",
+      "sourceType": "github",
+      "skillPath": ".codex/skills/typst-writing-document/SKILL.md",
+      "computedHash": "9bdbf8bf9fc22c2ce0ab5dafdf33b692396364fd6abb214b8289209c326e2048"
+    }
+  }
+}
