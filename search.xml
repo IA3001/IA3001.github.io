@@ -4,33 +4,6 @@
   
     
     <entry>
-      <title>Tracker</title>
-      <link href="/2026/08/01/tracker/"/>
-      <url>/2026/08/01/tracker/</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-      
-      <categories>
-          
-          <category> Templates </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> NC </tag>
-            
-            <tag> Tracker </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Tracker-区间增量与单点求值（SegmentTree / BIT）</title>
       <link href="/2026/08/01/tracker-%E5%8C%BA%E9%97%B4%E5%A2%9E%E9%87%8F%E4%B8%8E%E5%8D%95%E7%82%B9%E6%B1%82%E5%80%BC%EF%BC%88segmenttree-bit%EF%BC%89/"/>
       <url>/2026/08/01/tracker-%E5%8C%BA%E9%97%B4%E5%A2%9E%E9%87%8F%E4%B8%8E%E5%8D%95%E7%82%B9%E6%B1%82%E5%80%BC%EF%BC%88segmenttree-bit%EF%BC%89/</url>
@@ -605,9 +578,9 @@
       
         <tags>
             
-            <tag> NC </tag>
-            
             <tag> 牛客多校 </tag>
+            
+            <tag> NC </tag>
             
         </tags>
       
@@ -663,9 +636,9 @@
       
         <tags>
             
-            <tag> NC </tag>
-            
             <tag> 牛客多校 </tag>
+            
+            <tag> NC </tag>
             
         </tags>
       
@@ -721,9 +694,9 @@
       
         <tags>
             
-            <tag> NC </tag>
-            
             <tag> 牛客多校 </tag>
+            
+            <tag> NC </tag>
             
         </tags>
       
@@ -779,63 +752,9 @@
       
         <tags>
             
-            <tag> NC </tag>
-            
             <tag> 牛客多校 </tag>
             
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>HDU 模板</title>
-      <link href="/2026/07/22/hdu-%E6%A8%A1%E6%9D%BF/"/>
-      <url>/2026/07/22/hdu-%E6%A8%A1%E6%9D%BF/</url>
-      
-        <content type="html"><![CDATA[<h2 id="10">10</h2><h3 id="Problem-Description">Problem Description</h3><h3 id="Input">Input</h3><h3 id="Output">Output</h3><h3 id="Sample-Input">Sample Input</h3><pre><code class="hljs txt"></code></pre><h3 id="Sample-Output">Sample Output</h3><pre><code class="hljs txt"></code></pre><h3 id="Solution">Solution</h3><h3 id="Code">Code</h3><pre><code class="hljs cpp"></code></pre>]]></content>
-      
-      
-      <categories>
-          
-          <category> Templates </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 杭电多校 </tag>
-            
-            <tag> HDU </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>NC 模板</title>
-      <link href="/2026/07/22/nc-%E6%A8%A1%E6%9D%BF/"/>
-      <url>/2026/07/22/nc-%E6%A8%A1%E6%9D%BF/</url>
-      
-        <content type="html"><![CDATA[<h2 id="A">A</h2><h3 id="题目描述">题目描述</h3><h3 id="输入描述">输入描述</h3><h3 id="输出描述">输出描述</h3><h3 id="示例输入">示例输入</h3><pre><code class="hljs txt"></code></pre><h3 id="示例输出">示例输出</h3><pre><code class="hljs txt"></code></pre><h3 id="题解">题解</h3><h3 id="代码">代码</h3><pre><code class="hljs cpp"></code></pre>]]></content>
-      
-      
-      <categories>
-          
-          <category> Templates </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
             <tag> NC </tag>
-            
-            <tag> 牛客多校 </tag>
             
         </tags>
       
