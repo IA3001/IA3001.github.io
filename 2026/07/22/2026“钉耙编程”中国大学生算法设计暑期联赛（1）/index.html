@@ -101,7 +101,7 @@
                     <time class="post-time gt-c-content-color-first">
                         · 2026-07-22 ·</time>
                     <span class="post-wordcount gt-c-content-color-second">
-                        13 千字 ·</span>
+                        16 千字 ·</span>
                     
                         
                             <a href="/tags/%E6%9D%AD%E7%94%B5%E5%A4%9A%E6%A0%A1/" class="post-tag">
@@ -494,8 +494,191 @@ test:7
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">7</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">8</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">18</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">28</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">45</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">52</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">53</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">60</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">287</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">471</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">526</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">624</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">977</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">5724</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">7093</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">69995</span></span></span></span></span></p>
 <p>因此答案为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>17</mn></mrow><annotation encoding="application/x-tex">17</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6444em;"></span><span class="mord">17</span></span></span></span>。</p>
 <h3 id="Solution-4">Solution</h3>
+<p><strong>前置：字符串若干个连续定长子串排名计算</strong></p>
+<ul>
+<li>借鉴 SA 构建方式，双关键字基数排序
+<ul>
+<li>注意 使用 <code>tmp</code> 中介</li>
+<li>使用 <code>cur</code> 辅助理解</li>
+<li>注意 <code>cnt[256]</code> 开辟大小 与 <strong>线性（非倍增）</strong> 增量基数排序 的关系</li>
+</ul>
+</li>
+</ul>
+<p><strong>关键分析：对最优解的取值估计</strong></p>
+<ul>
+<li>关于 0 的选取问题
+<ul>
+<li>这是一个细节处理问题，特别是单走一个 0 的时候</li>
+</ul>
+</li>
+<li>关于最大串长问题
+<ul>
+<li>试想一下长度严格递增，会导致总量 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>L</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(L^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> 增长 故最大长度复杂度为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msqrt><mi>n</mi></msqrt><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(\sqrt{n})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1.0503em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">O</span><span class="mopen">(</span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8003em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord mathnormal">n</span></span></span><span style="top:-2.7603em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg xmlns="http://www.w3.org/2000/svg" width="400em" height="1.08em" viewBox="0 0 400000 1080" preserveAspectRatio="xMinYMin slice"><path d="M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2397em;"><span></span></span></span></span></span><span class="mclose">)</span></span></span></span></li>
+</ul>
+</li>
+</ul>
+<p><strong>可行的状态设计：DP 转移</strong></p>
+<ul>
+<li>设 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>dp</mtext><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>j</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">\text{dp}[i][j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">dp</span></span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.0572em;">j</span><span class="mclose">]</span></span></span></span> 表示最后一个数字以 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span> 位置结尾，且长度为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0572em;">j</span></span></span></span> 的最长长度（认为无前导 0）</li>
+<li>考虑其前驱数字
+<ul>
+<li>首先结束位置必须 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≤</mo><mi>i</mi><mo>−</mo><mi>j</mi></mrow><annotation encoding="application/x-tex">\le i-j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7429em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0572em;">j</span></span></span></span></li>
+<li>其次考虑长度（经过考虑，显然先遍历 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0572em;">j</span></span></span></span> 作为行）
+<ul>
+<li>长度 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>&lt;</mo><mi>j</mi></mrow><annotation encoding="application/x-tex">&lt;j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0572em;">j</span></span></span></span> 时，必然可以通过 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>+</mo><msub><mrow><mi>max</mi><mo>⁡</mo></mrow><mrow><mi>x</mi><mo>≤</mo><mi>i</mi><mo>−</mo><mi>j</mi><mo separator="true">,</mo><mi>y</mi><mo>&lt;</mo><mi>j</mi></mrow></msub><mtext>dp</mtext><mo stretchy="false">[</mo><mi>x</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>y</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">1 + \max_{x \le i-j, y \lt j} \text{dp}[x][y]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mop"><span class="mop">max</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class="mrel mtight">≤</span><span class="mord mathnormal mtight">i</span><span class="mbin mtight">−</span><span class="mord mathnormal mtight" style="margin-right:0.0572em;">j</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.0359em;">y</span><span class="mrel mtight">&lt;</span><span class="mord mathnormal mtight" style="margin-right:0.0572em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord text"><span class="mord">dp</span></span><span class="mopen">[</span><span class="mord mathnormal">x</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.0359em;">y</span><span class="mclose">]</span></span></span></span> 转移而来
+<ul>
+<li>这是一个 <strong>依赖历史旧行</strong> 的 <strong>本质二维前缀区间最值</strong>，只需要一个辅助数组即可维护，可以滚动</li>
+</ul>
+</li>
+<li>长度 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mi>j</mi></mrow><annotation encoding="application/x-tex">=j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.3669em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0572em;">j</span></span></span></span> 时，需要寻找 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>+</mo><msub><mrow><mi>max</mi><mo>⁡</mo></mrow><mrow><mi>x</mi><mo>≤</mo><mi>i</mi><mo>−</mo><mi>j</mi><mo separator="true">,</mo><mi>y</mi><mo>=</mo><mi>j</mi><mo separator="true">,</mo><mtext>rk</mtext><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>&lt;</mo><mtext>rk</mtext><mo stretchy="false">(</mo><mi>i</mi><mo stretchy="false">)</mo></mrow></msub><mtext>dp</mtext><mo stretchy="false">[</mo><mi>x</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>y</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">1 + \max_{x \le i-j, y = j, \text{rk}(x) \lt \text{rk}(i)} \text{dp}[x][y]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1.1052em;vertical-align:-0.3552em;"></span><span class="mop"><span class="mop">max</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.5198em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class="mrel mtight">≤</span><span class="mord mathnormal mtight">i</span><span class="mbin mtight">−</span><span class="mord mathnormal mtight" style="margin-right:0.0572em;">j</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.0359em;">y</span><span class="mrel mtight">=</span><span class="mord mathnormal mtight" style="margin-right:0.0572em;">j</span><span class="mpunct mtight">,</span><span class="mord text mtight"><span class="mord mtight">rk</span></span><span class="mopen mtight">(</span><span class="mord mathnormal mtight">x</span><span class="mclose mtight">)</span><span class="mrel mtight">&lt;</span><span class="mord text mtight"><span class="mord mtight">rk</span></span><span class="mopen mtight">(</span><span class="mord mathnormal mtight">i</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3552em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord text"><span class="mord">dp</span></span><span class="mopen">[</span><span class="mord mathnormal">x</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.0359em;">y</span><span class="mclose">]</span></span></span></span> 即找到同长度中比它字典序排名小的中的最大的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>dp</mtext></mrow><annotation encoding="application/x-tex">\text{dp}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord text"><span class="mord">dp</span></span></span></span></span> 值
+<ul>
+<li>这是一个 <strong>同行（j）</strong> 且 <strong>第二维偏序查询前缀最值</strong> 的转移方式，显然可以使用树状数组维护，下标表示 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>rk</mtext></mrow><annotation encoding="application/x-tex">\text{rk}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">rk</span></span></span></span></span> ，值表示 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>dp</mtext></mrow><annotation encoding="application/x-tex">\text{dp}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord text"><span class="mord">dp</span></span></span></span></span></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>【注意】<code>0</code> 的处理
+<ul>
+<li>选取的当前 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow><annotation encoding="application/x-tex">i, j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.0572em;">j</span></span></span></span> 对应的最高位如果是 <code>0</code>，那么其等价于 <code>dp[i][j-1]</code> 的效果，而非真正的按照此 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0572em;">j</span></span></span></span> 长度计算，故选择跳过（直接继承）</li>
+<li>【特判之特判 / 无需特判】如果当前的数字只有一个 <code>0</code>，即 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">j = 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0572em;">j</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span>，此时这里的 <code>0</code>，不应该被判定为前导 0，故将其按照正常处理</li>
+</ul>
+</li>
+</ul>
 <h3 id="Code-3">Code</h3>
-<pre><code class="hljs cpp"></code></pre>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>;
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> B = <span class="hljs-built_in">sqrt</span>(N) + <span class="hljs-number">2</span>;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">BIT</span>&#123;
+    <span class="hljs-type">int</span> n;
+    vector&lt;<span class="hljs-type">int</span>&gt; tr;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;
+        <span class="hljs-keyword">this</span>-&gt;n = n<span class="hljs-number">+1</span>;
+        tr.<span class="hljs-built_in">assign</span>(n<span class="hljs-number">+2</span>,<span class="hljs-number">0</span>);
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-type">int</span> i, <span class="hljs-type">int</span> v)</span> </span>&#123;
+        <span class="hljs-keyword">for</span> (++i;i&lt;=n;i+=i&amp;-i) tr[i] = <span class="hljs-built_in">max</span>(tr[i], v);
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span> </span>&#123;
+        <span class="hljs-type">int</span> res = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (++i;i;i-=i&amp;-i) res = <span class="hljs-built_in">max</span>(res, tr[i]);
+        <span class="hljs-keyword">return</span> res;
+    &#125;
+&#125;T;
+
+<span class="hljs-type">int</span> n, b, m;
+<span class="hljs-type">int</span> f[N], g[N], rk[N], id[N], cnt[<span class="hljs-number">256</span>], tmp[N], cur[N];
+
+string s;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span> </span>&#123;
+
+    <span class="hljs-type">int</span> ans = <span class="hljs-number">1</span>;
+
+    cin &gt;&gt; s;
+    n = s.<span class="hljs-built_in">size</span>();
+
+    s = <span class="hljs-string">&quot; &quot;</span> + s;
+    
+    <span class="hljs-comment">// 【坑点4：差点就没看出来 n*(n+1)/ 2 = N 里面的 n 约等于 sqrt(2N)】 </span>
+    b = <span class="hljs-built_in">min</span>(n, (<span class="hljs-type">int</span>)<span class="hljs-built_in">ceil</span>(<span class="hljs-built_in">sqrt</span>(n*<span class="hljs-number">2</span>))<span class="hljs-number">+10</span>);
+
+    <span class="hljs-comment">// 列出所有子串，注意是结尾为编号</span>
+    <span class="hljs-built_in">iota</span>(id,id<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
+    
+    <span class="hljs-comment">// 注意初始化啊</span>
+    <span class="hljs-comment">// fill(f,f+1+n,0); // 不必，因为它不会被读取初始值</span>
+    <span class="hljs-built_in">fill</span>(g,g<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>); <span class="hljs-comment">// 必须初始化</span>
+    <span class="hljs-built_in">fill</span>(rk,rk<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>); <span class="hljs-comment">// 要初始化啊，因为刚开始的时候，还没有第二关键字！众生平等</span>
+
+    <span class="hljs-comment">// 枚举子串长度</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= b; j++) &#123;
+        
+        <span class="hljs-comment">// 必须清空 cnt 因为它是前缀和做过了 </span>
+        <span class="hljs-built_in">memset</span>(cnt,<span class="hljs-number">0</span>,<span class="hljs-keyword">sizeof</span> cnt);
+        
+        <span class="hljs-comment">// 将 备选串 分类 按照第 j 个关键字 如果前面不够 j 个，视为无穷小</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) cnt[cur[id[i]] = (id[i] &gt;= j ? s[id[i]-j<span class="hljs-number">+1</span>] : <span class="hljs-string">&#x27;0&#x27;</span>)]++;
+        
+        <span class="hljs-comment">// 万年不变的 累加</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; <span class="hljs-number">256</span>;i ++) cnt[i] += cnt[i<span class="hljs-number">-1</span>];
+        
+        <span class="hljs-comment">// 倒序标记排名 [1..n] ，因为要保序</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = n ; i &gt;= <span class="hljs-number">1</span>; i--) tmp[cnt[cur[id[i]]]--] = id[i];
+        <span class="hljs-comment">// 使用 tmp</span>
+        <span class="hljs-built_in">memcpy</span>(id, tmp, <span class="hljs-built_in">sizeof</span>(id[<span class="hljs-number">0</span>]) * (n<span class="hljs-number">+1</span>));
+
+        <span class="hljs-comment">// 【坑点2：必须计算严格去重排名】</span>
+        <span class="hljs-comment">// 模仿 SA 比较第 1/2 关键字</span>
+        <span class="hljs-comment">// 相当于对 sort 之后的 id 进一步细化分组</span>
+        <span class="hljs-type">int</span> level = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
+            <span class="hljs-keyword">if</span>(i == <span class="hljs-number">1</span> || rk[id[i<span class="hljs-number">-1</span>]] != rk[id[i]] || cur[id[i<span class="hljs-number">-1</span>]] != cur[id[i]]) level++;
+            tmp[id[i]] = level;
+        &#125;
+        <span class="hljs-comment">// 依然 tmp</span>
+        <span class="hljs-built_in">memcpy</span>(rk, tmp, <span class="hljs-built_in">sizeof</span>(rk[<span class="hljs-number">0</span>]) * (n<span class="hljs-number">+1</span>));
+        
+        <span class="hljs-comment">// 这样上面的操作就求出了从 [1...n] 范围内的长度最长为 j 的结尾串的严格意义排名 [1..j-1]</span>
+        
+        <span class="hljs-comment">// dbg</span>
+        <span class="hljs-comment">// cout &lt;&lt; j &lt;&lt; &quot;:\n&quot;; </span>
+        <span class="hljs-comment">// for(int i = 1;i&lt;=n;i++) &#123;</span>
+        <span class="hljs-comment">//     int st = max(1, id[i] - j+1);</span>
+        <span class="hljs-comment">//     cout &lt;&lt; rk[id[i]] &lt;&lt; &quot; &quot; &lt;&lt; s.substr(st,min(id[i]-st+1, j)) &lt;&lt; &quot;\n&quot;;</span>
+        <span class="hljs-comment">// &#125; cout &lt;&lt; &quot;\n&quot;;</span>
+
+        T.<span class="hljs-built_in">init</span>(level);
+        <span class="hljs-comment">// cout &lt;&lt; &quot;J=&quot; &lt;&lt; j &lt;&lt; &quot;\n&quot;;</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = j; i &lt;= n; i++) &#123;
+            <span class="hljs-comment">// 针对长度为 j 的前驱串，我们在对应的时机加入</span>
+            <span class="hljs-comment">// 也就是说，同一行的答案在计算的同时，计算完之后在之后的某一时刻加入</span>
+            <span class="hljs-keyword">if</span> (i - j &gt;= j) &#123;
+                <span class="hljs-comment">// cout &lt;&lt; &quot;ins:&quot; &lt;&lt; rk[i-j] &lt;&lt; &quot; &quot; &lt;&lt; f[i-j] &lt;&lt; &quot;!\n&quot;;</span>
+                T.<span class="hljs-built_in">insert</span>(rk[i-j], f[i-j]);
+            &#125;
+            <span class="hljs-comment">// 要计算 i 结尾 j 长度的答案 必然是 结尾 &lt;=i-j </span>
+            <span class="hljs-comment">// 要么短的 老 f </span>
+            <span class="hljs-comment">// 要么等于 j 长度的同级串中字典序小的最长的串 </span>
+            <span class="hljs-comment">// 【坑点1：开头是 0 的不可以！ 直接继承！】</span>
+            <span class="hljs-comment">// 【坑点3：但是只有一个 0 是可以的！】</span>
+            <span class="hljs-keyword">if</span>(s[i-j<span class="hljs-number">+1</span>]!=<span class="hljs-string">&#x27;0&#x27;</span> || j == <span class="hljs-number">1</span>)  
+                f[i] = <span class="hljs-built_in">max</span>(g[i-j], T.<span class="hljs-built_in">query</span>(rk[i]<span class="hljs-number">-1</span>)) + <span class="hljs-number">1</span>;
+            ans = <span class="hljs-built_in">max</span>(ans, f[i]);
+            <span class="hljs-comment">// cout &lt;&lt; &quot;op1:&quot; &lt;&lt; g[i-j] &lt;&lt; &quot;, op2:&quot; &lt;&lt; T.query(rk[i]-1) &lt;&lt; &quot;\n&quot;;</span>
+            <span class="hljs-comment">// cout &lt;&lt; &quot;cal:&quot; &lt;&lt; f[i] &lt;&lt; &quot;\n&quot;;</span>
+            <span class="hljs-keyword">if</span> (i - j &gt;= j) &#123;
+                <span class="hljs-comment">// 因为滚动数组 g[i] 要维护一个二维前缀 max 本行滚动 用完即更新</span>
+                <span class="hljs-comment">// 由于只更新的是 i-j 所以不能直接用 g[n] 作为答案</span>
+                <span class="hljs-comment">// f[n] 更不可能</span>
+                g[i-j] = <span class="hljs-built_in">max</span>(&#123;f[i-j], g[i-j], g[i-j<span class="hljs-number">-1</span>]&#125;); 
+            &#125;
+        &#125;
+    &#125;
+    cout &lt;&lt; ans &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+&#125;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-type">int</span> T = <span class="hljs-number">1</span>;
+    cin &gt;&gt; T;
+    <span class="hljs-keyword">while</span> (T--) <span class="hljs-built_in">solve</span>();
+&#125;</code></pre>
 <h2 id="1010-游戏">1010 游戏</h2>
 <h3 id="Problem-Description-5">Problem Description</h3>
 <p>Alice 和 Bob 在玩取石子游戏，有 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> 堆石子从左到右排成一排，初始时从左到右第<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span> 堆有 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">x_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 颗石子。</p>
