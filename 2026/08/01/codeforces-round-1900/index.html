@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Title -->
+<title>Codeforces Round 1900 - IA3001&#39;s Blog</title>
+
+<!-- Icon -->
+<link rel="icon" href="/img/favicon.ico">
+
+<!-- Fonts -->
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@0;1&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" as="style" onload="this.onload=null, this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@0;1&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"></noscript>
+
+
+    <!-- KaTeX -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.18.1/dist/katex.min.css" as="style" onload="this.onload=null, this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.1/dist/katex.min.css"></noscript>
+
+
+<!-- Style -->
+
+<link rel="stylesheet" href="/styles/main.css">
+
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
+
+
+
+
+
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+
+    <meta name="generator" content="Hexo 8.1.2"></head>
+    <body>
+        <div class="main gt-bg-theme-color-first">
+            <div class="main-content">
+                <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <div class="site-name gt-c-content-color-first">
+            IA3001&#39;s Blog
+        </div>
+    </a>
+    <button aria-label="Navbar Toggler" class="navbar-toggler" type="button" id="changeNavbar">
+        <i class="gt-c-content-color-first" style="font-size: 18px;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="18px" fill="currentColor">
+                <path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z" />
+            </svg>
+        </i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center; ">
+            
+                <div class="nav-item">
+                    <a href="/" class="menu gt-a-link" target="_self">首页</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/archives/" class="menu gt-a-link" target="_self">归档</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/categories/" class="menu gt-a-link" target="_self">分类</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/tags/" class="menu gt-a-link" target="_self">标签</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/friends/" class="menu gt-a-link" target="_self">友链</a>
+                </div>
+            
+        </div>
+    </div>
+</nav>
+
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = function() {
+        let element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else { 
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+                
+
+<div class="post-wrapper">
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second gt-c-content-color-first">
+            <article class="gt-post-content">
+                
+                <h1 class="post-title">Codeforces Round 1900</h1>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2026-08-01 ·</time>
+                    <span class="post-wordcount gt-c-content-color-second">
+                        2 千字 ·</span>
+                    
+                        
+                            <a href="/tags/Codeforces/" class="post-tag">
+                                #Codeforces</a>
+                        
+                            <a href="/tags/CF/" class="post-tag">
+                                #CF</a>
+                        
+                    
+                </div>
+                <hr>
+                
+                <div class="post-content gt-c-content-color-first">
+                    <h2 id="D-基于小值域的GCD对之和的快速维护">D 基于小值域的GCD对之和的快速维护</h2>
+<h3 id="Problem-Description">Problem Description</h3>
+<p>见 code</p>
+<h3 id="Solution">Solution</h3>
+<p><strong>莫比乌斯反演、GCD、欧拉筛</strong></p>
+<p>见 code</p>
+<p><strong>踩坑</strong></p>
+<ul>
+<li><strong>UNK</strong>、<strong>TLE</strong></li>
+</ul>
+<h3 id="Code">Code</h3>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-keyword">using</span> LL = <span class="hljs-type">long</span> <span class="hljs-type">long</span>;
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">8e4</span> + <span class="hljs-number">5</span>;
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> V = <span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>;
+
+<span class="hljs-type">int</span> n;
+<span class="hljs-type">int</span> a[N];
+
+<span class="hljs-type">int</span> factor[V];
+<span class="hljs-type">int</span> primes[V], cntP;
+<span class="hljs-type">int</span> phi[V];
+<span class="hljs-type">int</span> cnt[V];
+vector&lt;<span class="hljs-type">int</span>&gt; ch[V];
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>&#123;
+    phi[<span class="hljs-number">1</span>] = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">2</span>; i &lt; V; i++) &#123;
+        <span class="hljs-keyword">if</span> (!factor[i]) &#123;
+            primes[++cntP] = factor[i] = i;
+            phi[i] = i - <span class="hljs-number">1</span>;
+        &#125;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= cntP; j++) &#123;
+            <span class="hljs-type">int</span> p = primes[j];
+            <span class="hljs-type">int</span> v = p * i;
+            <span class="hljs-keyword">if</span> (v &gt;= V) <span class="hljs-keyword">break</span>;
+            factor[v] = p;
+            <span class="hljs-keyword">if</span> (i % p) &#123;
+                <span class="hljs-comment">// 啊啊啊 这里是第一次</span>
+                phi[v] = phi[i] * (p - <span class="hljs-number">1</span>);
+            &#125; <span class="hljs-keyword">else</span> &#123;
+                phi[v] = phi[i] * p;
+                <span class="hljs-keyword">break</span>;
+            &#125;
+        &#125;
+    &#125;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; V; i++) &#123;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = i; j &lt; V; j+= i) &#123;
+            ch[j].<span class="hljs-built_in">push_back</span>(i);
+        &#125;
+    &#125;
+&#125;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span> </span>&#123;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; V; i++) cnt[i] = <span class="hljs-number">0</span>;
+    cin &gt;&gt; n;
+    LL ans = <span class="hljs-number">0</span>;
+    LL sum = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
+        cin &gt;&gt; a[i];
+    &#125;
+    <span class="hljs-built_in">sort</span>(a + <span class="hljs-number">1</span>, a + <span class="hljs-number">1</span> + n);
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
+        ans += sum;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> d: ch[a[i]]) &#123;
+            sum += (LL) phi[d] * cnt[d];
+            cnt[d]++;
+        &#125;
+    &#125;
+    cout &lt;&lt; ans &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+&#125;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    <span class="hljs-built_in">init</span>();
+    cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>)-&gt;<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-type">int</span> T = <span class="hljs-number">1</span>;
+    cin &gt;&gt; T;
+    <span class="hljs-keyword">while</span> (T--) <span class="hljs-built_in">solve</span>();
+&#125;
+
+<span class="hljs-comment">/*</span>
+<span class="hljs-comment">这个题是求 i &lt; j &lt; k  sum(gcd_of_min2(a[i], a[j], a[k])) </span>
+<span class="hljs-comment">显然是 枚举 最大值, 然后 它代表 的答案就是所有的 &lt;= 它 的所有的两两 gcd 之和 </span>
+<span class="hljs-comment">直接排序暴力计算 n^2 高达 4e9 (被 e4 骗了) </span>
+<span class="hljs-comment"></span>
+<span class="hljs-comment">还是得回归数学(莫比乌斯反演): n = sum_(d | n) phi(d)</span>
+<span class="hljs-comment">所以: gcd(a[i], a[j]) = sum_(d | a[i] &amp;&amp; d | a[j]) phi(d) </span>
+<span class="hljs-comment">枚举项为 d | x, 和 d | a[j] 注意到这个依赖关系与 phi(d) 的重复统计</span>
+<span class="hljs-comment">转化为: = sum_(d | a[i]) phi(d) * cnt[d | a[j]] </span>
+<span class="hljs-comment">即 枚举 a[i] 的 O(sqrt(a[i])) 个因子 d 求 sum(phi(d) * cnt[d的倍数])</span>
+<span class="hljs-comment"></span>
+<span class="hljs-comment">问题来了, 老了, 欧拉函数不会算了</span>
+<span class="hljs-comment"></span>
+<span class="hljs-comment">欧拉函数的计算是什么来着 有一个公式 质因数分解的 </span>
+<span class="hljs-comment">n * 每有一种 p 就 乘以 (p-1)/p 来着是吗</span>
+<span class="hljs-comment">想想 如果一个数是质数 那么函数值为 p - 1, </span>
+<span class="hljs-comment">如果再乘以一个 p 就是 除了 p 2*p 3*p ... p*p 这 p 个数 其他的都可以 即 p^2 - p = p*(p - 1) </span>
+<span class="hljs-comment">如果再乘一个 就是 p^3 - p^3/p = p^3 - p^2 = p^2(p - 1) = p^3(1 - 1/p)</span>
+<span class="hljs-comment">推导得到 phi(p^n) = p^n * (1 - 1/p) </span>
+<span class="hljs-comment">由于它是积性函数 所以 乘起来就是 phi(n) = n * (1 - 1/p_1) * (1 - 1/p_2) * ... * (1 - 1/p_k)</span>
+<span class="hljs-comment">所以 它的计算方式显然是 它本身 转化一次所有的 出现过的 质数集合的 p -&gt; p - 1</span>
+<span class="hljs-comment">即 如果是第一个质数 就乘以 p - 1 否则就乘以 p!!!</span>
+<span class="hljs-comment">欧拉筛怎么写来着???</span>
+<span class="hljs-comment">要维护一个质数集合</span>
+<span class="hljs-comment">遍历所有的质数 相乘产生新数</span>
+<span class="hljs-comment">直到遇到它的最小质因子就结束 是吗</span>
+<span class="hljs-comment">在遇到最小质因子之前，一定是互质的</span>
+<span class="hljs-comment">所以 这个数的phi 和 这个质数的phi 的乘积 = 新数的 phi</span>
+<span class="hljs-comment">难道第一个最小质因子也要计算? 好像有这个意思</span>
+<span class="hljs-comment">第一个最小质因子 显然是 这个数的phi 直接乘以这个质数 = 新数的 phi</span>
+<span class="hljs-comment">那么 w^5p^3q^2 这种的 phi 是如何求得的呢  </span>
+<span class="hljs-comment">我想 显然 它是由 它的必然的前驱 w^4p^3q^2 乘以 w 得到的这样就追溯到</span>
+<span class="hljs-comment">wp^3q^2 这个数必然是通过它的前驱 p^3q^2 乘以 w (它的phi为w-1) 得到的</span>
+<span class="hljs-comment">p^3q^2 这个数 就不必我说了吧 </span>
+<span class="hljs-comment">*/</span></code></pre>
+
+                </div>
+            </article>
+        </div>
+        <br>
+        
+            <div class="next-prev-post">
+                
+                    <div class="prev-post">
+                        <div class="prev gt-c-content-color-first">
+                            上一篇：<a href="/2026/08/01/neu-2026spring%EF%BC%883%EF%BC%89/"
+                                class="post-title gt-a-link">NEU 2026Spring（3）</a>
+                        </div>
+                    </div>
+                
+                
+                    <div class="next-post">
+                        <div class="next gt-c-content-color-first">
+                            下一篇：<a href="/2026/08/01/codeforces-round-2204/"
+                                class="post-title gt-a-link">Codeforces Round 2204</a>
+                        </div>
+                    </div>
+                
+            </div>
+        
+        
+
+        
+    <script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.18.0/js/md5.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+
+    <div id="gitalk-container"></div>
+
+    <script>
+    var gitalk = new Gitalk({
+        clientID: 'Ov23liZH3OYalvv7HzKX',
+        clientSecret: 'b8f25b093a363f12c0bfb88d7aa057a0f6b8b043',
+        repo: 'IA3001.github.io',
+        owner: 'IA3001',
+        admin: ['IA3001'],
+        id: md5(location.pathname),
+        distractionFreeMode: false,
+        proxy: 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token'
+    });
+    gitalk.render('gitalk-container');
+    </script>
+
+
+        
+    </div>
+
+    
+    <aside class="post-outline" id="post-outline">
+        <div class="outline-title">OUTLINE</div>
+        <nav class="outline-nav">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#D-%E5%9F%BA%E4%BA%8E%E5%B0%8F%E5%80%BC%E5%9F%9F%E7%9A%84GCD%E5%AF%B9%E4%B9%8B%E5%92%8C%E7%9A%84%E5%BF%AB%E9%80%9F%E7%BB%B4%E6%8A%A4"><span class="toc-text">D 基于小值域的GCD对之和的快速维护</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code"><span class="toc-text">Code</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+</div>
+
+<style>
+.post-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    padding: 20px;
+    align-items: flex-start;
+}
+.post-wrapper.typst-page {
+    display: block;
+    padding: 0;
+}
+.post-wrapper.typst-page .post-container {
+    width: auto;
+    max-width: none;
+}
+.post-wrapper.typst-page .post-detail {
+    background: transparent !important;
+    padding: 0;
+    margin: 0 auto;
+    width: fit-content;
+    max-width: 100%;
+    overflow-x: auto;
+}
+.post-container { width: 1000px; flex-shrink: 0; }
+
+.post-outline {
+    width: 200px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 24px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    font-size: 13px;
+    border-left: 1px solid var(--border);
+    padding-left: 20px;
+}
+.outline-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--content-second);
+    margin-bottom: 12px;
+}
+.outline-nav { position: relative; }
+.outline-nav .toc { list-style: none; padding: 0; margin: 0; }
+.outline-nav .toc-item { position: relative; }
+.outline-nav .toc-link {
+    display: block;
+    padding: 4px 0 4px 0;
+    color: var(--content-second);
+    text-decoration: none;
+    transition: color .15s;
+    line-height: 1.5;
+}
+.outline-nav .toc-link:hover { color: var(--content-first); }
+.outline-nav .toc-link.active {
+    color: var(--content-first);
+    font-weight: 600;
+}
+.outline-nav .toc-child { padding-left: 16px; }
+.outline-nav .toc-child .toc-link { font-size: 12px; }
+.outline-nav .toc-child .toc-child { padding-left: 16px; }
+.outline-nav .toc-child .toc-child .toc-link { font-size: 11px; }
+.outline-empty { color: var(--content-second); font-size: 12px; padding-left: 12px; }
+
+/* Typst */
+.typst-app { --typst-dom-scale: 1.5; }
+
+.post-outline.visible {
+    display: block;
+    position: fixed;
+    right: 20px;
+    top: 80px;
+    z-index: 999;
+    background: var(--theme-first);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.12);
+    max-height: 70vh;
+    width: 260px;
+}
+@media (max-width: 992px) { .post-outline { display: none; } }
+</style>
+
+<script>
+(function(){
+    var tocBtn = document.getElementById('toc-btn');
+    var outline = document.querySelector('.post-outline');
+    if (tocBtn && outline) {
+        tocBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (window.innerWidth <= 992) {
+                outline.classList.toggle('visible');
+            } else {
+                outline.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    }
+
+    var container = document.querySelector('.post-outline');
+    if (!container) return;
+    var links = [].slice.call(container.querySelectorAll('.toc-link'));
+    var headings = links.map(function(a) {
+        return document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
+    }).filter(Boolean);
+
+    // Intercept TOC clicks: smooth scroll + replaceState (no history pollution)
+    links.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            var id = decodeURIComponent(link.getAttribute('href').slice(1));
+            var target = document.getElementById(id);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                history.replaceState(null, '', '#' + id);
+            }
+        });
+    });
+
+    var activeLink = null;
+    function update() {
+        var top = 0;
+        for (var i = headings.length - 1; i >= 0; i--) {
+            if (headings[i].getBoundingClientRect().top < 120) {
+                top = i; break;
+            }
+        }
+        var current = links[top];
+        if (current !== activeLink) {
+            if (activeLink) activeLink.classList.remove('active');
+            current.classList.add('active');
+            var rect = current.getBoundingClientRect();
+            var cr = container.getBoundingClientRect();
+            if (rect.bottom > cr.bottom || rect.top < cr.top) {
+                current.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            }
+            activeLink = current;
+            // Update URL hash without pushing history entry
+            var id = decodeURIComponent(current.getAttribute('href').slice(1));
+            history.replaceState(null, '', '#' + id);
+        }
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+})();
+</script>
+
+                <div class="site-footer gt-c-content-color-first">
+    <div class="footer-main">
+        <!-- 建议保留版权信息或者添加主题信息到友链，感谢您的理解 -->
+        <!-- 文件位置：layout/_includes/footer.ejs -->
+        <span style="text-align: right; float: right;">Theme <a 
+            href="https://github.com/renbaoshuo/hexo-theme-pure" target="_blank">Pure</a> | Powered by <a 
+            href="https://hexo.io" target="_blank">Hexo</a></span>
+        <span style="text-align: left;">Footer HTML
+</span>
+    </div>
+</div>
+
+<!-- Buttons -->
+<div class="fab">
+    
+    <a aria-label="文章目录" class="fab-btn" id="toc-btn" href="javascript:;" title="文章目录">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            focusable="false"
+            data-icon="list-ul"
+            class="svg-inline--fa fa-list-ul fa-w-16"
+            role="img"
+            viewBox="0 0 512 512"
+            height="20"
+            width="20"
+        >
+            <path
+                fill="currentColor"
+                d="M48 48a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm448 16H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 160H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z"
+            />
+        </svg>
+    </a>
+    
+    <a aria-label="回到顶部" class="fab-btn" href="#" title="回到顶部">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            focusable="false"
+            role="img"
+            viewBox="0 0 320 512"
+            height="20"
+            width="20"
+        >
+            <path
+                fill="currentColor"
+                d="M168.5 164.2l148 146.8c4.7 4.7 4.7 12.3 0 17l-19.8 19.8c-4.7 4.7-12.3 4.7-17 0L160 229.3 40.3 347.8c-4.7 4.7-12.3 4.7-17 0L3.5 328c-4.7-4.7-4.7-12.3 0-17l148-146.8c4.7-4.7 12.3-4.7 17 0z"
+            />
+        </svg>
+    </a>
+</div>
+
+            </div>
+        </div>
+    </body>
+</html>
