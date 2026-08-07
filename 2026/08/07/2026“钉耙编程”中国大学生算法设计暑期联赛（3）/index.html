@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- Title -->
-<title>Tracker-区间增量与单点求值（SegmentTree / BIT） - IA3001&#39;s Blog</title>
+<title>2026“钉耙编程”中国大学生算法设计暑期联赛（3） - IA3001&#39;s Blog</title>
 
 <!-- Icon -->
 <link rel="icon" href="/img/favicon.ico">
@@ -96,145 +96,36 @@
         <div class="post-detail gt-bg-theme-color-second gt-c-content-color-first">
             <article class="gt-post-content">
                 
-                <h1 class="post-title">Tracker-区间增量与单点求值（SegmentTree / BIT）</h1>
+                <h1 class="post-title">2026“钉耙编程”中国大学生算法设计暑期联赛（3）</h1>
                 <div class="post-info">
                     <time class="post-time gt-c-content-color-first">
-                        · 2026-08-01 ·</time>
+                        · 2026-08-07 ·</time>
                     <span class="post-wordcount gt-c-content-color-second">
-                        2 千字 ·</span>
+                        66 字 ·</span>
                     
                         
-                            <a href="/tags/NC/" class="post-tag">
-                                #NC</a>
+                            <a href="/tags/%E6%9D%AD%E7%94%B5%E5%A4%9A%E6%A0%A1/" class="post-tag">
+                                #杭电多校</a>
                         
-                            <a href="/tags/Tracker/" class="post-tag">
-                                #Tracker</a>
+                            <a href="/tags/HDU/" class="post-tag">
+                                #HDU</a>
                         
                     
                 </div>
                 <hr>
                 
                 <div class="post-content gt-c-content-color-first">
-                    <blockquote>
-<p>忘了 BIT 也能处理 区间增加+单点查询 了</p>
-</blockquote>
-<pre><code class="hljs cpp"><span class="hljs-comment">/*</span>
-<span class="hljs-comment">代码里 切换一下注释就可以切换 SegmentTree / BIT</span>
-<span class="hljs-comment">*/</span>
-<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-keyword">using</span> LL = <span class="hljs-type">long</span> <span class="hljs-type">long</span>;
-
-<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">5e5</span> + <span class="hljs-number">5</span>;
-
-<span class="hljs-type">int</span> n, q;
-LL a[N];
-
-<span class="hljs-keyword">namespace</span> SegmentTree&#123;
-    LL sum[N*<span class="hljs-number">4</span>], tadd[N*<span class="hljs-number">4</span>];
-    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">up</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span> </span>&#123;
-        sum[i] = sum[i*<span class="hljs-number">2</span>] + sum[i*<span class="hljs-number">2</span><span class="hljs-number">+1</span>];
-    &#125;
-    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">build</span><span class="hljs-params">(<span class="hljs-type">int</span> i, <span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r,LL* a)</span> </span>&#123;
-        tadd[i] = <span class="hljs-number">0</span>;
-        <span class="hljs-keyword">if</span>(l==r) &#123;
-            sum[i] = a[l];
-        &#125; <span class="hljs-keyword">else</span> &#123;
-            <span class="hljs-type">int</span> mid = (l + r) / <span class="hljs-number">2</span>;
-            <span class="hljs-built_in">build</span>(i*<span class="hljs-number">2</span>, l,mid, a);
-            <span class="hljs-built_in">build</span>(i*<span class="hljs-number">2</span><span class="hljs-number">+1</span>, mid<span class="hljs-number">+1</span>,r, a);
-            <span class="hljs-built_in">up</span>(i);
-        &#125;
-    &#125;
-    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">lazy_add</span><span class="hljs-params">(<span class="hljs-type">int</span> i,<span class="hljs-type">int</span> n,LL v)</span> </span>&#123;
-        tadd[i] += v;
-        sum[i] += v*n;
-    &#125;
-    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">down</span><span class="hljs-params">(<span class="hljs-type">int</span> i, <span class="hljs-type">int</span> ln, <span class="hljs-type">int</span> rn)</span> </span>&#123;
-        <span class="hljs-keyword">if</span>(tadd[i]) &#123;
-            <span class="hljs-built_in">lazy_add</span>(i*<span class="hljs-number">2</span>, ln, tadd[i]);
-            <span class="hljs-built_in">lazy_add</span>(i*<span class="hljs-number">2</span><span class="hljs-number">+1</span>, rn, tadd[i]);
-            tadd[i] = <span class="hljs-number">0</span>;
-        &#125;
-    &#125;
-    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> i,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r,<span class="hljs-type">int</span> jl,<span class="hljs-type">int</span> jr, LL v)</span> </span>&#123;
-        <span class="hljs-keyword">if</span>(jl&lt;=l&amp;&amp;r&lt;=jr) &#123;
-            <span class="hljs-built_in">lazy_add</span>(i,r-l<span class="hljs-number">+1</span>,v);
-        &#125; <span class="hljs-keyword">else</span> &#123;
-            <span class="hljs-type">int</span> mid = (l + r) / <span class="hljs-number">2</span>;
-            <span class="hljs-built_in">down</span>(i, mid-l<span class="hljs-number">+1</span>,r-mid);
-            <span class="hljs-keyword">if</span> (jl &lt;= mid) <span class="hljs-built_in">add</span>(i*<span class="hljs-number">2</span>, l, mid, jl, jr, v);
-            <span class="hljs-keyword">if</span> (jr &gt; mid) <span class="hljs-built_in">add</span>(i*<span class="hljs-number">2</span> + <span class="hljs-number">1</span>, mid<span class="hljs-number">+1</span>, r, jl, jr, v);
-            <span class="hljs-built_in">up</span>(i);
-        &#125;
-    &#125;
-    <span class="hljs-function">LL <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">int</span> i,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r,<span class="hljs-type">int</span> jl,<span class="hljs-type">int</span> jr)</span> </span>&#123;
-        <span class="hljs-keyword">if</span>(jl&lt;=l&amp;&amp;r&lt;=jr) &#123;
-            <span class="hljs-keyword">return</span> sum[i];
-        &#125; <span class="hljs-keyword">else</span> &#123;
-            <span class="hljs-type">int</span> mid = (l + r) / <span class="hljs-number">2</span>;
-            <span class="hljs-built_in">down</span>(i, mid-l<span class="hljs-number">+1</span>,r-mid);
-            LL res = <span class="hljs-number">0</span>;
-            <span class="hljs-keyword">if</span>(jl&lt;=mid) res += <span class="hljs-built_in">query</span>(i*<span class="hljs-number">2</span>,l,mid,jl,jr);
-            <span class="hljs-keyword">if</span>(jr&gt;mid) res += <span class="hljs-built_in">query</span>(i*<span class="hljs-number">2</span><span class="hljs-number">+1</span>,mid<span class="hljs-number">+1</span>,r,jl,jr);
-            <span class="hljs-keyword">return</span> res;
-        &#125;
-    &#125;
-&#125;
-
-<span class="hljs-keyword">namespace</span> BIT&#123;
-    <span class="hljs-type">int</span> n;
-    LL tr[N];
-    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> i,LL v)</span> </span>&#123;
-        <span class="hljs-keyword">for</span>(i++;i&lt;=n;i+=i&amp;-i) tr[i] += v;
-    &#125;
-    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">range_add</span><span class="hljs-params">(<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r,LL v)</span> </span>&#123;
-        <span class="hljs-built_in">add</span>(l, v);
-        <span class="hljs-built_in">add</span>(r<span class="hljs-number">+1</span>, -v);
-    &#125;
-    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">build</span><span class="hljs-params">(<span class="hljs-type">int</span> _n,LL * a)</span> </span>&#123;
-        n = _n + <span class="hljs-number">2</span>;
-        <span class="hljs-built_in">fill</span>(tr,tr<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
-        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= _n;i++) &#123;
-            <span class="hljs-built_in">range_add</span>(i,i,a[i]);
-        &#125;
-    &#125;
-    <span class="hljs-function">LL <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span> </span>&#123;
-        LL res = <span class="hljs-number">0</span>;
-        <span class="hljs-keyword">for</span>(i++;i;i-=i&amp;-i) res += tr[i];
-        <span class="hljs-keyword">return</span> res;
-    &#125;
-&#125;
-
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span> </span>&#123;
-    cin &gt;&gt; n &gt;&gt; q;
-
-    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n;i ++) cin &gt;&gt; a[i];
-    
-    <span class="hljs-comment">// SegmentTree::build(1,1,n,a);</span>
-    BIT::<span class="hljs-built_in">build</span>(n, a);
-    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= q; i++) &#123;
-        <span class="hljs-type">int</span> op, l, r, x;
-        cin &gt;&gt; op;
-        <span class="hljs-keyword">if</span> (op == <span class="hljs-number">1</span>) &#123;
-            cin &gt;&gt; l &gt;&gt; r &gt;&gt; x;
-            <span class="hljs-comment">// SegmentTree::add(1,1,n,l,r,x);</span>
-            BIT::<span class="hljs-built_in">range_add</span>(l,r,x);
-        &#125; <span class="hljs-keyword">else</span> &#123;
-            cin &gt;&gt; x;
-            <span class="hljs-comment">// cout &lt;&lt; SegmentTree::query(1,1,n,x,x) &lt;&lt; &quot;\n&quot;;</span>
-            cout &lt;&lt; BIT::<span class="hljs-built_in">query</span>(x) &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
-        &#125;
-    &#125;
-&#125;
-
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
-    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
-    <span class="hljs-type">int</span> T = <span class="hljs-number">1</span>;
-    <span class="hljs-comment">// cin &gt;&gt; T;</span>
-    <span class="hljs-keyword">while</span> (T--) <span class="hljs-built_in">solve</span>();
-&#125;
-<span class="hljs-comment">// 64 位输出请用 printf(&quot;%lld&quot;)</span></code></pre>
+                    <h2 id="10">10</h2>
+<h3 id="Problem-Description">Problem Description</h3>
+<h3 id="Input">Input</h3>
+<h3 id="Output">Output</h3>
+<h3 id="Sample-Input">Sample Input</h3>
+<pre><code class="hljs txt"></code></pre>
+<h3 id="Sample-Output">Sample Output</h3>
+<pre><code class="hljs txt"></code></pre>
+<h3 id="Solution">Solution</h3>
+<h3 id="Code">Code</h3>
+<pre><code class="hljs cpp"></code></pre>
                 </div>
             </article>
         </div>
@@ -242,18 +133,11 @@ LL a[N];
         
             <div class="next-prev-post">
                 
-                    <div class="prev-post">
-                        <div class="prev gt-c-content-color-first">
-                            上一篇：<a href="/2026/08/07/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%9A%91%E6%9C%9F%E8%81%94%E8%B5%9B%EF%BC%883%EF%BC%89/"
-                                class="post-title gt-a-link">2026“钉耙编程”中国大学生算法设计暑期联赛（3）</a>
-                        </div>
-                    </div>
-                
                 
                     <div class="next-post">
                         <div class="next gt-c-content-color-first">
-                            下一篇：<a href="/2026/08/01/%E6%89%AB%E6%8F%8F%E7%BA%BF%E7%AC%94%E8%AE%B0/"
-                                class="post-title gt-a-link">扫描线笔记</a>
+                            下一篇：<a href="/2026/08/01/tracker-%E5%8C%BA%E9%97%B4%E5%A2%9E%E9%87%8F%E4%B8%8E%E5%8D%95%E7%82%B9%E6%B1%82%E5%80%BC%EF%BC%88segmenttree-bit%EF%BC%89/"
+                                class="post-title gt-a-link">Tracker-区间增量与单点求值（SegmentTree / BIT）</a>
                         </div>
                     </div>
                 
@@ -290,7 +174,7 @@ LL a[N];
     <aside class="post-outline" id="post-outline">
         <div class="outline-title">OUTLINE</div>
         <nav class="outline-nav">
-            <div class="outline-empty">-</div>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#10"><span class="toc-text">10</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code"><span class="toc-text">Code</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
