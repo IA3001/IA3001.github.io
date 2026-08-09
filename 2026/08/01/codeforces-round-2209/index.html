@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1786294124279">
+<link rel="stylesheet" href="/styles/main.css?v=1786297217948">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -103,6 +103,8 @@
                     <time class="post-time gt-c-content-color-first">
                         · 2026-08-01 ·</time>
                     
+                        <span class="post-updated">更新于 2026-08-10</span>
+                    
                     <span class="post-wordcount gt-c-content-color-second">
                         2.7 千字 ·</span>
                     
@@ -112,6 +114,21 @@
                         
                             <a href="/tags/CF/" class="post-tag">
                                 #CF</a>
+                        
+                            <a href="/tags/%E6%9E%84%E9%80%A0/" class="post-tag">
+                                #构造</a>
+                        
+                            <a href="/tags/%E8%B4%AA%E5%BF%83/" class="post-tag">
+                                #贪心</a>
+                        
+                            <a href="/tags/%E6%A0%91%E5%BD%A2DP/" class="post-tag">
+                                #树形DP</a>
+                        
+                            <a href="/tags/%E6%8D%A2%E6%A0%B9DP/" class="post-tag">
+                                #换根DP</a>
+                        
+                            <a href="/tags/%E5%8A%A8%E6%80%81k%E5%A4%A7%E5%80%BC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="post-tag">
+                                #动态k大值数据结构</a>
                         
                     
                 </div>
@@ -126,7 +143,6 @@
 <li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo mathvariant="normal">≠</mo><mi>S</mi><mo stretchy="false">[</mo><mi>i</mi><mo>−</mo><mn>3</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">S[i] \ne S[i-3]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0576em;">S</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel"><span class="mrel"><span class="mord katex-vbox"><span class="katex-thinbox"><span class="rlap"><span class="katex-strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="katex-inner"><span class="mord"><span class="mrel"></span></span></span><span class="katex-fix"></span></span></span></span></span><span class="mspace nobreak"></span><span class="mrel">=</span></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0576em;">S</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">3</span><span class="mclose">]</span></span></span></span></li>
 </ul>
 <h3 id="Solution">Solution</h3>
-<p><strong>构造、贪心</strong></p>
 <p><strong>贪心构造需要引理</strong>：</p>
 <ul>
 <li>构造串一定可以通过拼接若干个双字符对（RG、GB、RB 等）加上最多一个单字符</li>
@@ -196,7 +212,6 @@
 </ul>
 <p>最多进行 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.0315em;">k</span></span></span></span> 次操作，求最终的分数最大值。</p>
 <h3 id="Solution-3">Solution</h3>
-<p><strong>树形 DP、换根 DP、动态 k 大值数据结构</strong></p>
 <p>显然，一旦进行一次操作，所有的点权都会集中到叶子上，以后不再迁移。</p>
 <p>所以很自然就想到：</p>
 <ul>

@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1786294124281">
+<link rel="stylesheet" href="/styles/main.css?v=1786297217948">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -103,17 +103,23 @@
                     <time class="post-time gt-c-content-color-first">
                         · 2026-08-01 ·</time>
                     
-                        <span class="post-updated">更新于 2026-08-08</span>
+                        <span class="post-updated">更新于 2026-08-10</span>
                     
                     <span class="post-wordcount gt-c-content-color-second">
-                        829 字 ·</span>
+                        820 字 ·</span>
                     
+                        
+                            <a href="/tags/%E8%B4%AA%E5%BF%83/" class="post-tag">
+                                #贪心</a>
                         
                             <a href="/tags/2026%E6%9D%AD%E7%94%B5%E6%98%A5%E5%AD%A3%E5%A4%9A%E6%A0%A1/" class="post-tag">
                                 #2026杭电春季多校</a>
                         
                             <a href="/tags/HDU/" class="post-tag">
                                 #HDU</a>
+                        
+                            <a href="/tags/%E7%9B%B4%E5%BE%84%E5%90%88%E5%B9%B6%E6%80%A7%E8%B4%A8/" class="post-tag">
+                                #直径合并性质</a>
                         
                     
                 </div>
@@ -124,7 +130,6 @@
 <h3 id="Problem-Description">Problem Description</h3>
 <p>给定一个无环森林（多棵树），通过添加 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>−</mo><mi>m</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n-m-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> 条边权为<strong>正整数</strong>的边，使图连通成为一棵树，且新增边权总和 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≥</mo><mi>S</mi></mrow><annotation encoding="application/x-tex">\ge S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0576em;">S</span></span></span></span>。在满足条件的前提下，最小化最终树的直径，输出可能的最小直径。</p>
 <h3 id="Solution">Solution</h3>
-<p><strong>直径合并性质、贪心</strong></p>
 <p><strong>树的经典结论</strong></p>
 <ul>
 <li>两棵树连接到一起得到的树的直径，两个端点一定来源于原本两棵树直径的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn></mrow><annotation encoding="application/x-tex">4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6444em;"></span><span class="mord">4</span></span></span></span> 个点。</li>
