@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>标签样式预览</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --panel: #f8f9fa;
+    --text: #343a40;
+    --muted: #adb5bd;
+    --accent: #bfbfbf;
+    --border: #dfe2e5;
+    --blue: #4a90d9;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Open Sans', 'PingFang SC', 'Microsoft Yahei', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 24px 80px;
+    max-width: 960px;
+    margin: 0 auto;
+    font-size: 16px;
+  }
+  h1 { font-size: 26px; margin-bottom: 6px; }
+  .tip { color: var(--muted); font-size: 13px; margin-bottom: 32px; }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+  .card h2 { font-size: 16px; margin-bottom: 4px; }
+  .card .desc { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+  .card .tags { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .card .note { margin-top: 14px; font-size: 12px; color: var(--muted); }
+  .badge { display: inline-block; padding: 4px 12px; }
+
+  /* A. 胶囊 chip */
+  .a .badge {
+    background: #e9ecef;
+    color: #495057;
+    border-radius: 999px;
+    font-size: 14px;
+    transition: all .25s;
+  }
+  .a .badge:hover { background: #4a90d9; color: #fff; }
+
+  /* B. 细边框 outline */
+  .b .badge {
+    border: 1px solid #ced4da;
+    color: #495057;
+    border-radius: 6px;
+    background: transparent;
+    font-size: 14px;
+    transition: all .25s;
+  }
+  .b .badge:hover { background: #4a90d9; border-color: #4a90d9; color: #fff; }
+
+  /* C. 无背景文字优化 */
+  .c .badge {
+    background: transparent;
+    color: #6c757d;
+    font-size: 14px;
+    padding: 4px 2px;
+    transition: color .2s;
+  }
+  .c .badge:hover { color: #4a90d9; text-decoration: underline; }
+
+  /* D. 左侧色条 */
+  .d .badge {
+    background: #f1f3f5;
+    border-left: 3px solid #4a90d9;
+    color: #495057;
+    border-radius: 2px;
+    font-size: 14px;
+    transition: all .25s;
+  }
+  .d .badge:hover { border-left-color: #2f6fb5; background: #e7ecf1; }
+
+  /* E. 渐变胶囊 */
+  .e .badge {
+    background: linear-gradient(135deg, #e9ecef, #dee2e6);
+    color: #495057;
+    border-radius: 999px;
+    font-size: 14px;
+    transition: all .25s;
+  }
+  .e .badge:hover {
+    background: linear-gradient(135deg, #4a90d9, #6ab0f5);
+    color: #fff;
+  }
+
+  /* F. 标签云（按文章数分级） */
+  .f { justify-content: center; }
+  .f .badge {
+    background: #f1f3f5;
+    color: #495057;
+    border-radius: 4px;
+    transition: all .25s;
+  }
+  .f .badge:hover { background: #4a90d9; color: #fff; }
+  .f .s { font-size: 13px; }
+  .f .m { font-size: 17px; }
+  .f .l { font-size: 22px; font-weight: 600; }
+  .count { color: var(--muted); font-size: 11px; margin-left: 2px; }
+</style>
+</head>
+<body>
+  <h1>标签样式预览</h1>
+  <p class="tip">共 6 个方案，鼠标悬停可查看 hover 效果。底部有"文章页"与"标签页"两种场景的对照。</p>
+
+  <div class="card a">
+    <h2>A. 胶囊 chip</h2>
+    <p class="desc">圆角药丸 + 浅灰底，hover 变蓝底白字。最经典的博客标签样式，适用标签页 & 文章页。</p>
+    <div class="tags">
+      <span class="badge">#Codeforces</span><span class="badge">#杭电多校</span>
+      <span class="badge">#扫描线</span><span class="badge">#DP</span><span class="badge">#矩阵加速</span>
+    </div>
+    <p class="note">hover: 背景加深为品牌色</p>
+  </div>
+
+  <div class="card b">
+    <h2>B. 细边框 outline</h2>
+    <p class="desc">1px 边框 + 小圆角，hover 填充蓝色。清爽克制。</p>
+    <div class="tags">
+      <span class="badge">#Codeforces</span><span class="badge">#杭电多校</span>
+      <span class="badge">#扫描线</span><span class="badge">#DP</span><span class="badge">#矩阵加速</span>
+    </div>
+    <p class="note">hover: 边框+背景同时填充</p>
+  </div>
+
+  <div class="card c">
+    <h2>C. 无背景文字优化</h2>
+    <p class="desc">无底色无边框，仅颜色 + hover 下划线。最素雅，几乎零视觉噪音。</p>
+    <div class="tags">
+      <span class="badge">#Codeforces</span><span class="badge">#杭电多校</span>
+      <span class="badge">#扫描线</span><span class="badge">#DP</span><span class="badge">#矩阵加速</span>
+    </div>
+    <p class="note">hover: 高亮 + 下划线</p>
+  </div>
+
+  <div class="card d">
+    <h2>D. 左侧色条</h2>
+    <p class="desc">浅灰底 + 左侧 3px 品牌色竖条，像代码文件标签。个性一点。</p>
+    <div class="tags">
+      <span class="badge">#Codeforces</span><span class="badge">#杭电多校</span>
+      <span class="badge">#扫描线</span><span class="badge">#DP</span><span class="badge">#矩阵加速</span>
+    </div>
+    <p class="note">hover: 色条加深</p>
+  </div>
+
+  <div class="card e">
+    <h2>E. 渐变胶囊</h2>
+    <p class="desc">浅灰渐变底，hover 转蓝渐变。比 A 多一点点层次。</p>
+    <div class="tags">
+      <span class="badge">#Codeforces</span><span class="badge">#杭电多校</span>
+      <span class="badge">#扫描线</span><span class="badge">#DP</span><span class="badge">#矩阵加速</span>
+    </div>
+    <p class="note">hover: 渐变转蓝</p>
+  </div>
+
+  <div class="card f">
+    <h2>F. 标签云（按文章数分级）</h2>
+    <p class="desc">小圆角底块 + 字号随文章数量分级（少→多：小/中/大），适合 /tags/ 标签页做云图。</p>
+    <div class="tags">
+      <span class="badge s">#计算几何<span class="count">3</span></span>
+      <span class="badge s">#字符串<span class="count">4</span></span>
+      <span class="badge m">#数据结构<span class="count">12</span></span>
+      <span class="badge m">#数学<span class="count">15</span></span>
+      <span class="badge l">#DP<span class="count">28</span></span>
+      <span class="badge l">#杭电多校<span class="count">33</span></span>
+    </div>
+    <p class="note">hover: 底色加深；数字为文章数，可只显示在标签页</p>
+  </div>
+
+  <h2 style="font-size:18px;margin:28px 0 12px;">两种场景对照（方案 A 为例）</h2>
+  <div style="display:flex;gap:16px;flex-wrap:wrap">
+    <div class="card" style="flex:1;min-width:280px">
+      <h2 style="font-size:14px">文章页（标题下方）</h2>
+      <p class="desc">时间 · 字数 · 标签</p>
+      <div class="tags" style="gap:8px">
+        <span class="badge a" style="background:#e9ecef;color:#495057;border-radius:999px;padding:3px 10px;font-size:13px">#Codeforces</span>
+        <span class="badge a" style="background:#e9ecef;color:#495057;border-radius:999px;padding:3px 10px;font-size:13px">#CF</span>
+      </div>
+    </div>
+    <div class="card" style="flex:1;min-width:280px">
+      <h2 style="font-size:14px">标签页（/tags/ 云图）</h2>
+      <p class="desc">居中排布 + 分级字号</p>
+      <div class="tags" style="justify-content:center">
+        <span class="badge" style="background:#e9ecef;color:#495057;border-radius:999px;font-size:13px">#笔记</span>
+        <span class="badge" style="background:#e9ecef;color:#495057;border-radius:999px;font-size:17px">#扫描线</span>
+        <span class="badge" style="background:#e9ecef;color:#495057;border-radius:999px;font-size:22px;font-weight:600">#DP</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

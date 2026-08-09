@@ -1,7 +1,7 @@
 ---
 title: 2026牛客暑期多校训练营3
 tags:
-  - 牛客多校
+  - 2026牛客多校
   - NC
 published: true
 ---
@@ -466,7 +466,9 @@ int main() {
 
 ### Solution
 
-**端点 / 相邻暴力，内部交换枚举绝对值符号，做对偶前缀最大**
+**端点 / 相邻暴力，内部交换枚举绝对值符号**
+
+> 人话：贡献倍率有限，暴力枚举，相互照顾
 
 一次交换只影响局部。先把所有含端点的交换和相邻交换暴力掉，用交换前后的局部贡献差更新 `ans`。
 
@@ -607,6 +609,342 @@ void solve() {
 
     }
     cout << (sum + ans) << "\n";
+}
+
+int main() {
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+    int T = 1;
+    cin >> T;
+    while (T--) solve();
+}
+```
+
+## M 漫游者
+
+### Problem Description
+
+**M. 漫游者**
+
+有一棵 $n$ 个顶点的树。一个漫游者从顶点 $s$ 出发，想要到达顶点 $t$。漫游者希望尽可能避免走回头路，但他的记忆力很差，只能记住上一步。
+
+如果 $s = t$，旅程立即结束，步数为 $0$。
+
+否则，漫游者按以下规则移动：
+
+- 第一步，他从 $s$ 的相邻顶点中等概率随机选择一个并移动过去。
+- 在之后的每一步中，假设他当前位于顶点 $x$，上一步所在的顶点为 $y$。如果 $\deg(x) > 1$，他从 $x$ 的相邻顶点中除 $y$ 之外的顶点中等概率随机选择一个并移动过去。如果 $\deg(x) = 1$，那么 $y$ 是 $x$ 唯一的相邻顶点，因此他必须回到 $y$。
+- 漫游者一到达顶点 $t$，旅程即结束。
+
+求旅程步数的期望，对 $998244353$ 取模。
+
+### Input
+
+每个测试文件包含多组测试数据。第一行包含一个整数 $T$（$1 \le T \le 100$）。每组测试数据的格式如下：
+
+第一行包含三个整数 $n, s, t$（$2 \le n \le 5 \cdot 10^5$，$1 \le s, t \le n$）。
+
+第二行包含 $n - 1$ 个整数 $p_2, p_3, \ldots, p_n$（$1 \le p_i < i$）。对每个 $2 \le i \le n$，顶点 $i$ 和 $p_i$ 之间有一条边。保证给定的边构成一棵树。
+
+保证同一测试文件中所有测试数据的 $n$ 之和不超过 $5 \cdot 10^5$。
+
+### Output
+
+对于每组测试数据，输出一个整数：步数期望对 $998244353$ 取模的结果。
+
+形式化地，设 $M = 998244353$。可以证明，答案可以表示为最简分数 $\frac{p}{q}$，其中 $p$ 和 $q$ 为整数且 $q \not\equiv 0 \pmod{M}$。输出等于 $p \cdot q^{-1} \bmod M$ 的整数。
+
+### Sample Input
+
+```txt
+4
+4 2 4
+1 2 3
+3 2 1
+1 2
+3 3 1
+1 2
+4 1 2
+1 1 1
+```
+
+### Sample Output
+
+```txt
+3
+2
+2
+665496239
+```
+
+### Hint
+
+对于第一个样例，边为 $1 - 2$、$2 - 3$、$3 - 4$。漫游者从顶点 $2$ 出发，想要到达顶点 $4$。第一步，他以各 $\frac{1}{2}$ 的概率选择顶点 $1$ 或顶点 $3$。如果他移动到顶点 $3$，则下一步必须是顶点 $4$，因此旅程为 $2$ 步；如果他移动到顶点 $1$，则他必须回到顶点 $2$，再到顶点 $3$，最后到顶点 $4$，因此旅程为 $4$ 步。因此，步数期望为 $\frac{2 + 4}{2} = 3$。
+
+### Solution
+
+**树上随机游走-变体**  **公式化简可能需要惊人的注意力**
+
+- **一看像树上随机游走，只是游走的时候，被上一步限制了**
+	- 根据常识，这个题目满足线性关系
+	- 所以大胆猜想，各个未知数依然可以相互线性表示出
+	- 即 使用树上随机游走的套路解题
+	- 此题作为树上随机游走的一道例题，揭示了一种可能的推式子方法：
+		- $\sum_{\text{son}_u}$ 集团的替换与分解，实现消元
+- **考虑游走特性**
+	- 游走决策与上个点有关，初步设计为关于有向边的转移
+	- 考虑到树上的边，可以存放在其儿子节点上，故基于儿子节点创建变量
+	- 最终的答案是基于 $t$ 为根的树，所以
+		- 以 $t$ 为根，建立有根树，建立到 $t$ 的期望的 DP
+	- 对于一个节点 $u$ 及其父边，
+		1. 要么移动方向向下，来到 $u$ ：$f_u$ 表示当前 $u$ 到 $t$ 的期望
+		2. 要么移动方向向上，来到 $p$ ：$g_u$ 表示当前 $p$ 到 $t$ 的期望
+	- 假设线性关系：
+		- $f_u = a_u g_u + b_u$ 
+	- 自底向上分析
+	- 设 $m = |\text{son}_u|$
+	- 叶子：
+		- $f_u$：只能向上移动，变为从 $u$ 到 $p$ 之后的期望
+			- 即 $f_u = 1 + g_u$
+			- $a_u = b_u = 1$
+		- $g_u$ ：同上
+	- 非叶子：
+		- $f_u$ ：只能向下
+			- $f_u = 1 + \frac{1}{m} \sum_{w \in \text{son}_u} f_w$
+		- 为了方便凑出来方程，这里使用 $g_v$
+		- $g_v$ ：可以向上，向下少一个
+			- $g_v = 1 + \frac{1}{m} (g_u + \sum_{w \in \text{son}_u} f_w - f_v)$
+
+设 $S = \sum_{w \in \text{son}_u} f_w$  （tips：将整体替换，以后便于消元）
+
+有
+
+$$
+\begin{cases} 
+\begin{aligned}
+
+f_u &= 1 + \frac{1}{m} S \\
+
+g_v &= 1 + \frac{1}{m} (g_u + S - f_v) 
+
+\end{aligned}
+\end{cases}
+$$
+
+- 问题来了
+	- 我们想得到 $f_u, g_u$ 的关系（需要通过比较系数得到对应的 $a_u, b_u - a_v, b_v$ 递推式），怎么得到？
+	- 首先可以将 $f_v$ 转化为 $g_v$ 之后，消去 $g_v$ 
+	- 然后只剩下陌生的 $S$ 和 $g_v$ 了
+	- 注意到 $S$ 中只存在 $f_v$ 即 $g_v$ 
+	- 显然通过 $S$ 这个跳板，我们可以带入消掉 $g_v$
+		1. 将 $g_v$ 表示为 $S$ 的函数
+		2. 将 $S$ 中的 $g_v$ 用上式代入
+		3. 得到只含有 $S$ 的函数，无 $g_v$
+		4. 化简出 $S$ 并回代到 $f_u$ 式子中去即可
+
+步骤如下
+
+$$
+\begin{equation} 
+\begin{aligned}
+
+g_v &= 1 + \frac{1}{m}(g_u + S - a_v g_v - b_v) \\
+(m + a_v) g_v &= m + g_u + S - b_v \\
+g_v &= \frac{1}{m+a_v} (m + g_u + S - b_v)
+
+\end{aligned}
+\end{equation}
+$$
+
+$$
+\begin{equation} 
+\begin{aligned}
+
+S &= \sum_{w \in \text{son}_u} f_w \\
+S &= \sum_{w \in \text{son}_u} (a_w (\frac{1}{m+a_w} (m + g_u + S - b_w)) + b_w) \\
+S &= \sum_{w \in \text{son}_u} (\frac{a_w(m-b_w)}{m+a_w} + \frac{a_w}{m+a_w}g_u + \frac{a_w}{m+a_w}S + b_w) \\
+
+
+\end{aligned}
+\end{equation}
+$$
+
+接下来的化简看着头疼，所以换元：
+
+$$
+\begin{cases} 
+\begin{aligned}
+
+A_u &= \sum_{w \in \text{son}_u} \frac{a_w}{m+a_w} \\
+B_u &= \sum_{w \in \text{son}_u} (\frac{a_w(m-b_w)}{m+a_w} + b_w)
+
+\end{aligned}
+\end{cases}
+$$
+
+所以
+
+$$
+\begin{equation} 
+\begin{aligned}
+
+S &= B_u + A_u g_u + A_u S \\
+S &= \frac{A_u}{1-A_u} g_u + \frac{1}{1-A_u} B_u \\
+
+
+\end{aligned}
+\end{equation}
+$$
+代入到 $f_u$ 
+
+$$
+\begin{equation} 
+\begin{aligned}
+
+f_u &= 1 + \frac{1}{m} S \\
+
+f_u &= 1 + \frac{1}{m} (\frac{A_u}{1-A_u} g_u + \frac{1}{1-A_u} B_u) \\
+
+f_u &= \frac{A_u}{m(1-A_u)} g_u + \frac{1}{1-A_u} B_u + 1
+
+\end{aligned}
+\end{equation}
+$$
+
+比较系数，可得：
+
+$$
+\begin{cases} 
+\begin{aligned}
+
+a_u &= \frac{A_u}{m(1-A_u)} \\
+b_u &= \frac{1}{1-A_u} B_u + 1
+
+\end{aligned}
+\end{cases}
+$$
+
+- 至此，问题解决了一半
+	- 可以自底向上求系数了
+- 但是缺少之后自顶向下的 $u, v$ 递推式
+	- 主要是求解 $g_u, g_v$ 递推式，因为 $f_v$ 可以通过 $a_v, b_v$ 得到
+
+显然，只需将最初的公式中， $S$ 直接消掉即可
+
+$$
+\begin{equation} 
+\begin{aligned}
+
+g_v &= \frac{1}{m+a_v} (m + g_u + S - b_v) \\
+
+g_v &= \frac{1}{m+a_v} (m + g_u + m f_u - m - b_v) \\
+
+g_v &= \frac{1}{m+a_v} (g_u + m a_u g_u + m b_u - b_v) \\
+
+g_v &= \frac{(1+ma_u)}{m+a_v} g_u + \frac{1}{m+a_v} (m b_u - b_v) \\
+
+\end{aligned}
+\end{equation}
+$$
+
+- ok，最后就剩下 $s$ 处的求解了
+	- 当 $s==t$ 时，显然答案为 $0$
+	- 否则，先进行 `dfs1` 
+		- 目的是自底向上，收集 $a_u, b_u$ 系数
+	- 然后遍历 $t$ 的儿子，分别从儿子处开始 `dfs2`
+		- 目的是计算 $f_u, g_u$ 
+		- 为什么不从 $t$ 开始？
+			- 因为 $t$ 没有父亲，其 $f_u, g_u$ 定义非法
+			- 而其儿子 $v$ 的 $g_v$ 必定初始化为 $0$ 
+			- 因此系数从 儿子处向下传递
+	- $s$ 的计算方式
+		- 由是刚开始，没有限制，所以需要特殊计算，即
+			1. 首先有 $1$ 的初始值
+			2. 接下来是按照度数均分的贡献
+			3. 向上移动，那么 `+=g[s]`
+			4. 向下移动到 $v$ ，那么 `+=f[v]` 
+
+完结撒花
+
+### Code
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+using ll = long long;
+
+const int N = 5e5 + 5;
+const ll mod = 998244353;
+
+ll ksm(ll a, ll b = mod - 2) {
+    ll res = 1;
+    for (;b;b>>=1,a=a*a%mod) if(b&1) res = res * a % mod;
+    return res;
+}
+
+int n, s, t;
+int P[N];
+vector<int> e[N];
+ll a[N], b[N], f[N], g[N], m[N];
+
+void dfs1(int u, int fa) {
+    P[u] = fa;
+    m[u] = e[u].size() - (fa!=0);
+    if (e[u].size() == 1 && fa) {
+        a[u] = b[u] = 1;
+        return;
+    }
+    ll A = 0, B = 0;
+    for (auto v: e[u]) if(v!=fa){
+        dfs1(v, u);
+        ll tmp = ksm(m[u] + a[v]);
+        (A += a[v] * tmp) %= mod;
+        (B += a[v] * (m[u] - b[v] + mod) % mod * tmp % mod + b[v]) %= mod;
+    }
+    ll tmp = ksm(m[u] * (1 - A + mod) % mod);
+    a[u] = A * tmp % mod;
+    b[u] = (B * tmp + 1) % mod;
+}
+
+void dfs2(int u, int fa) {
+    f[u] = (a[u] * g[u] + b[u]) % mod;
+    for (auto v: e[u]) if(v!=fa){
+        ll tmp = ksm(m[u] + a[v]);
+        ll c = (1 + m[u] * a[u]) % mod * tmp % mod;
+        ll d = ((m[u] * b[u] - b[v]) % mod + mod) % mod * tmp % mod;
+        g[v] = (c * g[u] + d) % mod;
+        dfs2(v, u);
+    }
+}
+
+void solve() {
+    cin >> n >> s >> t;
+    for (int i = 1; i <= n; i++) e[i].clear();
+    for (int i = 2, p; i <= n; i++) {
+        cin >> p;
+        e[p].push_back(i);
+        e[i].push_back(p);
+    }
+    dfs1(t, 0);
+    f[t] = 0;
+    for (auto v:e[t]) {
+        g[v] = 0;
+        dfs2(v, t);
+    }
+    if (s == t) {
+        cout << "0\n";
+    } else {
+        ll res = 0;
+        for (auto v:e[s]) {
+            if (v == P[s]) {
+                (res += g[s]) %= mod;
+            }  else {
+                (res += f[v]) %= mod;
+            }
+        }
+        res = (res * ksm(m[s]+1) + 1) % mod;        
+        cout << res << "\n";
+    }
 }
 
 int main() {

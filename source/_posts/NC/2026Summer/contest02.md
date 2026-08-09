@@ -1,11 +1,65 @@
 ---
 title: 2026牛客暑期多校训练营2
 tags:
-  - 牛客多校
+  - 2026牛客多校
   - NC
 published: true
 ---
-## F
+## C 比赛：连胜记录
+
+### Problem Description
+
+小羊正在观看一场特殊的羽毛球比赛，Alice 和 Bob 正在进行对决。若将两位选手的得分记为 $x$ 和 $y$，当以下两个条件同时满足时，比赛结束：
+
+- $\max(x, y) \geqslant k$，其中 $k$ 为给定参数。
+- $|x - y| \geqslant 2$。
+
+但不幸的是，小羊睡着了。过了相当长一段时间后，他醒来，发现比分已经大幅改变。在他睡着之前，Alice 和 Bob 的比分分别为 $x_1, y_1$，而当他醒来时，比分变为 $x_2, y_2$。在小羊睡眠期间，Alice 最长连胜长度的最小值和最大值分别是多少？
+
+连胜是指一名选手连续赢得若干分的情况，连胜的长度为该期间赢得的分数数量。
+
+### Input
+
+每个测试包含多组测试用例。第一行包含测试用例数 $T$（$1 \leqslant T \leqslant 10^4$）。接下来是每组测试用例的描述。
+
+每组测试用例仅一行，包含五个整数 $k, x_1, y_1, x_2, y_2$（$1 \leqslant k \leqslant 10^9$，$1 \leqslant x_1 < x_2 \leqslant 10^9$，$1 \leqslant y_1 \leqslant y_2 \leqslant 10^9$）——比赛参数以及小羊睡前和醒来后 Alice 和 Bob 的比分。
+
+保证 $\max(x_1, y_1) < k$ 或 $|x_1 - y_1| \leqslant 1$ 成立，且 $\max(x_2, y_2) \leqslant k$ 或 $|x_2 - y_2| \leqslant 2$ 成立。即，当小羊睡着时比赛尚未结束，但当他醒来时比赛可能已经结束。
+
+### Output
+
+对于每组测试用例，输出两个整数，分别表示 Alice 最长连胜长度的最小值和最大值。
+
+### Sample Input
+
+```txt
+4
+21 1 1 10 5
+21 19 20 22 21
+21 16 19 21 19
+21 9 12 22 20
+```
+
+### Sample Output
+
+```txt
+2 9
+2 2
+5 5
+2 13
+```
+
+### Solution
+
+**超级分类讨论** 
+
+**切入点：感觉是分讨的斩杀线**
+
+### Code
+
+
+
+## F 神奇的树
 
 ### Problem Description
 
@@ -162,6 +216,290 @@ int main() {
     ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
     int T = 1;
     cin >> T;
+    while (T--) solve();
+}
+```
+
+## K 幼儿园
+
+### Problem Description
+
+- 输入模式：标准输入
+- 输出模式：标准输出
+- 时间限制：3 秒
+- 空间限制：256 MB
+
+牛客城的天气渐渐转好，牛客幼儿园的园长准备带小朋友们去主题公园玩。
+
+主题公园有 $n$ 个游乐设施，有 $m$ 条游乐设施之间的无向的通道。第 $i$ 个设施被称为设施 $i$，而第 $i$ 条通道连结了设施 $u_i$ 和设施 $v_i$。你没办法不使用通道从一个设施到另一个设施，同时任意两个设施是相互可达的。
+
+一般而言，每条通道需要 $T$ 单位的时间通过。但现在在一些通道上正在进行 $k$ 个活动，使得这条路的通行时间变得不一致。第 $i$ 个活动发生在第 $w_i$ 条通道上，而当小朋友到达公园时，需要 $c_i$ 单位的时间去通过这条通道。
+
+在活动的进行过程中，通过通道的时间也可能发生改变。总共有 $q$ 次更新，第 $i$ 次中，第 $x_i$ 条通道的通行时间变为了 $y_i$。这里保证，$x_i$ 是曾经发生过活动的街道。
+
+更新是累积且持久的，即前面更新所做的修改将在所有后续的更新和询问中持续生效。
+
+在每次更新后，小朋友会提出 $L_i$ 个问题：从 $a$ 到 $b$ 需要多少时间呢？你能帮忙回答这些问题吗？
+
+### Input
+
+测试样例由多行组成。
+
+第一行包含三个整数 $n, m, T$（$3 \le n \le 2 \times 10^3$，$n - 1 \le m \le 10^5$，$1 \le T \le 10^6$）——设施个数、通道个数以及一般而言通道需要的通行时间。
+
+接下来 $m$ 行中的第 $i$ 行包含两个整数 $u_i, v_i$（$1 \le u_i, v_i \le n$，$u_i \ne v_i$）——第 $i$ 条通道的两个端点。可能有重边。
+
+接下来的一行包含一个整数 $k$（$1 \le k \le 50$）——在进行活动的通道数量。
+
+接下来 $k$ 行中的第 $i$ 行包含两个整数 $w_i, c_i$（$1 \le w_i \le m$，$1 \le c_i \le 10^9$）——有活动的通道的下标及其通行时间。保证 $\forall 1 \le i < j \le k,\ w_i \ne w_j$。
+
+接下来的一行包含一个整数 $q$（$1 \le q \le 2 \times 10^4$）——更新的次数。
+
+每次更新由多行组成。以下是更新的格式。
+
+第一行包含两个整数 $x_i, y_i$（$x_i \in \{w_1, w_2, \ldots, w_k\}$，$1 \le y_i \le 10^9$）——更新的通道的下标及其新的通行时间。
+
+接下来的一行包含一个整数 $L_i$（$1 \le L_i \le 10^4$）——小朋友提出的问题的个数。
+
+接下来 $L_i$ 行中的第 $j$ 行包含两个整数 $a_j, b_j$（$1 \le a_j, b_j \le n$）——小朋友提出的问题对应的两个端点。
+
+保证 $L_i$ 的和不超过 $2 \times 10^4$。
+
+### Output
+
+对于每个小朋友提出的问题，输出一个正整数，表示从 $a_j$ 走到 $b_j$ 所需的最小时间。
+
+### Sample Input
+
+```txt
+4 4 1
+1 2
+2 3
+1 3
+1 4
+3
+1 1
+2 2
+3 100
+3
+2 5
+1
+3 4
+3 1
+1
+3 4
+1 5
+1
+3 4
+```
+
+### Sample Output
+
+```txt
+7
+2
+2
+```
+
+### Solution
+
+- **中介集群 思想**
+	- **需要建立一个新的图！**
+	- **动态维护他们之间的边权的时候，需要平衡树维护最小值！**
+	- 就是说少量的 $k \le 50$ 的 关键边/点，可以另外建立一个新的图加速转移
+	- 使用朴素的 Dijkstra 即可
+- **图算法复建**
+	- **全源 01-BFS** 的复杂度是 $O(n(n+m))$
+		- 必须使用 邻接表，不可以用邻接矩阵，否则是 $O(n^3)$
+	- **新：两张图，特殊点之间的正向/反向映射**
+		- `mp[N]` `pm[K]`
+	- **新：重边动态选取最小边权的数据结构**
+		- `multiset<LL> cand` 
+
+### Code
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+using LL = long long;
+
+const int N = 2e3 + 5, M = 1e5 + 5, NN=2e2+5;
+const LL inf = 1e15;
+
+int n, m, T, k, q;
+
+// 初始边集
+// 【坑点1：这里的数组大小一定要开对啊！！！】，有多个 constant
+array<int,3> uv[M];
+
+// 图0 / 图1 边集
+// 【坑点2：这里原图一定要开邻接表啊】
+// 【全源BFS最短路 邻接表是O(n(n+m))，临界矩阵是 O(n^3)】
+// LL g0[N][N];
+vector<int> e0[N];
+LL g1[NN][NN];
+
+// 图0 <-> 图1 点映射
+int mp[N], pm[NN], tot;
+
+// 图0：不变最短路
+LL dist[N][N];
+
+// 辅助：图1 动态边权最小值候选
+// 【坑点3】这里的边，最好开 LL 以防弄混
+multiset<LL> cand[NN][NN];
+
+void solve() {
+
+    cin >> n >> m >> T;
+    
+    // for (int i = 1; i < N; i++) 
+    //     fill(g0[i], g0[i]+N, inf);
+    for (int i = 1; i < NN;i++) 
+        fill(g1[i], g1[i]+NN,inf);
+    
+    // 存储所有边
+    for (int i = 1; i <= m; i++) {
+        auto& [u, v, _] = uv[i];
+        cin >> u >> v;
+    }
+    
+    // 读取关键边
+    cin >> k;
+    for (int i = 1; i <= k; i++) {
+        int id, cost;
+        cin >> id >> cost;
+        uv[id][2] = cost;
+    }
+
+    // 根据是否关键边，加入合适的图0/1
+    for (int i = 1; i <= m; i++) {
+        auto [u, v, w] = uv[i];
+        if (!w) {
+            // 非关键
+            // g0[u][v] = g0[v][u] = min(g0[u][v], w);
+            e0[u].push_back(v);
+            e0[v].push_back(u);
+        } else {
+            // 关键，先映射端点
+            if (!mp[u]) mp[u] = ++tot, pm[tot] = u;
+            if (!mp[v]) mp[v] = ++tot, pm[tot] = v;
+            u = mp[u], v = mp[v];
+            if (u > v) swap(u, v);
+            cand[u][v].insert(w);
+            g1[u][v] = g1[v][u] = min(g1[u][v], (LL)w);
+        }
+    }
+
+    // 图0 BFS 得到 dist[i][j]
+    for (int s = 1; s <= n; s++) {
+        fill(dist[s],dist[s]+1+n,inf);
+        
+        queue<int> Q;
+        Q.push(s);
+        
+        vector<bool> vis(n+1);
+        vis[s] = true;
+        
+        // 分层 BFS
+        int d = 0;
+        while(Q.size()) {
+            int t = Q.size();
+            while(t--) {
+                int u = Q.front(); Q.pop();
+                // 坑点 3
+                dist[s][u] = (LL) d * T;
+                for (auto v:e0[u]) {
+                    if (!vis[v]) {
+                        Q.push(v);
+                        vis[v] = true;
+                    }
+                }
+            }
+            d++;
+        }
+    }
+
+    // 【坑点3：没有写关键点之间的 dist 初始化啊啊啊】
+    for (int i = 1; i <= tot;i++) {
+        for (int j = i+1; j <=tot;j++) {
+            int u = pm[i], v = pm[j];
+            cand[i][j].insert(dist[u][v]);
+            g1[i][j] = g1[j][i] = min(g1[i][j], dist[u][v]);
+        }
+    }
+    
+    // 计算函数 O(k^2) 朴素 dijkstra
+    auto cal = [&](int s, int t)-> LL {
+        // 先设置为不经过特殊边
+        LL res = dist[s][t];
+        
+        // dijk 初始化
+        vector<LL> d(tot + 1, inf);
+        vector<bool> vis(tot + 1);
+        
+        // 初始化映射位置的 d (注意枚举小的！)
+        for (int i = 1; i <= tot; i++) 
+            d[i] = dist[s][pm[i]];
+        
+        // 每次寻找 d 最小的 !vis
+        while(1) {
+            int best = -1;
+            LL mn = inf;
+            for (int i = 1; i <= tot; i++) {
+                if (!vis[i] && d[i] < mn) {
+                    mn = d[i];
+                    best = i;
+                }
+            }
+            if (best == -1) break;
+            vis[best] = true;
+            // 松弛
+            for (int i = 1; i <= tot; i++) 
+                if (!vis[i])
+                    d[i] = min(d[i], mn + g1[best][i]);
+        }
+
+        // 同样枚举小的，回溯 图0 上面的全源静态距离
+        for (int i = 1; i <= tot; i++) 
+            res = min(res, d[i] + dist[pm[i]][t]);
+        
+        return res;
+    };
+
+    // 回答询问
+    cin >> q;
+    for (int i = 1; i <= q; i++) {
+        int x, y;
+        cin >> x >> y;
+        // cout << "x=" << x << "y=" << y << "\n";
+        
+        // 找到边
+        auto [u, v, _] = uv[x];
+        u = mp[u], v = mp[v];
+        if (u > v) swap(u, v);
+        
+        // 更新图1 边权（注意需要动态维护集合最小值）
+        cand[u][v].erase(cand[u][v].find(uv[x][2]));
+        uv[x][2] = y;
+        cand[u][v].insert(uv[x][2]);
+        g1[u][v] = g1[v][u] = *cand[u][v].begin();
+        
+        int L;
+        cin >> L;
+        for (int i = 1; i <= L; i++) {
+            int a, b;
+            cin >> a >> b;
+            cout << cal(a, b) << "\n";
+        }
+    }
+}
+
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+    int T = 1;
+    // cin >> T;
     while (T--) solve();
 }
 ```

@@ -1,11 +1,14 @@
 ---
 title: 2026“钉耙编程”中国大学生算法设计暑期联赛（2）
 tags:
-  - 杭电多校
+  - 2026杭电暑期多校
   - HDU
 published: true
 ---
-### 1001 xyz 问题
+
+> 一场竟然两道 NTT
+
+## 1001 xyz 问题
 
 ### Problem Description
 
@@ -579,6 +582,875 @@ void solve() {
 }
 
 int main() {
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+    int T = 1;
+    cin >> T;
+    while (T--) solve();
+}
+```
+
+## 1002 表达式2
+
+### Problem Description
+
+河灵上小学二年级了。最近，河灵在学校里学到了最新最酷的乘法运算。
+
+这一天，老师给河灵一个由 $n$ 个非零数字构成的数字串 $S$。河灵可以在数字串的任意两个相邻数字之间的空隙中插入乘号，使其变成一个数字表达式。
+
+例如数字串 $1234$，河灵可以在第一个空隙和第三个空隙中插入乘号，就可以得到表达式 $1 \times 23 \times 4$。
+
+简单的表达式求值已经难不倒河灵了，该去研究更有意思的数学问题了！于是河灵交给了你这个问题。
+
+对于每一个整数 $k$（$0 \le k < n$），你需要求出：在数字串 $S$ 的 $n-1$ 个空隙中插入恰好 $k$ 个乘号，使其变成一个数学表达式，计算所有不同插入方案所得表达式的结果之和。
+
+答案对 $998244353$ 取模。
+
+### Input
+
+每个测试点中包含多组测试数据。输入的第一行包含一个正整数 $T$（$1 \le T \le 2 \times 10^5$），表示数据组数。对于每组测试数据：
+
+第一行一个正整数 $n$（$1 \le n \le 10^5$），表示数字串长度。
+
+第二行一个长度为 $n$ 的数字串 $S$，保证 $S$ 的每一位数字均为 $1 \sim 9$ 中的某一个。
+
+保证所有测试数据中 $n$ 之和不超过 $2 \times 10^5$。
+
+### Output
+
+对于每组测试数据：输出一行 $n$ 个整数 $ans_0, ans_1, \ldots, ans_{n-1}$，其中 $ans_i$ 表示当 $k=i$ 时问题的答案对 $998244353$ 取模后的值。
+
+### Sample Input
+
+```txt
+2
+3
+777
+5
+32768
+```
+
+### Sample Output
+
+```txt
+777 1078 343
+32768 81324 67124 21144 2016
+```
+
+### Solution
+
+**DP 分析 -> 二维状态+双函数 DP -> 生成函数表示 DP -> NTT 加速递推**
+
+- 事后诸葛亮：看到打印 $k = 0 \dots n-1$ 的答案的时候，就往 **FFT** 加速 **二维生成函数** 递推方向想 
+
+- **DP分析**
+	- 朴素地定义二维状态 DP
+		- $f_{i,j}$ 表示前 $i$ 个字符，插入 $j$ 个乘号的结果之和
+	- 依然是增量法 DP 转移
+		- 显然考虑的是：
+		- 当枚举到第 $i$ 个字符的时候，$f_{i,j}$ 考虑要不要在前面新插入一个 乘号
+			1. 不插入：相当于前面的结果都乘以 10 在加上这一位的影响（上一个乘号之前的结果之和是什么？）
+				- 因此引入新的辅助函数 $g_{i,j}$ 表示这个结果之和
+				- 既然需要用到 $g_{i,j}$ 自然也要维护它的转移
+				- 即：不变 $g_{i-1,j}$
+			2. 插入：相当于这一位的数字乘以之前 $f_{i-1,j-1}$  的结果
+				- 同样要维护 $g_{i,j}$ 
+				- 显然是：$f_{i-1,j-1}$
+
+综上，转移为
+
+$$
+\begin{cases}
+\begin{aligned}
+
+f_{i,j} &= 10 \cdot f_{i-1,j} + S[i] \cdot g_{i-1,j} + S[i] \cdot f_{i-1,j-1} \\
+g_{i,j} &= g_{i-1,j} + f_{i-1,j-1}
+
+\end{aligned}
+\end{cases}
+$$
+
+建立生成函数（二维！）
+
+$$
+\begin{cases}
+\begin{aligned}
+
+F_i(x) &= \sum_{j=0}^{i-1} f_{i,j} x^j \\
+G_i(x) &= \sum_{j=0}^{i-1} g_{i,j} x^j 
+
+\end{aligned}
+\end{cases}
+$$
+
+初步改写：
+
+$$
+\begin{cases}
+\begin{aligned}
+
+F_i &=  (10 + S[i]  \cdot x) \cdot F_{i-1} + S[i] \cdot G_{i-1} \\
+G_i &= x \cdot F_{i-1} + G_{i-1}
+
+\end{aligned}
+\end{cases}
+$$
+
+写成矩阵形式，就是：
+
+$$
+
+\left[
+\begin{array}{cc}
+
+F_i & G_i 
+
+\end{array}
+\right]
+
+=
+
+\left[
+\begin{array}{cc}
+
+F_{i-1} & G_{i-1} 
+
+\end{array}
+\right]
+
+\times
+
+\left[
+\begin{array}{cc}
+
+10 + S[i] \cdot x & x \\
+S[i] & 1
+
+\end{array}
+\right]
+
+
+$$
+
+记
+
+$$
+
+M_i 
+
+= 
+
+\left[
+\begin{array}{cc}
+
+10 + S[i] \cdot x & x \\
+S[i] & 1
+
+\end{array}
+\right]
+
+$$
+
+则
+
+$$
+
+\left[
+\begin{array}{cc}
+
+F_n & G_n 
+
+\end{array}
+\right]
+
+=
+
+\left[
+\begin{array}{cc}
+
+F_{1} & G_{1} 
+
+\end{array}
+\right]
+
+\times
+
+\prod_{i=2}^{n} M_i
+
+$$
+
+显然，这是我第一次遇到矩阵套多项式（原来套的是二维生成函数）的
+
+- **如何优化多项式连乘的复杂度？**
+	- 使用类似线段树的方法
+	- 其实是分治乘法
+	- 这样可以最大化利用 FFT 这类算法的乘法优势
+	- 复杂度 $O(n \log^2{n})$
+
+### Code
+
+> 几个坑点，见代码
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+using LL = long long;
+using Poly = vector<LL>;
+
+const int N = 1e5 + 5;
+
+const LL mod = 998244353;
+const int g = 3;
+
+inline void inc(LL& a, LL x) {a+=x;if(a>=mod)a-=mod;}
+inline void dec(LL& a, LL x) {a-=x;if(a<0)a+=mod;}
+inline void tim(LL& a, LL x) {(a*=x)%=mod;}
+inline LL add(LL a, LL b){a+=b;if(a>=mod)a-=mod;return a;}
+inline LL sub(LL a, LL b){a-=b;if(a<0)a+=mod;return a;}
+
+LL ksm(LL a, LL b = mod - 2) {
+    LL res = 1;
+    for (;b;b>>=1,tim(a,a)) if(b&1) tim(res, a);
+    return res;
+}
+
+namespace NTT{
+    const int N = 1 << 21;
+    LL w[N], iw[N];
+    
+    void init() {
+        for (int i = 1;i < N; i<<=1) {
+            LL wn = ksm(g, (mod-1)/(i<<1));
+            LL iwn = ksm(wn);
+            // 【宇宙超级无敌大坑点：没初始化 w[i] = iw[i] = 0】
+            w[i] = iw[i] = 1;
+            for (int j = 1; j < i;j++) {
+                w[i|j] = w[i|(j-1)] * wn % mod;
+                iw[i|j] = iw[i|(j-1)] * iwn % mod;
+            }
+        }
+    }
+    
+    void DIF(Poly& A, int n) {
+        for (int l = n >> 1;l;l>>=1) {
+            for (int i = 0; i < n; i += l<<1) {
+                for (int j = 0;j<l;j++) {
+                    LL x = A[i|j], y = A[i|l|j];
+                    A[i|j] = add(x,y);
+                    A[i|l|j] = sub(x,y) * w[l|j] % mod;
+                }
+            }
+        }
+    }
+
+    void DIT(Poly& A, int n) {
+        for (int l = 1; l < n;l <<= 1) {
+            for (int i = 0; i < n; i += l<<1) {
+                for (int j = 0;j<l;j++) {
+                    LL x = A[i|j], y = A[i|l|j] * iw[l|j] % mod;
+                    A[i|j] = add(x,y);
+                    A[i|l|j] = sub(x,y);
+                }
+            }
+        }
+        LL invn = ksm(n);
+        for (int i = 0; i < n; i++) tim(A[i], invn);
+    }
+
+    void mul_to(Poly& A, Poly& B, int lim) {
+        int n = A.size(), m = B.size(), L = 1;
+        while(L<n+m-1) L <<= 1;
+        A.resize(L), B.resize(L);
+        DIF(A,L),DIF(B,L);
+        for (int i =0 ; i<L;i++) tim(A[i], B[i]);
+        DIT(A,L);
+        A.resize(lim);
+    }
+
+    Poly mul(Poly A, Poly B, int lim=-1) {
+        if(lim==-1)lim = A.size() + B.size() - 1;
+        mul_to(A, B, lim);
+        return A;
+    }
+
+    void add_to(Poly& A,const Poly& B) {
+        A.resize(max(A.size(), B.size()));
+        for(int i = 0;i<B.size();i++) inc(A[i], B[i]);
+    }
+
+    Poly addP(Poly A, Poly B) {
+        add_to(A, B);
+        return A;
+    }
+}
+using NTT::mul;
+using NTT::addP;
+
+struct Mat{
+    Poly a00,a01,a10,a11;
+    Mat(){}
+    Mat(Poly&& a00, Poly&& a01, Poly&& a10, Poly&& a11) 
+    :a00(move(a00)),
+    a01(move(a01)),
+    a10(move(a10)),
+    a11(move(a11))
+    {}
+};
+
+int n;
+string s;
+
+Mat merge(const Mat& a, const Mat& b) {
+    return Mat(
+        addP(mul(a.a00,b.a00),mul(a.a01,b.a10)), addP(mul(a.a00,b.a01), mul(a.a01,b.a11)),
+        addP(mul(a.a10,b.a00),mul(a.a11,b.a10)), addP(mul(a.a10,b.a01), mul(a.a11,b.a11))
+    );
+}
+
+Mat dc(int l,int r) {
+    if(l==r) {
+        return Mat(
+            {10,s[l]}, {0,1},
+            {s[l]}, {1}
+        );
+    } else {
+        int mid = (l + r) / 2;
+        Mat L = dc(l,mid);
+        Mat R = dc(mid+1,r);
+        return merge(L, R);
+    }
+}
+
+void solve() {
+    cin >> n >> s;
+    s = " " + s;
+    // 【双重的坑】
+    // 【坑点1：特判 n = 1，要不然无限递归】
+    if(n == 1) {
+        // 【坑点2：不要 s[i] -= '0' 之后作为答案输出，否则输出 滚木 字符】
+        cout << s[1] << "\n";
+    } else {
+        for (int i = 1; i <= n;i++) s[i] -= '0';
+        Poly F1 = {s[1]}, G1 = {1};
+        Mat M = dc(2, n);
+        Poly Fn = addP(mul(M.a00,F1), mul(M.a10,G1));
+        // Poly Gn = addP(mul(M.a01,F1), mul(M.a11,G1));
+        for(int i = 0; i < n;i ++) {
+            // assert(Fn[i] >= 0 && Fn[i] < mod);
+            cout << Fn[i] << " ";
+        }cout << "\n";
+    }
+}
+
+int main() {
+    // auto st = clock();
+    NTT::init();
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+    int T = 1;
+    cin >> T;
+    while (T--) solve();
+    // auto ed = clock();
+    // cout << (ed - st) << "ms\n";
+}
+```
+
+## 1003 张力
+
+### Problem Description
+
+胖胖龙正在研究一种数字排列艺术。
+
+他认为，对于任意两个非负整数 $x,y$，将它们相邻放置时会产生大小为 $\operatorname{lowbit}(x \oplus y)$ 的“张力”。
+
+现在，胖胖龙有一个长度为 $n$ 的非负整数序列 $a_1,a_2,\dots,a_n$。他希望将这些数重新排列成 $b_1,b_2,\dots,b_n$，使得相邻数字之间的总张力最小，即最小化：
+
+$$
+\sum_{i=1}^{n-1} \operatorname{lowbit}(b_i \oplus b_{i+1})
+$$
+
+其中 $\oplus$ 表示按位异或。
+
+对于正整数 $x$，$\operatorname{lowbit}(x)$ 表示 $x$ 二进制表示下最低位的 $1$ 对应的数值，例如 $\operatorname{lowbit}(12)=4$。特别地，我们定义 $\operatorname{lowbit}(0)=0$。
+
+请你帮帮胖胖龙，求出最小可能的总张力。
+
+### Input
+
+每个测试点中包含多组测试数据。输入的第一行包含一个正整数 $T$ $(1 \le T \le 100)$，表示数据组数。对于每组测试数据：
+
+第一行一个正整数 $n$ $(1 \le n \le 5 \times 10^3)$，表示序列的长度。
+
+第二行 $n$ 个整数 $a_1,a_2,\dots,a_n$ $(0 \le a_i < 2^{50})$，表示序列 $a$。
+
+保证所有测试数据中 $n$ 之和不超过 $2 \times 10^4$。
+
+### Output
+
+对于每组测试数据：输出一行一个整数，表示最小可能的总张力。
+
+### Sample Input
+
+```txt
+3
+3
+0 1 2
+5
+3 4 5 6 7
+8
+1 8 2 0 12 1 4 2
+```
+
+### Sample Output
+
+```txt
+2
+4
+8
+```
+
+### Solution
+
+- **01Trie 上 LCA = lowbit** 
+- **二叉树上启发式 DP 合并**
+- **启发式 + ST 表 RMQ -> 优化 树上合并 DP** 
+
+![](assets/contest02/file-20260803113832550.png)
+
+### Code
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+using LL = long long;
+
+const int N = 5e3 + 5;
+const int B = 50;
+const LL INF = 0x3f3f3f3f3f3f3f3f;
+
+int n;
+LL a[N];
+
+namespace Trie{
+    // 【坑点1：Trie 的数组不要开小了！】
+    int ch[N*50][2], tot;
+    int pass[N*50], dep[N*50];
+
+    void clear() {
+        memset(ch,0,sizeof(ch[0]) * (tot + 2));
+        memset(pass,0,sizeof(pass[0]) * (tot + 2));
+        memset(dep,0,sizeof(dep[0]) * (tot + 2));
+        tot = 1;
+    }
+
+    void insert(LL x) {
+        int cur = 1;
+        pass[cur]++;
+        for(int i = 0;i<B;i++) {
+            int to = x >>i & 1;
+            if (!ch[cur][to]) ch[cur][to] = ++tot, dep[tot] = dep[cur]+1;
+            cur = ch[cur][to];
+            pass[cur]++;
+        }
+    }
+    vector<LL> dfs(int u) {
+        int l = ch[u][0], r = ch[u][1];
+        int c = pass[u];
+        vector<LL> res;
+        if (!l && !r) {
+            res.assign(c+1, 0);
+            res[0] = INF;
+            return res;
+        }
+        if (!l) return dfs(r);
+        if (!r) return dfs(l);
+
+        LL w = 1LL << dep[u];
+        auto L = dfs(l);
+        auto R = dfs(r);
+        if(L.size() > R.size()) swap(L, R);
+        int szR = R.size();
+        int lg = __lg(szR);
+        vector<vector<LL>> rmq(szR,vector<LL>(lg+1));
+        for (int i = 0; i < szR;i++) rmq[i][0] = R[i] + w * i;
+        for (int p = 1; p <= lg;p++) {
+            for (int i = 0;i < szR;i++) {
+                int j = min(szR-1, i + (1 << (p-1)));
+                rmq[i][p] = min(rmq[i][p-1], rmq[j][p-1]);
+            }
+        }
+        // dp_u[k] = max dp_a[i] + dp_b[j] + w * (i + j - k)
+        // 其中 max(abs(i-j), 1) <= k <= i + j
+        // 先枚举 k >= 1, i >= 1 然后
+        // j >= k - i,  i - k <= j <= i + k
+        // 即 abs(i - k) <= j <= i + k
+        res.assign(c+1, INF);
+        int szL = L.size();
+        for (int k = 1; k <= c; k++) {
+            for (int i = 1; i < szL; i++) {
+                int jl = abs(i - k), jr = min(i+k, szR - 1);
+                if (jl > jr) continue;
+                int lgl = __lg(jr - jl + 1);
+                LL tmp = min(rmq[jl][lgl], rmq[jr-(1<<lgl)+1][lgl]);
+                // 【坑点2：别爆 long long 了】
+                __int128 x = (__int128) w * (i - k) + tmp + L[i];
+                if(x < res[k]) res[k] = x;
+            }
+        }
+        return res;
+    }
+
+    LL cal() {
+        return dfs(1)[1];
+    }
+}
+
+void solve() {
+    cin >> n;
+    Trie::clear();
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+        Trie::insert(a[i]);
+    }
+    cout << Trie::cal() << "\n";
+}
+
+int main() {
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+    int T = 1;
+    cin >> T;
+    while (T--) solve();
+}
+```
+
+## 1005 减数游戏 2
+
+### Problem Description
+
+河灵和胖胖龙正在玩「减数游戏」。
+
+游戏在一个长度为 $n$ 的正整数序列 $a_1, \dots, a_n$（$1 \le a_i \le n$）上进行，这些数构成了一个可重集合 $S$。
+
+游戏开始时，河灵和胖胖龙的分数均为 $0$。河灵和胖胖龙轮流操作，河灵先手。
+
+每次操作需要在 $1 \sim \min\{S\}$ 范围内选择一个正整数 $x$，然后将当前集合 $S$ 中的所有数都减去 $x$，如果某些数在当前操作后变成了 $0$，那么这些数将会被立即移出集合 $S$。若本次操作中至少有一个数被移出集合 $S$，则对方玩家得一分。
+
+当集合 $S$ 为空时，游戏结束。记最终河灵与胖胖龙的分数分别为 $A, B$。若 $A \ge B$，则河灵获胜；否则胖胖龙获胜。
+
+现在，河灵获得了一个残缺的序列 $a_1, \dots, a_n$（$0 \le a_i \le n$），其中某些位置的值已知，满足 $1 \le a_i \le n$；其余位置的值未知，用 $a_i = 0$ 表示。
+
+对于每个满足 $a_i = 0$ 的未知位置，河灵都可以将 $a_i$ 替换成 $1 \sim n$ 中的任意一个正整数。不同未知位置的替换相互独立。
+
+请你帮帮河灵，求出有多少种不同的替换方案，使得在河灵和胖胖龙都采取最优策略的前提下，最终河灵获胜。两种替换方案不同，当且仅当存在某个未知位置，在两种方案中的替换数值不同。答案对 $998244353$ 取模。
+
+### Input
+
+每个测试点中包含多组测试数据。输入的第一行包含一个正整数 $T$（$1 \le T \le 5 \times 10^5$），表示数据组数。对于每组测试数据：
+
+第一行一个正整数 $n$（$1 \le n \le 10^5$），表示序列 $a$ 长度。
+
+第二行 $n$ 个整数 $a_1, \dots, a_n$（$0 \le a_i \le n$），表示残缺的序列 $a$。其中某些位置的值已知，保证满足 $1 \le a_i \le n$；其余位置的值未知，用 $a_i = 0$ 表示。
+
+保证所有测试数据中 $n$ 之和不超过 $5 \times 10^5$。
+
+### Output
+
+对于每组测试数据：输出一行一个整数，表示答案对 $998244353$ 取模后的值。
+
+### Sample Input
+
+```txt
+5
+7
+7 4 1 3 5 4 1
+11
+8 9 3 1 11 1 6 6 4 2 7
+6
+0 1 4 5 0 0
+6
+0 0 0 0 0 0
+15
+0 4 0 13 0 0 6 0 13 0 0 2 8 3 0
+```
+
+### Sample Output
+
+```txt
+0
+1
+67
+27867
+528208295
+```
+
+### Solution
+
+- **容斥原理**
+	- 回顾一下
+	- yesAND_i / noAND_i 表示的是：**钦定** **至少** i 个一定/一定不 
+	- 第一种：yesOR = sum of +-yesAND_i 
+	- 第二种：yesAND = U - noOR = U - (sum of +-noAND_i)
+		- 后来我发现我好傻逼， $U$ 其实就是 noAND_0 
+		- 所以 yesAND = sum of +- noAND_i
+- **这个题，它的外部是一层博弈问题**
+	- 通过分析它的先手优势与操作控制
+	- 奇偶性
+	- 等
+	- 得到：填数后的数字集合 $S$ 合法当且仅当
+	- $\text{mex}^+ (S)$ 即最小的没有出现过的正整数，是奇数
+	- 问题就是求这个填法的方案数
+- **开始容斥**
+	- 假设有 $k$ 个填数字的位置
+	- 一开始，已经有了一些数字占位，所以枚举 $\text{mex}^+$ 答案为 $x$ 
+	- 因此，前面的没选过的数字必须被选中（假设有 $i$ 个空缺），$x$ 一定不选
+	- 合法的方案描述为：
+		- $k$ 个完全不同的小球，放到 $n-1$ 个不同的箱子中，其中所有的 $i$ 个盒子，都必须有小球放，求合法的方案数
+	- 分析：
+		- 这是一个 **异球**，**异盒**，**特定盒子特定数量** 的小球盒子问题
+		- 如果是 **同球** 的话，隔板法就可以解决了
+		- 难就难在 是 **异球** 所以不得不使用容斥
+	- 如何容斥？
+		- 最终我们需要的是，所有的 $i$ 个空都要有球，是 AND ，
+			- 相比：钦定若干位置先放 1 个（这是一个死路）
+		- 所以，使用 **容斥原理2** 
+		- 所以，我们需要快速求出：至少有 $j$ 个位置不放球的方案数，显然这个好枚举了
+			- 钦定若干位置不放的话，以后也不再放了
+			- 即 $\binom{i}{j} (n-1-j)^k$
+		- 然后就是简单的全集 $U$ 
+			- 显然是随便放
+			- 即 $(n-1)^k$ 
+		- 因此
+		- $\text{ans}_i = (n-1)^k - \sum_{j=1}^{i} (-1)^{j+1} \binom{i}{j} (n-1-j)^k = n^k - f_i$ 
+			- 后来才发现
+			- $ans_i = \sum_{j=0}{i} (-1)^j \binom{i}{j}(n-1-j)^k = f_i'$  
+
+考虑这个求解这个：
+
+$$
+
+\begin{equation}
+\begin{aligned}
+
+f_i &= \sum_{j=1}^{i} (-1)^{j+1} \binom{i}{j} (n-1-j)^k \\
+&= \sum_{j=1}^{i} (-1)^{j+1} \frac{i!}{j!(i-j)!} (n-1-j)^k \\
+&= i! \sum_{j=1}^{i} (-1)^{j+1} \frac{(n-1-j)^k}{j!} \cdot \frac{1}{(i-j)!}  \\
+
+或者: \\
+f_i' &= i!\sum_{j=0}^{i}(-1)^j \frac{(n-1-j)^k}{j!} \cdot \frac{1}{(i-j)!} 
+
+\end{aligned}
+\end{equation}
+
+
+
+$$
+
+分离出 $j$ 与 $i-j$ 可观察到：
+
+设
+
+$$
+\begin{cases}
+\begin{aligned}
+
+A_j &= (-1)^{j+1} \frac{(n-1-j)^k}{j!} \\
+B_j &= \frac{1}{j!} \\
+
+或者: \\
+
+A_j' &= (-1)^j \frac{(n-1-j)^k}{j!} \\
+B_j' &= \frac{1}{j!}
+
+\end{aligned}
+\end{cases}
+$$
+
+则 
+
+$$
+\begin{equation}
+\begin{aligned}
+
+f_i &= i! \sum_{a+b=i \wedge a \ne 0} A_a \cdot B_b \\
+&= i! \sum_{a+b=i} A_a \cdot B_b -  i! A_0 B_i \\
+
+或者: \\
+
+f_i' &= i! \sum_{a+b=i} A_a \cdot B_i
+
+\end{aligned}
+\end{equation}
+$$
+整合式子
+
+$$
+\begin{equation}
+\begin{aligned}
+
+\text{ans}_i &= n^k + i! A_0 B_i - i! (A \times B)_i \\
+&= i! (A' \times B')_i
+
+\end{aligned}
+\end{equation}
+$$
+
+因此针对不同的 $i$ 我们可以计算其卷积，使用 **NTT** 计算（因为 998244353 友好）
+
+- 忘了说了， $i=n+1$ 的时候， $n \leftarrow n + 1$ 注意特判
+
+### Code
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+using LL = long long;
+using Poly = vector<LL>;
+
+const int N = 1e5 + 5;
+
+const LL mod = 998244353;
+const int g = 3;
+
+// +-*
+inline LL add(LL a, LL b) {a += b;if(a>=mod)a-=mod;return a;}
+inline LL sub(LL a, LL b) {a -= b;if(a<0)a+=mod;return a;}
+inline void inc(LL& a, LL x) {a += x;if(a>=mod)a-=mod;}
+inline void dec(LL& a, LL x) {a -= x;if(a<0)a+=mod;}
+inline void tim(LL& a, LL x) {(a*=x)%=mod;}
+
+// 求逆
+LL ksm(LL a, LL b = mod - 2) {
+    LL res = 1;
+    for(;b;b>>=1,tim(a,a))if(b&1)tim(res,a);
+    return res;
+}
+
+namespace NTT{
+    const int N = 1 << 21;
+    // w_{N}^{i} / w_{N}^{-i}
+    LL w[N], iw[N];
+
+    void init() {
+        for (int i = 1; i < N; i <<= 1) {
+            LL wn = ksm(g, (mod-1)/(i<<1));
+            LL iwn = ksm(wn);
+            w[i] = iw[i] = 1;
+            for (int j = 1;j<i;j++) {
+                w[i|j] = w[i|(j-1)] * wn % mod;
+                iw[i|j] = iw[i|(j-1)] * iwn % mod;
+            }
+        }
+    }
+
+    void DIF(Poly& A, int n) {
+        for (int l = n >> 1; l; l>>=1) {
+            for (int i = 0; i < n; i += l << 1) {
+                for (int j = 0; j < l; j++) {
+                    LL x = A[i | j], y = A[i | l | j];
+                    A[i | j] = add(x, y);
+                    A[i | l | j] = sub(x, y) * w[l | j] % mod;
+                }
+            }
+        }
+    }
+
+    void DIT(Poly& A, int n) {
+        for (int l = 1; l < n; l<<=1) {
+            for (int i = 0; i < n; i += l << 1) {
+                for (int j = 0; j < l; j++) {
+                    LL x = A[i | j], y = A[i | l | j] * iw[l | j] % mod;
+                    A[i | j] = add(x, y);
+                    A[i | l | j] = sub(x, y);
+                }
+            }
+        }
+        LL invn = ksm(n);
+        for (int i = 0; i < n; i++) tim(A[i], invn);
+    }
+
+    void mul_to(Poly& A, Poly& B, int lim) {
+        int n = A.size(), m = B.size(), L = 1;
+        while(L < n + m - 1) L <<= 1;
+        A.resize(L); B.resize(L);
+        DIF(A, L); DIF(B, L);
+        for (int i = 0; i < L; i++) tim(A[i], B[i]);
+        DIT(A, L);
+        A.resize(lim);
+    }
+}
+
+LL fac[N], invfac[N];
+
+void init() {
+    fac[0] = 1;
+    for (int i = 1; i < N; i++) fac[i] = fac[i-1] * i % mod;
+    invfac[N-1] = ksm(fac[N-1]);
+    for (int i = N-1; i >= 1; i--) invfac[i-1] = invfac[i] * i % mod;
+}
+
+LL binom(int a, int b) {
+    if (a < b) return 0;
+    return fac[a] * invfac[b] % mod * invfac[a-b] % mod;
+}
+
+int n;
+bool vis[N];
+Poly A, B; // B 其实就是 invfac
+
+void solve() {
+    
+    int k = 0;
+    cin >> n;
+
+    fill(vis,vis+1+n+1,false);
+    
+    for (int i = 1; i <= n; i++) {
+        int a;
+        cin >> a;
+        if (a == 0) {
+            k++;
+        } else {
+            vis[a] = true;
+        }
+    }
+
+    A.resize(n);
+    B.resize(n);
+    
+    for (int j = 0; j < n; j++) {
+        A[j] = ksm(n - 1 - j, k) * invfac[j] % mod;
+        if (j & 1) A[j] = (-A[j] + mod) % mod;
+    }
+    for (int j = 0;j < n; j++) B[j] = invfac[j];
+    
+    NTT::mul_to(A, B, n);
+    
+    LL ans = 0;
+    int i = 0;
+    for (int _ = 1; _ <= n+1; _++) {
+        // 【坑点1：跳过不可能的奇数】
+        if(_&1 && !vis[_]) {
+            if(_ == n+1) {
+                // noOR 并集求的是 \sum_{j=0}^{i} (-1)^j \binom{i}{j} (n-j)^k 
+                // 也就是说 n = n + 1
+                // 不用 NTT 直接暴力求和
+                LL res = 0;
+                for (int j = 0; j <= i; j++) {
+                    LL tmp = binom(i, j) * ksm(n-j, k) % mod;
+                    if (j & 1) dec(res, tmp);
+                    else inc(res, tmp);
+                }
+                inc(ans, res);
+            } else {
+                inc(ans, fac[i] * A[i] % mod);
+            }
+        }
+        if(!vis[_]) i++;
+    }
+    cout << ans << "\n";
+}
+
+int main() {
+    init();
+    NTT::init();
     ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
     int T = 1;
     cin >> T;

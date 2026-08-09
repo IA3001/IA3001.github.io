@@ -1,11 +1,496 @@
 ---
 title: 2026牛客暑期多校训练营5
 tags:
-  - 牛客多校
+  - 2026牛客多校
   - NC
 published: true
 ---
 > 数学/构造 场
+
+## A 回声前缀
+
+### Problem Description
+
+Input file: standard input  
+Output file: standard output  
+Time limit: 4 seconds  
+Memory limit: 512 megabytes
+
+给定一个长度为 $n$ 的小写英文字母串 $S$。字符串 $S$ 固定不变。
+
+每个位置 $i$ 有一个非负权值 $a_i$，权值可以被修改。
+
+对于一个非空字符串 $X$，定义它的回声值为
+
+$$
+H(X)=\sum_{\substack{1\le j\le n-|X|+1\\ S[j..j+|X|-1]=X}} a_j.
+$$
+
+也就是说，$X$ 在 $S$ 中每出现一次，就贡献该出现起点的当前权值。
+
+处理 $q$ 次操作：
+
+- `1 i x`：令 $a_i = x$。
+- `2 p m`：输出
+
+$$
+\sum_{t=1}^{m} H(S[p..p+t-1]).
+$$
+
+- `3 p m k`：求最小的 $t$，满足 $1 \le t \le m$ 且
+
+$$
+\sum_{d=1}^{t} H(S[p..p+d-1]) \ge k.
+$$
+
+若不存在这样的 $t$，输出 $0$。
+
+所有下标均从 $1$ 开始。
+
+### Input
+
+第一行包含两个整数 $n, q$（$1 \le n, q \le 2 \cdot 10^5$）。
+
+第二行包含一个长度为 $n$ 的小写英文字母串 $S$。
+
+第三行包含 $n$ 个整数 $a_1, a_2, \dots, a_n$（$0 \le a_i \le 10^6$）。
+
+接下来 $q$ 行，每行包含一次操作，格式为以下三种之一：
+
+- `1 i x`（$1 \le i \le n$，$0 \le x \le 10^6$）
+- `2 p m`（$1 \le p \le n$，$1 \le m \le n-p+1$）
+- `3 p m k`（$1 \le p \le n$，$1 \le m \le n-p+1$，$1 \le k \le 10^{18}$）
+
+保证所有输出答案均不超过 $9 \cdot 10^{18}$。
+
+### Output
+
+对于每个类型为 $2$ 或 $3$ 的操作，输出一行一个整数。
+
+### Sample Input
+
+```txt
+5 9
+ababa
+1 0 2 1 3
+2 1 5
+3 1 5 10
+1 1 5
+2 1 5
+3 1 5 20
+2 2 3
+1 4 4
+3 2 3 8
+2 2 3
+```
+
+### Sample Output
+
+```txt
+14
+3
+34
+3
+2
+2
+8
+```
+
+### Hint
+
+初始时，$S=\texttt{ababa}$，$a=[1,0,2,1,3]$。
+
+对于 $p=1, m=5$，五个前缀分别为 $\texttt{a}, \texttt{ab}, \texttt{aba}, \texttt{abab}, \texttt{ababa}$，它们的回声值分别为 $6, 3, 3, 1, 1$。因此第一个答案为 $14$。
+
+对于询问 `3 1 5 10`，$t=1,2,3$ 时的前缀累计和依次为 $6,9,12$，所以答案为 $3$。
+
+将 $a_1=5$ 后，上述五个回声值变为 $10,7,7,5,5$，所以 `2 1 5` 的答案为 $34$。
+
+### Solution
+
+**【后缀树 上 RMQ** 】**【SA 构建后缀树】**
+
+> **后缀树** 不失为处理 子串查询 的强有力数据结构
+
+- 用到的后缀树的性质
+	- 压缩版的 Trie
+		- 压缩了二度节点
+	- 所有后缀节点都是叶子节点
+		- 一个叶子节点，对应一条链，一个后缀
+	- 一个字符串在后缀树上如果可以走过某一条路径，那么它所到达的端点子树的叶子个数，即为出现次数
+		- 原因：出现次数对应于各种后缀的前缀，因此该子树的叶子个数即为出现次数
+	- 两个叶子节点的 LCA 即为两个后缀的 LCP，
+		- 【这是很棒的一点】
+		- 因为如果单纯使用 Height 数组构建的笛卡尔树，非常难用，还需要判断排名相对大小，并且左端点+1
+- 后缀树的 SA 构建原理
+	- 由于 SA 越相似的前缀，越容易排到连续的位置，
+		- 因此，lcp 扫描过程中，其长度是连续变化的
+		- 便于压缩构造 Trie 树
+	- 使用一个栈链，维护当前稻苗到的后缀的单链结构
+	- Height 表示的即为下一个后缀与当前栈链第一个不同的位置，便于快速定位、分叉
+	- （注意到）已经被弹出栈链的节点，不再有机会和后续的后缀合并
+		- 这也就对应了 lcp = rmq height
+
+### Code
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+const int N = 2e5 + 5;
+const int M = 1<<8;
+
+// 【NEW】 SA 构建后缀树 无终止符 优雅 模板
+namespace SufTree {
+    int sa[N*2], tsa[N], rk[N*2], trk[N*2], cnt[N], n,m,p;
+    int height[N];
+    string s;
+    void init(const string & _) {
+        s = _;
+        n = s.size();
+        m = M - 1;
+        p = 0;
+        for (int i = 1; i <= n; i++) cnt[rk[i]=s[i-1]]++;
+        for (int i = 1; i <= m; i++) cnt[i] += cnt[i-1];
+        for (int i = n; i >= 1; i--) sa[cnt[rk[i]]--] = i;
+        
+        for (int w = 1; w <= n; w <<= 1, m=p) {
+            int cur = 0;
+            for (int i = n; i > n - w; i--) tsa[++cur] = i;
+            for (int i = 1; i <= n; i++) if (sa[i] > w) tsa[++cur] = sa[i] - w;
+
+            memset(cnt,0,sizeof(cnt[0]) * (m + 1));
+            for (int i = 1; i <= n; i++) cnt[rk[i]]++;
+            for (int i = 1; i <= m; i++) cnt[i] += cnt[i-1];
+            for (int i = n; i >= 1; i--) sa[cnt[rk[tsa[i]]]--] = tsa[i];
+
+            p = 0;
+            memcpy(trk,rk,sizeof(rk[0]) * (n+1));
+            for (int i = 1; i <= n; i++) {
+                p += trk[sa[i]] != trk[sa[i-1]] || trk[sa[i]+w] != trk[sa[i-1]+w];
+                rk[sa[i]] = p;
+            }
+            if (p == n) break;
+        }
+    }
+    // 【终于知道复杂度为什么这么低了】
+    // 想想 SufTree 的节点个数才 O(2n) 个
+    void get_height() {
+        for (int i = 1,h=0;i<=n;i++) {
+            if(rk[i]==1) h=0;
+            else {
+                if(h)h--;
+                int j = sa[rk[i]-1];
+                while(i+h<=n&&j+h<=n&&s[i+h-1]==s[j+h-1])h++;
+            }
+            height[rk[i]]=h;
+        }
+    }
+    // 【正片】
+    // 1-n 是后缀， >= n + 1 是中间节点
+    int fa[N*2], stk[N*2], tp, tot, len[N*2], root;
+    void build(const string& s) {
+        init(s);
+        get_height();
+
+        tot = n;
+        root = ++tot;
+        fa[root] = 0;
+        len[root] = 0;
+        stk[tp = 1] = root;
+
+        for (int i = 1; i <= n; ++i) {
+            int x = sa[i], h = height[i];
+            len[x] = n + 1 - x;
+
+            int last = 0;
+            while (len[stk[tp]] > h) last = stk[tp--];
+
+            int cur = stk[tp];
+            if (len[cur] < h) {
+                int z = ++tot;
+                len[z] = h;
+                fa[z] = cur;
+                if (last) fa[last] = z;
+                cur = z;
+                stk[++tp] = z;
+            } else if (cur <= n) {
+                int z = ++tot;
+                len[z] = h;
+                fa[z] = stk[tp - 1];
+                fa[cur] = z;
+                cur = z;
+                stk[tp] = z;
+            }
+
+            fa[x] = cur;
+            stk[++tp] = x;
+        }
+    }
+}
+
+int n, q;
+string S;
+ll a[N], sum[N];
+
+vector<int> e[N*2];
+int dfn[N*2], dfncnt, rnk[N*2], son[N*2], sz[N*2], fa[N*2], dep[N*2], top[N*2];
+
+namespace SegTree{
+    // f 表示区间 a 之和 g 表示区间边长之和 h 表示区间 a * h 之和
+    ll f[N*8], g[N*8], h[N*8];
+    ll tag[N*8]; // tag 表示 区间加
+    void up(int i) {
+        f[i] = f[i*2] + f[i*2+1];
+        g[i] = g[i*2] + g[i*2+1];
+        h[i] = h[i*2] + h[i*2+1];
+    }
+    void build(int i,int l,int r) {
+        tag[i] = 0;
+        if (l == r) {
+            int u = rnk[l];
+            f[i] = sum[u];
+            g[i] = SufTree::len[u] - SufTree::len[fa[u]];
+            h[i] = f[i] * g[i];
+        } else {
+            int mid = (l + r) / 2;
+            build(i*2,l,mid);
+            build(i*2+1,mid+1,r);
+            up(i);
+        }
+    }
+    void lazy_add(int i,int n,ll v) {
+        tag[i] += v;
+        f[i] += n * v;
+        h[i] += v * g[i];
+    }
+    void down(int i,int ln,int rn) {
+        if(tag[i]) {
+            lazy_add(i*2,ln,tag[i]);
+            lazy_add(i*2+1,rn,tag[i]);
+            tag[i] = 0;
+        }
+    }
+    void add(int i,int l,int r,int jl,int jr,ll v) {
+        if (jl <= l && r <= jr) {
+            lazy_add(i,r-l+1,v);
+        } else {
+            int mid = (l + r) / 2;
+            down(i,mid-l+1,r-mid);
+            if(jl<=mid) add(i*2,l,mid,jl,jr,v);
+            if(jr>mid) add(i*2+1,mid+1,r,jl,jr,v);
+            up(i);
+        }
+    }
+    ll query_f(int i,int l,int r,int jl,int jr) {
+        if (jl <= l && r <= jr) {
+            return f[i];
+        } else {
+            ll res = 0;
+            int mid = (l + r) / 2;
+            down(i,mid-l+1,r-mid);
+            if (jl <= mid) res += query_f(i*2,l,mid,jl,jr);
+            if (jr > mid) res += query_f(i*2+1,mid+1,r,jl,jr);
+            return res;
+        }
+    }
+    ll query_g(int i,int l,int r,int jl,int jr) {
+        // 【坑点！！！】 在 upper_bound_g 调用它的时候，会出现 空集查询的情况，必须制止!
+        if(r<jl||l>jr) return 0;
+        if (jl <= l && r <= jr) {
+            return g[i];
+        } else {
+            ll res = 0;
+            int mid = (l + r) / 2;
+            if (jl <= mid) res += query_g(i*2,l,mid,jl,jr);
+            if (jr > mid) res += query_g(i*2+1,mid+1,r,jl,jr);
+            return res;
+        }
+    }
+    ll query_h(int i,int l,int r,int jl,int jr) {
+        if(r<jl||l>jr) return 0;
+        if (jl <= l && r <= jr) {
+            return h[i];
+        } else {
+            ll res = 0;
+            int mid = (l + r) / 2;
+            down(i,mid-l+1,r-mid);
+            if (jl <= mid) res += query_h(i*2,l,mid,jl,jr);
+            if (jr > mid) res += query_h(i*2+1,mid+1,r,jl,jr);
+            return res;
+        }
+    }
+    int upper_bound_g(int i,int l,int r,int jl,int jr,ll x) {
+        // cout << i << " " << l << " " << r << "\n";
+        if (l == r) return l;
+        int mid = (l + r) / 2;
+        down(i,mid-l+1,r-mid);
+        ll L = query_g(i*2,l,mid,jl,jr);
+        if (L <= x) {
+            x -= L;
+            return upper_bound_g(i*2+1,mid+1,r,jl,jr,x);
+        } else {
+            return upper_bound_g(i*2,l,mid,jl,jr,x);
+        }
+    }
+    int upper_bound_h(int i,int l,int r,int jl,int jr,ll x) {
+        if (l == r) return l;
+        int mid = (l + r) / 2;
+        down(i,mid-l+1,r-mid);
+        ll L = query_h(i*2,l,mid,jl,jr);
+        if (L < x) {
+            x -= L;
+            return upper_bound_h(i*2+1,mid+1,r,jl,jr,x);
+        } else {
+            return upper_bound_h(i*2,l,mid,jl,jr,x);
+        }
+    }
+}
+
+// 由于后缀树 都是查询/修改的 从叶子到根 的路径，所以一路往上跳
+vector<array<int,2>> get_range(int x) {
+    vector<array<int,2>> res;
+    while(x) {
+        res.push_back({top[x], x});
+        x = fa[top[x]];
+    }
+    reverse(res.begin(), res.end());
+    return res;
+}
+
+// op1
+void add(int x,ll v) {
+    auto lr = get_range(x);
+    for(auto [l,r]: lr) 
+        SegTree::add(1,1,dfncnt,dfn[l], dfn[r], v);
+}
+
+// op2
+ll query2(int x,int m) {
+    ll res = 0;
+    auto lr = get_range(x);
+    for (auto [l, r]: lr) {
+        ll tmp_g = SegTree::query_g(1,1,dfncnt,dfn[l],dfn[r]);
+        if (tmp_g <= m) {
+            m -= tmp_g;
+            res += SegTree::query_h(1,1,dfncnt,dfn[l],dfn[r]);
+        } else {
+            int y = rnk[SegTree::upper_bound_g(1,1,dfncnt,dfn[l],dfn[r],m)];            
+            if(y != top[y]) {
+                int fy = fa[y];
+                if(dep[fy] >= dep[l]) {
+                    tmp_g = SegTree::query_g(1,1,dfncnt,dfn[l],dfn[fy]);
+                    m -= tmp_g;
+                    res += SegTree::query_h(1,1,dfncnt,dfn[l],dfn[fy]);
+                }
+            }
+            ll f = SegTree::query_f(1,1,dfncnt,dfn[y],dfn[y]);
+            res += f * m;
+            break;
+        }
+    }
+    return res;
+}
+
+// op3
+int query3(int x,int m,ll k) {
+    int t = 0;
+    auto lr = get_range(x);
+    for (auto [l, r]: lr) {
+        ll tmp_h = SegTree::query_h(1,1,dfncnt,dfn[l],dfn[r]);
+        if (tmp_h < k) {
+            k -= tmp_h;
+            t += SegTree::query_g(1,1,dfncnt,dfn[l],dfn[r]);
+        } else {
+            int y = rnk[SegTree::upper_bound_h(1,1,dfncnt,dfn[l],dfn[r],k)];
+            if (y != top[y]) {
+                int fy = fa[y];
+                if(dep[fy] >= dep[l]) {
+                    tmp_h = SegTree::query_h(1,1,dfncnt,dfn[l],dfn[fy]);
+                    k -= tmp_h;
+                    t += SegTree::query_g(1,1,dfncnt,dfn[l],dfn[fy]);
+                }
+            }
+            ll f = SegTree::query_f(1,1,dfncnt,dfn[y],dfn[y]);
+            // if(!f) return 0;
+            ll rm = (k-1) / f;
+            t += rm + 1;
+            k = -1;
+            break;
+        }
+    }
+    return k == -1 && t <= m ? t : 0;
+}
+
+void dfs1(int u) {
+    sz[u] = 1;
+    sum[u] = u <= n ? a[u] : 0;
+    for (auto v: e[u]) {
+        fa[v] = u;
+        dep[v] = dep[u] + 1;
+        
+        dfs1(v);
+
+        sum[u] += sum[v];
+        sz[u] += sz[v];
+        if (sz[son[u]] < sz[v]) {
+            son[u] = v;
+        }
+    }    
+}
+
+void dfs2(int u,int tp) {
+    dfn[u] = ++dfncnt;
+    rnk[dfncnt] = u;
+    top[u] = tp;
+    if(son[u]) dfs2(son[u], tp);
+    for (auto v: e[u]) if (v!=son[u]) dfs2(v, v);
+}
+
+void solve() {
+    cin >> n >> q;
+    cin >> S;
+    for (int i = 1; i <= n; i++) cin >> a[i];
+
+    SufTree::build(S);
+    for (int i = 1; i <= SufTree::tot; i++) e[SufTree::fa[i]].push_back(i);
+
+    dfs1(SufTree::root);
+    dfs2(SufTree::root,SufTree::root);
+    
+    SegTree::build(1,1,dfncnt);
+
+    for (int i = 1; i <= q; i++) {
+        int op;
+        cin >> op;
+        if (op == 1) {
+            int i, x;
+            cin >> i >> x;
+            add(i, x - a[i]);
+            a[i] = x; 
+        } else if(op == 2) {
+            int p, m;
+            cin >> p >> m;
+            cout << query2(p, m) << "\n";
+        } else {
+            int p, m;
+            ll k;
+            cin >> p >> m >> k;
+            cout << query3(p, m, k) << "\n";
+
+        }
+    }
+
+}
+
+int main() {
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+    int T = 1;
+    // cin >> T;
+    while (T--) solve();
+}
+```
 
 ## B 放大的徽章
 
@@ -537,3 +1022,5 @@ int main() {
     }
 }
 ```
+
+[^1]: 

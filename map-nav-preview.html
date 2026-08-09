@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>比赛地图导航预览</title>
+<style>
+  :root {
+    --bg: #ffffff; --panel: #f8f9fa; --text: #343a40; --muted: #adb5bd;
+    --accent: #bfbfbf; --border: #dfe2e5; --blue: #4a90d9;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Open Sans', 'PingFang SC', 'Microsoft Yahei', sans-serif;
+    background: var(--bg); color: var(--text); font-size: 16px;
+  }
+  .page-head { max-width: 1000px; margin: 0 auto; padding: 40px 24px 10px; }
+  .page-head h1 { font-size: 26px; margin-bottom: 6px; }
+  .page-head p { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+
+  /* ============ 方案 1：顶部胶囊导航条 ============ */
+  .nav-bar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 0;
+    display: flex; justify-content: center; gap: 8px;
+  }
+  .nav-bar .nav-chip {
+    padding: 4px 16px; border-radius: 999px;
+    background: #e9ecef; color: #495057; font-size: 14px;
+    cursor: pointer; border: none; transition: all .25s;
+  }
+  .nav-bar .nav-chip:hover { background: var(--blue); color: #fff; }
+  .nav-bar .nav-chip.active { background: var(--blue); color: #fff; }
+
+  /* ============ 方案 2：右侧目录侧栏 ============ */
+  .layout { max-width: 1240px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: center; gap: 32px; align-items: flex-start; }
+  .content { width: 1000px; flex-shrink: 0; }
+  .outline {
+    width: 200px; flex-shrink: 0; position: sticky; top: 70px;
+    max-height: calc(100vh - 90px); overflow-y: auto;
+    font-size: 13px; border-left: 1px solid var(--border); padding-left: 20px;
+  }
+  .outline .ot-title { font-size: 11px; font-weight: 600; letter-spacing: 1px; color: var(--muted); margin-bottom: 12px; }
+  .outline a {
+    display: block; padding: 4px 0; color: var(--muted); text-decoration: none;
+    transition: color .15s; line-height: 1.5; cursor: pointer;
+  }
+  .outline a:hover { color: var(--text); }
+  .outline a.active { color: var(--text); font-weight: 600; }
+  .outline .sub { padding-left: 16px; font-size: 12px; }
+
+  /* ============ 方案 3：纯锚点链接 ============ */
+  .anchor-row { display: flex; gap: 16px; padding: 14px 24px; background: var(--panel); border: 1px dashed var(--border); border-radius: 8px; margin: 0 0 24px; }
+  .anchor-row a { color: var(--blue); text-decoration: none; font-size: 14px; }
+  .anchor-row a:hover { text-decoration: underline; }
+
+  /* 内容区（模拟地图） */
+  section { margin-bottom: 48px; scroll-margin-top: 80px; }
+  .series-title { font-size: 20px; border-bottom: 1px dashed var(--border); padding-bottom: 6px; margin-bottom: 12px; }
+  .contest { margin: 10px 0 4px; font-weight: 600; }
+  .probs { display: flex; flex-wrap: wrap; gap: 4px 16px; list-style: none; padding-left: 0; }
+  .probs a { color: var(--blue); font-size: 14px; text-decoration: none; }
+  .probs a:hover { text-decoration: underline; }
+  .mock-note { text-align: center; color: var(--muted); font-size: 12px; padding: 20px 0 60px; }
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <h1>比赛地图导航预览</h1>
+  <p>三种方案，可滚动页面、点击导航、观察滚动高亮。方案 1 和 2 可交互；方案 3 是原生锚点跳转。</p>
+</div>
+
+<!-- 方案 1 -->
+<nav class="nav-bar" id="navBar">
+  <button class="nav-chip" data-target="cf">CF</button>
+  <button class="nav-chip" data-target="hdu">HDU</button>
+  <button class="nav-chip" data-target="nc">NC</button>
+  <button class="nav-chip" data-target="neu">NEU</button>
+</nav>
+
+<div class="layout">
+  <div class="content">
+    <!-- 方案 3 -->
+    <div class="anchor-row">
+      <span style="color:var(--muted);font-size:13px">方案 3（纯锚点）：</span>
+      <a href="#cf">CF</a><a href="#hdu">HDU</a><a href="#nc">NC</a><a href="#neu">NEU</a>
+    </div>
+
+    <section id="cf">
+      <h2 class="series-title">CF</h2>
+      <p class="contest">Codeforces Round 2209</p>
+      <ul class="probs"><li><a>D RGB三色限制序列构造</a></li><li><a>E 字符串最大前缀分解数</a></li><li><a>F Dynamic Values And Maximum Sum</a></li></ul>
+      <p class="contest">Codeforces Round 2204</p>
+      <ul class="probs"><li><a>E Sum of Digits (and Again)</a></li><li><a>F Sum of Fractions</a></li><li><a>G Grid Path</a></li></ul>
+      <p class="contest">Codeforces Round 2084</p>
+      <ul class="probs"><li><a>G2 区间博弈 DP</a></li></ul>
+    </section>
+
+    <section id="hdu">
+      <h2 class="series-title">HDU</h2>
+      <p class="contest">2026"钉耙编程"中国大学生算法设计春季联赛（1）</p>
+      <ul class="probs"><li><a>1001 氟化钙</a></li><li><a>1003 回文串</a></li><li><a>1010 MEX</a></li></ul>
+      <p class="contest">2026"钉耙编程"中国大学生算法设计春季联赛（2）</p>
+      <ul class="probs"><li><a>1003 A 和 B 依次选数</a></li></ul>
+      <p class="contest">2026"钉耙编程"中国大学生算法设计春季联赛（热身）</p>
+      <ul class="probs"><li><a>1001 最大的公约数</a></li><li><a>1005 时空碎片收集者</a></li></ul>
+    </section>
+
+    <section id="nc">
+      <h2 class="series-title">NC</h2>
+      <p class="contest">2026牛客暑期多校训练营2</p>
+      <ul class="probs"><li><a>C 比赛：连胜记录</a></li><li><a>F 神奇的树</a></li><li><a>K 幼儿园</a></li></ul>
+      <p class="contest">2026牛客暑期多校训练营5</p>
+      <ul class="probs"><li><a>A 回声前缀</a></li><li><a>B 放大的徽章</a></li></ul>
+    </section>
+
+    <section id="neu">
+      <h2 class="series-title">NEU</h2>
+      <p class="contest">NEU 2026Spring（1）</p>
+      <ul class="probs"><li><a>I 数字子数组排序和</a></li><li><a>M 从多个商店买货</a></li></ul>
+      <p class="contest">NEU 2026Spring（5）</p>
+      <ul class="probs"><li><a>L 尖尖的排列计数</a></li></ul>
+    </section>
+
+    <p class="mock-note">—— 模拟内容结束，继续滚动回到顶部观察导航高亮 ——</p>
+  </div>
+
+  <!-- 方案 2 -->
+  <aside class="outline" id="outline">
+    <div class="ot-title">NAVIGATION（方案 2）</div>
+    <a data-target="cf">CF</a>
+    <a class="sub" data-target="hdu">HDU</a>
+    <a class="sub" data-target="nc">NC</a>
+    <a class="sub" data-target="neu">NEU</a>
+    <a data-target="hdu">HDU</a>
+    <a data-target="nc">NC</a>
+    <a data-target="neu">NEU</a>
+  </aside>
+</div>
+
+<script>
+  // 滚动高亮：方案 1 顶部胶囊 + 方案 2 侧栏（共享 IntersectionObserver）
+  var sections = ['cf','hdu','nc','neu'];
+  var navEls1 = document.querySelectorAll('#navBar .nav-chip');
+  var navEls2 = document.querySelectorAll('#outline a');
+  function setActive(id) {
+    navEls1.forEach(function(b){ b.classList.toggle('active', b.dataset.target === id); });
+    navEls2.forEach(function(b){ b.classList.toggle('active', b.dataset.target === id); });
+  }
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (en.isIntersecting) setActive(en.target.id);
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(function(id){ obs.observe(document.getElementById(id)); });
+
+  // 点击平滑滚动（方案 1 和 2 共用）
+  [].forEach.call(document.querySelectorAll('#navBar .nav-chip, #outline a'), function(el){
+    el.addEventListener('click', function(){
+      var t = document.getElementById(el.dataset.target);
+      if (t) t.scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+  });
+</script>
+</body>
+</html>
