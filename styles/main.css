@@ -455,8 +455,17 @@ hr {
 }
 .post-list-container .post-inner .post .post-left .post-info .post-tag,
 .post-list-container .post-inner .post .post-left .post-info .post-category {
-  margin: 0 10px;
-  color: var(--accent-first);
+  margin: 0 4px;
+  padding: 2px 8px;
+  background: var(--accent-second);
+  border-radius: 999px;
+  color: var(--content-first);
+  transition: all 0.25s;
+}
+.post-list-container .post-inner .post .post-left .post-info .post-tag:hover,
+.post-list-container .post-inner .post .post-left .post-info .post-category:hover {
+  background: #4a90d9;
+  color: #ffffff !important;
 }
 .post-list-container .post-inner .post .post-left .post-info a {
   color: var(--accent-first);
@@ -515,7 +524,16 @@ hr {
   padding: 0 8px;
 }
 .post-container .post-detail .post-info .post-tag {
-  padding: 8px;
+  padding: 3px 10px;
+  margin: 0 4px;
+  background: var(--accent-second);
+  border-radius: 999px;
+  color: var(--content-first);
+  transition: all 0.25s;
+}
+.post-container .post-detail .post-info .post-tag:hover {
+  background: #4a90d9;
+  color: #ffffff !important;
 }
 .post-container .post-detail .post-toc {
   margin-bottom: 30px;
@@ -592,8 +610,6 @@ hr {
 }
 .gt-a-link {
   color: var(--content-first) !important;
-  position: relative !important;
-  background: linear-gradient(180deg, transparent 75%, #4dabf766 0) !important;
 }
 .gt-post-content {
   word-break: normal;
@@ -601,7 +617,7 @@ hr {
 }
 .gt-post-content a,
 .gt-post-content a code {
-  color: var(--accent-first) !important;
+  color: #4a90d9 !important;
   transition: all 0.3s;
 }
 .gt-post-content a:hover {
@@ -796,6 +812,13 @@ hr {
   font-size: 18px;
   margin-bottom: 24px;
 }
+.current-tag-container .title .current-tag-name {
+  display: inline-block;
+  padding: 4px 14px;
+  background: var(--accent-second);
+  border-radius: 999px;
+  color: var(--content-first);
+}
 @media (max-width: 992px) {
   .current-tag-container .title {
     margin-top: 50px;
@@ -813,8 +836,27 @@ hr {
   align-self: center;
 }
 .tags-container .tag {
-  font-size: 15px;
-  margin: 5px 15px;
+  display: inline-block;
+  margin: 6px 8px;
+  padding: 4px 14px;
+  background: var(--accent-second);
+  border-radius: 999px;
+  color: var(--content-first);
+  transition: all 0.25s;
+}
+.tags-container .tag:hover {
+  background: #4a90d9;
+  color: #ffffff !important;
+}
+.tags-container .tag-sm {
+  font-size: 13px;
+}
+.tags-container .tag-md {
+  font-size: 16px;
+}
+.tags-container .tag-lg {
+  font-size: 20px;
+  font-weight: 600;
 }
 .friend-box {
   float: left;

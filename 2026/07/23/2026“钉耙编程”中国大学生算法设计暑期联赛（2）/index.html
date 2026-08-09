@@ -66,6 +66,10 @@
                 </div>
             
                 <div class="nav-item">
+                    <a href="/map/" class="menu gt-a-link" target="_self">地图</a>
+                </div>
+            
+                <div class="nav-item">
                     <a href="/tags/" class="menu gt-a-link" target="_self">标签</a>
                 </div>
             
@@ -104,11 +108,11 @@
                         31 千字 ·</span>
                     
                         
-                            <a href="/tags/HDU/" class="post-tag">
-                                #HDU</a>
-                        
                             <a href="/tags/2026%E6%9D%AD%E7%94%B5%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1/" class="post-tag">
                                 #2026杭电暑期多校</a>
+                        
+                            <a href="/tags/HDU/" class="post-tag">
+                                #HDU</a>
                         
                     
                 </div>
@@ -1825,6 +1829,9 @@ LL ans;
     });
 
     var activeLink = null;
+    // 首次 update()（页面加载时）不写 URL hash，
+    // 否则会把从地图/外部跳转进来的 #锚点 覆盖成目录第一个标题，导致跳转失效
+    var firstRun = true;
     function update() {
         var top = 0;
         for (var i = headings.length - 1; i >= 0; i--) {
@@ -1842,13 +1849,16 @@ LL ans;
                 current.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
             }
             activeLink = current;
-            // Update URL hash without pushing history entry
-            var id = decodeURIComponent(current.getAttribute('href').slice(1));
-            history.replaceState(null, '', '#' + id);
+            if (!firstRun) {
+                // Update URL hash without pushing history entry
+                var id = decodeURIComponent(current.getAttribute('href').slice(1));
+                history.replaceState(null, '', '#' + id);
+            }
         }
     }
     window.addEventListener('scroll', update, { passive: true });
     update();
+    firstRun = false;
 })();
 </script>
 

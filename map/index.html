@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Title -->
+<title>IA3001&#39;s Blog</title>
+
+<!-- Icon -->
+<link rel="icon" href="/img/favicon.ico">
+
+<!-- Fonts -->
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@0;1&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" as="style" onload="this.onload=null, this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@0;1&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"></noscript>
+
+
+    <!-- KaTeX -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.18.1/dist/katex.min.css" as="style" onload="this.onload=null, this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.1/dist/katex.min.css"></noscript>
+
+
+<!-- Style -->
+
+<link rel="stylesheet" href="/styles/main.css">
+
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
+
+
+
+
+
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+
+    <meta name="generator" content="Hexo 8.1.2"></head>
+    <body>
+        <div class="main gt-bg-theme-color-first">
+            <div class="main-content">
+                <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <div class="site-name gt-c-content-color-first">
+            IA3001&#39;s Blog
+        </div>
+    </a>
+    <button aria-label="Navbar Toggler" class="navbar-toggler" type="button" id="changeNavbar">
+        <i class="gt-c-content-color-first" style="font-size: 18px;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="18px" fill="currentColor">
+                <path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z" />
+            </svg>
+        </i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center; ">
+            
+                <div class="nav-item">
+                    <a href="/" class="menu gt-a-link" target="_self">首页</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/archives/" class="menu gt-a-link" target="_self">归档</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/categories/" class="menu gt-a-link" target="_self">分类</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/map/" class="menu gt-a-link" target="_self">地图</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/tags/" class="menu gt-a-link" target="_self">标签</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/friends/" class="menu gt-a-link" target="_self">友链</a>
+                </div>
+            
+        </div>
+    </div>
+</nav>
+
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = function() {
+        let element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else { 
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+                <div class="post-container">
+    <div class="post-detail gt-bg-theme-color-second gt-c-content-color-first">
+        <article class="gt-post-content">
+            <h1 class="post-title">比赛地图</h1>
+            <div class="post-content">
+                <style>
+                    .map-anchors {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 8px 20px;
+                        padding: 12px 20px;
+                        margin-bottom: 24px;
+                        background: var(--theme-second);
+                        border: 1px dashed var(--border);
+                        border-radius: 8px;
+                    }
+                    .map-anchors a { font-size: 15px; }
+                    .map-series { margin-top: 1.4em; margin-bottom: .3em; border-bottom: 1px dashed #999; padding-bottom: .3em; scroll-margin-top: 24px; }
+                    .map-sub { margin: .9em 0 .2em; font-size: 1.05em; scroll-margin-top: 24px; }
+                    .map-contest { margin: .45em 0 .1em; font-weight: 600; }
+                    .map-problems { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0 0 .5em; padding-left: 0; list-style: none; }
+                    .map-problems li { font-size: .92em; }
+                </style>
+
+                
+                    <div class="map-anchors">
+                        
+                            <a class="gt-a-link" href="#map-CF">CF</a>
+                        
+                            <a class="gt-a-link" href="#map-HDU">HDU</a>
+                        
+                            <a class="gt-a-link" href="#map-NC">NC</a>
+                        
+                            <a class="gt-a-link" href="#map-NEU">NEU</a>
+                        
+                    </div>
+                    
+                        <h2 class="map-series" id="map-CF">CF</h2>
+                        
+                            
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/08/01/codeforces-round-1900/">Codeforces Round 1900</a>
+                                    <span>（1 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/codeforces-round-1900/#D-基于小值域的GCD对之和的快速维护">D 基于小值域的GCD对之和的快速维护</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/08/01/codeforces-round-2084/">Codeforces Round 2084</a>
+                                    <span>（1 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/codeforces-round-2084/#G2-区间博弈-DP">G2 区间博弈 DP</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/08/01/codeforces-round-2092/">Codeforces Round 2092</a>
+                                    <span>（1 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/codeforces-round-2092/#F-Andryusha-and-CCB">F Andryusha and CCB</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/08/01/codeforces-round-2204/">Codeforces Round 2204</a>
+                                    <span>（3 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/codeforces-round-2204/#E-Sum-of-Digits-and-Again">E Sum of Digits (and Again)</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/codeforces-round-2204/#F-Sum-of-Fractions">F Sum of Fractions</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/codeforces-round-2204/#G-Grid-Path">G Grid Path</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/08/01/codeforces-round-2209/">Codeforces Round 2209</a>
+                                    <span>（3 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/codeforces-round-2209/#D-RGB三色限制序列构造">D RGB三色限制序列构造</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/codeforces-round-2209/#E-字符串最大前缀分解数">E 字符串最大前缀分解数</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/codeforces-round-2209/#F-Dynamic-Values-And-Maximum-Sum">F Dynamic Values And Maximum Sum</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                        
+                    
+                        <h2 class="map-series" id="map-HDU">HDU</h2>
+                        
+                            
+                                <h3 class="map-sub" id="map-HDU-2026Spring">2026Spring</h3>
+                            
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%881%EF%BC%89/">2026“钉耙编程”中国大学生算法设计春季联赛（1）</a>
+                                    <span>（8 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%881%EF%BC%89/#1001-氟化钙">1001 氟化钙</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%881%EF%BC%89/#1002-数字王国的警报密码">1002 数字王国的警报密码</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%881%EF%BC%89/#1003-回文串">1003 回文串</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%881%EF%BC%89/#1004-炼金术士的配方">1004 炼金术士的配方</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%881%EF%BC%89/#1006-巧克力工厂">1006 巧克力工厂</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%881%EF%BC%89/#1007-流沙">1007 流沙</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%881%EF%BC%89/#1009-力的平衡">1009 力的平衡</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%881%EF%BC%89/#1010-MEX">1010 MEX</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%882%EF%BC%89/">2026“钉耙编程”中国大学生算法设计春季联赛（2）</a>
+                                    <span>（1 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%882%EF%BC%89/#1003-A-和-B-依次选数-选完后立刻删除该数">1003 A 和 B 依次选数 选完后立刻删除该数</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%884%EF%BC%89/">2026“钉耙编程”中国大学生算法设计春季联赛（4）</a>
+                                    <span>（2 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%884%EF%BC%89/#1003-通行证（Hard-Version）">1003 通行证（Hard Version）</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%884%EF%BC%89/#1006-游戏">1006 游戏</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%885%EF%BC%89/">2026“钉耙编程”中国大学生算法设计春季联赛（5）</a>
+                                    <span>（3 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%885%EF%BC%89/#1006-牧场">1006 牧场</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%885%EF%BC%89/#1009-走马观花">1009 走马观花</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%885%EF%BC%89/#1010">1010</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%886%EF%BC%89/">2026“钉耙编程”中国大学生算法设计春季联赛（6）</a>
+                                    <span>（1 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%886%EF%BC%89/#1001-飞燕草">1001 飞燕草</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%889%EF%BC%89/">2026“钉耙编程”中国大学生算法设计春季联赛（9）</a>
+                                    <span>（2 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%889%EF%BC%89/#1003-玉米式概率">1003 玉米式概率</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%889%EF%BC%89/#1006-玉米式象棋">1006 玉米式象棋</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%88%E7%83%AD%E8%BA%AB%EF%BC%89/">2026“钉耙编程”中国大学生算法设计春季联赛（热身）</a>
+                                    <span>（7 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%88%E7%83%AD%E8%BA%AB%EF%BC%89/#1001-最大的公约数">1001 最大的公约数</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%88%E7%83%AD%E8%BA%AB%EF%BC%89/#1002-雪蜜冰城柠檬茶的神秘成分魔法">1002 雪蜜冰城柠檬茶的神秘成分魔法</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%88%E7%83%AD%E8%BA%AB%EF%BC%89/#1004-小z的开箱">1004 小z的开箱</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%88%E7%83%AD%E8%BA%AB%EF%BC%89/#1005-时空碎片收集者">1005 时空碎片收集者</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%88%E7%83%AD%E8%BA%AB%EF%BC%89/#1006-光辉岁月">1006 光辉岁月</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%88%E7%83%AD%E8%BA%AB%EF%BC%89/#1008-单十一花钱计划">1008 单十一花钱计划</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%98%A5%E5%AD%A3%E8%81%94%E8%B5%9B%EF%BC%88%E7%83%AD%E8%BA%AB%EF%BC%89/#1010-收买时间">1010 收买时间</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                        
+                            
+                                <h3 class="map-sub" id="map-HDU-2026Summer">2026Summer</h3>
+                            
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/07/22/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%9A%91%E6%9C%9F%E8%81%94%E8%B5%9B%EF%BC%881%EF%BC%89/">2026“钉耙编程”中国大学生算法设计暑期联赛（1）</a>
+                                    <span>（7 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/22/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%9A%91%E6%9C%9F%E8%81%94%E8%B5%9B%EF%BC%881%EF%BC%89/#1001-小丑牌">1001 小丑牌</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/22/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%9A%91%E6%9C%9F%E8%81%94%E8%B5%9B%EF%BC%881%EF%BC%89/#1004-搭积木">1004 搭积木</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/22/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%9A%91%E6%9C%9F%E8%81%94%E8%B5%9B%EF%BC%881%EF%BC%89/#1005-摩卡数">1005 摩卡数</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/22/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%9A%91%E6%9C%9F%E8%81%94%E8%B5%9B%EF%BC%881%EF%BC%89/#1006-开关灯">1006 开关灯</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/22/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%9A%91%E6%9C%9F%E8%81%94%E8%B5%9B%EF%BC%881%EF%BC%89/#1008-数字子序列">1008 数字子序列</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/22/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%9A%91%E6%9C%9F%E8%81%94%E8%B5%9B%EF%BC%881%EF%BC%89/#1010-游戏">1010 游戏</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/22/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%9A%91%E6%9C%9F%E8%81%94%E8%B5%9B%EF%BC%881%EF%BC%89/#1012-向量">1012 向量</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/07/23/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%9A%91%E6%9C%9F%E8%81%94%E8%B5%9B%EF%BC%882%EF%BC%89/">2026“钉耙编程”中国大学生算法设计暑期联赛（2）</a>
+                                    <span>（6 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/23/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%9A%91%E6%9C%9F%E8%81%94%E8%B5%9B%EF%BC%882%EF%BC%89/#1001-xyz-问题">1001 xyz 问题</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/23/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%9A%91%E6%9C%9F%E8%81%94%E8%B5%9B%EF%BC%882%EF%BC%89/#1002-表达式2">1002 表达式2</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/23/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%9A%91%E6%9C%9F%E8%81%94%E8%B5%9B%EF%BC%882%EF%BC%89/#1003-张力">1003 张力</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/23/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%9A%91%E6%9C%9F%E8%81%94%E8%B5%9B%EF%BC%882%EF%BC%89/#1005-减数游戏-2">1005 减数游戏 2</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/23/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%9A%91%E6%9C%9F%E8%81%94%E8%B5%9B%EF%BC%882%EF%BC%89/#1006-合成大hdu">1006 合成大hdu</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/23/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%9A%91%E6%9C%9F%E8%81%94%E8%B5%9B%EF%BC%882%EF%BC%89/#1007-另一个-shu-论问题">1007 另一个 shu 论问题</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/08/07/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%9A%91%E6%9C%9F%E8%81%94%E8%B5%9B%EF%BC%883%EF%BC%89/">2026“钉耙编程”中国大学生算法设计暑期联赛（3）</a>
+                                    <span>（0 题）</span>
+                                </p>
+                                
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/07/31/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%9A%91%E6%9C%9F%E8%81%94%E8%B5%9B%EF%BC%884%EF%BC%89/">2026“钉耙编程”中国大学生算法设计暑期联赛（4）</a>
+                                    <span>（1 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/31/2026%E2%80%9C%E9%92%89%E8%80%99%E7%BC%96%E7%A8%8B%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%9A%91%E6%9C%9F%E8%81%94%E8%B5%9B%EF%BC%884%EF%BC%89/#1005-TREE">1005 TREE</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                        
+                    
+                        <h2 class="map-series" id="map-NC">NC</h2>
+                        
+                            
+                                <h3 class="map-sub" id="map-NC-2026Summer">2026Summer</h3>
+                            
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/07/22/2026%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A51/">2026牛客暑期多校训练营1</a>
+                                    <span>（0 题）</span>
+                                </p>
+                                
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/07/23/2026%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A52/">2026牛客暑期多校训练营2</a>
+                                    <span>（4 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/23/2026%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A52/#C-比赛：连胜记录">C 比赛：连胜记录</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/23/2026%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A52/#F-神奇的树">F 神奇的树</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/23/2026%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A52/#K-幼儿园">K 幼儿园</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/23/2026%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A52/#L-懒得打乱">L 懒得打乱</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/07/24/2026%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A53/">2026牛客暑期多校训练营3</a>
+                                    <span>（5 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/24/2026%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A53/#A-比特掩码">A 比特掩码</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/24/2026%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A53/#B-再买一瓶">B 再买一瓶</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/24/2026%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A53/#G-矩阵标记">G 矩阵标记</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/24/2026%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A53/#I-交换大师">I 交换大师</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/24/2026%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A53/#M-漫游者">M 漫游者</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/08/08/2026%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A54/">2026牛客暑期多校训练营4</a>
+                                    <span>（0 题）</span>
+                                </p>
+                                
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/07/31/2026%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A55/">2026牛客暑期多校训练营5</a>
+                                    <span>（3 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/31/2026%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A55/#A-回声前缀">A 回声前缀</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/31/2026%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A55/#B-放大的徽章">B 放大的徽章</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/07/31/2026%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A55/#C-数字游戏">C 数字游戏</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/08/08/2026%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A56/">2026牛客暑期多校训练营6</a>
+                                    <span>（1 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/08/2026%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A56/#J-加除">J 加除</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/08/08/2026%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A57/">2026牛客暑期多校训练营7</a>
+                                    <span>（2 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/08/2026%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A57/#C-我得到神奇宝贝了！">C 我得到神奇宝贝了！</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/08/2026%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A57/#J-Leaf-Order-Reconstruction">J Leaf Order Reconstruction</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                        
+                            
+                                <h3 class="map-sub" id="map-NC-Daily">Daily</h3>
+                            
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/08/01/kevin%E7%9A%84%E7%9F%A9%E9%98%B5/">Kevin的矩阵</a>
+                                    <span>（1 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/kevin%E7%9A%84%E7%9F%A9%E9%98%B5/#Kevin的矩阵">Kevin的矩阵</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/08/01/tracker-%E5%8C%BA%E9%97%B4%E5%A2%9E%E9%87%8F%E4%B8%8E%E5%8D%95%E7%82%B9%E6%B1%82%E5%80%BC%EF%BC%88segmenttree-bit%EF%BC%89/">Tracker-区间增量与单点求值（SegmentTree / BIT）</a>
+                                    <span>（0 题）</span>
+                                </p>
+                                
+                            
+                        
+                    
+                        <h2 class="map-series" id="map-NEU">NEU</h2>
+                        
+                            
+                                <h3 class="map-sub" id="map-NEU-2026Spring">2026Spring</h3>
+                            
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/08/01/neu-2026spring%EF%BC%881%EF%BC%89/">NEU 2026Spring（1）</a>
+                                    <span>（2 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/neu-2026spring%EF%BC%881%EF%BC%89/#I-数字子数组排序和">I 数字子数组排序和</a></li>
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/neu-2026spring%EF%BC%881%EF%BC%89/#M-从多个商店买货">M 从多个商店买货</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/08/01/neu-2026spring%EF%BC%883%EF%BC%89/">NEU 2026Spring（3）</a>
+                                    <span>（1 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/neu-2026spring%EF%BC%883%EF%BC%89/#G-我愿将扫描线称为一种数据结构">G 我愿将扫描线称为一种数据结构</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/08/01/neu-2026spring%EF%BC%885-5%EF%BC%89/">NEU 2026Spring（5.5）</a>
+                                    <span>（1 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/neu-2026spring%EF%BC%885-5%EF%BC%89/#I-校园跑">I 校园跑</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                                <p class="map-contest">
+                                    <a class="gt-a-link" href="/2026/08/01/neu-2026spring%EF%BC%885%EF%BC%89/">NEU 2026Spring（5）</a>
+                                    <span>（1 题）</span>
+                                </p>
+                                
+                                    <ul class="map-problems">
+                                        
+                                            <li><a class="gt-a-link" href="/2026/08/01/neu-2026spring%EF%BC%885%EF%BC%89/#L-尖尖的排列计数">L 尖尖的排列计数</a></li>
+                                        
+                                    </ul>
+                                
+                            
+                        
+                    
+                
+            </div>
+        </article>
+    </div>
+</div>
+
+                <div class="site-footer gt-c-content-color-first">
+    <div class="footer-main">
+        <!-- 建议保留版权信息或者添加主题信息到友链，感谢您的理解 -->
+        <!-- 文件位置：layout/_includes/footer.ejs -->
+        <span style="text-align: right; float: right;">Theme <a 
+            href="https://github.com/renbaoshuo/hexo-theme-pure" target="_blank">Pure</a> | Powered by <a 
+            href="https://hexo.io" target="_blank">Hexo</a></span>
+        <span style="text-align: left;">Footer HTML
+</span>
+    </div>
+</div>
+
+<!-- Buttons -->
+<div class="fab">
+    
+    <a aria-label="回到顶部" class="fab-btn" href="#" title="回到顶部">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            focusable="false"
+            role="img"
+            viewBox="0 0 320 512"
+            height="20"
+            width="20"
+        >
+            <path
+                fill="currentColor"
+                d="M168.5 164.2l148 146.8c4.7 4.7 4.7 12.3 0 17l-19.8 19.8c-4.7 4.7-12.3 4.7-17 0L160 229.3 40.3 347.8c-4.7 4.7-12.3 4.7-17 0L3.5 328c-4.7-4.7-4.7-12.3 0-17l148-146.8c4.7-4.7 12.3-4.7 17 0z"
+            />
+        </svg>
+    </a>
+</div>
+
+            </div>
+        </div>
+    </body>
+</html>

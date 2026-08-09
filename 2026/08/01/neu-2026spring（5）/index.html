@@ -66,6 +66,10 @@
                 </div>
             
                 <div class="nav-item">
+                    <a href="/map/" class="menu gt-a-link" target="_self">地图</a>
+                </div>
+            
+                <div class="nav-item">
                     <a href="/tags/" class="menu gt-a-link" target="_self">标签</a>
                 </div>
             
@@ -361,6 +365,9 @@
     });
 
     var activeLink = null;
+    // 首次 update()（页面加载时）不写 URL hash，
+    // 否则会把从地图/外部跳转进来的 #锚点 覆盖成目录第一个标题，导致跳转失效
+    var firstRun = true;
     function update() {
         var top = 0;
         for (var i = headings.length - 1; i >= 0; i--) {
@@ -378,13 +385,16 @@
                 current.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
             }
             activeLink = current;
-            // Update URL hash without pushing history entry
-            var id = decodeURIComponent(current.getAttribute('href').slice(1));
-            history.replaceState(null, '', '#' + id);
+            if (!firstRun) {
+                // Update URL hash without pushing history entry
+                var id = decodeURIComponent(current.getAttribute('href').slice(1));
+                history.replaceState(null, '', '#' + id);
+            }
         }
     }
     window.addEventListener('scroll', update, { passive: true });
     update();
+    firstRun = false;
 })();
 </script>
 
