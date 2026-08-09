@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1786297217949">
+<link rel="stylesheet" href="/styles/main.css?v=1786297393991">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -115,27 +115,6 @@
                             <a href="/tags/CF/" class="post-tag">
                                 #CF</a>
                         
-                            <a href="/tags/%E5%8D%9A%E5%BC%88%E5%85%AC%E5%BC%8F/" class="post-tag">
-                                #博弈公式</a>
-                        
-                            <a href="/tags/%E4%B9%98%E6%B3%95%E5%8E%9F%E7%90%86/" class="post-tag">
-                                #乘法原理</a>
-                        
-                            <a href="/tags/%E5%A5%87%E5%81%B6%E4%BA%8C%E5%88%86%E7%B1%BB/" class="post-tag">
-                                #奇偶二分类</a>
-                        
-                            <a href="/tags/%E9%BB%91%E7%99%BD%E4%BA%8C%E5%88%86%E7%B1%BB/" class="post-tag">
-                                #黑白二分类</a>
-                        
-                            <a href="/tags/%E8%B7%AF%E5%BE%84%E8%B4%A1%E7%8C%AE%E6%B3%95/" class="post-tag">
-                                #路径贡献法</a>
-                        
-                            <a href="/tags/Slope-Trick/" class="post-tag">
-                                #Slope Trick</a>
-                        
-                            <a href="/tags/%E6%96%9C%E7%8E%87%E4%BC%98%E5%8C%96DP/" class="post-tag">
-                                #斜率优化DP</a>
-                        
                     
                 </div>
                 <hr>
@@ -152,6 +131,7 @@
 <p>给定长度为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> 的排列 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>（有空缺项），求所有可能中<strong>最大的</strong> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span> 的所有子数组的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.1076em;">f</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span> 之和。</p>
 <p>数据范围：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>≤</mo><mi>n</mi><mo>≤</mo><mn>5</mn><mo>×</mo><msup><mn>10</mn><mn>5</mn></msup></mrow><annotation encoding="application/x-tex">1 \le n \le 5 \times 10^5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.7804em;vertical-align:-0.136em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span></span></span></span></span></span></span></span></p>
 <h3 id="Solution">Solution</h3>
+<p><strong>博弈公式、乘法原理、奇偶二分类、黑白二分类、路径贡献法、Slope Trick、斜率优化 DP</strong></p>
 <p>首先一定要推导博弈公式：</p>
 <ul>
 <li>使用<strong>01二分答案</strong>求解博弈答案</li>
