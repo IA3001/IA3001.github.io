@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1786298089648">
+<link rel="stylesheet" href="/styles/main.css?v=1786298355464">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -111,8 +111,23 @@
                     .map-series { margin-top: 1.4em; margin-bottom: .3em; border-bottom: 1px dashed #999; padding-bottom: .3em; scroll-margin-top: 24px; }
                     .map-sub { margin: .9em 0 .2em; font-size: 1.05em; scroll-margin-top: 24px; }
                     .map-contest { margin: .45em 0 .1em; font-weight: 600; }
-                    .map-problems { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0 0 .5em; padding-left: 0; list-style: none; }
-                    .map-problems li { font-size: .92em; }
+                    .map-problems {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+                        gap: 2px 18px;
+                        margin: 0 0 .5em;
+                        padding-left: 0;
+                        list-style: none;
+                    }
+                    .map-problems li {
+                        font-size: .92em;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        border-radius: 4px;
+                    }
+                    .map-problems li a::before { content: "· "; color: var(--content-second); }
+                    .map-problems li:hover { background: #eef3fa; }
                 </style>
 
                 
