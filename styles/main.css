@@ -723,7 +723,7 @@ hr {
   -moz-tab-size: 4;
   letter-spacing: 0px;
   font-size: 14px;
-  font-family: 'Roboto Mono', Consolas, Menlo, Monaco, 'Source Code Pro', 'Courier New', monospace;
+  font-family: Consolas, 'Roboto Mono', Menlo, Monaco, 'Courier New', monospace;
   padding: 1em;
   border-radius: 5px;
   line-height: 1.375;
@@ -737,7 +737,7 @@ hr {
 .gt-post-content table code {
   letter-spacing: 0px;
   color: var(--content-first);
-  font-family: 'Roboto Mono', Consolas, Menlo, Monaco, 'Source Code Pro', 'Courier New', monospace;
+  font-family: Consolas, 'Roboto Mono', Menlo, Monaco, 'Courier New', monospace;
   padding: 0.2em 0.4em;
   margin: 0;
   font-size: 85%;
