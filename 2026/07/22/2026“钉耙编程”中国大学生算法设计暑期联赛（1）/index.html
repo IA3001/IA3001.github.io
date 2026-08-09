@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1786300655054">
+<link rel="stylesheet" href="/styles/main.css?v=1786300787788">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -106,14 +106,14 @@
                         <span class="post-updated">更新于 2026-08-10</span>
                     
                     <span class="post-wordcount gt-c-content-color-second">
-                        18 千字 ·</span>
+                        19 千字 ·</span>
                     
-                        
-                            <a href="/tags/HDU/" class="post-tag">
-                                #HDU</a>
                         
                             <a href="/tags/2026%E6%9D%AD%E7%94%B5%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1/" class="post-tag">
                                 #2026杭电暑期多校</a>
+                        
+                            <a href="/tags/HDU/" class="post-tag">
+                                #HDU</a>
                         
                     
                 </div>
@@ -902,7 +902,71 @@ No Solution</code></pre>
 </li>
 </ul>
 <h3 id="Code-5">Code</h3>
-<pre><code class="hljs cpp"></code></pre>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-keyword">using</span> LL = <span class="hljs-type">long</span> <span class="hljs-type">long</span>;
+
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e6</span> + <span class="hljs-number">5</span>;
+
+<span class="hljs-type">int</span> n, k, m;
+LL u[N], tmp[N], v[N], r[N];
+<span class="hljs-type">int</span> x[N], y[N];
+map&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt; A[N];
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span> </span>&#123;
+    cin &gt;&gt; n &gt;&gt; k &gt;&gt; m;
+    <span class="hljs-comment">// 初始化对角</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n;i++) &#123;
+        A[i].<span class="hljs-built_in">clear</span>(), A[i][i]++;
+        v[i] = <span class="hljs-number">0</span>;
+    &#125;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) cin &gt;&gt; u[i], tmp[i] = u[i];
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) cin &gt;&gt; x[i];
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) cin &gt;&gt; y[i], A[x[i]][y[i]] += k;
+    LL cur = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>) &#123;
+        <span class="hljs-comment">// 直等 + 设置第 k 位</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n;i++) 
+            <span class="hljs-comment">// 【？？？坑点2：这里竟然会出现负数！！！】</span>
+            <span class="hljs-comment">// 【好像确实！因为 u - r 之后还要 - kAr】</span>
+            v[i] += (r[i] = (u[i] % k + k) % k) * cur;
+        <span class="hljs-comment">// u_&#123;i&#125; &lt;- u_&#123;i+1&#125;</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n;i++) &#123;
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> [j,c]: A[i]) 
+                u[i] -= c * r[j];
+            u[i] /= k;
+        &#125;
+        cur *= k;
+        <span class="hljs-comment">// 【坑点1：注意区分系数与值域范围之间的 k 倍关系啊】</span>
+        <span class="hljs-keyword">if</span>(cur &gt; <span class="hljs-number">2e9</span>) <span class="hljs-keyword">break</span>;
+    &#125;
+    <span class="hljs-type">bool</span> ok = <span class="hljs-literal">true</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
+        <span class="hljs-keyword">if</span> (v[i] &gt; <span class="hljs-number">1e9</span>) v[i] -= cur;
+        ok &amp;= v[i] &gt;= <span class="hljs-number">-1e9</span>;
+    &#125;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n;i ++) &#123;
+        u[i] = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> [j,c]: A[i]) &#123;
+            u[i] += c * v[j];
+        &#125;
+        ok &amp;= tmp[i] == u[i];
+    &#125;
+    <span class="hljs-keyword">if</span>(!ok) &#123;
+        cout &lt;&lt; <span class="hljs-string">&quot;No Solution\n&quot;</span>;
+    &#125; <span class="hljs-keyword">else</span> &#123;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
+            cout &lt;&lt; v[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>; 
+        &#125;cout &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+    &#125;
+&#125;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-type">int</span> T = <span class="hljs-number">1</span>;
+    cin &gt;&gt; T;
+    <span class="hljs-keyword">while</span> (T--) <span class="hljs-built_in">solve</span>();
+&#125;</code></pre>
                 </div>
             </article>
         </div>
