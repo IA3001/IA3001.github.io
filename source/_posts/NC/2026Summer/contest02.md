@@ -5,7 +5,7 @@ tags:
   - NC
 published: true
 ---
-## C 比赛：连胜记录
+## C 比赛：连胜记录【分讨】（TODO）
 
 ### Problem Description
 
@@ -59,7 +59,7 @@ published: true
 
 
 
-## F 神奇的树
+## F 神奇的树【树形DP】
 
 ### Problem Description
 
@@ -220,7 +220,7 @@ int main() {
 }
 ```
 
-## K 幼儿园
+## K 幼儿园【关键点动态最短路】
 
 ### Problem Description
 
@@ -504,7 +504,7 @@ int main() {
 }
 ```
 
-## L 懒得打乱
+## L 懒得打乱【逆序对 / 拓扑排序方案数】
 
 ### Problem Description
 

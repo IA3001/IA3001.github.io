@@ -5,11 +5,7 @@ tags:
   - HDU
 published: true
 ---
-## 1001 小丑牌
-
-签到题， $x$ 集合和 $y$ 集合选两个数字，乘积尽可能大
-
-## 1004 搭积木
+## 1004 搭积木【排序贪心】
 
 ### Problem Description
 
@@ -184,7 +180,7 @@ int main() {
 }
 ```
 
-## 1005 摩卡数
+## 1005 摩卡数【构造】
 
 ### Problem Description
 
@@ -312,7 +308,7 @@ int main() {
     while (T--) solve();
 }
 ```
-## 1006 开关灯
+## 1006 开关灯【打表 / 段计数 / 期望】
 
 ### Problem Description
 
@@ -479,7 +475,7 @@ int main() {
 }
 ```
 
-## 1008 数字子序列
+## 1008 数字子序列【字符串 / 基数排序 / DP / DP优化】
 
 ### Problem Description
 
@@ -680,7 +676,7 @@ int main() {
 }
 ```
 
-## 1010 游戏
+## 1010 游戏【博弈】
 
 ### Problem Description
 

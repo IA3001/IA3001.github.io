@@ -5,7 +5,7 @@ tags:
   - NC
 published: true
 ---
-## J 加除
+## J 加除【凸包 / 二分】（TODO）
 
 ### Problem Description
 

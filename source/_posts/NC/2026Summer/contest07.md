@@ -5,7 +5,7 @@ tags:
   - NC
 published: true
 ---
-## C 我得到神奇宝贝了！
+## C 我得到神奇宝贝了！【扩展域并查集】
 
 ### Problem Description
 
@@ -480,7 +480,7 @@ int main(){
 }
 ```
 
-## J Leaf Order Reconstruction
+## J Leaf Order Reconstruction 【溯源】
 
 ### Problem Description
 

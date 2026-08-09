@@ -5,7 +5,7 @@ tags:
   - NC
 published: true
 ---
-## A 比特掩码
+## A 比特掩码【段计数 / 位运算】
 ### Problem Description
 
 对于非负整数 $x$，定义 $f(x)$ 为 $x$ 的二进制表示（不含前导零）中极长连续全 $1$ 段的个数。例如，$f(23)=2$，因为 $23=(10111)_2$，其二进制表示包含 $2$ 个极长连续全 $1$ 段。
@@ -156,7 +156,7 @@ int main() {
 }
 ```
 
-## B 再买一瓶
+## B 再买一瓶【Raney 引理】
 
 ### Problem Description
 
@@ -269,7 +269,7 @@ int main() {
 }
 ```
 
-## G 矩阵标记
+## G 矩阵标记【单调栈】
 
 ### Problem Description
 
@@ -414,7 +414,7 @@ int main() {
 }
 ```
 
-## I 交换大师
+## I 交换大师【DP / 拆绝对值】
 
 ### Problem Description
 
@@ -619,7 +619,7 @@ int main() {
 }
 ```
 
-## M 漫游者
+## M 漫游者【树上随机游走】
 
 ### Problem Description
 

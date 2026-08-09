@@ -8,7 +8,7 @@ published: true
 
 > 一场竟然两道 NTT
 
-## 1001 xyz 问题
+## 1001 xyz 问题【2-SAT / 优化建图】
 
 ### Problem Description
 
@@ -953,7 +953,7 @@ int main() {
 }
 ```
 
-## 1003 张力
+## 1003 张力【01Trie / LCA / 启发式 DP】
 
 ### Problem Description
 
@@ -1121,7 +1121,7 @@ int main() {
 }
 ```
 
-## 1005 减数游戏 2
+## 1005 减数游戏 2【博弈 / 容斥原理 / NTT】
 
 ### Problem Description
 
@@ -1458,7 +1458,7 @@ int main() {
 }
 ```
 
-## 1006 合成大hdu
+## 1006 合成大hdu【构造】
 
 ### Problem Description
 
@@ -1599,7 +1599,7 @@ int main() {
 }
 ```
 
-## 1007 另一个 shu 论问题
+## 1007 另一个 shu 论问题【莫比乌斯反演 / 启发式合并】
 
 ### Problem Description
 

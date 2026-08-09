@@ -5,7 +5,7 @@ tags:
   - HDU
 published: true
 ---
-## 1001 氟化钙
+## 1001 氟化钙【笛卡尔树 / 启发式合并】
 
 ### Problem Description
 

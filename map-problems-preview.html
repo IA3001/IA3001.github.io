@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>地图题目区布局预览</title>
+<style>
+  :root {
+    --bg: #ffffff; --panel: #f8f9fa; --text: #343a40; --muted: #adb5bd;
+    --border: #dfe2e5; --blue: #4a90d9; --chip-bg: #e9ecef;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Open Sans', 'PingFang SC', 'Microsoft Yahei', sans-serif;
+    background: var(--bg); color: var(--text); font-size: 16px;
+    max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px;
+  }
+  h1 { font-size: 26px; margin-bottom: 6px; }
+  .tip { color: var(--muted); font-size: 13px; margin-bottom: 32px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px 24px; margin-bottom: 20px;
+  }
+  .card h2 { font-size: 16px; margin-bottom: 4px; }
+  .card .desc { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+  .contest-title { font-weight: 600; margin: 8px 0 6px; font-size: 15px; }
+  .contest-title .cnt { color: var(--muted); font-weight: 400; font-size: 13px; }
+  a { color: var(--blue); text-decoration: none; }
+
+  /* A. 题目胶囊墙 */
+  .probs-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .probs-chips a {
+    padding: 3px 12px; background: var(--chip-bg); color: #495057;
+    border-radius: 999px; font-size: 13px; transition: all .2s;
+  }
+  .probs-chips a:hover { background: var(--blue); color: #fff; }
+
+  /* B. 紧凑多列网格 */
+  .probs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 2px 18px; }
+  .probs-grid a {
+    padding: 3px 6px; font-size: 13px; border-radius: 4px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: background .2s;
+  }
+  .probs-grid a:hover { background: #eef3fa; }
+  .probs-grid a::before { content: "· "; color: var(--muted); }
+
+  /* C. 默认折叠 */
+  details { border: 1px solid var(--border); border-radius: 8px; padding: 0 12px; margin: 4px 0; background: #fff; }
+  summary { cursor: pointer; padding: 8px 0; font-size: 14px; color: #495057; user-select: none; }
+  summary:hover { color: var(--blue); }
+  .probs-details { padding: 0 0 10px; list-style: none; display: flex; flex-wrap: wrap; gap: 4px 16px; }
+  .probs-details li { font-size: 13px; }
+
+  /* D. 微调现有 flex */
+  .probs-flex { display: flex; flex-wrap: wrap; gap: 2px 10px; list-style: none; }
+  .probs-flex li { font-size: 12.5px; line-height: 1.7; }
+</style>
+</head>
+<body>
+  <h1>地图题目区布局预览</h1>
+  <p class="tip">同一场比赛（8 道题）的四种呈现，可点击/悬停。看中哪个告诉我编号。</p>
+
+  <div class="card">
+    <h2>A. 题目胶囊墙</h2>
+    <p class="desc">每题一个胶囊横向流式排布，密度高、像标签墙，hover 变蓝。</p>
+    <p class="contest-title">2026"钉耙编程"中国大学生算法设计春季联赛（1）<span class="cnt">（8 题）</span></p>
+    <div class="probs-chips">
+      <a href="#">1001 氟化钙</a><a href="#">1002 数字王国的警报密码</a><a href="#">1003 回文串</a>
+      <a href="#">1004 炼金术士的配方</a><a href="#">1006 巧克力工厂</a><a href="#">1007 流沙</a>
+      <a href="#">1009 力的平衡</a><a href="#">1010 MEX</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>B. 紧凑多列网格</h2>
+    <p class="desc">CSS grid 自适应列（≥230px 一列），列严格对齐、行高统一，最整齐。</p>
+    <p class="contest-title">2026"钉耙编程"中国大学生算法设计春季联赛（1）<span class="cnt">（8 题）</span></p>
+    <div class="probs-grid">
+      <a href="#">1001 氟化钙</a><a href="#">1002 数字王国的警报密码</a><a href="#">1003 回文串</a>
+      <a href="#">1004 炼金术士的配方</a><a href="#">1006 巧克力工厂</a><a href="#">1007 流沙</a>
+      <a href="#">1009 力的平衡</a><a href="#">1010 MEX</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>C. 默认折叠</h2>
+    <p class="desc">题目列表收起成一个「N 题」条，点击展开；最省空间，多一步操作。</p>
+    <p class="contest-title">2026"钉耙编程"中国大学生算法设计春季联赛（1）<span class="cnt">（8 题）</span></p>
+    <details>
+      <summary>8 题 · 点击展开</summary>
+      <ul class="probs-details">
+        <li><a href="#">1001 氟化钙</a></li><li><a href="#">1002 数字王国的警报密码</a></li>
+        <li><a href="#">1003 回文串</a></li><li><a href="#">1004 炼金术士的配方</a></li>
+        <li><a href="#">1006 巧克力工厂</a></li><li><a href="#">1007 流沙</a></li>
+        <li><a href="#">1009 力的平衡</a></li><li><a href="#">1010 MEX</a></li>
+      </ul>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>D. 微调现有 flex</h2>
+    <p class="desc">保持现在的列表形式，只缩小字号和间距（12.5px / 行高 1.7）。</p>
+    <p class="contest-title">2026"钉耙编程"中国大学生算法设计春季联赛（1）<span class="cnt">（8 题）</span></p>
+    <ul class="probs-flex">
+      <li><a href="#">1001 氟化钙</a></li><li><a href="#">1002 数字王国的警报密码</a></li>
+      <li><a href="#">1003 回文串</a></li><li><a href="#">1004 炼金术士的配方</a></li>
+      <li><a href="#">1006 巧克力工厂</a></li><li><a href="#">1007 流沙</a></li>
+      <li><a href="#">1009 力的平衡</a></li><li><a href="#">1010 MEX</a></li>
+    </ul>
+  </div>
+</body>
+</html>

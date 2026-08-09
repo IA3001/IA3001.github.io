@@ -7,7 +7,7 @@ published: true
 ---
 > 数学/构造 场
 
-## A 回声前缀
+## A 回声前缀【后缀树】
 
 ### Problem Description
 
@@ -492,7 +492,7 @@ int main() {
 }
 ```
 
-## B 放大的徽章
+## B 放大的徽章【闵可夫斯基和 / Pick 定理】
 
 ### Problem Description
 
@@ -772,7 +772,7 @@ int main() {
 }
 ```
 
-## C 数字游戏
+## C 数字游戏【构造】
 
 ### Problem Description
 
