@@ -101,14 +101,14 @@
                     <time class="post-time gt-c-content-color-first">
                         · 2026-08-08 ·</time>
                     <span class="post-wordcount gt-c-content-color-second">
-                        3.7 千字 ·</span>
+                        13 千字 ·</span>
                     
-                        
-                            <a href="/tags/NC/" class="post-tag">
-                                #NC</a>
                         
                             <a href="/tags/2026%E7%89%9B%E5%AE%A2%E5%A4%9A%E6%A0%A1/" class="post-tag">
                                 #2026牛客多校</a>
+                        
+                            <a href="/tags/NC/" class="post-tag">
+                                #NC</a>
                         
                     
                 </div>
@@ -161,6 +161,476 @@ RR</code></pre>
 <pre><code class="hljs txt">5 2
 3 1
 4 6</code></pre>
+<h3 id="Solution">Solution</h3>
+<blockquote>
+<p><strong>我脑子抽了：答案就在眼皮底下，为什么我不认为这是 2-SAT ?</strong></p>
+</blockquote>
+<p><strong>【2-SAT 秒了】</strong> <strong>【二元 扩展域并查集 也可以过】</strong></p>
+<ul>
+<li>
+<p>显然，要么 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>&lt;</mo><mi>b</mi><mo>&lt;</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">a&lt;b&lt;c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7335em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">c</span></span></span></span> 要么 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>&gt;</mo><mi>b</mi><mo>&gt;</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">a&gt;b&gt;c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7335em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">c</span></span></span></span></p>
+</li>
+<li>
+<p>所以我们可以设计节点 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>:</mo><mi>x</mi><mo>&lt;</mo><mi>y</mi></mrow><annotation encoding="application/x-tex">p:x&lt;y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">y</span></span></span></span> 则 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">!</mo><mi>p</mi><mo>:</mo><mi>x</mi><mo>&gt;</mo><mi>y</mi></mrow><annotation encoding="application/x-tex">!p:x&gt;y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mclose">!</span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">y</span></span></span></span></p>
+</li>
+<li>
+<p>给定一个约束 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo separator="true">,</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">a,b,c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">b</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">c</span></span></span></span> 那么显然</p>
+<ul>
+<li>要么 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>:</mo><mi>a</mi><mo>&lt;</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">p:a&lt;b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mo>:</mo><mi>b</mi><mo>&lt;</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">q:b&lt;c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7335em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">c</span></span></span></span>  即 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>∧</mo><mi>q</mi></mrow><annotation encoding="application/x-tex">p \land q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.75em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∧</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span></span></span></span></li>
+<li>要么 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">¬</mi><mi>p</mi><mo>:</mo><mi>a</mi><mo>&gt;</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">\neg p:a&gt;b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord">¬</span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">¬</mi><mi>q</mi><mo>:</mo><mi>b</mi><mo>&gt;</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">\neg q:b&gt;c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord">¬</span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7335em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">c</span></span></span></span> 即 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">¬</mi><mi>p</mi><mo>∧</mo><mi mathvariant="normal">¬</mi><mi>q</mi></mrow><annotation encoding="application/x-tex">\neg p \land \neg q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.75em;vertical-align:-0.1944em;"></span><span class="mord">¬</span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∧</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord">¬</span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span></span></span></span></li>
+</ul>
+</li>
+<li>
+<p>所以为什么我没看出来，分析原因</p>
+<ul>
+<li>是因为我没有细看，值关注了 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo separator="true">,</mo><mi>q</mi></mrow><annotation encoding="application/x-tex">p, q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span></span></span></span> 整体要么 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo separator="true">,</mo><mi>q</mi></mrow><annotation encoding="application/x-tex">p,q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span></span></span></span> 要么 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">¬</mi><mi>p</mi><mo separator="true">,</mo><mi mathvariant="normal">¬</mi><mi>q</mi></mrow><annotation encoding="application/x-tex">\neg p, \neg q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord">¬</span><span class="mord mathnormal">p</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">¬</span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span></span></span></span> 忽视了具体公式的关系</li>
+<li>进一步的说，是因为我没有建立 base 信息，导致我看问题过于抽象，宏观，忽视了底层基础决定上层抽象</li>
+</ul>
+</li>
+<li>
+<p>现在分析</p>
+<ul>
+<li>要么 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>∧</mo><mi>q</mi></mrow><annotation encoding="application/x-tex">p \land q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.75em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∧</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span></span></span></span> 要么 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">¬</mi><mi>p</mi><mo>∧</mo><mi mathvariant="normal">¬</mi><mi>q</mi></mrow><annotation encoding="application/x-tex">\neg p \land \neg q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.75em;vertical-align:-0.1944em;"></span><span class="mord">¬</span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∧</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord">¬</span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span></span></span></span></li>
+<li>就是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>p</mi><mo>∧</mo><mi>q</mi><mo stretchy="false">)</mo><mo>∨</mo><mo stretchy="false">(</mo><mi mathvariant="normal">¬</mi><mi>p</mi><mo>∧</mo><mi mathvariant="normal">¬</mi><mi>q</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(p \land q) \lor (\neg p \land \neg q)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∧</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∨</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">¬</span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∧</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">¬</span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span><span class="mclose">)</span></span></span></span></li>
+<li>写出来真值表啊！！！！</li>
+<li>就是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>t</mi><mi>u</mi><mi>r</mi><mi>e</mi><mo separator="true">,</mo><mi>t</mi><mi>r</mi><mi>u</mi><mi>e</mi><mo stretchy="false">)</mo><mo>∨</mo><mo stretchy="false">(</mo><mi>f</mi><mi>a</mi><mi>l</mi><mi>s</mi><mi>e</mi><mo separator="true">,</mo><mi>f</mi><mi>a</mi><mi>l</mi><mi>s</mi><mi>e</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(ture, true) \lor (false, false)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mord mathnormal">u</span><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="mord mathnormal">e</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="mord mathnormal">u</span><span class="mord mathnormal">e</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∨</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.1076em;">f</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.0197em;">l</span><span class="mord mathnormal">se</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.1076em;">f</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.0197em;">l</span><span class="mord mathnormal">se</span><span class="mclose">)</span></span></span></span></li>
+<li>不就是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>=</mo><mi>q</mi></mrow><annotation encoding="application/x-tex">p = q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span></span></span></span> 吗！！！！！！！</li>
+</ul>
+</li>
+<li>
+<p>【2-SAT】解法</p>
+</li>
+<li>
+<p>对于 2-SAT 需要化成 <strong>合取式子</strong> 找到所有不满足的条件，就是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>t</mi><mi>r</mi><mi>u</mi><mi>e</mi><mo separator="true">,</mo><mi>f</mi><mi>a</mi><mi>l</mi><mi>s</mi><mi>e</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mo stretchy="false">(</mo><mi>f</mi><mi>a</mi><mi>l</mi><mi>s</mi><mi>e</mi><mo separator="true">,</mo><mi>t</mi><mi>r</mi><mi>u</mi><mi>e</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(true, false), (false, true)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="mord mathnormal">u</span><span class="mord mathnormal">e</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.1076em;">f</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.0197em;">l</span><span class="mord mathnormal">se</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.1076em;">f</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.0197em;">l</span><span class="mord mathnormal">se</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="mord mathnormal">u</span><span class="mord mathnormal">e</span><span class="mclose">)</span></span></span></span></p>
+<ul>
+<li>就是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi mathvariant="normal">¬</mi><mi>p</mi><mo>∨</mo><mi>q</mi><mo stretchy="false">)</mo><mo>∧</mo><mo stretchy="false">(</mo><mi>p</mi><mo>∨</mo><mi mathvariant="normal">¬</mi><mi>q</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(\neg p \lor q) \land (p \lor \neg q)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">¬</span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∨</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∧</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∨</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">¬</span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span><span class="mclose">)</span></span></span></span></li>
+<li>就是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>p</mi><mo>→</mo><mi>q</mi><mo stretchy="false">)</mo><mo>∧</mo><mo stretchy="false">(</mo><mi mathvariant="normal">¬</mi><mi>q</mi><mo>→</mo><mi mathvariant="normal">¬</mi><mi>p</mi><mo stretchy="false">)</mo><mo>∧</mo><mo stretchy="false">(</mo><mi mathvariant="normal">¬</mi><mi>p</mi><mo>→</mo><mi mathvariant="normal">¬</mi><mi>q</mi><mo stretchy="false">)</mo><mo>∧</mo><mo stretchy="false">(</mo><mi>q</mi><mo>→</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(p \rightarrow q) \land (\neg q \rightarrow \neg p) \land (\neg p \rightarrow \neg q) \land (q \rightarrow p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∧</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">¬</span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">¬</span><span class="mord mathnormal">p</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∧</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">¬</span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">¬</span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∧</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class="mclose">)</span></span></span></span></li>
+<li>四条 有向边</li>
+<li>【可行解】
+<ul>
+<li>显然是 tarjan 缩点，一个可行解</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>【二元扩展域并查集】解法</p>
+<ul>
+<li>注意到是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>=</mo><mi>q</mi></mrow><annotation encoding="application/x-tex">p = q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span></span></span></span> 的形式</li>
+<li>由于二元扩展域并查集专注于 相等/不等 关系，因此可以用它</li>
+<li>只需 <code>merge(p, q), merge(!p, !q)</code></li>
+<li>【可行解】
+<ul>
+<li>逐个遍历每一个变量 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span>，如果 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span> 或者 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">!</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">!x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6944em;"></span><span class="mclose">!</span><span class="mord mathnormal">x</span></span></span></span> 所在集合的代表元素已经确定，那么直接对应着来即可</li>
+<li>否则，默认 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span> 所在集合为真，对应的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">!</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">!x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6944em;"></span><span class="mclose">!</span><span class="mord mathnormal">x</span></span></span></span> 那一侧的集合代表元素设置为 假</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-SAT-vs-二元扩展域并查集">2-SAT vs 二元扩展域并查集</h4>
+<p>可以，按“<strong>常见布尔关系</strong>”整理成表最清楚。</p>
+<table>
+<thead>
+<tr>
+<th>关系</th>
+<th>2-SAT 处理</th>
+<th>扩展域并查集处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a</code> 为真</td>
+<td><code>!a -&gt; a</code> (1条边)</td>
+<td>不能直接表达“真”，只能作为某个块被赋值后间接成立</td>
+</tr>
+<tr>
+<td><code>!a</code> 为真</td>
+<td><code>a -&gt; !a</code> (1条边)</td>
+<td>同上，<code>a</code> 和 <code>!a</code> 是一对互补点</td>
+</tr>
+<tr>
+<td><code>a or b</code></td>
+<td><code>!a -&gt; b</code>，<code>!b -&gt; a</code> (2条边)</td>
+<td>不能直接表达</td>
+</tr>
+<tr>
+<td><code>a and b</code></td>
+<td><code>!a -&gt; a</code>，<code>!b -&gt; b</code> (2条边)</td>
+<td>不能直接表达</td>
+</tr>
+<tr>
+<td><code>a xor b</code> / <code>a != b</code></td>
+<td><code>(a or b) &amp;&amp; (!a or !b)</code>，即 4 条蕴含 (4条边)</td>
+<td><code>a</code> 与 <code>!b</code> 合并，<code>!a</code> 与 <code>b</code> 合并</td>
+</tr>
+<tr>
+<td><code>a -&gt; b</code></td>
+<td><code>a -&gt; b</code> (1条边)</td>
+<td>不能直接表达</td>
+</tr>
+<tr>
+<td><code>a &lt;-&gt; b</code></td>
+<td><code>a -&gt; b</code>，<code>b -&gt; a</code> (2条边)</td>
+<td><code>a</code> 与 <code>b</code> 合并，<code>!a</code> 与 <code>!b</code> 合并</td>
+</tr>
+<tr>
+<td><code>a == b</code></td>
+<td><code>(a -&gt; b) &amp;&amp; (b -&gt; a)</code> (2条边？卧槽确实？)</td>
+<td><code>a</code> 与 <code>b</code> 合并，<code>!a</code> 与 <code>!b</code> 合并</td>
+</tr>
+<tr>
+<td><code>a</code> 和 <code>b</code> 不能同时真 (ban 1 1)</td>
+<td><code>a -&gt; !b</code>，<code>b -&gt; !a</code> (2 条边，)</td>
+<td><code>a</code> 与 <code>!b</code> 合并，<code>b</code> 与 <code>!a</code> 合并</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>2-SAT</code> 适合：<strong>逻辑公式、蕴含、或、至少一个、不能同时</strong></li>
+<li>扩展域并查集适合：<strong>相等、相反、异或、差分/模关系</strong></li>
+</ul>
+<blockquote>
+<p>But: 以上的 2-SAT 内容，这题用不上！！！ 或者说，2-SAT 解不了！！！</p>
+</blockquote>
+<h4 id="正解：">正解：</h4>
+<p>【法1：先定一个方向，逐步丰富拓扑信息】</p>
+<ol>
+<li>可以先定向 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mn>1</mn></msub><mo>&lt;</mo><msub><mi>G</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">R_1 &lt; G_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0077em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">G</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> （入队）</li>
+<li>然后现在枚举 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>B</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">B_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0502em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0502em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> ，此时必然可以知道 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>B</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">B_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0502em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0502em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 的相对大小是什么，将 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><msub><mi>R</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>B</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mo separator="true">,</mo><mo stretchy="false">(</mo><msub><mi>G</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>B</mi><mi>i</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(R_1, B_i), (G_1, B_i)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0077em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0502em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0502em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">G</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0502em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0502em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> 入队，以此类推，不断补充拓扑信息</li>
+<li>特别注意，所有的相对信息都要补充，不要留有隐式传递的信息</li>
+</ol>
+<p>【法2：扩展域并查集，法1的扩展域并查集维护版】（使用抽象写法）</p>
+<ol>
+<li>设节点 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span> 的状态为
+<ol>
+<li><code>i &lt;&lt; 1</code> 表示与 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><msub><mi>R</mi><mn>0</mn></msub><mo separator="true">,</mo><msub><mi>G</mi><mn>0</mn></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(R_0,G_0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0077em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">G</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> 正向（0-base）</li>
+<li><code>i &lt;&lt; 1 | 1</code> 表示与 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><msub><mi>R</mi><mn>0</mn></msub><mo separator="true">,</mo><msub><mi>G</mi><mn>0</mn></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(R_0, G_0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0077em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">G</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> 反向</li>
+</ol>
+</li>
+<li>将三维矩阵得到的相对方向信息，全部进行并查集合并</li>
+<li>以 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><msub><mi>R</mi><mn>0</mn></msub><mo separator="true">,</mo><msub><mi>G</mi><mn>0</mn></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(R_0, G_0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0077em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">G</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> 为参考系，按照对应方向进行建图（由于是，互异阵营，所以只需 度数++）</li>
+<li>使用朴素的拓扑排序即可得到拓扑序</li>
+</ol>
+<h3 id="Code">Code</h3>
+<blockquote>
+<p>法1：手动定向，丰富信息，写麻了</p>
+</blockquote>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">152</span>;
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> NN = N*N*<span class="hljs-number">9</span>;
+
+<span class="hljs-type">int</span> x, y, z;
+
+<span class="hljs-comment">// 三元组</span>
+<span class="hljs-type">char</span> mat[N][N][N];
+
+<span class="hljs-comment">// 小编号</span>
+<span class="hljs-type">int</span> r[N*<span class="hljs-number">3</span>], g[N*<span class="hljs-number">3</span>], b[N*<span class="hljs-number">3</span>];
+<span class="hljs-comment">// 大编号</span>
+<span class="hljs-type">int</span> R[N], G[N], B[N];
+
+<span class="hljs-comment">// 拓扑图</span>
+vector&lt;<span class="hljs-type">int</span>&gt; e[N*<span class="hljs-number">3</span>];
+<span class="hljs-comment">// 入度，拓扑序</span>
+<span class="hljs-type">int</span> ind[N*<span class="hljs-number">3</span>], rnk[N*<span class="hljs-number">3</span>];
+
+<span class="hljs-comment">// A-&gt;B 处理记录</span>
+<span class="hljs-type">bool</span> vis[N*<span class="hljs-number">3</span>][N*<span class="hljs-number">3</span>];
+
+<span class="hljs-comment">// 处理节点</span>
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">Node</span> &#123;
+    string type;
+    <span class="hljs-type">int</span> V1, V2;
+&#125;;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span> </span>&#123;
+    cin &gt;&gt; x &gt;&gt; y &gt;&gt; z;
+    
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= x; i++) r[R[i] = i] = i;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= y; i++) g[G[i] = x + i] = i;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= z; i++) b[B[i] = x + y + i] = i;
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= x; i++) &#123;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= y; j++) &#123;
+            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">1</span>; k &lt;= z; k++) &#123;
+                <span class="hljs-type">char</span> c;
+                cin &gt;&gt; c;
+                mat[i][j][k] = c;
+            &#125;
+        &#125;
+    &#125;
+
+    queue&lt;Node&gt; Q;
+    Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;RGB&quot;</span>, R[<span class="hljs-number">1</span>], G[<span class="hljs-number">1</span>]&#125;);
+    
+    <span class="hljs-keyword">while</span>(Q.<span class="hljs-built_in">size</span>()) &#123;
+        <span class="hljs-keyword">auto</span> [type, V1, V2] = Q.<span class="hljs-built_in">front</span>(); Q.<span class="hljs-built_in">pop</span>();
+        
+        <span class="hljs-keyword">if</span> (vis[V1][V2]) <span class="hljs-keyword">continue</span>;
+        vis[V1][V2] = <span class="hljs-literal">true</span>;
+        
+        <span class="hljs-comment">// cout &lt;&lt; type &lt;&lt; &quot;:&quot;;</span>
+        <span class="hljs-comment">// cout &lt;&lt; V1 &lt;&lt; &quot;-&gt;&quot; &lt;&lt; V2 &lt;&lt; &quot;\n&quot;;</span>
+
+        e[V1].<span class="hljs-built_in">push_back</span>(V2);
+        ind[V2]++;
+
+        <span class="hljs-type">char</span> cc = type.<span class="hljs-built_in">back</span>();
+        type.<span class="hljs-built_in">pop_back</span>();
+
+        <span class="hljs-type">int</span> RR, GG, BB, rr, gg, bb;
+        
+        <span class="hljs-type">bool</span> inc = type == <span class="hljs-string">&quot;RG&quot;</span> || type == <span class="hljs-string">&quot;RB&quot;</span> || type == <span class="hljs-string">&quot;GB&quot;</span>;
+        <span class="hljs-keyword">if</span> (!inc) <span class="hljs-built_in">swap</span>(V1, V2);
+
+        <span class="hljs-comment">// cout &lt;&lt; inc &lt;&lt; &quot;\n&quot;;</span>
+        
+        <span class="hljs-keyword">if</span>(cc == <span class="hljs-string">&#x27;R&#x27;</span>) &#123;
+            GG = V1; BB = V2;
+            gg = g[GG]; bb = b[BB];
+            <span class="hljs-comment">// cout &lt;&lt; gg &lt;&lt; &quot; &quot; &lt;&lt; bb &lt;&lt; &quot;\n&quot;;</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> rr = <span class="hljs-number">1</span>; rr &lt;= x; rr++) &#123;
+                RR = R[rr];
+                <span class="hljs-type">char</span> c = mat[rr][gg][bb];
+                <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&#x27;R&#x27;</span>) &#123;
+                    <span class="hljs-keyword">if</span> (inc) &#123;
+                        <span class="hljs-comment">// G -&gt; R -&gt; B</span>
+                        <span class="hljs-keyword">if</span>(!vis[GG][RR])
+                        Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;GRB&quot;</span>, GG, RR&#125;);
+                        <span class="hljs-keyword">if</span>(!vis[RR][BB])
+                        Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;RBG&quot;</span>, RR, BB&#125;);
+                    &#125; <span class="hljs-keyword">else</span> &#123;
+                        <span class="hljs-comment">// B -&gt; R -&gt; G</span>
+                        <span class="hljs-keyword">if</span>(!vis[BB][RR])
+                        Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;BRG&quot;</span>, BB, RR&#125;);
+                        <span class="hljs-keyword">if</span>(!vis[RR][GG])
+                        Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;RGB&quot;</span>, RR, GG&#125;);
+                    &#125;
+                &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&#x27;G&#x27;</span>) &#123;
+                    <span class="hljs-comment">// R -&gt; G B</span>
+                    <span class="hljs-keyword">if</span> (inc) &#123;
+                        <span class="hljs-keyword">if</span>(!vis[RR][GG])
+                        Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;RGB&quot;</span>, RR, GG&#125;);
+                        <span class="hljs-keyword">if</span>(!vis[RR][BB])
+                        Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;RBG&quot;</span>, RR, BB&#125;);
+                    &#125;
+                    <span class="hljs-comment">// B G -&gt; R</span>
+                    <span class="hljs-keyword">else</span> &#123;
+                        <span class="hljs-keyword">if</span>(!vis[GG][RR])
+                        Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;GRB&quot;</span>, GG, RR&#125;);
+                        <span class="hljs-keyword">if</span>(!vis[BB][RR])
+                        Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;BRG&quot;</span>, BB, RR&#125;);
+                    &#125;
+                &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&#x27;B&#x27;</span>) &#123;
+                    <span class="hljs-comment">// G B -&gt; R</span>
+                    <span class="hljs-keyword">if</span> (inc) &#123;
+                        <span class="hljs-keyword">if</span>(!vis[BB][RR])
+                        Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;BRG&quot;</span>, BB, RR&#125;);
+                        <span class="hljs-keyword">if</span>(!vis[GG][RR])
+                        Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;GRB&quot;</span>, GG, RR&#125;);
+                    &#125;
+                    <span class="hljs-comment">// R -&gt; B G </span>
+                    <span class="hljs-keyword">else</span> &#123;
+                        <span class="hljs-keyword">if</span>(!vis[RR][BB]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;RBG&quot;</span>, RR, BB&#125;);
+                        <span class="hljs-keyword">if</span>(!vis[RR][GG]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;RGB&quot;</span>, RR, GG&#125;);
+                    &#125;
+                &#125;
+            &#125; 
+        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(cc == <span class="hljs-string">&#x27;G&#x27;</span>) &#123;
+            RR = V1; BB = V2;
+            rr = r[RR]; bb = b[BB];
+            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> gg = <span class="hljs-number">1</span>; gg &lt;= y; gg++) &#123;
+                GG = G[gg];
+                <span class="hljs-type">char</span> c = mat[rr][gg][bb];
+                <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&#x27;G&#x27;</span>) &#123;
+                    <span class="hljs-keyword">if</span> (inc) &#123;
+                        <span class="hljs-comment">// R -&gt; G -&gt; B</span>
+                        <span class="hljs-keyword">if</span>(!vis[RR][GG]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;RGB&quot;</span>, RR, GG&#125;);
+                        <span class="hljs-keyword">if</span>(!vis[GG][BB]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;GBR&quot;</span>, GG, BB&#125;);
+                    &#125; <span class="hljs-keyword">else</span> &#123;
+                        <span class="hljs-comment">// B -&gt; G -&gt; R</span>
+                        <span class="hljs-keyword">if</span>(!vis[BB][GG]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;BGR&quot;</span>, BB, GG&#125;);
+                        <span class="hljs-keyword">if</span>(!vis[GG][RR]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;GRB&quot;</span>, GG, RR&#125;);
+                    &#125;
+                &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&#x27;R&#x27;</span>) &#123;
+                    <span class="hljs-comment">// G -&gt; R B</span>
+                    <span class="hljs-keyword">if</span> (inc) &#123;
+                        <span class="hljs-keyword">if</span>(!vis[GG][RR]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;GRB&quot;</span>, GG, RR&#125;);
+                        <span class="hljs-keyword">if</span>(!vis[GG][BB]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;GBR&quot;</span>, GG, BB&#125;);
+                    &#125;
+                    <span class="hljs-comment">// B R -&gt; G</span>
+                    <span class="hljs-keyword">else</span> &#123;
+                        <span class="hljs-keyword">if</span>(!vis[RR][GG]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;RGB&quot;</span>, RR, GG&#125;);
+                        <span class="hljs-keyword">if</span>(!vis[BB][GG]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;BGR&quot;</span>, BB, GG&#125;);
+                    &#125;
+                &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&#x27;B&#x27;</span>) &#123;
+                    <span class="hljs-comment">// R B -&gt; G</span>
+                    <span class="hljs-keyword">if</span> (inc) &#123;
+                        <span class="hljs-keyword">if</span>(!vis[BB][GG]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;BGR&quot;</span>, BB, GG&#125;);
+                        <span class="hljs-keyword">if</span>(!vis[RR][GG]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;RGB&quot;</span>, RR, GG&#125;);
+                    &#125;
+                    <span class="hljs-comment">// G -&gt; B R</span>
+                    <span class="hljs-keyword">else</span> &#123;
+                        <span class="hljs-keyword">if</span>(!vis[GG][BB]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;GBR&quot;</span>, GG, BB&#125;);
+                        <span class="hljs-keyword">if</span>(!vis[GG][RR]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;GRB&quot;</span>, GG, RR&#125;);
+                    &#125;
+                &#125;
+            &#125; 
+        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(cc == <span class="hljs-string">&#x27;B&#x27;</span>) &#123;
+            RR = V1; GG = V2;
+            rr = r[RR]; gg = g[GG];
+            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> bb = <span class="hljs-number">1</span>; bb &lt;= z; bb++) &#123;
+                BB = B[bb];
+                <span class="hljs-type">char</span> c = mat[rr][gg][bb];
+                <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&#x27;B&#x27;</span>) &#123;
+                    <span class="hljs-keyword">if</span> (inc) &#123;
+                        <span class="hljs-comment">// R -&gt; B -&gt; G</span>
+                        <span class="hljs-keyword">if</span>(!vis[RR][BB]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;RBG&quot;</span>, RR, BB&#125;);
+                        <span class="hljs-keyword">if</span>(!vis[BB][GG]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;BGR&quot;</span>, BB, GG&#125;);
+                    &#125; <span class="hljs-keyword">else</span> &#123;
+                        <span class="hljs-comment">// G -&gt; B -&gt; R</span>
+                        <span class="hljs-keyword">if</span>(!vis[GG][BB]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;GBR&quot;</span>, GG, BB&#125;);
+                        <span class="hljs-keyword">if</span>(!vis[BB][RR]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;BRG&quot;</span>, BB, RR&#125;);
+                    &#125;
+                &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&#x27;R&#x27;</span>) &#123;
+                    <span class="hljs-comment">// B -&gt; R G</span>
+                    <span class="hljs-keyword">if</span> (inc) &#123;
+                        <span class="hljs-keyword">if</span>(!vis[BB][RR]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;BRG&quot;</span>, BB, RR&#125;);
+                        <span class="hljs-keyword">if</span>(!vis[BB][GG]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;BGR&quot;</span>, BB, GG&#125;);
+                    &#125;
+                    <span class="hljs-comment">// G R -&gt; B</span>
+                    <span class="hljs-keyword">else</span> &#123;
+                        <span class="hljs-keyword">if</span>(!vis[RR][BB]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;RBG&quot;</span>, RR, BB&#125;);
+                        <span class="hljs-keyword">if</span>(!vis[GG][BB]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;GBR&quot;</span>, GG, BB&#125;);
+                    &#125;
+                &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&#x27;G&#x27;</span>) &#123;
+                    <span class="hljs-comment">// R G -&gt; B</span>
+                    <span class="hljs-keyword">if</span> (inc) &#123;
+                        <span class="hljs-keyword">if</span>(!vis[GG][BB]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;GBR&quot;</span>, GG, BB&#125;);
+                        <span class="hljs-keyword">if</span>(!vis[RR][BB]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;RBG&quot;</span>, RR, BB&#125;);
+                    &#125;
+                    <span class="hljs-comment">// B -&gt; G R</span>
+                    <span class="hljs-keyword">else</span> &#123;
+                        <span class="hljs-keyword">if</span>(!vis[BB][GG]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;BGR&quot;</span>, BB, GG&#125;);
+                        <span class="hljs-keyword">if</span>(!vis[BB][RR]) Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-string">&quot;BRG&quot;</span>, BB, RR&#125;);
+                    &#125;
+                &#125;
+            &#125; 
+        &#125;
+    &#125;
+    
+    queue&lt;<span class="hljs-type">int</span>&gt; q;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>;  i &lt;= x+y+z; i++) &#123;
+        <span class="hljs-keyword">if</span>(!ind[i]) q.<span class="hljs-built_in">push</span>(i);
+    &#125;
+    
+    <span class="hljs-built_in">assert</span>(q.<span class="hljs-built_in">size</span>());
+
+    <span class="hljs-type">int</span> idx = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">while</span>(q.<span class="hljs-built_in">size</span>()) &#123;
+        <span class="hljs-type">int</span> u = q.<span class="hljs-built_in">front</span>(); q.<span class="hljs-built_in">pop</span>();
+        rnk[u] = ++idx;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> v:e[u]) &#123;
+            <span class="hljs-keyword">if</span>(!--ind[v]) q.<span class="hljs-built_in">push</span>(v);
+        &#125;
+    &#125;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= x+y+z;i++) &#123;
+        <span class="hljs-built_in">assert</span>(rnk[i]);
+        cout &lt;&lt; rnk[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;
+        <span class="hljs-keyword">if</span> (i == x || i == x + y || i == x+y+z) cout &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+    &#125;
+&#125;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-type">int</span> T  =<span class="hljs-number">1</span>;
+    <span class="hljs-comment">// cin &gt;&gt; T;</span>
+    <span class="hljs-keyword">while</span> (T--) <span class="hljs-built_in">solve</span>();
+&#125;</code></pre>
+<blockquote>
+<p>法2：扩展域并查集，依然维护有向边的相对方向</p>
+</blockquote>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> INF 1000000000</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> LINF 1000000000000000000</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> MOD 1000000007</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> mod 998244353</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> F first</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> S second</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> ll long long</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> N 70010</span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> B=<span class="hljs-number">22500</span>;
+<span class="hljs-type">int</span> n,m,d,fa[N*<span class="hljs-number">2</span>],deg[N],ans[N];
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">getf</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span>&#123;<span class="hljs-keyword">return</span> x==fa[x]?x:fa[x]=<span class="hljs-built_in">getf</span>(fa[x]);&#125;
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">upd</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y,<span class="hljs-type">int</span> o)</span></span>&#123;
+    fa[<span class="hljs-built_in">getf</span>(x&lt;&lt;<span class="hljs-number">1</span>)]=<span class="hljs-built_in">getf</span>(y&lt;&lt;<span class="hljs-number">1</span>|o);
+    fa[<span class="hljs-built_in">getf</span>(x&lt;&lt;<span class="hljs-number">1</span>|<span class="hljs-number">1</span>)]=<span class="hljs-built_in">getf</span>(y&lt;&lt;<span class="hljs-number">1</span>|(o^<span class="hljs-number">1</span>));
+    <span class="hljs-keyword">return</span>;
+&#125;
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;
+    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-literal">false</span>);
+    cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>),cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
+    cin&gt;&gt;n&gt;&gt;m&gt;&gt;d;
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;N*<span class="hljs-number">2</span>;i++) fa[i]=i;
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++)&#123;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">0</span>;j&lt;m;j++)&#123;
+            string s;
+            cin&gt;&gt;s;
+            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k=<span class="hljs-number">0</span>;k&lt;d;k++)&#123;
+                <span class="hljs-keyword">if</span>(s[k]==<span class="hljs-string">&#x27;R&#x27;</span>)&#123;
+                    <span class="hljs-built_in">upd</span>(i*m+j,i*d+k+B,<span class="hljs-number">1</span>);
+                    <span class="hljs-built_in">upd</span>(i*m+j,j*d+k+B*<span class="hljs-number">2</span>,<span class="hljs-number">1</span>);
+                &#125;
+                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(s[k]==<span class="hljs-string">&#x27;G&#x27;</span>)&#123;
+                    <span class="hljs-built_in">upd</span>(i*m+j,i*d+k+B,<span class="hljs-number">0</span>);
+                    <span class="hljs-built_in">upd</span>(i*m+j,j*d+k+B*<span class="hljs-number">2</span>,<span class="hljs-number">0</span>);
+                &#125;
+                <span class="hljs-keyword">else</span>&#123;
+                    <span class="hljs-built_in">upd</span>(i*m+j,i*d+k+B,<span class="hljs-number">0</span>);
+                    <span class="hljs-built_in">upd</span>(i*m+j,j*d+k+B*<span class="hljs-number">2</span>,<span class="hljs-number">1</span>);
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++) <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">0</span>;j&lt;m;j++)&#123;
+        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">getf</span>((i*m+j)&lt;&lt;<span class="hljs-number">1</span>)==<span class="hljs-built_in">getf</span>(<span class="hljs-number">0</span>)) deg[j+n]++;
+        <span class="hljs-keyword">else</span> deg[i]++;
+    &#125;
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++) <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">0</span>;j&lt;d;j++)&#123;
+        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">getf</span>((i*d+j+B)&lt;&lt;<span class="hljs-number">1</span>)==<span class="hljs-built_in">getf</span>(<span class="hljs-number">0</span>)) deg[j+n+m]++;
+        <span class="hljs-keyword">else</span> deg[i]++;
+    &#125;
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;m;i++) <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">0</span>;j&lt;d;j++)&#123;
+        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">getf</span>((i*d+j+B*<span class="hljs-number">2</span>)&lt;&lt;<span class="hljs-number">1</span>)==<span class="hljs-built_in">getf</span>(<span class="hljs-number">0</span>)) deg[j+n+m]++;
+        <span class="hljs-keyword">else</span> deg[i+n]++;
+    &#125;
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> _=<span class="hljs-number">0</span>;_&lt;n+m+d;_++)&#123;
+        pair&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt; mn=<span class="hljs-built_in">make_pair</span>(INF,INF);
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n+m+d;i++) mn=<span class="hljs-built_in">min</span>(mn,<span class="hljs-built_in">make_pair</span>(deg[i],i));
+        <span class="hljs-built_in">assert</span>(mn.F==<span class="hljs-number">0</span>);
+        ans[mn.S]=_<span class="hljs-number">+1</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n+m+d;i++)&#123;
+            <span class="hljs-keyword">if</span>((i&lt;n?<span class="hljs-number">0</span>:(i&lt;n+m?<span class="hljs-number">1</span>:<span class="hljs-number">2</span>))!=(mn.S&lt;n?<span class="hljs-number">0</span>:(mn.S&lt;n+m?<span class="hljs-number">1</span>:<span class="hljs-number">2</span>))) deg[i]--;
+        &#125;
+        deg[mn.S]=INF;
+    &#125;
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++) cout&lt;&lt;ans[i]&lt;&lt;<span class="hljs-string">&quot; &quot;</span>;
+    cout&lt;&lt;<span class="hljs-string">&#x27;\n&#x27;</span>;
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=n;i&lt;n+m;i++) cout&lt;&lt;ans[i]&lt;&lt;<span class="hljs-string">&quot; &quot;</span>;
+    cout&lt;&lt;<span class="hljs-string">&#x27;\n&#x27;</span>;
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=n+m;i&lt;n+d+m;i++) cout&lt;&lt;ans[i]&lt;&lt;<span class="hljs-string">&quot; &quot;</span>;
+    cout&lt;&lt;<span class="hljs-string">&#x27;\n&#x27;</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+&#125;</code></pre>
 <h2 id="J-Leaf-Order-Reconstruction">J Leaf Order Reconstruction</h2>
 <h3 id="Problem-Description-2">Problem Description</h3>
 <p>在无数次试图拯救 Madoka 之后，Homura Akemi 已经体验了许多不同的时间线。</p>
@@ -260,7 +730,7 @@ RR</code></pre>
     <aside class="post-outline" id="post-outline">
         <div class="outline-title">OUTLINE</div>
         <nav class="outline-nav">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#C-%E6%88%91%E5%BE%97%E5%88%B0%E7%A5%9E%E5%A5%87%E5%AE%9D%E8%B4%9D%E4%BA%86%EF%BC%81"><span class="toc-text">C 我得到神奇宝贝了！</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output"><span class="toc-text">Sample Output</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#J-Leaf-Order-Reconstruction"><span class="toc-text">J Leaf Order Reconstruction</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description-2"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input-2"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output-2"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input-2"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output-2"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hint"><span class="toc-text">Hint</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#C-%E6%88%91%E5%BE%97%E5%88%B0%E7%A5%9E%E5%A5%87%E5%AE%9D%E8%B4%9D%E4%BA%86%EF%BC%81"><span class="toc-text">C 我得到神奇宝贝了！</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#J-Leaf-Order-Reconstruction"><span class="toc-text">J Leaf Order Reconstruction</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description-2"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input-2"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output-2"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input-2"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output-2"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hint"><span class="toc-text">Hint</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
