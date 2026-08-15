@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1786752966480">
+<link rel="stylesheet" href="/styles/main.css?v=1786797619075">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -103,8 +103,10 @@
                     <time class="post-time gt-c-content-color-first">
                         · 2026-08-11 ·</time>
                     
+                        <span class="post-updated">更新于 2026-08-15</span>
+                    
                     <span class="post-wordcount gt-c-content-color-second">
-                        3.7 千字 ·</span>
+                        5.5 千字 ·</span>
                     
                         
                             <a href="/tags/HDU/" class="post-tag">
@@ -118,7 +120,7 @@
                 <hr>
                 
                 <div class="post-content gt-c-content-color-first">
-                    <h2 id="1003-括号凸包【凸包-环形前缀和】（TODO）">1003 括号凸包【凸包 / 环形前缀和】（TODO）</h2>
+                    <h2 id="1003-括号凸包【凸包DP-环形前缀和-几何特有的限定端点法】">1003 括号凸包【凸包DP / 环形前缀和 / 几何特有的限定端点法】</h2>
 <h3 id="Problem-Description">Problem Description</h3>
 <p>给定二维平面上的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> 个点，所有点互不相同，且不存在三点共线。每个点上写有一个括号，可能是左括号 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo></mrow><annotation encoding="application/x-tex">(</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span></span></span></span>，也可能是右括号 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mclose">)</span></span></span></span>。</p>
 <p>我们称一个字符串 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi></mrow><annotation encoding="application/x-tex">S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0576em;">S</span></span></span></span> 是一个合法括号序列，当且仅当它可以由如下递归规则生成：</p>
@@ -179,6 +181,109 @@
 1
 0
 0</code></pre>
+<h3 id="Solution">Solution</h3>
+<blockquote>
+<p>看图吧</p>
+</blockquote>
+<p><img src="assets/contest05/file-20260815203927091.png" alt=""></p>
+<h3 id="Code">Code</h3>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">using</span> ll = <span class="hljs-type">long</span> <span class="hljs-type">long</span>;
+<span class="hljs-keyword">using</span> lll = __int128;
+
+<span class="hljs-type">const</span> ll mod = <span class="hljs-number">998244353</span>;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">Vec</span> &#123;
+    ll x, y;
+    <span class="hljs-type">double</span> arg;
+    <span class="hljs-built_in">Vec</span>(ll x=<span class="hljs-number">0</span>,ll y=<span class="hljs-number">0</span>):<span class="hljs-built_in">x</span>(x),<span class="hljs-built_in">y</span>(y),<span class="hljs-built_in">arg</span>(<span class="hljs-built_in">atan2</span>(y,x)) &#123;&#125;
+    lll <span class="hljs-keyword">operator</span>%(<span class="hljs-type">const</span> Vec o) <span class="hljs-type">const</span> &#123;
+        <span class="hljs-keyword">return</span> (lll)(x-o.x)*(o.y-y) - (lll)(y-o.y)*(o.x-x);
+    &#125;
+    Vec <span class="hljs-keyword">operator</span>-(<span class="hljs-type">const</span> Vec&amp; o) <span class="hljs-type">const</span> &#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">Vec</span>(x-o.x,y-o.y);
+    &#125;
+    <span class="hljs-type">bool</span> <span class="hljs-keyword">operator</span>&lt;(<span class="hljs-type">const</span> Vec&amp; o) <span class="hljs-type">const</span> &#123;
+        <span class="hljs-keyword">return</span> arg &lt; o.arg;
+    &#125;
+&#125;;
+
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">505</span>;
+
+<span class="hljs-type">int</span> n;
+Vec p[N];
+<span class="hljs-type">int</span> t[N];
+
+ll dp[N][N];
+ll sum[N];
+
+<span class="hljs-type">int</span> order[N];
+pair&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt; par[N*N];
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span> </span>&#123;
+    cin &gt;&gt; n;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
+        ll x, y;
+        cin &gt;&gt; x &gt;&gt; y &gt;&gt; t[i];
+        p[i] = <span class="hljs-built_in">Vec</span>(x, y);
+    &#125;
+    <span class="hljs-type">int</span> cnt = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j++) &#123;
+            <span class="hljs-keyword">if</span>(i != j) &#123;
+                par[++cnt] = &#123;i, j&#125;;
+            &#125;
+        &#125;
+    &#125;
+    <span class="hljs-built_in">iota</span>(order,order<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
+    <span class="hljs-built_in">sort</span>(order<span class="hljs-number">+1</span>,order<span class="hljs-number">+1</span>+n, [](<span class="hljs-keyword">auto</span>&amp; a,<span class="hljs-keyword">auto</span>&amp; b)&#123;
+        <span class="hljs-keyword">return</span> p[a].y &gt; p[b].y;
+    &#125;);
+    <span class="hljs-built_in">sort</span>(par<span class="hljs-number">+1</span>,par<span class="hljs-number">+1</span>+cnt,[](<span class="hljs-keyword">auto</span>&amp; i,<span class="hljs-keyword">auto</span>&amp; j)&#123;
+        <span class="hljs-built_in">return</span> (p[i.second] - p[i.first]) &lt; (p[j.second] - p[j.first]);
+    &#125;);
+    ll ans = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
+        <span class="hljs-type">int</span> s = order[i];
+        ll h = p[s].y;
+        <span class="hljs-comment">// cout &lt;&lt; &quot;s=&quot; &lt;&lt; s &lt;&lt; &quot;\n&quot;;</span>
+        <span class="hljs-built_in">fill</span>(sum,sum<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>;i &lt;= n; i++) &#123;
+            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j++) &#123;
+                dp[i][j] = <span class="hljs-number">0</span>;
+            &#125;
+        &#125;
+        sum[s] = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= cnt; j++) &#123;
+            <span class="hljs-keyword">auto</span> [u, v] = par[j];
+            <span class="hljs-keyword">if</span>(t[u] == t[v] || p[u].y &gt; h || p[v].y &gt; h) <span class="hljs-keyword">continue</span>;
+            <span class="hljs-comment">// cout &lt;&lt; u &lt;&lt; &quot;-&quot; &lt;&lt; v &lt;&lt; &quot;\n&quot;;</span>
+            (dp[u][v] += sum[u]) %= mod;
+            (sum[v] += dp[u][v]) %= mod;
+            <span class="hljs-comment">// cout &lt;&lt; &quot;dp=&quot; &lt;&lt; dp[u][v] &lt;&lt; &quot;\n&quot;;</span>
+        &#125;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j++) &#123;
+            (ans += dp[j][s] ) %= mod;
+        &#125;
+    &#125;
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt; i; j++) &#123;
+            <span class="hljs-keyword">if</span>(t[i] !=  t[j]) &#123;
+                (ans += mod - <span class="hljs-number">1</span>) %= mod;
+            &#125;
+        &#125;
+    &#125;
+    cout &lt;&lt; ans &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+&#125;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>);cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-type">int</span> T =  <span class="hljs-number">1</span>;
+    cin &gt;&gt; T;
+    <span class="hljs-keyword">while</span> (T--) <span class="hljs-built_in">solve</span>();
+&#125;</code></pre>
 <h2 id="1004-探索宝物【期望】（TODO）">1004 探索宝物【期望】（TODO）</h2>
 <h3 id="Problem-Description-2">Problem Description</h3>
 <p>玩家准备探索一个神秘房间，最多可以进行 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> 次探索。每次探索会消耗 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi></mrow><annotation encoding="application/x-tex">c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">c</span></span></span></span> 个金币，并随机生成一个宝物。宝物的价值是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mi>m</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[1, m]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">m</span><span class="mclose">]</span></span></span></span> 中的一个整数。对于价值为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">v</span></span></span></span> 的宝物，其出现概率为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mi>v</mi></msub></mrow><annotation encoding="application/x-tex">P_v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1389em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.0359em;">v</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>。</p>
@@ -290,7 +395,7 @@ aaaaaa</code></pre>
     <aside class="post-outline" id="post-outline">
         <div class="outline-title">OUTLINE</div>
         <nav class="outline-nav">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1003-%E6%8B%AC%E5%8F%B7%E5%87%B8%E5%8C%85%E3%80%90%E5%87%B8%E5%8C%85-%E7%8E%AF%E5%BD%A2%E5%89%8D%E7%BC%80%E5%92%8C%E3%80%91%EF%BC%88TODO%EF%BC%89"><span class="toc-text">1003 括号凸包【凸包 &#x2F; 环形前缀和】（TODO）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output"><span class="toc-text">Sample Output</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1004-%E6%8E%A2%E7%B4%A2%E5%AE%9D%E7%89%A9%E3%80%90%E6%9C%9F%E6%9C%9B%E3%80%91%EF%BC%88TODO%EF%BC%89"><span class="toc-text">1004 探索宝物【期望】（TODO）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description-2"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input-2"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output-2"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input-2"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output-2"><span class="toc-text">Sample Output</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1006-%E4%B8%89%E4%B8%B2%E5%85%B1%E9%B8%A3%E3%80%90%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%91%EF%BC%88TODO%EF%BC%89"><span class="toc-text">1006 三串共鸣【字符串】（TODO）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description-3"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input-3"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output-3"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input-3"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output-3"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hint"><span class="toc-text">Hint</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1003-%E6%8B%AC%E5%8F%B7%E5%87%B8%E5%8C%85%E3%80%90%E5%87%B8%E5%8C%85DP-%E7%8E%AF%E5%BD%A2%E5%89%8D%E7%BC%80%E5%92%8C-%E5%87%A0%E4%BD%95%E7%89%B9%E6%9C%89%E7%9A%84%E9%99%90%E5%AE%9A%E7%AB%AF%E7%82%B9%E6%B3%95%E3%80%91"><span class="toc-text">1003 括号凸包【凸包DP &#x2F; 环形前缀和 &#x2F; 几何特有的限定端点法】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1004-%E6%8E%A2%E7%B4%A2%E5%AE%9D%E7%89%A9%E3%80%90%E6%9C%9F%E6%9C%9B%E3%80%91%EF%BC%88TODO%EF%BC%89"><span class="toc-text">1004 探索宝物【期望】（TODO）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description-2"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input-2"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output-2"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input-2"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output-2"><span class="toc-text">Sample Output</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1006-%E4%B8%89%E4%B8%B2%E5%85%B1%E9%B8%A3%E3%80%90%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%91%EF%BC%88TODO%EF%BC%89"><span class="toc-text">1006 三串共鸣【字符串】（TODO）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description-3"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input-3"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output-3"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input-3"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output-3"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hint"><span class="toc-text">Hint</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
