@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1786882571989">
+<link rel="stylesheet" href="/styles/main.css?v=1786903398522">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -103,10 +103,10 @@
                     <time class="post-time gt-c-content-color-first">
                         · 2026-08-11 ·</time>
                     
-                        <span class="post-updated">更新于 2026-08-16</span>
+                        <span class="post-updated">更新于 2026-08-17</span>
                     
                     <span class="post-wordcount gt-c-content-color-second">
-                        7.3 千字 ·</span>
+                        10 千字 ·</span>
                     
                         
                             <a href="/tags/HDU/" class="post-tag">
@@ -443,7 +443,7 @@ ll w[M];
     cin &gt;&gt; T;
     <span class="hljs-keyword">while</span> (T--) <span class="hljs-built_in">solve</span>();
 &#125;</code></pre>
-<h2 id="1006-三串共鸣【字符串】（TODO）">1006 三串共鸣【字符串】（TODO）</h2>
+<h2 id="1006-三串共鸣【Z-函数-计数-“类01段计数算法”-“类等长段覆盖算法”】">1006 三串共鸣【Z 函数 / 计数 / “类01段计数算法” / “类等长段覆盖算法”】</h2>
 <h3 id="Problem-Description-3">Problem Description</h3>
 <p>给定三个仅由小写英文字母组成的字符串 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi></mrow><annotation encoding="application/x-tex">c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">c</span></span></span></span>。所有字符串的下标均从 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span> 开始，我们用 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">∣</mi><mi>S</mi><mi mathvariant="normal">∣</mi></mrow><annotation encoding="application/x-tex">|S|</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.0576em;">S</span><span class="mord">∣</span></span></span></span> 表示字符串 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi></mrow><annotation encoding="application/x-tex">S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0576em;">S</span></span></span></span> 的长度，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo stretchy="false">[</mo><mi>x</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi>y</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">S[x..y]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0576em;">S</span><span class="mopen">[</span><span class="mord mathnormal">x</span><span class="mord">..</span><span class="mord mathnormal" style="margin-right:0.0359em;">y</span><span class="mclose">]</span></span></span></span> 表示字符串 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi></mrow><annotation encoding="application/x-tex">S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0576em;">S</span></span></span></span> 从下标 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span> 到下标 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">y</span></span></span></span> 的连续子串，区间两端均包含在内。</p>
 <p>你需要统计有多少个三元组 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo separator="true">,</mo><mi>l</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(i, j, l)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.0572em;">j</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.0197em;">l</span><span class="mclose">)</span></span></span></span> 满足以下条件：</p>
@@ -473,7 +473,188 @@ aaaaaa</code></pre>
 90</code></pre>
 <h3 id="Hint">Hint</h3>
 <p>对于第一组样例，满足条件的三个三元组分别为：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>1</mn><mo separator="true">,</mo><mn>0</mn><mo separator="true">,</mo><mn>0</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(1, 0, 0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0</span><span class="mclose">)</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(1, 1, 1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>2</mn><mo separator="true">,</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(2, 1, 1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span>。</p>
+<h3 id="Solution-3">Solution</h3>
+<ul>
+<li>
+<p>首先 c 显然可以变为一个权重</p>
+</li>
+<li>
+<p>重点在于 b 在不同的 L 下的覆盖长度计算</p>
+</li>
+<li>
+<p>还记得01段计数吗</p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>段数</mtext><mo>=</mo><mn>1</mn><mtext>的个数</mtext><mo>−</mo><mn>11</mn><mtext>的个数</mtext></mrow><annotation encoding="application/x-tex">段数 = 1的个数 - 11的个数</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord cjk_fallback">段数</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mord cjk_fallback">的个数</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord">11</span><span class="mord cjk_fallback">的个数</span></span></span></span></li>
+</ul>
+</li>
+<li>
+<p>那么这里，等长段覆盖计数，依然使用</p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>覆盖长度</mtext><mo>=</mo><mtext>定长</mtext><mi>L</mi><mo>×</mo><mtext>点个数</mtext><mi>n</mi><mo>−</mo><mo>∑</mo><mi>max</mi><mo>⁡</mo><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mi>L</mi><mo>−</mo><mtext>邻点间距</mtext><mo stretchy="false">(</mo><msub><mi>p</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>−</mo><msub><mi>p</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">覆盖长度 = 定长L \times 点个数n - \sum \max(0,L-邻点间距(p_{i+1}-p_i))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord cjk_fallback">覆盖长度</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord cjk_fallback">定长</span><span class="mord mathnormal">L</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord cjk_fallback">点个数</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop op-symbol small-op" style="position:relative;top:0em;">∑</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop">max</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">L</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord cjk_fallback">邻点间距</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">))</span></span></span></span></li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>覆盖长度</mtext><mo>=</mo><mtext>定长</mtext><mi>L</mi><mo>×</mo><mtext>点个数</mtext><mi>n</mi><mo>−</mo><mo>∑</mo><mi>max</mi><mo>⁡</mo><mo stretchy="false">(</mo><mo stretchy="false">(</mo><msub><mi>p</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>−</mo><msub><mi>p</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mo separator="true">,</mo><mi>L</mi><mo stretchy="false">)</mo><mo>+</mo><mo stretchy="false">(</mo><msub><mi>p</mi><mtext>max</mtext></msub><mo>−</mo><msub><mi>p</mi><mtext>min</mtext></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">覆盖长度 = 定长L \times 点个数n - \sum \max((p_{i+1}-p_i), L) + (p_{\text{max}} - p_{\text{min}})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord cjk_fallback">覆盖长度</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord cjk_fallback">定长</span><span class="mord mathnormal">L</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord cjk_fallback">点个数</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop op-symbol small-op" style="position:relative;top:0em;">∑</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop">max</span><span class="mopen">((</span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">L</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">max</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3175em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">min</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></li>
+<li>只需要维护：
+<ul>
+<li>相对位置（set）</li>
+<li>间隔长度（Bit）</li>
+</ul>
+</li>
+<li>对任意 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi></mrow><annotation encoding="application/x-tex">L</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal">L</span></span></span></span> 可以快读计算</li>
+<li>使用 <code>set</code> + <code>BitSum, BitCnt</code> 维护即可</li>
+</ul>
+</li>
+<li>
+<p>考虑到发展变化的顺序，此题使用按 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi></mrow><annotation encoding="application/x-tex">L</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal">L</span></span></span></span> 倒序插入位置即可</p>
+</li>
+</ul>
+<h3 id="Code-3">Code</h3>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-keyword">using</span> ll = <span class="hljs-type">long</span> <span class="hljs-type">long</span>;
 
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">2e5</span> + <span class="hljs-number">5</span>;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">BIT</span>&#123;
+    <span class="hljs-type">int</span> n;
+    ll tr[N];
+
+    <span class="hljs-comment">// 0-base 适配</span>
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-type">int</span> _)</span> </span>&#123;
+        n = _ + <span class="hljs-number">1</span>;
+        <span class="hljs-built_in">fill</span>(tr,tr<span class="hljs-number">+1</span>+n, <span class="hljs-number">0</span>);
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> i,<span class="hljs-type">int</span> v)</span> </span>&#123;
+        <span class="hljs-keyword">for</span>(i++;i&lt;=n;i+=i&amp;-i) tr[i]+=v;
+    &#125;
+
+    <span class="hljs-comment">// 查询前缀和</span>
+    <span class="hljs-function">ll <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span> </span>&#123;
+        ll res = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span>(i++;i;i-=i&amp;-i) res += tr[i];
+        <span class="hljs-keyword">return</span> res;
+    &#125;
+    
+    <span class="hljs-comment">// // 第一个前缀和 &gt;= v 的位置</span>
+    <span class="hljs-comment">// // 返回 -1: 空即可 </span>
+    <span class="hljs-comment">// // 返回 0~n: 找到</span>
+    <span class="hljs-comment">// // 返回 n+1: 找不到</span>
+    <span class="hljs-comment">// int lower_bound(int v) &#123;</span>
+    <span class="hljs-comment">//     if (v &lt;= 0) return -1;</span>
+    <span class="hljs-comment">//     int sum = 0;</span>
+    <span class="hljs-comment">//     int cur = 0;</span>
+    <span class="hljs-comment">//     for(int i = __lg(n); i&gt;=0;i--) &#123;</span>
+    <span class="hljs-comment">//         int nxt = cur | (1 &lt;&lt; i);</span>
+    <span class="hljs-comment">//         // 止步</span>
+    <span class="hljs-comment">//         if(nxt &lt;= n &amp;&amp; sum + tr[nxt] &lt; v) &#123;</span>
+    <span class="hljs-comment">//             cur = nxt;</span>
+    <span class="hljs-comment">//             sum += tr[nxt];</span>
+    <span class="hljs-comment">//         &#125;</span>
+    <span class="hljs-comment">//     &#125;</span>
+    <span class="hljs-comment">//     return cur + 1 - 1;</span>
+    <span class="hljs-comment">//     // 返回 0 说明</span>
+    <span class="hljs-comment">// &#125;</span>
+&#125;Sum,Cnt;
+
+<span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">getZ</span><span class="hljs-params">(<span class="hljs-type">const</span> string&amp; s)</span> </span>&#123;
+    <span class="hljs-type">int</span> n = s.<span class="hljs-built_in">size</span>();
+    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">z</span><span class="hljs-params">(n)</span></span>;
+    z[<span class="hljs-number">0</span>] = n;
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>,c,r=<span class="hljs-number">0</span>,len;i&lt;n;i++) &#123;
+        len = i&lt;r ? <span class="hljs-built_in">min</span>(z[i-c], r-i):<span class="hljs-number">0</span>;
+        <span class="hljs-keyword">while</span>(i+len&lt;n&amp;&amp;s[len]==s[i+len])len++;
+        <span class="hljs-keyword">if</span>(i+len&gt;r) &#123;
+            r = i+len;
+            c= i;
+        &#125;
+        z[i]=len;
+    &#125;
+    <span class="hljs-keyword">return</span> z;
+&#125;
+
+string a, b, c;
+<span class="hljs-type">int</span> na,nb,nc;
+<span class="hljs-type">int</span> k[N];
+array&lt;<span class="hljs-type">int</span>,2&gt; pl[N];
+set&lt;<span class="hljs-type">int</span>&gt; pos;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> p)</span> </span>&#123;
+    <span class="hljs-keyword">auto</span> nxt = pos.<span class="hljs-built_in">lower_bound</span>(p);
+    <span class="hljs-keyword">if</span>(nxt==pos.<span class="hljs-built_in">end</span>()) &#123;
+        <span class="hljs-keyword">if</span>(nxt==pos.<span class="hljs-built_in">begin</span>()) &#123;
+            <span class="hljs-comment">// 空的 </span>
+            <span class="hljs-comment">// 无事发生</span>
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-comment">// 最大的</span>
+            Sum.<span class="hljs-built_in">add</span>(p - *pos.<span class="hljs-built_in">rbegin</span>(), (p - *pos.<span class="hljs-built_in">rbegin</span>()));
+            Cnt.<span class="hljs-built_in">add</span>(p - *pos.<span class="hljs-built_in">rbegin</span>(), <span class="hljs-number">1</span>);
+        &#125;
+    &#125; <span class="hljs-keyword">else</span> &#123;
+        <span class="hljs-keyword">if</span>(nxt==pos.<span class="hljs-built_in">begin</span>()) &#123;
+            <span class="hljs-comment">// 最小的</span>
+            Sum.<span class="hljs-built_in">add</span>(*pos.<span class="hljs-built_in">begin</span>() - p, (*pos.<span class="hljs-built_in">begin</span>() - p));
+            Cnt.<span class="hljs-built_in">add</span>(*pos.<span class="hljs-built_in">begin</span>() - p, <span class="hljs-number">1</span>);
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-comment">// 中间的</span>
+            <span class="hljs-keyword">auto</span> pre = <span class="hljs-built_in">prev</span>(nxt);
+            Sum.<span class="hljs-built_in">add</span>(*nxt - *pre, -(*nxt - *pre));
+            Cnt.<span class="hljs-built_in">add</span>(*nxt - *pre, <span class="hljs-number">-1</span>);
+            Sum.<span class="hljs-built_in">add</span>(*nxt - p, (*nxt - p));
+            Cnt.<span class="hljs-built_in">add</span>(*nxt - p, <span class="hljs-number">1</span>);
+            Sum.<span class="hljs-built_in">add</span>(p - *pre, (p - *pre));
+            Cnt.<span class="hljs-built_in">add</span>(p - *pre, <span class="hljs-number">1</span>);
+        &#125;
+    &#125;
+    pos.<span class="hljs-built_in">insert</span>(p);
+&#125;
+
+<span class="hljs-function">ll <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">int</span> lim)</span> </span>&#123;
+    <span class="hljs-type">int</span> cn = Cnt.<span class="hljs-built_in">query</span>(lim);
+    <span class="hljs-keyword">return</span> (ll) cn * lim + Sum.<span class="hljs-built_in">query</span>(nb) - Sum.<span class="hljs-built_in">query</span>(lim);
+&#125;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span> </span>&#123;
+    cin &gt;&gt; na &gt;&gt; nb &gt;&gt; nc;
+    cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+    string ab = a + <span class="hljs-string">&quot;#&quot;</span> + b;
+    string ac = a + <span class="hljs-string">&quot;#&quot;</span> + c;
+    vector&lt;<span class="hljs-type">int</span>&gt; zab = <span class="hljs-built_in">getZ</span>(ab);
+    vector&lt;<span class="hljs-type">int</span>&gt; zac = <span class="hljs-built_in">getZ</span>(ac);
+
+    <span class="hljs-built_in">fill</span>(k,k<span class="hljs-number">+1</span>+na,<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= nc; i++) k[zac[na+i]]++;
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = na<span class="hljs-number">-1</span>;i&gt;=<span class="hljs-number">1</span>;i--) k[i] += k[i<span class="hljs-number">+1</span>];
+
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= nb; i++) pl[i] = &#123;zab[na+i], i&#125;;
+    <span class="hljs-built_in">sort</span>(pl<span class="hljs-number">+1</span>,pl<span class="hljs-number">+1</span>+nb,greater&lt;&gt;());
+    
+    <span class="hljs-comment">// 【坑点2】用的其实是 b 的间隔 不是 a !!!</span>
+    ll ans = <span class="hljs-number">0</span>;
+    Sum.<span class="hljs-built_in">init</span>(nb);
+    Cnt.<span class="hljs-built_in">init</span>(nb);
+    pos.<span class="hljs-built_in">clear</span>();
+    <span class="hljs-type">int</span> cn = <span class="hljs-number">0</span>;
+    <span class="hljs-type">int</span> mx = <span class="hljs-number">-1</span>, mn = <span class="hljs-number">1e9</span>;
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> L = nb, p = <span class="hljs-number">1</span>; L &gt;= <span class="hljs-number">1</span>; L--) &#123;
+        <span class="hljs-keyword">while</span>(p &lt;= nb &amp;&amp; pl[p][<span class="hljs-number">0</span>] == L) &#123;
+            cn++;
+            mx=<span class="hljs-built_in">max</span>(mx, pl[p][<span class="hljs-number">1</span>]);
+            mn=<span class="hljs-built_in">min</span>(mn, pl[p][<span class="hljs-number">1</span>]);
+            <span class="hljs-built_in">add</span>(pl[p++][<span class="hljs-number">1</span>]);
+        &#125;
+        <span class="hljs-comment">// 【坑点：】 正负号又算反了，让我想起了概率论与数理统计</span>
+        <span class="hljs-keyword">if</span>(cn)
+            ans += k[L] * ((ll) cn * L - <span class="hljs-built_in">query</span>(L) + (mx - mn));
+    &#125;
+    cout &lt;&lt; ans &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+&#125;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>);
+    cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-type">int</span> T = <span class="hljs-number">1</span>;
+    cin &gt;&gt; T;
+    <span class="hljs-keyword">while</span> (T--) <span class="hljs-built_in">solve</span>();
+&#125;</code></pre>
                 </div>
             </article>
         </div>
@@ -529,7 +710,7 @@ aaaaaa</code></pre>
     <aside class="post-outline" id="post-outline">
         <div class="outline-title">OUTLINE</div>
         <nav class="outline-nav">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1003-%E6%8B%AC%E5%8F%B7%E5%87%B8%E5%8C%85%E3%80%90%E5%87%B8%E5%8C%85DP-%E7%8E%AF%E5%BD%A2%E5%89%8D%E7%BC%80%E5%92%8C-%E5%87%A0%E4%BD%95%E7%89%B9%E6%9C%89%E7%9A%84%E9%99%90%E5%AE%9A%E7%AB%AF%E7%82%B9%E6%B3%95%E3%80%91"><span class="toc-text">1003 括号凸包【凸包DP &#x2F; 环形前缀和 &#x2F; 几何特有的限定端点法】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1004-%E6%8E%A2%E7%B4%A2%E5%AE%9D%E7%89%A9%E3%80%90%E6%9C%9F%E6%9C%9B-%E2%80%9C%E5%B7%B2%E7%BB%8F%E8%BE%BE%E6%A0%87%E7%89%B9%E5%88%A4%E2%80%9D-%E2%80%9C%E5%88%86%E6%AF%8D%E4%B8%BA0-%E5%85%AC%E5%BC%8F%E6%9C%80%E7%AE%80%E5%8C%96%E2%80%9D%E3%80%91"><span class="toc-text">1004 探索宝物【期望 &#x2F; “已经达标特判” &#x2F; “分母为0-&gt;公式最简化”】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description-2"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input-2"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output-2"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input-2"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output-2"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution-2"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-2"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1006-%E4%B8%89%E4%B8%B2%E5%85%B1%E9%B8%A3%E3%80%90%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%91%EF%BC%88TODO%EF%BC%89"><span class="toc-text">1006 三串共鸣【字符串】（TODO）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description-3"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input-3"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output-3"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input-3"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output-3"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hint"><span class="toc-text">Hint</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1003-%E6%8B%AC%E5%8F%B7%E5%87%B8%E5%8C%85%E3%80%90%E5%87%B8%E5%8C%85DP-%E7%8E%AF%E5%BD%A2%E5%89%8D%E7%BC%80%E5%92%8C-%E5%87%A0%E4%BD%95%E7%89%B9%E6%9C%89%E7%9A%84%E9%99%90%E5%AE%9A%E7%AB%AF%E7%82%B9%E6%B3%95%E3%80%91"><span class="toc-text">1003 括号凸包【凸包DP &#x2F; 环形前缀和 &#x2F; 几何特有的限定端点法】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1004-%E6%8E%A2%E7%B4%A2%E5%AE%9D%E7%89%A9%E3%80%90%E6%9C%9F%E6%9C%9B-%E2%80%9C%E5%B7%B2%E7%BB%8F%E8%BE%BE%E6%A0%87%E7%89%B9%E5%88%A4%E2%80%9D-%E2%80%9C%E5%88%86%E6%AF%8D%E4%B8%BA0-%E5%85%AC%E5%BC%8F%E6%9C%80%E7%AE%80%E5%8C%96%E2%80%9D%E3%80%91"><span class="toc-text">1004 探索宝物【期望 &#x2F; “已经达标特判” &#x2F; “分母为0-&gt;公式最简化”】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description-2"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input-2"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output-2"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input-2"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output-2"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution-2"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-2"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1006-%E4%B8%89%E4%B8%B2%E5%85%B1%E9%B8%A3%E3%80%90Z-%E5%87%BD%E6%95%B0-%E8%AE%A1%E6%95%B0-%E2%80%9C%E7%B1%BB01%E6%AE%B5%E8%AE%A1%E6%95%B0%E7%AE%97%E6%B3%95%E2%80%9D-%E2%80%9C%E7%B1%BB%E7%AD%89%E9%95%BF%E6%AE%B5%E8%A6%86%E7%9B%96%E7%AE%97%E6%B3%95%E2%80%9D%E3%80%91"><span class="toc-text">1006 三串共鸣【Z 函数 &#x2F; 计数 &#x2F; “类01段计数算法” &#x2F; “类等长段覆盖算法”】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description-3"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input-3"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output-3"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input-3"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output-3"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hint"><span class="toc-text">Hint</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution-3"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-3"><span class="toc-text">Code</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
