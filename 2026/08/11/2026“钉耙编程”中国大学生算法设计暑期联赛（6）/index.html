@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1786944628163">
+<link rel="stylesheet" href="/styles/main.css?v=1786948556507">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -752,11 +752,13 @@ vector&lt;map&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int<
             <span class="hljs-type">int</span> l = j &lt;&lt; <span class="hljs-number">1</span>, r = j &lt;&lt; <span class="hljs-number">1</span> | <span class="hljs-number">1</span>;
             <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> [p, c]:f[i<span class="hljs-number">+1</span>][l]) &#123;
                 <span class="hljs-keyword">auto</span> it = f[i<span class="hljs-number">+1</span>][r].<span class="hljs-built_in">find</span>(p^<span class="hljs-number">1</span>);
-                f[i][j][p&gt;&gt;<span class="hljs-number">1</span>] = <span class="hljs-built_in">max</span>(f[i][j][p&gt;&gt;<span class="hljs-number">1</span>], c + (it!=f[i<span class="hljs-number">+1</span>][r].<span class="hljs-built_in">end</span>()?it-&gt;second:<span class="hljs-number">0</span>));
+                <span class="hljs-keyword">auto</span>&amp; dp = f[i][j][p&gt;&gt;<span class="hljs-number">1</span>];
+                dp = <span class="hljs-built_in">max</span>(dp, c + (it!=f[i<span class="hljs-number">+1</span>][r].<span class="hljs-built_in">end</span>()?it-&gt;second:<span class="hljs-number">0</span>));
             &#125;
             <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> [p, c]:f[i<span class="hljs-number">+1</span>][r]) &#123;
                 <span class="hljs-keyword">auto</span> it = f[i<span class="hljs-number">+1</span>][l].<span class="hljs-built_in">find</span>(p^<span class="hljs-number">1</span>);
-                f[i][j][p&gt;&gt;<span class="hljs-number">1</span>] = <span class="hljs-built_in">max</span>(f[i][j][p&gt;&gt;<span class="hljs-number">1</span>], c + (it!=f[i<span class="hljs-number">+1</span>][l].<span class="hljs-built_in">end</span>()?it-&gt;second:<span class="hljs-number">0</span>));
+                <span class="hljs-keyword">auto</span>&amp; dp = f[i][j][p&gt;&gt;<span class="hljs-number">1</span>];
+                dp = <span class="hljs-built_in">max</span>(dp, c + (it!=f[i<span class="hljs-number">+1</span>][l].<span class="hljs-built_in">end</span>()?it-&gt;second:<span class="hljs-number">0</span>));
             &#125;
         &#125;
     &#125;
