@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1787054584521">
+<link rel="stylesheet" href="/styles/main.css?v=1787157856042">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -103,24 +103,24 @@
                     <time class="post-time gt-c-content-color-first">
                         · 2026-07-31 ·</time>
                     
-                        <span class="post-updated">更新于 2026-08-11</span>
+                        <span class="post-updated">更新于 2026-08-20</span>
                     
                     <span class="post-wordcount gt-c-content-color-second">
-                        12 千字 ·</span>
+                        18 千字 ·</span>
                     
-                        
-                            <a href="/tags/HDU/" class="post-tag">
-                                #HDU</a>
                         
                             <a href="/tags/2026%E6%9D%AD%E7%94%B5%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1/" class="post-tag">
                                 #2026杭电暑期多校</a>
+                        
+                            <a href="/tags/HDU/" class="post-tag">
+                                #HDU</a>
                         
                     
                 </div>
                 <hr>
                 
                 <div class="post-content gt-c-content-color-first">
-                    <h2 id="1001-Signal-【Minmax-容斥】（TODO）">1001 Signal 【Minmax 容斥】（TODO）</h2>
+                    <h2 id="1001-Signal-【Minmax-容斥-半平面交求凸包交-“clip-动态维护凸包半平面交”-“继承性-dfs”】">1001 Signal 【Minmax 容斥 / 半平面交求凸包交 / “clip 动态维护凸包半平面交” / “继承性 dfs”】</h2>
 <h3 id="Problem-Description">Problem Description</h3>
 <p>A 国和 B 国正在交战，战场是平面内的一个凸多边形 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.1389em;">P</span></span></span></span>。A 国的通信系统由 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> 个频道组成。频道 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span> 由平面内两个不同的点 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>A</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>B</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">A_i, B_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0502em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0502em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 确定，其单位面积使用费用为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>w</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">w_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0269em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>。</p>
 <p>战场内一点 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span> 能接收到频道 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span> 的信号，当且仅当</p>
@@ -221,8 +221,390 @@
 <li>任意两条不平行边界直线的交点，到其他任意边界直线的距离至少为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>4</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-4}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">4</span></span></span></span></span></span></span></span></span></span></span></span>。</li>
 </ul>
 <h3 id="Solution">Solution</h3>
+<ul>
+<li>看本质
+<ul>
+<li>面积是直观的</li>
+<li>本质在于怎么求 k-max</li>
+</ul>
+</li>
+<li>快速求面积：
+<ul>
+<li>显然预处理各种半平面交</li>
+</ul>
+</li>
+<li>快速求k-max
+<ul>
+<li>使用 min-max 容斥</li>
+</ul>
+</li>
+</ul>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mtext>kmax</mtext><mi>k</mi></msub><mo stretchy="false">(</mo><mi>S</mi><mo stretchy="false">)</mo><mo>=</mo><munder><mo>∑</mo><mrow><mi>T</mi><mo>⊆</mo><mi>S</mi><mtext> </mtext><mi mathvariant="normal">∣</mi><mi>T</mi><mi mathvariant="normal">∣</mi><mo>≥</mo><mi>k</mi></mrow></munder><mo stretchy="false">(</mo><mo>−</mo><mn>1</mn><msup><mo stretchy="false">)</mo><mrow><mi mathvariant="normal">∣</mi><mi>T</mi><mi mathvariant="normal">∣</mi><mo>−</mo><mi>k</mi></mrow></msup><mrow><mo fence="true">(</mo><mfrac linethickness="0px"><mrow><mi mathvariant="normal">∣</mi><mi>T</mi><mi mathvariant="normal">∣</mi><mo>−</mo><mn>1</mn></mrow><mrow><mi>k</mi><mo>−</mo><mn>1</mn></mrow></mfrac><mo fence="true">)</mo></mrow><munder><mrow><mi>min</mi><mo>⁡</mo></mrow><mrow><mi>v</mi><mo>∈</mo><mi>T</mi></mrow></munder><mi>v</mi></mrow><annotation encoding="application/x-tex">\text{kmax}_k(S) = \sum_{T \subseteq S \ |T| \ge k} (-1)^{|T|-k} \binom{|T|-1}{k-1} \min_{v \in T} v
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord text"><span class="mord">kmax</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.0315em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.0576em;">S</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:2.966em;vertical-align:-1.516em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.05em;"><span style="top:-1.809em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.1389em;">T</span><span class="mrel mtight">⊆</span><span class="mord mathnormal mtight" style="margin-right:0.0576em;">S</span><span class="mspace mtight"><span class="mtight"> </span></span><span class="mord mtight">∣</span><span class="mord mathnormal mtight" style="margin-right:0.1389em;">T</span><span class="mord mtight">∣</span><span class="mrel mtight">≥</span><span class="mord mathnormal mtight" style="margin-right:0.0315em;">k</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.516em;"><span></span></span></span></span></span><span class="mopen">(</span><span class="mord">−</span><span class="mord">1</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.938em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∣</span><span class="mord mathnormal mtight" style="margin-right:0.1389em;">T</span><span class="mord mtight">∣</span><span class="mbin mtight">−</span><span class="mord mathnormal mtight" style="margin-right:0.0315em;">k</span></span></span></span></span></span></span></span></span><span class="mord"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0315em;">k</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">1</span></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.1389em;">T</span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693em;"><span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6679em;"><span style="top:-2.3557em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0359em;">v</span><span class="mrel mtight">∈</span><span class="mord mathnormal mtight" style="margin-right:0.1389em;">T</span></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop">min</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7717em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">v</span></span></span></span></span></p>
+<ul>
+<li>推导答案公式</li>
+</ul>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>ans</mtext><mo stretchy="false">(</mo><mi>S</mi><mo separator="true">,</mo><mi>k</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mo>∫</mo><mrow><mi>p</mi><mo>∈</mo><mi>P</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\text{ans}(S, k) = \int_{p \in P} 
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">ans</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.0576em;">S</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.0315em;">k</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:2.4081em;vertical-align:-1.0481em;"></span><span class="mop"><span class="mop op-symbol large-op" style="margin-right:0.4445em;position:relative;top:-0.0011em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:-0.4336em;"><span style="top:-1.7881em;margin-left:-0.4445em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">p</span><span class="mrel mtight">∈</span><span class="mord mathnormal mtight" style="margin-right:0.1389em;">P</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.0481em;"><span></span></span></span></span></span></span></span></span></span></span></p>
+<h3 id="Solution-2">Solution</h3>
+<ul>
+<li>折腾这么久，似乎重点已经不是 min-max 容斥了，而是 <strong>凸包 + 半平面交</strong> 到底用哪个算法
+<ol>
+<li>传统的单调栈维护半平面交：凸包的边必须转化为半平面，难以动态加入新的半平面</li>
+<li>clip 凸包半平面交切割算法：凸包仍然用 <code>Vec</code> 顶点存储，可以方便动态添加半平面交限制，便于此题中的 <strong>dfs 继承</strong></li>
+</ol>
+</li>
+<li>当然还有一点，就是半平面交算法的鲁棒性
+<ul>
+<li>可以理解板子</li>
+<li>但是，对于特殊情况的处理，无法保证不存在未知问题</li>
+</ul>
+</li>
+<li>【坑点】最后讲一下优化步骤
+<ul>
+<li>首先，输入都是整数输入不要用 <code>double</code> 避免 TLE</li>
+<li>先排序还是后排序的问题
+<ul>
+<li>先全局排序，之后取得的子集天然有序</li>
+<li>但是后排序，虽然可以快速收集，但是不保证有序，必须有内嵌 log 复杂度排序</li>
+</ul>
+</li>
+<li>计算条件继承性问题
+<ul>
+<li>此题尤为明显，利用计算结果的继承性，可以加速结果的递推 避免 TLE</li>
+<li>dfs 继承性</li>
+</ul>
+</li>
+<li><code>uniq()</code> 去重问题
+<ul>
+<li>不知道为什么要去重</li>
+<li>此题问题不大</li>
+<li>记着吧</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>【回顾知识点】
+<ul>
+<li>二维计算集合精度工具
+<ul>
+<li><code>const db eps = 1e-9</code></li>
+<li><code>int sign(db x) {}</code></li>
+</ul>
+</li>
+<li>二维计算几何结构体
+<ul>
+<li><code>Vec</code> 点/向量
+<ul>
+<li><code>db x, y, arg</code></li>
+<li>重载：加法<code>+</code>，减法<code>-</code>，内积<code>*</code>，外积<code>%</code>，数乘<code>*</code></li>
+<li>重载：打印（建议写成 <code>(x, y)</code>）</li>
+</ul>
+</li>
+<li><code>Seg</code> 线段
+<ul>
+<li><code>Vec s, t, v;</code></li>
+<li><code>db arg</code></li>
+<li>重载：打印（建议写成 <code>[s -&gt; t]</code> ）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>二维计算几何，经典问题
+<ul>
+<li><code>inter(Seg A, Seg B)</code></li>
+<li><code>right(Seg A, Vec b)</code></li>
+</ul>
+</li>
+<li>半平面交传统算法
+<ul>
+<li>前置 <code>cmp(Seg A, Seg B)</code></li>
+<li><code>vector&lt;Vec&gt; half(vector&lt;Seg&gt; ss)</code></li>
+</ul>
+</li>
+<li>半平面交 clip 算法
+<ul>
+<li><code>vector&lt;Vec&gt; clip(vector&lt;Vec&gt;&amp; poly, Seg s)</code></li>
+</ul>
+</li>
+<li>计算多边形的面积
+<ul>
+<li><code>db getS(vector&lt;Vec&gt;&amp; poly)</code></li>
+</ul>
+</li>
+<li></li>
+</ul>
+</li>
+</ul>
 <h3 id="Code">Code</h3>
-<pre><code class="hljs cpp"></code></pre>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-keyword">using</span> db = <span class="hljs-type">double</span>;
+<span class="hljs-keyword">using</span> ll = <span class="hljs-type">int</span>;
+
+<span class="hljs-type">const</span> db eps = <span class="hljs-number">1e-9</span>;
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">18</span>, M = <span class="hljs-number">31</span>;
+
+<span class="hljs-type">int</span> C[N<span class="hljs-number">+1</span>][N<span class="hljs-number">+1</span>];
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>&#123;
+    C[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]=<span class="hljs-number">1</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>;i&lt;=N;i++) &#123;
+        C[i][<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>;j&lt;=i;j++) 
+            C[i][j] = C[i<span class="hljs-number">-1</span>][j] + C[i<span class="hljs-number">-1</span>][j<span class="hljs-number">-1</span>];
+    &#125;
+&#125;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">sign</span><span class="hljs-params">(db x)</span> </span>&#123;
+    <span class="hljs-keyword">if</span>(x &gt; eps) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">if</span>(x &lt; -eps) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+&#125;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">Vec</span> &#123;
+    db x, y;
+    db arg;
+    <span class="hljs-built_in">Vec</span>(db x=<span class="hljs-number">0</span>,db y=<span class="hljs-number">0</span>):<span class="hljs-built_in">x</span>(x),<span class="hljs-built_in">y</span>(y),<span class="hljs-built_in">arg</span>(<span class="hljs-built_in">atan2</span>(y,x))&#123;&#125;
+    <span class="hljs-type">bool</span> <span class="hljs-keyword">operator</span>&lt;(<span class="hljs-type">const</span> Vec&amp; o) <span class="hljs-type">const</span> &#123;<span class="hljs-keyword">return</span> arg &lt; o.arg;&#125;
+    Vec <span class="hljs-keyword">operator</span>-(Vec o) <span class="hljs-type">const</span> &#123;<span class="hljs-keyword">return</span> <span class="hljs-built_in">Vec</span>(x-o.x,y-o.y);&#125;
+    Vec <span class="hljs-keyword">operator</span>+(Vec o) <span class="hljs-type">const</span> &#123;<span class="hljs-keyword">return</span> <span class="hljs-built_in">Vec</span>(x+o.x,y+o.y);&#125;
+    db <span class="hljs-keyword">operator</span>*(Vec o) <span class="hljs-type">const</span> &#123;<span class="hljs-keyword">return</span> x*o.x + y*o.y;&#125;
+    Vec <span class="hljs-keyword">operator</span>*(db o) <span class="hljs-type">const</span> &#123;<span class="hljs-keyword">return</span> <span class="hljs-built_in">Vec</span>(x*o, y*o);&#125;
+    db <span class="hljs-keyword">operator</span>%(Vec o) <span class="hljs-type">const</span> &#123;<span class="hljs-keyword">return</span> x*o.y - y*o.x;&#125;
+    <span class="hljs-keyword">friend</span> ostream&amp; <span class="hljs-keyword">operator</span>&lt;&lt;(ostream&amp; os, Vec o) &#123;
+        <span class="hljs-keyword">return</span> os &lt;&lt; <span class="hljs-string">&quot;(&quot;</span> &lt;&lt; o.x &lt;&lt; <span class="hljs-string">&quot;, &quot;</span> &lt;&lt; o.y &lt;&lt; <span class="hljs-string">&quot;)&quot;</span>;
+    &#125;
+&#125;;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">Seg</span> &#123;
+    Vec s, t, v;
+    db arg;
+    <span class="hljs-type">int</span> id;
+    <span class="hljs-built_in">Seg</span>():<span class="hljs-built_in">id</span>(<span class="hljs-number">-1</span>)&#123;&#125;
+    <span class="hljs-built_in">Seg</span>(Vec s, Vec t):<span class="hljs-built_in">s</span>(s),<span class="hljs-built_in">t</span>(t),<span class="hljs-built_in">v</span>(t-s),<span class="hljs-built_in">id</span>(<span class="hljs-number">-1</span>)&#123;arg = <span class="hljs-built_in">atan2</span>(v.y, v.x);&#125;
+    <span class="hljs-type">bool</span> <span class="hljs-keyword">operator</span>&lt;(<span class="hljs-type">const</span> Seg&amp; o) <span class="hljs-type">const</span> &#123;<span class="hljs-keyword">return</span> v &lt; o.v;&#125;
+    <span class="hljs-keyword">friend</span> ostream&amp; <span class="hljs-keyword">operator</span>&lt;&lt;(ostream&amp; os, Seg o) &#123;
+        <span class="hljs-keyword">return</span> os &lt;&lt; <span class="hljs-string">&quot;Seg[&quot;</span> &lt;&lt; o.s &lt;&lt; <span class="hljs-string">&quot; -&gt; &quot;</span> &lt;&lt; o.t &lt;&lt; <span class="hljs-string">&quot;]&quot;</span>;
+    &#125;
+&#125;;
+
+<span class="hljs-keyword">namespace</span> TLE_ConventionalHalfPlane &#123; <span class="hljs-comment">// Failed </span>
+
+    <span class="hljs-function">Vec <span class="hljs-title">inter</span><span class="hljs-params">(Seg A, Seg B)</span> </span>&#123;
+        <span class="hljs-comment">// 求交点</span>
+        Vec u = A.s - B.s;
+        <span class="hljs-keyword">return</span> A.s + A.v * ((B.v%u)/(A.v%B.v));
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">right</span><span class="hljs-params">(Seg A, Vec b)</span> </span>&#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">sign</span>(A.v%(b-A.s)) == <span class="hljs-number">-1</span>;
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">cmp</span><span class="hljs-params">(Seg A, Seg B)</span> </span>&#123;
+        <span class="hljs-keyword">if</span>(!<span class="hljs-built_in">sign</span>(A.arg-B.arg))<span class="hljs-keyword">return</span> <span class="hljs-built_in">right</span>(A,B.s);
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-built_in">sign</span>(A.arg-B.arg) == <span class="hljs-number">-1</span>;
+    &#125;
+    
+    Seg Q[<span class="hljs-number">1000005</span>];
+    vector&lt;Seg&gt; alls;
+
+    <span class="hljs-function">db <span class="hljs-title">half</span><span class="hljs-params">(vector&lt;Seg&gt;&amp; S)</span> </span>&#123;
+        <span class="hljs-comment">// 给定若干半平面，求交集面积</span>
+        <span class="hljs-type">int</span> sz = S.<span class="hljs-built_in">size</span>();
+        <span class="hljs-type">int</span> l = <span class="hljs-number">1</span>, r = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i&lt;sz;i++) &#123;
+            <span class="hljs-keyword">if</span>(l&lt;=r&amp;&amp;<span class="hljs-built_in">sign</span>(S[i].arg-Q[r].arg) == <span class="hljs-number">0</span>) <span class="hljs-keyword">continue</span>;
+            <span class="hljs-keyword">while</span>(l&lt;r&amp;&amp;<span class="hljs-built_in">right</span>(S[i],<span class="hljs-built_in">inter</span>(Q[r],Q[r<span class="hljs-number">-1</span>])))r--;
+            <span class="hljs-keyword">while</span>(l&lt;r&amp;&amp;<span class="hljs-built_in">right</span>(S[i],<span class="hljs-built_in">inter</span>(Q[l],Q[l<span class="hljs-number">+1</span>])))++l;
+            Q[++r] = S[i];
+        &#125;
+        <span class="hljs-keyword">while</span>(l &lt; r&amp;&amp;<span class="hljs-built_in">right</span>(Q[l], <span class="hljs-built_in">inter</span>(Q[r], Q[r<span class="hljs-number">-1</span>]))) --r;
+        <span class="hljs-keyword">if</span> (r - l + <span class="hljs-number">1</span> &lt; <span class="hljs-number">3</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+        Q[r<span class="hljs-number">+1</span>] = Q[l];
+        db res = <span class="hljs-number">0</span>;
+        Vec O = <span class="hljs-built_in">inter</span>(Q[l], Q[l<span class="hljs-number">+1</span>]);
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=l<span class="hljs-number">+2</span>;i&lt;=r;i++) &#123;
+            <span class="hljs-keyword">auto</span> tmp1 = (<span class="hljs-built_in">inter</span>(Q[i<span class="hljs-number">-1</span>], Q[i])-O);
+            <span class="hljs-keyword">auto</span> tmp2 = (<span class="hljs-built_in">inter</span>(Q[i], Q[i<span class="hljs-number">+1</span>])-O);
+            res += tmp1 % tmp2;
+        &#125;
+        <span class="hljs-keyword">return</span> res/<span class="hljs-number">2</span>;
+    &#125;
+&#125;
+
+<span class="hljs-keyword">namespace</span> AC_ClipHalfPlane &#123;
+    <span class="hljs-comment">// 小规模数据 + 继承性加持 复杂度神了</span>
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">uniq</span><span class="hljs-params">(vector&lt;Vec&gt;&amp; p)</span> </span>&#123;
+        vector&lt;Vec&gt; q;
+        q.<span class="hljs-built_in">reserve</span>(p.<span class="hljs-built_in">size</span>());
+        <span class="hljs-keyword">for</span> (Vec x : p) &#123;
+            <span class="hljs-keyword">if</span> (q.<span class="hljs-built_in">empty</span>() || <span class="hljs-built_in">sign</span>(x.x - q.<span class="hljs-built_in">back</span>().x) || <span class="hljs-built_in">sign</span>(x.y - q.<span class="hljs-built_in">back</span>().y)) &#123;
+                q.<span class="hljs-built_in">push_back</span>(x);
+            &#125;
+        &#125;
+        <span class="hljs-comment">// 去掉首尾重复</span>
+        <span class="hljs-keyword">if</span> (q.<span class="hljs-built_in">size</span>() &gt; <span class="hljs-number">1</span> &amp;&amp; !<span class="hljs-built_in">sign</span>(q.<span class="hljs-built_in">front</span>().x - q.<span class="hljs-built_in">back</span>().x) &amp;&amp; !<span class="hljs-built_in">sign</span>(q.<span class="hljs-built_in">front</span>().y - q.<span class="hljs-built_in">back</span>().y)) &#123;
+            q.<span class="hljs-built_in">pop_back</span>();
+        &#125;
+        p.<span class="hljs-built_in">swap</span>(q);
+    &#125;
+    <span class="hljs-comment">// 【新】clip O(n) 半平面 切割 凸包 算法</span>
+    <span class="hljs-function">vector&lt;Vec&gt; <span class="hljs-title">clip</span><span class="hljs-params">(vector&lt;Vec&gt;&amp; poly, Seg s)</span> </span>&#123;
+        vector&lt;Vec&gt; res;
+        <span class="hljs-keyword">if</span>(poly.<span class="hljs-built_in">empty</span>()) <span class="hljs-keyword">return</span> res;
+        <span class="hljs-type">int</span> n = poly.<span class="hljs-built_in">size</span>();
+        poly.<span class="hljs-built_in">push_back</span>(poly[<span class="hljs-number">0</span>]);
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++) &#123;
+            Vec a = poly[i], b = poly[i<span class="hljs-number">+1</span>];
+            db ta = s.v % (a - s.s);
+            db tb = s.v % (b - s.s);
+            <span class="hljs-type">bool</span> ina = <span class="hljs-built_in">sign</span>(ta)&gt;=<span class="hljs-number">0</span>;
+            <span class="hljs-type">bool</span> inb = <span class="hljs-built_in">sign</span>(tb)&gt;=<span class="hljs-number">0</span>;
+            <span class="hljs-keyword">if</span> (ina) res.<span class="hljs-built_in">push_back</span>(a);
+            <span class="hljs-keyword">if</span> (ina^inb) &#123;
+                db t = ta / (ta - tb);
+                res.<span class="hljs-built_in">push_back</span>(a + (b-a)*t);
+            &#125;
+        &#125;
+        <span class="hljs-built_in">uniq</span>(res); <span class="hljs-comment">// 不用 Unique 也能过 ?!!!</span>
+        <span class="hljs-keyword">return</span> res;
+    &#125;
+    <span class="hljs-function">db <span class="hljs-title">getS</span><span class="hljs-params">(vector&lt;Vec&gt;&amp; poly)</span> </span>&#123;
+        <span class="hljs-keyword">if</span>(poly.<span class="hljs-built_in">empty</span>()) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        db res = <span class="hljs-number">0</span>;
+        <span class="hljs-type">int</span> n = poly.<span class="hljs-built_in">size</span>();
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++) &#123;
+            res += poly[i] % poly[(i<span class="hljs-number">+1</span>)%n];
+        &#125;
+        <span class="hljs-keyword">return</span> res / <span class="hljs-number">2</span>;
+    &#125;
+&#125;
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> AC_ClipHalfPlane;
+
+<span class="hljs-type">int</span> n, m, q;
+
+db S[(<span class="hljs-number">1</span>&lt;&lt;N)<span class="hljs-number">+1</span>];
+db kmax[N<span class="hljs-number">+1</span>][(<span class="hljs-number">1</span>&lt;&lt;N)<span class="hljs-number">+1</span>];
+vector&lt;Vec&gt; points; <span class="hljs-comment">// 凸包点集</span>
+vector&lt;Seg&gt; segments;
+<span class="hljs-type">int</span> w[N<span class="hljs-number">+1</span>];
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> i,<span class="hljs-type">int</span> s,vector&lt;Vec&gt; poly)</span> </span>&#123;
+    S[s] = <span class="hljs-built_in">getS</span>(poly);
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = i;j&lt;n;j++) &#123;
+        <span class="hljs-keyword">auto</span> tmp = <span class="hljs-built_in">clip</span>(poly, segments[j]);
+        <span class="hljs-built_in">dfs</span>(j<span class="hljs-number">+1</span>,s|(<span class="hljs-number">1</span>&lt;&lt;j),tmp);
+    &#125;
+&#125;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span> </span>&#123;
+    <span class="hljs-comment">// 1. 读取 m 个顶点 -&gt; m 个封闭半平面</span>
+    <span class="hljs-comment">// 2. 读取 n 个半平面</span>
+    <span class="hljs-comment">// 3. 然后预处理 2^n 个半平面交</span>
+    <span class="hljs-comment">//      每次都是有 m + i 个半平面 求解交面积</span>
+    <span class="hljs-comment">// 4. 然后 用高位前缀和 min-max 容斥</span>
+    <span class="hljs-comment">//      即，对于从 1 到 n 每一个 k 值，都算一下 系数*权值*面积 容斥</span>
+    cin &gt;&gt; n &gt;&gt; m &gt;&gt; q;
+
+    <span class="hljs-built_in">fill</span>(S,S+(<span class="hljs-number">1</span>&lt;&lt;n), <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">1</span>; k &lt;= n;k++) 
+        <span class="hljs-built_in">fill</span>(kmax[k],kmax[k]+(<span class="hljs-number">1</span>&lt;&lt;n),<span class="hljs-number">0</span>); 
+    
+    <span class="hljs-comment">// 1.</span>
+    points.<span class="hljs-built_in">clear</span>();
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span> ; i &lt; m;i++) &#123;
+        ll x, y;
+        cin &gt;&gt; x &gt;&gt; y;
+        points.<span class="hljs-built_in">push_back</span>(<span class="hljs-built_in">Vec</span>(x,y));
+    &#125;
+    
+    <span class="hljs-comment">// alls.clear(); // But Still Failed</span>
+    <span class="hljs-comment">// for (int i = 0 ; i &lt; m;i++) </span>
+    <span class="hljs-comment">//     alls.push_back(Seg(points[i], points[(i+1)%m]));</span>
+
+    <span class="hljs-comment">// 2.</span>
+    segments.<span class="hljs-built_in">clear</span>();
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span> ; i &lt; n;i++) &#123;
+        ll x1,y1,x2,y2;
+        cin &gt;&gt; x1 &gt;&gt; y1 &gt;&gt; x2 &gt;&gt; y2 &gt;&gt; w[i];
+
+        <span class="hljs-keyword">auto</span> tmp = <span class="hljs-built_in">Seg</span>(<span class="hljs-built_in">Vec</span>(x1,y1), <span class="hljs-built_in">Vec</span>(x2,y2));
+        segments.<span class="hljs-built_in">push_back</span>(tmp);
+
+        <span class="hljs-comment">// tmp.id = i; // But Still Failed</span>
+        <span class="hljs-comment">// alls.push_back(tmp);</span>
+    &#125;
+
+    <span class="hljs-comment">// sort(alls.begin(), alls.end(), cmp); // But Still Failed</span>
+
+    <span class="hljs-built_in">dfs</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,points);
+    
+    <span class="hljs-comment">// 3. </span>
+    <span class="hljs-comment">// vector&lt;Seg&gt; tmp; // Failed</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span> ; i&lt; (<span class="hljs-number">1</span>&lt;&lt;n); i++) &#123;
+        vector&lt;Vec&gt; poly = points;
+        
+        <span class="hljs-comment">// tmp.clear();</span>
+
+        <span class="hljs-type">int</span> mn = <span class="hljs-number">1e7</span>;
+        <span class="hljs-type">int</span> sz = <span class="hljs-number">0</span>;
+        
+        <span class="hljs-comment">// 【坑点 But Still Failed】 排序 + 按需加入 &gt;&gt; 按需加入 + 排序</span>
+        <span class="hljs-comment">// 依然 TLE 因为根本上，传统半平面交在这里常数太大！！！</span>
+        <span class="hljs-comment">// 并且没有继承性</span>
+        <span class="hljs-comment">// 必须使用 Clip + 继承性</span>
+        <span class="hljs-comment">// for(const auto&amp; s:alls) &#123;</span>
+        <span class="hljs-comment">//     if(s.id==-1) &#123;</span>
+        <span class="hljs-comment">//         tmp.push_back(s);</span>
+        <span class="hljs-comment">//     &#125; else if(i &gt;&gt; s.id &amp; 1) &#123;</span>
+        <span class="hljs-comment">//         sz++;</span>
+        <span class="hljs-comment">//         tmp.push_back(s);</span>
+        <span class="hljs-comment">//         mn = min(mn, w[s.id]);</span>
+        <span class="hljs-comment">//     &#125;</span>
+        <span class="hljs-comment">// &#125;</span>
+        
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>;j&lt;n;j++) &#123;
+            <span class="hljs-keyword">if</span>(i&gt;&gt;j&amp;<span class="hljs-number">1</span>) &#123;
+                sz++;
+                mn = <span class="hljs-built_in">min</span>(mn, w[j]);
+                <span class="hljs-comment">// 【坑点 But Still Failed】直接使用 clip凸包半平面裁剪 依然 TLE </span>
+                <span class="hljs-comment">// 必须充分利用继承性 使用 dfs 实现最简单</span>
+                <span class="hljs-comment">// poly = clip(poly, segments[j]); </span>
+                <span class="hljs-comment">// if(poly.size() &lt; 3) break;</span>
+            &#125;
+        &#125;
+
+        <span class="hljs-comment">// db sum = half(tmp); // Failed </span>
+        
+        <span class="hljs-comment">// 4.</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">1</span>; k &lt;= n; k++) &#123;
+            kmax[k][i] = S[i] * mn * C[sz<span class="hljs-number">-1</span>][k<span class="hljs-number">-1</span>];
+            <span class="hljs-keyword">if</span>((sz-k)&amp;<span class="hljs-number">1</span>) kmax[k][i] = -kmax[k][i];
+        &#125;
+    &#125;
+
+    <span class="hljs-comment">// 4.</span>
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = <span class="hljs-number">1</span>; k &lt;= n; k++) 
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) 
+            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> s = <span class="hljs-number">1</span> ; s &lt; (<span class="hljs-number">1</span>&lt;&lt;n); s++) 
+                <span class="hljs-keyword">if</span>(s&gt;&gt;i&amp;<span class="hljs-number">1</span>) 
+                    kmax[k][s] += kmax[k][s^(<span class="hljs-number">1</span>&lt;&lt;i)];
+    <span class="hljs-keyword">while</span>(q--) &#123;
+        <span class="hljs-type">int</span> s, k;
+        cin &gt;&gt; s &gt;&gt; k;
+        cout &lt;&lt; kmax[k][s] &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+    &#125;
+&#125;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    <span class="hljs-built_in">init</span>();
+    cout &lt;&lt; <span class="hljs-built_in">setprecision</span>(<span class="hljs-number">16</span>) &lt;&lt; fixed;
+    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-type">int</span> t = <span class="hljs-number">1</span>;
+    cin &gt;&gt; t;
+    <span class="hljs-keyword">while</span> (t--) <span class="hljs-built_in">solve</span>();
+&#125;</code></pre>
 <h2 id="1002-Binary-Choice【欧拉回路-x-二分图】">1002 Binary Choice【欧拉回路 x 二分图】</h2>
 <h3 id="Problem-Description-2">Problem Description</h3>
 <p>本题开启 Special Judge。</p>
@@ -287,7 +669,7 @@
 <p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mn>1</mn><mo>≤</mo><msub><mi>a</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>b</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>c</mi><mi>i</mi></msub><mo>≤</mo><msup><mn>10</mn><mn>9</mn></msup></mrow><annotation encoding="application/x-tex">1 \le a_i, b_i, c_i \le 10^9
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.7804em;vertical-align:-0.136em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8641em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">9</span></span></span></span></span></span></span></span></span></span></span></span></p>
 <p>每种颜色的出现次数均为偶数。</p>
-<h3 id="Solution-2">Solution</h3>
+<h3 id="Solution-3">Solution</h3>
 <p><strong>欧拉回路 + 二分图染色 = 欧拉二分图</strong></p>
 <p>DeepSeek：你刚才描述的现象，正是 <strong>“欧拉回路定理”（Eulerian Circuit Theorem）</strong> 的直接推论。</p>
 <p><strong>定理原话</strong>：</p>
@@ -641,7 +1023,7 @@ array&lt;<span class="hljs-type">int</span>,3&gt; abc[N];
 <li>输入的边构成一棵树。</li>
 <li>所有测试数据的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> 之和不超过 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn><mo>×</mo><msup><mn>10</mn><mn>5</mn></msup></mrow><annotation encoding="application/x-tex">4\times 10^5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span></span></span></span></span></span></span></span>。</li>
 </ul>
-<h3 id="Solution-3">Solution</h3>
+<h3 id="Solution-4">Solution</h3>
 <h3 id="Code-3">Code</h3>
 <pre><code class="hljs cpp"></code></pre>
 <h2 id="1005-TREE【笛卡尔树-ST-表-矩阵乘法】">1005 TREE【笛卡尔树 / ST 表 / 矩阵乘法】</h2>
@@ -715,7 +1097,7 @@ array&lt;<span class="hljs-type">int</span>,3&gt; abc[N];
 3
 2
 1</code></pre>
-<h3 id="Solution-4">Solution</h3>
+<h3 id="Solution-5">Solution</h3>
 <p><strong>像这种，笛卡尔树，非平衡的树，在上面做文章的话</strong></p>
 <ul>
 <li>除了 <strong>启发式合并</strong> 以外</li>
@@ -914,7 +1296,7 @@ array&lt;<span class="hljs-type">int</span>,3&gt; abc[N];
     <aside class="post-outline" id="post-outline">
         <div class="outline-title">OUTLINE</div>
         <nav class="outline-nav">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1001-Signal-%E3%80%90Minmax-%E5%AE%B9%E6%96%A5%E3%80%91%EF%BC%88TODO%EF%BC%89"><span class="toc-text">1001 Signal 【Minmax 容斥】（TODO）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hint"><span class="toc-text">Hint</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1002-Binary-Choice%E3%80%90%E6%AC%A7%E6%8B%89%E5%9B%9E%E8%B7%AF-x-%E4%BA%8C%E5%88%86%E5%9B%BE%E3%80%91"><span class="toc-text">1002 Binary Choice【欧拉回路 x 二分图】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description-2"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input-2"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output-2"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input-2"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output-2"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hint-2"><span class="toc-text">Hint</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution-2"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-2"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1004-EERT-%E3%80%90%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84-%E6%A0%91%E4%B8%8A%E8%83%8C%E5%8C%85%E3%80%91%EF%BC%88TODO%EF%BC%89"><span class="toc-text">1004 EERT 【树的直径 &#x2F; 树上背包】（TODO）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description-3"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input-3"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output-3"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input-3"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output-3"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hint-3"><span class="toc-text">Hint</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution-3"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-3"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1005-TREE%E3%80%90%E7%AC%9B%E5%8D%A1%E5%B0%94%E6%A0%91-ST-%E8%A1%A8-%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95%E3%80%91"><span class="toc-text">1005 TREE【笛卡尔树 &#x2F; ST 表 &#x2F; 矩阵乘法】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description-4"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input-4"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output-4"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input-4"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output-4"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution-4"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-4"><span class="toc-text">Code</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1001-Signal-%E3%80%90Minmax-%E5%AE%B9%E6%96%A5-%E5%8D%8A%E5%B9%B3%E9%9D%A2%E4%BA%A4%E6%B1%82%E5%87%B8%E5%8C%85%E4%BA%A4-%E2%80%9Cclip-%E5%8A%A8%E6%80%81%E7%BB%B4%E6%8A%A4%E5%87%B8%E5%8C%85%E5%8D%8A%E5%B9%B3%E9%9D%A2%E4%BA%A4%E2%80%9D-%E2%80%9C%E7%BB%A7%E6%89%BF%E6%80%A7-dfs%E2%80%9D%E3%80%91"><span class="toc-text">1001 Signal 【Minmax 容斥 &#x2F; 半平面交求凸包交 &#x2F; “clip 动态维护凸包半平面交” &#x2F; “继承性 dfs”】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hint"><span class="toc-text">Hint</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution-2"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1002-Binary-Choice%E3%80%90%E6%AC%A7%E6%8B%89%E5%9B%9E%E8%B7%AF-x-%E4%BA%8C%E5%88%86%E5%9B%BE%E3%80%91"><span class="toc-text">1002 Binary Choice【欧拉回路 x 二分图】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description-2"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input-2"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output-2"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input-2"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output-2"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hint-2"><span class="toc-text">Hint</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution-3"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-2"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1004-EERT-%E3%80%90%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84-%E6%A0%91%E4%B8%8A%E8%83%8C%E5%8C%85%E3%80%91%EF%BC%88TODO%EF%BC%89"><span class="toc-text">1004 EERT 【树的直径 &#x2F; 树上背包】（TODO）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description-3"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input-3"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output-3"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input-3"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output-3"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hint-3"><span class="toc-text">Hint</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution-4"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-3"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1005-TREE%E3%80%90%E7%AC%9B%E5%8D%A1%E5%B0%94%E6%A0%91-ST-%E8%A1%A8-%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95%E3%80%91"><span class="toc-text">1005 TREE【笛卡尔树 &#x2F; ST 表 &#x2F; 矩阵乘法】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description-4"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input-4"><span class="toc-text">Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output-4"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Input-4"><span class="toc-text">Sample Input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sample-Output-4"><span class="toc-text">Sample Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution-5"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-4"><span class="toc-text">Code</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
