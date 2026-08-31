@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1788158050279">
+<link rel="stylesheet" href="/styles/main.css?v=1788189861980">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -103,8 +103,10 @@
                     <time class="post-time gt-c-content-color-first">
                         · 2026-08-30 ·</time>
                     
+                        <span class="post-updated">更新于 2026-08-31</span>
+                    
                     <span class="post-wordcount gt-c-content-color-second">
-                        4.4 千字 ·</span>
+                        4.3 千字 ·</span>
                     
                         
                             <a href="/tags/Algo/" class="post-tag">
@@ -150,32 +152,33 @@
     <span class="hljs-keyword">struct</span> <span class="hljs-title class_">Edge</span> &#123;
         <span class="hljs-type">int</span> to, nxt;
         <span class="hljs-type">int</span> w;
-    &#125;e[M*<span class="hljs-number">4</span>];
-    <span class="hljs-type">int</span> hd1[N], hd2[N], cntE; <span class="hljs-comment">// 111</span>
-    <span class="hljs-type">bool</span> cut[M*<span class="hljs-number">4</span>]; <span class="hljs-comment">// 1</span>
-
+    &#125;e[M*<span class="hljs-number">2</span>];
+    <span class="hljs-type">int</span> hd[N], cntE; <span class="hljs-comment">// 111</span>
+    <span class="hljs-type">bool</span> cut[M*<span class="hljs-number">2</span>]; <span class="hljs-comment">// 1</span>
+    <span class="hljs-comment">// 新树</span>
+    vector&lt;<span class="hljs-type">int</span>&gt; E[N];
+    
     <span class="hljs-type">int</span> dfn[N], low[N], dfncnt; <span class="hljs-comment">// 101</span>
-    <span class="hljs-type">int</span> stk[N], tp; <span class="hljs-comment">// 01</span>
-    <span class="hljs-type">int</span> dcc[N], dc, sz[N]; <span class="hljs-comment">// 011</span>
-    <span class="hljs-comment">// 懒人写法</span>
+    <span class="hljs-type">int</span> stk[N], tp; <span class="hljs-comment">// 01    </span>
+    <span class="hljs-comment">// edcc 划分</span>
+    <span class="hljs-type">int</span> dcc[N], dc; <span class="hljs-comment">// 01</span>
     vector&lt;<span class="hljs-type">int</span>&gt; edcc[N];
 
     <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-type">int</span> nn)</span> </span>&#123;
-        <span class="hljs-built_in">fill</span>(hd1,hd1<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
-        <span class="hljs-built_in">fill</span>(hd2,hd2<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
+        <span class="hljs-built_in">fill</span>(hd,hd<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
         <span class="hljs-built_in">fill</span>(cut,cut<span class="hljs-number">+1</span>+cntE,<span class="hljs-literal">false</span>);
 
         <span class="hljs-built_in">fill</span>(dfn,dfn<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
-        <span class="hljs-built_in">fill</span>(sz,sz<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
         
         <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= dc; i++) edcc[i].<span class="hljs-built_in">clear</span>();
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= dc; i++) E[i].<span class="hljs-built_in">clear</span>();
         
         n = nn;
         cntE = <span class="hljs-number">1</span>;
         dfncnt = dc = tp = <span class="hljs-number">0</span>;
     &#125;
 
-    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add_edge</span><span class="hljs-params">(<span class="hljs-type">int</span>*hd, <span class="hljs-type">int</span> u,<span class="hljs-type">int</span> v, <span class="hljs-type">int</span> w = <span class="hljs-number">0</span>)</span> </span>&#123;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add_edge</span><span class="hljs-params">(<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> v, <span class="hljs-type">int</span> w = <span class="hljs-number">0</span>)</span> </span>&#123;
         e[++cntE] = &#123;v, hd[u], w&#125;;
         hd[u] = cntE;
     &#125;
@@ -183,7 +186,7 @@
     <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">tarjan</span><span class="hljs-params">(<span class="hljs-type">int</span> u, <span class="hljs-type">int</span> fi)</span> </span>&#123;
         low[u] = dfn[u] = ++dfncnt;
         stk[++tp] = u;
-        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = hd1[u]; i;i=e[i].nxt) &#123;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = hd[u]; i;i=e[i].nxt) &#123;
             <span class="hljs-keyword">if</span> ((i^<span class="hljs-number">1</span>) == fi) <span class="hljs-keyword">continue</span>;
             <span class="hljs-type">int</span> v = e[i].to;
             <span class="hljs-keyword">if</span>(!dfn[v]) &#123;
@@ -203,7 +206,6 @@
             <span class="hljs-keyword">do</span> &#123;
                 pop = stk[tp--];
                 dcc[pop] = dc;
-                sz[dc]++;
                 edcc[dc].<span class="hljs-built_in">push_back</span>(pop);
             &#125; <span class="hljs-keyword">while</span>(pop != u);
         &#125;
@@ -218,11 +220,12 @@
         <span class="hljs-comment">// 除非： add_edge 建立的是双向边</span>
         <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> u = <span class="hljs-number">1</span>; u &lt;= n;u++) &#123;
             <span class="hljs-type">int</span> x = dcc[u];
-            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = hd1[u];i;i=e[i].nxt) &#123;
+            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = hd[u];i;i=e[i].nxt) &#123;
                 <span class="hljs-type">int</span> v = e[i].to;
                 <span class="hljs-type">int</span> y = dcc[v];
                 <span class="hljs-keyword">if</span> (x != y) &#123;
-                    <span class="hljs-built_in">add_edge</span>(hd2, x, y);
+                    E[x].<span class="hljs-built_in">push_back</span>(y);
+                    <span class="hljs-comment">// add_edge(hd2, x, y);</span>
                 &#125; <span class="hljs-keyword">else</span> &#123;
                     <span class="hljs-comment">// 无</span>
                 &#125;
@@ -256,15 +259,13 @@
         dep[u] = dep[f] + <span class="hljs-number">1</span>;
         dfn[u] = ++dfncnt;
         rmq[dfncnt][<span class="hljs-number">0</span>] = f;
-        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = DCC::hd2[u];i;i=DCC::e[i].nxt) &#123;
-            <span class="hljs-type">int</span> v = DCC::e[i].to;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> v: DCC::E[u])&#123;
             <span class="hljs-keyword">if</span> (v == f) <span class="hljs-keyword">continue</span>;
             <span class="hljs-built_in">dfs</span>(v, u);
         &#125;
     &#125;
     <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs2</span><span class="hljs-params">(<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> f)</span> </span>&#123;
-        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = DCC::hd2[u];i;i=DCC::e[i].nxt) &#123;
-            <span class="hljs-type">int</span> v = DCC::e[i].to;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> v: DCC::E[u]) &#123;
             <span class="hljs-keyword">if</span> (v == f) <span class="hljs-keyword">continue</span>;
             <span class="hljs-built_in">dfs2</span>(v, u);
             <span class="hljs-comment">// 【坑】 被自己阴阳到了：递归顺序乱了 </span>
@@ -280,8 +281,8 @@
         <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) &#123;
             <span class="hljs-type">int</span> u, v;
             cin &gt;&gt; u &gt;&gt; v;
-            DCC::<span class="hljs-built_in">add_edge</span>(DCC::hd1, u, v);
-            DCC::<span class="hljs-built_in">add_edge</span>(DCC::hd1, v, u);
+            DCC::<span class="hljs-built_in">add_edge</span>(u, v);
+            DCC::<span class="hljs-built_in">add_edge</span>(v, u);
         &#125;
         DCC::<span class="hljs-built_in">work</span>();
         DCC::<span class="hljs-built_in">build</span>();
@@ -342,9 +343,8 @@
     <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> f)</span> </span>&#123;
         <span class="hljs-comment">// cout &lt;&lt; &quot;dp[&quot; &lt;&lt; u &lt;&lt; &quot;]:&quot; &lt;&lt; &quot;\n&quot;;</span>
         bridge[u] = <span class="hljs-number">0</span>;
-        dp[u] = power2[DCC::sz[u]] - <span class="hljs-number">1</span>;
-        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = DCC::hd2[u];i;i=DCC::e[i].nxt) &#123;
-            <span class="hljs-type">int</span> v = DCC::e[i].to;
+        dp[u] = power2[DCC::edcc[u].<span class="hljs-built_in">size</span>()] - <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> v: DCC::E[u]) &#123;
             <span class="hljs-keyword">if</span> (v == f) <span class="hljs-keyword">continue</span>;
             <span class="hljs-built_in">dfs</span>(v, u);
             dp[u] = (
@@ -369,8 +369,8 @@
         <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) &#123;
             <span class="hljs-type">int</span> u, v;
             cin &gt;&gt; u &gt;&gt; v;
-            DCC::<span class="hljs-built_in">add_edge</span>(DCC::hd1, u, v);
-            DCC::<span class="hljs-built_in">add_edge</span>(DCC::hd1, v, u);
+            DCC::<span class="hljs-built_in">add_edge</span>(u, v);
+            DCC::<span class="hljs-built_in">add_edge</span>(v, u);
         &#125;
         DCC::<span class="hljs-built_in">work</span>();
         DCC::<span class="hljs-built_in">build</span>();
@@ -399,6 +399,13 @@
         <br>
         
             <div class="next-prev-post">
+                
+                    <div class="prev-post">
+                        <div class="prev gt-c-content-color-first">
+                            上一篇：<a href="/2026/08/31/v-dcc-%E7%82%B9%E5%8F%8C%E8%BF%9E%E9%80%9A%E5%88%86%E9%87%8F/"
+                                class="post-title gt-a-link">V-DCC 点双连通分量</a>
+                        </div>
+                    </div>
                 
                 
                     <div class="next-post">
