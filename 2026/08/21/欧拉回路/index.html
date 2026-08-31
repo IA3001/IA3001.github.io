@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1788074560113">
+<link rel="stylesheet" href="/styles/main.css?v=1788158050279">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -102,6 +102,8 @@
                 <div class="post-info">
                     <time class="post-time gt-c-content-color-first">
                         · 2026-08-21 ·</time>
+                    
+                        <span class="post-updated">更新于 2026-08-30</span>
                     
                     <span class="post-wordcount gt-c-content-color-second">
                         5.1 千字 ·</span>
@@ -319,7 +321,7 @@
     <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = (<span class="hljs-number">1</span>&lt;&lt;K) * <span class="hljs-number">10</span>;
     <span class="hljs-type">int</span> k, mask;
 
-    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span> </span>&#123;
+    <span class="hljs-built_in">LG_P10950</span>() &#123;
         cin &gt;&gt; k;
         mask = (<span class="hljs-number">1</span> &lt;&lt; (k<span class="hljs-number">-1</span>)) - <span class="hljs-number">1</span>;
         Euler::<span class="hljs-built_in">init</span>(<span class="hljs-number">1</span> &lt;&lt; (k<span class="hljs-number">-1</span>));
@@ -351,7 +353,7 @@
     <span class="hljs-comment">// 无向图 最小字典序</span>
     <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">505</span>, M = <span class="hljs-number">3005</span>;
     <span class="hljs-type">int</span> n, m;
-    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span> </span>&#123;
+    <span class="hljs-built_in">LG_P2731</span>() &#123;
         cin &gt;&gt; m;
         vector&lt;<span class="hljs-type">int</span>&gt; X;
         vector&lt;array&lt;<span class="hljs-type">int</span>,3&gt;&gt; edge;
@@ -381,7 +383,7 @@
 &#125;;
 
 <span class="hljs-keyword">struct</span> <span class="hljs-title class_">LG_P7771</span> &#123;
-    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span> </span>&#123;
+    <span class="hljs-built_in">LG_P7771</span>() &#123;
         <span class="hljs-type">int</span> n, m;
         cin &gt;&gt; n &gt;&gt; m;
         Euler::<span class="hljs-built_in">init</span>(n);
@@ -408,9 +410,9 @@
 
 <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
     ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
-    <span class="hljs-comment">// LG_P10950().solve();</span>
-    <span class="hljs-comment">// LG_P2731().solve();</span>
-    <span class="hljs-built_in">LG_P7771</span>().<span class="hljs-built_in">solve</span>();
+    <span class="hljs-comment">// new LG_P10950();</span>
+    <span class="hljs-comment">// new LG_P2731();</span>
+    <span class="hljs-keyword">new</span> <span class="hljs-built_in">LG_P7771</span>();
 &#125;</code></pre>
                 </div>
             </article>
