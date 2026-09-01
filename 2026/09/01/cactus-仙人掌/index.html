@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1788281532045">
+<link rel="stylesheet" href="/styles/main.css?v=1788281733774">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -104,7 +104,7 @@
                         · 2026-09-01 ·</time>
                     
                     <span class="post-wordcount gt-c-content-color-second">
-                        5.6 千字 ·</span>
+                        5.5 千字 ·</span>
                     
                         
                             <a href="/tags/Algo/" class="post-tag">
@@ -116,11 +116,11 @@
                 
                 <div class="post-content gt-c-content-color-first">
                     <h2 id="图解">图解</h2>
-<h3 id="Link">Link</h3>
+<h3 id="Link-最短路">Link 最短路</h3>
 <p><img src="assets/Cactus/file-20260901210604650.png" alt=""></p>
-<h3 id="Circle">Circle</h3>
+<h3 id="Circle-最短路">Circle 最短路</h3>
 <p><img src="assets/Cactus/file-20260901210645199.png" alt=""></p>
-<h2 id="P1-最大独立集（DFS-复杂-DP？？？）">P1 最大独立集（DFS + 复杂 DP？？？）</h2>
+<h2 id="P1-仙人掌最大权独立集（DFS-复杂-DP？？？）">P1 仙人掌最大权独立集（DFS + 复杂 DP？？？）</h2>
 <ul>
 <li>【坑点】
 <ul>
@@ -151,13 +151,10 @@
     <span class="hljs-comment">// 题目信息</span>
     <span class="hljs-type">int</span> a[N];
     ll dp[N][<span class="hljs-number">2</span>];
-    <span class="hljs-type">bool</span> vis[N];
 
     <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-type">int</span> nn)</span> </span>&#123;
         <span class="hljs-built_in">fill</span>(hd,hd<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
         <span class="hljs-built_in">fill</span>(dfn,dfn<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
-
-        <span class="hljs-built_in">fill</span>(vis,vis<span class="hljs-number">+1</span>+n,<span class="hljs-literal">false</span>);
 
         n = nn;
         cntE = <span class="hljs-number">1</span>;
@@ -174,11 +171,9 @@
     <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">link</span><span class="hljs-params">(<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> v)</span> </span>&#123;
         <span class="hljs-comment">// 收集环节点 标记已有环节点</span>
         vector&lt;<span class="hljs-type">int</span>&gt; buf;
-        vis[u] = <span class="hljs-literal">true</span>;
         <span class="hljs-type">int</span> pop;
         <span class="hljs-keyword">do</span> &#123;
             pop = stk[tp--];
-            vis[pop] = <span class="hljs-literal">true</span>;
             buf.<span class="hljs-built_in">push_back</span>(pop);
         &#125;<span class="hljs-keyword">while</span>(pop != v);
         <span class="hljs-comment">// 【坑坑点！】 我太愚蠢！耍小聪明！</span>
@@ -289,7 +284,7 @@
     ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
     <span class="hljs-built_in">solve</span>();
 &#125;</code></pre>
-<h2 id="P2-静态最短路（圆方树-简单-LCA）">P2 静态最短路（圆方树 + 简单 LCA）</h2>
+<h2 id="P2-仙人掌静态最短路（圆方树-简单-LCA）">P2 仙人掌静态最短路（圆方树 + 简单 LCA）</h2>
 <pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
 <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
 <span class="hljs-keyword">using</span> ll = <span class="hljs-type">long</span> <span class="hljs-type">long</span>;
@@ -536,7 +531,7 @@
     <aside class="post-outline" id="post-outline">
         <div class="outline-title">OUTLINE</div>
         <nav class="outline-nav">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E8%A7%A3"><span class="toc-text">图解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Link"><span class="toc-text">Link</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Circle"><span class="toc-text">Circle</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E6%9C%80%E5%A4%A7%E7%8B%AC%E7%AB%8B%E9%9B%86%EF%BC%88DFS-%E5%A4%8D%E6%9D%82-DP%EF%BC%9F%EF%BC%9F%EF%BC%9F%EF%BC%89"><span class="toc-text">P1 最大独立集（DFS + 复杂 DP？？？）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P2-%E9%9D%99%E6%80%81%E6%9C%80%E7%9F%AD%E8%B7%AF%EF%BC%88%E5%9C%86%E6%96%B9%E6%A0%91-%E7%AE%80%E5%8D%95-LCA%EF%BC%89"><span class="toc-text">P2 静态最短路（圆方树 + 简单 LCA）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P3-%E4%BB%99%E4%BA%BA%E6%8E%8C%E5%AD%90%E5%9B%BE%E7%9B%B4%E5%BE%84%EF%BC%88%E5%9C%86%E6%96%B9%E6%A0%91-%E5%A4%8D%E6%9D%82-DFS%EF%BC%89"><span class="toc-text">P3 仙人掌子图直径（圆方树 + 复杂 DFS）</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E8%A7%A3"><span class="toc-text">图解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Link-%E6%9C%80%E7%9F%AD%E8%B7%AF"><span class="toc-text">Link 最短路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Circle-%E6%9C%80%E7%9F%AD%E8%B7%AF"><span class="toc-text">Circle 最短路</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E4%BB%99%E4%BA%BA%E6%8E%8C%E6%9C%80%E5%A4%A7%E6%9D%83%E7%8B%AC%E7%AB%8B%E9%9B%86%EF%BC%88DFS-%E5%A4%8D%E6%9D%82-DP%EF%BC%9F%EF%BC%9F%EF%BC%9F%EF%BC%89"><span class="toc-text">P1 仙人掌最大权独立集（DFS + 复杂 DP？？？）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P2-%E4%BB%99%E4%BA%BA%E6%8E%8C%E9%9D%99%E6%80%81%E6%9C%80%E7%9F%AD%E8%B7%AF%EF%BC%88%E5%9C%86%E6%96%B9%E6%A0%91-%E7%AE%80%E5%8D%95-LCA%EF%BC%89"><span class="toc-text">P2 仙人掌静态最短路（圆方树 + 简单 LCA）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P3-%E4%BB%99%E4%BA%BA%E6%8E%8C%E5%AD%90%E5%9B%BE%E7%9B%B4%E5%BE%84%EF%BC%88%E5%9C%86%E6%96%B9%E6%A0%91-%E5%A4%8D%E6%9D%82-DFS%EF%BC%89"><span class="toc-text">P3 仙人掌子图直径（圆方树 + 复杂 DFS）</span></a></li></ol>
         </nav>
     </aside>
     
