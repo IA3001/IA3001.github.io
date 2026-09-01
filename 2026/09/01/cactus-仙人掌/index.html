@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Title -->
+<title>Cactus 仙人掌 - IA3001&#39;s Blog</title>
+
+<!-- Icon -->
+<link rel="icon" href="/img/favicon.ico">
+
+<!-- Fonts -->
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" as="style" onload="this.onload=null, this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"></noscript>
+
+
+    <!-- KaTeX -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.18.1/dist/katex.min.css" as="style" onload="this.onload=null, this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.1/dist/katex.min.css"></noscript>
+
+
+<!-- Style -->
+<link rel="stylesheet" href="/styles/main.css?v=1788281532045">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
+
+
+
+
+
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+
+    <meta name="generator" content="Hexo 8.1.2"></head>
+    <body>
+        <div class="main gt-bg-theme-color-first">
+            <div class="main-content">
+                <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <div class="site-name gt-c-content-color-first">
+            IA3001&#39;s Blog
+        </div>
+    </a>
+    <button aria-label="Navbar Toggler" class="navbar-toggler" type="button" id="changeNavbar">
+        <i class="gt-c-content-color-first" style="font-size: 18px;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="18px" fill="currentColor">
+                <path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z" />
+            </svg>
+        </i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center; ">
+            
+                <div class="nav-item">
+                    <a href="/" class="menu gt-a-link" target="_self">首页</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/archives/" class="menu gt-a-link" target="_self">归档</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/categories/" class="menu gt-a-link" target="_self">分类</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/map/" class="menu gt-a-link" target="_self">地图</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/tags/" class="menu gt-a-link" target="_self">标签</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/friends/" class="menu gt-a-link" target="_self">友链</a>
+                </div>
+            
+        </div>
+    </div>
+</nav>
+
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = function() {
+        let element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else { 
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+                
+
+<div class="post-wrapper">
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second gt-c-content-color-first">
+            <article class="gt-post-content">
+                
+                <h1 class="post-title">Cactus 仙人掌</h1>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2026-09-01 ·</time>
+                    
+                    <span class="post-wordcount gt-c-content-color-second">
+                        5.6 千字 ·</span>
+                    
+                        
+                            <a href="/tags/Algo/" class="post-tag">
+                                #Algo</a>
+                        
+                    
+                </div>
+                <hr>
+                
+                <div class="post-content gt-c-content-color-first">
+                    <h2 id="图解">图解</h2>
+<h3 id="Link">Link</h3>
+<p><img src="assets/Cactus/file-20260901210604650.png" alt=""></p>
+<h3 id="Circle">Circle</h3>
+<p><img src="assets/Cactus/file-20260901210645199.png" alt=""></p>
+<h2 id="P1-最大独立集（DFS-复杂-DP？？？）">P1 最大独立集（DFS + 复杂 DP？？？）</h2>
+<ul>
+<li>【坑点】
+<ul>
+<li>没有发现，仙人掌缩环</li>
+<li>其实 就是 按照 <strong>拓扑序</strong> 的！</li>
+</ul>
+</li>
+</ul>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-keyword">using</span> ll = <span class="hljs-type">long</span> <span class="hljs-type">long</span>;
+
+<span class="hljs-keyword">namespace</span> Cactus &#123;
+    <span class="hljs-comment">// P4410</span>
+    <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>;
+    <span class="hljs-type">const</span> <span class="hljs-type">int</span> M = <span class="hljs-number">2e5</span> + <span class="hljs-number">5</span>;
+    
+    <span class="hljs-type">int</span> n;
+
+    <span class="hljs-keyword">struct</span> <span class="hljs-title class_">Edge</span> &#123;
+        <span class="hljs-type">int</span> to, nxt;
+    &#125;e[M*<span class="hljs-number">2</span>];
+    <span class="hljs-type">int</span> hd[N], cntE;
+    
+    <span class="hljs-type">int</span> dfn[N], low[N], dfncnt;
+    <span class="hljs-type">int</span> stk[N], tp;
+    
+    <span class="hljs-comment">// 题目信息</span>
+    <span class="hljs-type">int</span> a[N];
+    ll dp[N][<span class="hljs-number">2</span>];
+    <span class="hljs-type">bool</span> vis[N];
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-type">int</span> nn)</span> </span>&#123;
+        <span class="hljs-built_in">fill</span>(hd,hd<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
+        <span class="hljs-built_in">fill</span>(dfn,dfn<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
+
+        <span class="hljs-built_in">fill</span>(vis,vis<span class="hljs-number">+1</span>+n,<span class="hljs-literal">false</span>);
+
+        n = nn;
+        cntE = <span class="hljs-number">1</span>;
+        dfncnt = tp = <span class="hljs-number">0</span>;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add_edge</span><span class="hljs-params">(<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> v)</span> </span>&#123;
+        e[++cntE] = &#123;v, hd[u]&#125;;
+        hd[u] = cntE;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">tarjan</span><span class="hljs-params">(<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> fi)</span></span>;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">link</span><span class="hljs-params">(<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> v)</span> </span>&#123;
+        <span class="hljs-comment">// 收集环节点 标记已有环节点</span>
+        vector&lt;<span class="hljs-type">int</span>&gt; buf;
+        vis[u] = <span class="hljs-literal">true</span>;
+        <span class="hljs-type">int</span> pop;
+        <span class="hljs-keyword">do</span> &#123;
+            pop = stk[tp--];
+            vis[pop] = <span class="hljs-literal">true</span>;
+            buf.<span class="hljs-built_in">push_back</span>(pop);
+        &#125;<span class="hljs-keyword">while</span>(pop != v);
+        <span class="hljs-comment">// 【坑坑点！】 我太愚蠢！耍小聪明！</span>
+        <span class="hljs-comment">// 我突然 最终发现： 仙人掌缩环是按照 &quot;拓扑序&quot; 缩环的</span>
+        <span class="hljs-comment">// 并非无序!!!</span>
+        <span class="hljs-comment">// 所以不应该有所谓的:</span>
+        <span class="hljs-comment">// 递归计算完毕 &quot;子树&quot;</span>
+        <span class="hljs-comment">// 都充分算完之后，终于可以计算了</span>
+        <span class="hljs-comment">// 注意 我们最终只服务于 u </span>
+        <span class="hljs-comment">// 因为 u 是 &quot;祖先&quot;</span>
+        <span class="hljs-comment">// 因此 下方环间的 dp 值并非全局 dp 值 </span>
+        <span class="hljs-comment">// 而是一个 抽象物品 值 即使 不选 也可能有 权值</span>
+        <span class="hljs-comment">// 1. u 不选 那么直接对 [1,sz] 进行打家劫舍</span>
+        ll res = <span class="hljs-number">0</span>;
+        ll pre0 = <span class="hljs-number">0</span>, pre1 = <span class="hljs-number">-2e18</span>;
+        <span class="hljs-type">int</span> sz = buf.<span class="hljs-built_in">size</span>();
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; sz; i++) &#123;
+            <span class="hljs-type">int</span> u = buf[i];
+            ll cur0 = dp[u][<span class="hljs-number">0</span>] + <span class="hljs-built_in">max</span>(pre0, pre1);
+            ll cur1 = dp[u][<span class="hljs-number">1</span>] + pre0;
+            res = <span class="hljs-built_in">max</span>(cur0, cur1);
+            pre0 = cur0;
+            pre1 = cur1;
+        &#125;
+        <span class="hljs-comment">// 注意是 +=</span>
+        dp[u][<span class="hljs-number">0</span>] += res;
+
+        <span class="hljs-comment">// 2. u 选 那么直接对 [2,sz-1] 进行打家劫舍</span>
+        res = <span class="hljs-number">0</span>;
+        pre0 = <span class="hljs-number">0</span>, pre1 = <span class="hljs-number">-2e18</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i + <span class="hljs-number">1</span> &lt; sz; i++) &#123;
+            <span class="hljs-type">int</span> u = buf[i];
+            ll cur0 = dp[u][<span class="hljs-number">0</span>] + <span class="hljs-built_in">max</span>(pre0, pre1);
+            ll cur1 = dp[u][<span class="hljs-number">1</span>] + pre0;
+            res = <span class="hljs-built_in">max</span>(cur0, cur1);
+            pre0 = cur0;
+            pre1 = cur1;
+        &#125;
+        <span class="hljs-comment">// 注意是 +=</span>
+        <span class="hljs-comment">// 【坑点1】不选也有价值啊啊</span>
+        <span class="hljs-comment">// 【坑点4】 我居然直接存到 pre0 里面 根本无法生效啊</span>
+        dp[u][<span class="hljs-number">1</span>] += res + dp[buf[<span class="hljs-number">0</span>]][<span class="hljs-number">0</span>];
+        <span class="hljs-comment">// 【坑点2】 如果是 二元环我不就炸了？</span>
+        <span class="hljs-comment">// 【坑点3】 不是 0 sz-1 而是 buf[0] buf[sz-1] 啊啊啊啊啊</span>
+        <span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>!=sz<span class="hljs-number">-1</span>) dp[u][<span class="hljs-number">1</span>] += dp[buf[sz<span class="hljs-number">-1</span>]][<span class="hljs-number">0</span>];
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">tarjan</span><span class="hljs-params">(<span class="hljs-type">int</span> u, <span class="hljs-type">int</span> fi)</span> </span>&#123;
+        low[u] = dfn[u] = ++dfncnt;
+        stk[++tp] = u;
+
+        <span class="hljs-comment">// 初始化 dp 信息</span>
+        dp[u][<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
+        dp[u][<span class="hljs-number">1</span>] = a[u];
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = hd[u]; i; i = e[i].nxt) &#123;
+            <span class="hljs-keyword">if</span> ((i^<span class="hljs-number">1</span>) == fi) <span class="hljs-keyword">continue</span>;
+            <span class="hljs-type">int</span> v = e[i].to;
+            <span class="hljs-keyword">if</span> (!dfn[v]) &#123;
+                <span class="hljs-built_in">tarjan</span>(v, i);
+                <span class="hljs-keyword">if</span> (low[v] &lt; dfn[u]) &#123;
+                    low[u] = <span class="hljs-built_in">min</span>(low[u], low[v]);
+                &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (low[v] &gt; dfn[u]) &#123;
+                    <span class="hljs-comment">// 割边直接转移</span>
+                    <span class="hljs-comment">// 注意是 +=</span>
+                    dp[u][<span class="hljs-number">0</span>] += <span class="hljs-built_in">max</span>(dp[v][<span class="hljs-number">0</span>], dp[v][<span class="hljs-number">1</span>]);
+                    dp[u][<span class="hljs-number">1</span>] += dp[v][<span class="hljs-number">0</span>];
+                    tp--;
+                &#125; <span class="hljs-keyword">else</span> &#123;
+                    <span class="hljs-comment">// 非割边递归转移</span>
+                    <span class="hljs-built_in">link</span>(u, v);
+                &#125;
+            &#125; <span class="hljs-keyword">else</span> &#123;
+                <span class="hljs-keyword">if</span> (dfn[v] &lt; dfn[u]) &#123;
+                    low[u] = <span class="hljs-built_in">min</span>(low[u], dfn[v]);
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+
+    <span class="hljs-comment">// 缝缝补补</span>
+    <span class="hljs-comment">// 只为 营造出一种 拓扑排序/树形DP/等价抽象化 的计算顺序</span>
+    <span class="hljs-function">ll <span class="hljs-title">cal</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-built_in">tarjan</span>(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(dp[<span class="hljs-number">1</span>][<span class="hljs-number">0</span>], dp[<span class="hljs-number">1</span>][<span class="hljs-number">1</span>]);
+    &#125;
+&#125;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span> </span>&#123;
+    <span class="hljs-type">int</span> n, m;
+    cin &gt;&gt; n &gt;&gt; m;
+    Cactus::<span class="hljs-built_in">init</span>(n);
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) &#123;
+        <span class="hljs-type">int</span> u, v;
+        cin &gt;&gt; u &gt;&gt; v;
+        <span class="hljs-keyword">if</span> (u != v) &#123;
+            Cactus::<span class="hljs-built_in">add_edge</span>(u, v);
+            Cactus::<span class="hljs-built_in">add_edge</span>(v, u);
+        &#125;
+    &#125;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
+        cin &gt;&gt; Cactus::a[i]; <span class="hljs-comment">// P4410</span>
+        <span class="hljs-comment">// Cactus::a[i] = 1; // P10779</span>
+    &#125;
+    cout &lt;&lt; Cactus::<span class="hljs-built_in">cal</span>() &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+&#125;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-built_in">solve</span>();
+&#125;</code></pre>
+<h2 id="P2-静态最短路（圆方树-简单-LCA）">P2 静态最短路（圆方树 + 简单 LCA）</h2>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-keyword">using</span> ll = <span class="hljs-type">long</span> <span class="hljs-type">long</span>;
+
+<span class="hljs-keyword">namespace</span> Cactus &#123;
+    <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">2e6</span> + <span class="hljs-number">5</span>;
+    <span class="hljs-type">const</span> <span class="hljs-type">int</span> M = <span class="hljs-number">2e6</span> + <span class="hljs-number">5</span>;
+
+    <span class="hljs-type">int</span> n;
+    <span class="hljs-type">int</span> cntn;
+
+    <span class="hljs-keyword">struct</span> <span class="hljs-title class_">Edge</span> &#123;
+        <span class="hljs-type">int</span> to, nxt;
+        <span class="hljs-type">int</span> w;
+    &#125;e[M*<span class="hljs-number">2</span>];
+    <span class="hljs-type">int</span> hd[N], cntE;
+    
+    vector&lt;pair&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt;&gt; E[N*<span class="hljs-number">2</span>];
+    
+    <span class="hljs-type">int</span> dfn[N], low[N], dfncnt;
+    <span class="hljs-type">int</span> stk[N], tp;
+    
+    <span class="hljs-comment">// 圆方树信息</span>
+    <span class="hljs-type">int</span> fw[N]; <span class="hljs-comment">// fromWeight</span>
+    ll len[N]; <span class="hljs-comment">// 前缀和</span>
+    <span class="hljs-comment">// 方点信息 </span>
+    ll sum[N*<span class="hljs-number">2</span>];
+    
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-type">int</span> nn)</span> </span>&#123;
+        <span class="hljs-built_in">fill</span>(hd,hd<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= cntn; i++) E[i].<span class="hljs-built_in">clear</span>();
+
+        <span class="hljs-built_in">fill</span>(dfn,dfn<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
+        <span class="hljs-built_in">fill</span>(sum,sum<span class="hljs-number">+1</span>+cntn,<span class="hljs-number">0</span>);
+
+        cntn = n = nn;
+        cntE = <span class="hljs-number">1</span>;
+        dfncnt = tp = <span class="hljs-number">0</span>;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add_edge</span><span class="hljs-params">(<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> v, <span class="hljs-type">int</span> w=<span class="hljs-number">0</span>)</span> </span>&#123;
+        e[++cntE] = &#123;v, hd[u], w&#125;;
+        hd[u] = cntE;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">link</span><span class="hljs-params">(<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> v)</span> </span>&#123;
+        <span class="hljs-comment">// 顶</span>
+        ++cntn;
+        E[u].<span class="hljs-built_in">push_back</span>(&#123;cntn, <span class="hljs-number">0</span>&#125;);
+        <span class="hljs-type">int</span> pop, tmp = tp;
+        sum[cntn] = fw[u];
+        <span class="hljs-comment">// 前缀和 同时计算 len</span>
+        <span class="hljs-keyword">do</span> &#123;
+            pop = stk[tmp--];
+            len[pop] = sum[cntn];
+            sum[cntn] += fw[pop];
+        &#125; <span class="hljs-keyword">while</span>(pop != v);
+        <span class="hljs-keyword">do</span> &#123;
+            pop = stk[tp--];
+            <span class="hljs-comment">// 添加最短路</span>
+            E[cntn].<span class="hljs-built_in">push_back</span>(&#123;pop, <span class="hljs-built_in">min</span>(len[pop], sum[cntn] - len[pop])&#125;);
+        &#125; <span class="hljs-keyword">while</span>(pop != v);
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">tarjan</span><span class="hljs-params">(<span class="hljs-type">int</span> u, <span class="hljs-type">int</span> fi)</span> </span>&#123;
+        low[u] = dfn[u] = ++dfncnt;
+        stk[++tp] = u;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = hd[u]; i; i = e[i].nxt) &#123;
+            <span class="hljs-keyword">if</span> ((i^<span class="hljs-number">1</span>) == fi) <span class="hljs-keyword">continue</span>;
+            <span class="hljs-type">int</span> v = e[i].to;
+            <span class="hljs-keyword">if</span> (!dfn[v]) &#123;
+                <span class="hljs-comment">// 走树边 </span>
+                <span class="hljs-built_in">tarjan</span>(v, i);
+                <span class="hljs-comment">// 树边最终覆盖(最高优先级)</span>
+                fw[v] = e[i].w;
+                <span class="hljs-keyword">if</span> (low[v] &lt; dfn[u]) &#123;
+                    <span class="hljs-comment">// 没有扎口袋</span>
+                    low[u] = <span class="hljs-built_in">min</span>(low[u], low[v]);
+                &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (low[v] &gt; dfn[u]) &#123;
+                    <span class="hljs-comment">// 是 &quot;割边&quot;</span>
+                    E[u].<span class="hljs-built_in">push_back</span>(&#123;v, e[i].w&#125;);
+                    <span class="hljs-comment">// 弹出 v</span>
+                    tp--;
+                &#125; <span class="hljs-keyword">else</span> &#123;
+                    <span class="hljs-comment">// 是环顶 </span>
+                    <span class="hljs-built_in">link</span>(u, v);
+                    <span class="hljs-comment">// 弹出了 v</span>
+                &#125;
+            &#125; <span class="hljs-keyword">else</span> &#123;
+                <span class="hljs-keyword">if</span> (dfn[v] &lt; dfn[u]) &#123;
+                    <span class="hljs-comment">// 发现回边</span>
+                    <span class="hljs-comment">// 回边覆盖(最低优先级, 先解决 &quot;子树&quot;)</span>
+                    fw[v] = e[i].w;
+                    low[u] = <span class="hljs-built_in">min</span>(low[u], dfn[v]);
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">build</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
+            <span class="hljs-keyword">if</span> (!dfn[i]) &#123;
+                <span class="hljs-built_in">tarjan</span>(i, <span class="hljs-number">0</span>);
+            &#125;
+        &#125;
+    &#125;
+&#125;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">LG_P5236</span> &#123;
+    <span class="hljs-comment">// 仙人掌最短路 模板题</span>
+    <span class="hljs-keyword">inline</span> <span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e4</span> + <span class="hljs-number">5</span>, M = <span class="hljs-number">2e4</span> + <span class="hljs-number">5</span>;
+    
+    <span class="hljs-comment">// 基本树剖 求 lca 求 子树方向</span>
+    <span class="hljs-type">int</span> dfn[N*<span class="hljs-number">2</span>], dfncnt, sz[N*<span class="hljs-number">2</span>], son[N*<span class="hljs-number">2</span>], fa[N*<span class="hljs-number">2</span>], top[N*<span class="hljs-number">2</span>], dep[N*<span class="hljs-number">2</span>];
+    <span class="hljs-comment">// 差分工具</span>
+    ll path[N*<span class="hljs-number">2</span>];
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs1</span><span class="hljs-params">(<span class="hljs-type">int</span> u, <span class="hljs-type">int</span> f)</span> </span>&#123;
+        fa[u] = f;
+        dep[u] = dep[f] + <span class="hljs-number">1</span>;
+        sz[u] = <span class="hljs-number">1</span>;
+        son[u] = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> [v, w]: Cactus::E[u]) &#123;
+            <span class="hljs-keyword">if</span> (v == f) <span class="hljs-keyword">continue</span>; <span class="hljs-comment">// 无用</span>
+            path[v] = path[u] + w;
+            <span class="hljs-built_in">dfs1</span>(v, u);
+            sz[u] += sz[v];
+            <span class="hljs-keyword">if</span> (sz[v] &gt; sz[son[u]]) son[u] = v;
+        &#125;
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs2</span><span class="hljs-params">(<span class="hljs-type">int</span> u, <span class="hljs-type">int</span> tp)</span> </span>&#123;
+        dfn[u] = ++dfncnt; 
+        top[u] = tp;
+        <span class="hljs-keyword">if</span> (son[u]) <span class="hljs-built_in">dfs2</span>(son[u], tp);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> [v, w]: Cactus::E[u]) &#123;
+            <span class="hljs-keyword">if</span> (v != fa[u] &amp;&amp; v != son[u]) &#123;
+                <span class="hljs-built_in">dfs2</span>(v, v);
+            &#125;
+        &#125;
+    &#125;
+    <span class="hljs-comment">// 树剖 求 lca</span>
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">lca</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span> </span>&#123;
+        <span class="hljs-keyword">while</span>(top[x] != top[y]) &#123;
+            <span class="hljs-keyword">if</span> (dep[top[x]] &lt; dep[top[y]]) <span class="hljs-built_in">swap</span>(x, y);
+            x = fa[top[x]];
+        &#125;
+        <span class="hljs-keyword">return</span> dep[x] &lt; dep[y] ? x : y;
+    &#125;
+    <span class="hljs-comment">// 树剖 求 子树方向</span>
+    <span class="hljs-comment">// 已知 x 是 s 的子孙 找到 s 的儿子 y 使得 x in y</span>
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> s)</span> </span>&#123;
+        <span class="hljs-type">int</span> pre = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">while</span>(top[x] != top[s]) &#123;
+            pre = top[x];
+            x = fa[pre];
+        &#125;
+        <span class="hljs-keyword">return</span> x == s ? pre:son[s];
+    &#125;
+    <span class="hljs-function">ll <span class="hljs-title">cal</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y)</span> </span>&#123;
+        <span class="hljs-keyword">if</span> (x == y) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        <span class="hljs-type">int</span> z = <span class="hljs-built_in">lca</span>(x, y);
+        <span class="hljs-keyword">if</span> (z &lt;= n) &#123;
+            <span class="hljs-keyword">return</span> path[x] + path[y] - <span class="hljs-number">2</span> * path[z];
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-type">int</span> X = <span class="hljs-built_in">find</span>(x, z);
+            <span class="hljs-type">int</span> Y = <span class="hljs-built_in">find</span>(y, z);
+            ll d = <span class="hljs-built_in">abs</span>(Cactus::len[X] - Cactus::len[Y]);
+            <span class="hljs-keyword">return</span> path[x] - path[X] + <span class="hljs-built_in">min</span>(d, Cactus::sum[z] - d) + path[y] - path[Y];
+        &#125;
+    &#125;
+    <span class="hljs-type">int</span> n, m, q;
+    <span class="hljs-built_in">LG_P5236</span>() &#123;
+        <span class="hljs-built_in">fill</span>(dfn,dfn<span class="hljs-number">+1</span>+Cactus::cntn, <span class="hljs-number">0</span>);
+        cin &gt;&gt; n &gt;&gt; m &gt;&gt; q;
+        Cactus::<span class="hljs-built_in">init</span>(n);
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) &#123;
+            <span class="hljs-type">int</span> u, v, w;
+            cin &gt;&gt; u &gt;&gt; v &gt;&gt; w;
+            Cactus::<span class="hljs-built_in">add_edge</span>(u, v, w);
+            Cactus::<span class="hljs-built_in">add_edge</span>(v, u, w);
+        &#125;
+        Cactus::<span class="hljs-built_in">build</span>();
+        <span class="hljs-built_in">dfs1</span>(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+        <span class="hljs-built_in">dfs2</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">while</span>(q--) &#123;
+            <span class="hljs-type">int</span> x, y;
+            cin &gt;&gt; x &gt;&gt; y;
+            cout &lt;&lt; <span class="hljs-built_in">cal</span>(x, y) &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;            
+        &#125;
+    &#125;
+&#125;;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">new</span> <span class="hljs-built_in">LG_P5236</span>();
+&#125;</code></pre>
+<h2 id="P3-仙人掌子图直径（圆方树-复杂-DFS）">P3 仙人掌子图直径（圆方树 + 复杂 DFS）</h2>
+<pre><code class="hljs cpp"></code></pre>
+                </div>
+            </article>
+        </div>
+        <br>
+        
+            <div class="next-prev-post">
+                
+                
+                    <div class="next-post">
+                        <div class="next gt-c-content-color-first">
+                            下一篇：<a href="/2026/08/31/v-dcc-%E7%82%B9%E5%8F%8C%E8%BF%9E%E9%80%9A%E5%88%86%E9%87%8F/"
+                                class="post-title gt-a-link">V-DCC 点双连通分量</a>
+                        </div>
+                    </div>
+                
+            </div>
+        
+        
+
+        
+    <script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.18.0/js/md5.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+
+    <div id="gitalk-container"></div>
+
+    <script>
+    var gitalk = new Gitalk({
+        clientID: 'Ov23liZH3OYalvv7HzKX',
+        clientSecret: 'b8f25b093a363f12c0bfb88d7aa057a0f6b8b043',
+        repo: 'IA3001.github.io',
+        owner: 'IA3001',
+        admin: ['IA3001'],
+        id: md5(location.pathname),
+        distractionFreeMode: false,
+        proxy: 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token'
+    });
+    gitalk.render('gitalk-container');
+    </script>
+
+
+        
+    </div>
+
+    
+    <aside class="post-outline" id="post-outline">
+        <div class="outline-title">OUTLINE</div>
+        <nav class="outline-nav">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E8%A7%A3"><span class="toc-text">图解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Link"><span class="toc-text">Link</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Circle"><span class="toc-text">Circle</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E6%9C%80%E5%A4%A7%E7%8B%AC%E7%AB%8B%E9%9B%86%EF%BC%88DFS-%E5%A4%8D%E6%9D%82-DP%EF%BC%9F%EF%BC%9F%EF%BC%9F%EF%BC%89"><span class="toc-text">P1 最大独立集（DFS + 复杂 DP？？？）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P2-%E9%9D%99%E6%80%81%E6%9C%80%E7%9F%AD%E8%B7%AF%EF%BC%88%E5%9C%86%E6%96%B9%E6%A0%91-%E7%AE%80%E5%8D%95-LCA%EF%BC%89"><span class="toc-text">P2 静态最短路（圆方树 + 简单 LCA）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P3-%E4%BB%99%E4%BA%BA%E6%8E%8C%E5%AD%90%E5%9B%BE%E7%9B%B4%E5%BE%84%EF%BC%88%E5%9C%86%E6%96%B9%E6%A0%91-%E5%A4%8D%E6%9D%82-DFS%EF%BC%89"><span class="toc-text">P3 仙人掌子图直径（圆方树 + 复杂 DFS）</span></a></li></ol>
+        </nav>
+    </aside>
+    
+</div>
+
+<style>
+.post-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    padding: 20px;
+    align-items: flex-start;
+}
+.post-wrapper.typst-page {
+    display: block;
+    padding: 0;
+}
+.post-wrapper.typst-page .post-container {
+    width: auto;
+    max-width: none;
+}
+.post-wrapper.typst-page .post-detail {
+    background: transparent !important;
+    padding: 0;
+    margin: 0 auto;
+    width: fit-content;
+    max-width: 100%;
+    overflow-x: auto;
+}
+.post-container { width: 1000px; flex-shrink: 0; }
+
+.post-outline {
+    width: 200px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 24px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    font-size: 13px;
+    border-left: 1px solid var(--border);
+    padding-left: 20px;
+}
+.outline-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--content-second);
+    margin-bottom: 12px;
+}
+.outline-nav { position: relative; }
+.outline-nav .toc { list-style: none; padding: 0; margin: 0; }
+.outline-nav .toc-item { position: relative; }
+.outline-nav .toc-link {
+    display: block;
+    padding: 4px 0 4px 0;
+    color: var(--content-second);
+    text-decoration: none;
+    transition: color .15s;
+    line-height: 1.5;
+}
+.outline-nav .toc-link:hover { color: var(--content-first); }
+.outline-nav .toc-link.active {
+    color: var(--content-first);
+    font-weight: 600;
+}
+.outline-nav .toc-child { padding-left: 16px; }
+.outline-nav .toc-child .toc-link { font-size: 12px; }
+.outline-nav .toc-child .toc-child { padding-left: 16px; }
+.outline-nav .toc-child .toc-child .toc-link { font-size: 11px; }
+.outline-empty { color: var(--content-second); font-size: 12px; padding-left: 12px; }
+
+/* Typst */
+.typst-app { --typst-dom-scale: 1.5; }
+
+.post-outline.visible {
+    display: block;
+    position: fixed;
+    right: 20px;
+    top: 80px;
+    z-index: 999;
+    background: var(--theme-first);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.12);
+    max-height: 70vh;
+    width: 260px;
+}
+@media (max-width: 992px) { .post-outline { display: none; } }
+</style>
+
+<script>
+(function(){
+    var tocBtn = document.getElementById('toc-btn');
+    var outline = document.querySelector('.post-outline');
+    if (tocBtn && outline) {
+        tocBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (window.innerWidth <= 992) {
+                outline.classList.toggle('visible');
+            } else {
+                outline.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    }
+
+    var container = document.querySelector('.post-outline');
+    if (!container) return;
+    var links = [].slice.call(container.querySelectorAll('.toc-link'));
+    var headings = links.map(function(a) {
+        return document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
+    }).filter(Boolean);
+
+    // Intercept TOC clicks: smooth scroll + replaceState (no history pollution)
+    links.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            var id = decodeURIComponent(link.getAttribute('href').slice(1));
+            var target = document.getElementById(id);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                history.replaceState(null, '', '#' + id);
+            }
+        });
+    });
+
+    var activeLink = null;
+    // 首次 update()（页面加载时）不写 URL hash，
+    // 否则会把从地图/外部跳转进来的 #锚点 覆盖成目录第一个标题，导致跳转失效
+    var firstRun = true;
+    function update() {
+        var top = 0;
+        for (var i = headings.length - 1; i >= 0; i--) {
+            if (headings[i].getBoundingClientRect().top < 120) {
+                top = i; break;
+            }
+        }
+        var current = links[top];
+        if (current !== activeLink) {
+            if (activeLink) activeLink.classList.remove('active');
+            current.classList.add('active');
+            var rect = current.getBoundingClientRect();
+            var cr = container.getBoundingClientRect();
+            if (rect.bottom > cr.bottom || rect.top < cr.top) {
+                current.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            }
+            activeLink = current;
+            if (!firstRun) {
+                // Update URL hash without pushing history entry
+                var id = decodeURIComponent(current.getAttribute('href').slice(1));
+                history.replaceState(null, '', '#' + id);
+            }
+        }
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+    firstRun = false;
+})();
+</script>
+
+                <div class="site-footer gt-c-content-color-first">
+    <div class="footer-main">
+        <!-- 建议保留版权信息或者添加主题信息到友链，感谢您的理解 -->
+        <!-- 文件位置：layout/_includes/footer.ejs -->
+        <span style="text-align: right; float: right;">Theme <a 
+            href="https://github.com/renbaoshuo/hexo-theme-pure" target="_blank">Pure</a> | Powered by <a 
+            href="https://hexo.io" target="_blank">Hexo</a></span>
+        <span style="text-align: left;">Footer HTML
+</span>
+    </div>
+</div>
+
+<!-- Buttons -->
+<div class="fab">
+    
+    <a aria-label="文章目录" class="fab-btn" id="toc-btn" href="javascript:;" title="文章目录">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            focusable="false"
+            data-icon="list-ul"
+            class="svg-inline--fa fa-list-ul fa-w-16"
+            role="img"
+            viewBox="0 0 512 512"
+            height="20"
+            width="20"
+        >
+            <path
+                fill="currentColor"
+                d="M48 48a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm448 16H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 160H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z"
+            />
+        </svg>
+    </a>
+    
+    <a aria-label="回到顶部" class="fab-btn" href="#" title="回到顶部">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            focusable="false"
+            role="img"
+            viewBox="0 0 320 512"
+            height="20"
+            width="20"
+        >
+            <path
+                fill="currentColor"
+                d="M168.5 164.2l148 146.8c4.7 4.7 4.7 12.3 0 17l-19.8 19.8c-4.7 4.7-12.3 4.7-17 0L160 229.3 40.3 347.8c-4.7 4.7-12.3 4.7-17 0L3.5 328c-4.7-4.7-4.7-12.3 0-17l148-146.8c4.7-4.7 12.3-4.7 17 0z"
+            />
+        </svg>
+    </a>
+</div>
+
+            </div>
+        </div>
+    </body>
+</html>
