@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Title -->
+<title>优化建图 - IA3001&#39;s Blog</title>
+
+<!-- Icon -->
+<link rel="icon" href="/img/favicon.ico">
+
+<!-- Fonts -->
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" as="style" onload="this.onload=null, this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"></noscript>
+
+
+    <!-- KaTeX -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.18.1/dist/katex.min.css" as="style" onload="this.onload=null, this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.1/dist/katex.min.css"></noscript>
+
+
+<!-- Style -->
+<link rel="stylesheet" href="/styles/main.css?v=1788367241023">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
+
+
+
+
+
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+
+    <meta name="generator" content="Hexo 8.1.2"></head>
+    <body>
+        <div class="main gt-bg-theme-color-first">
+            <div class="main-content">
+                <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <div class="site-name gt-c-content-color-first">
+            IA3001&#39;s Blog
+        </div>
+    </a>
+    <button aria-label="Navbar Toggler" class="navbar-toggler" type="button" id="changeNavbar">
+        <i class="gt-c-content-color-first" style="font-size: 18px;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="18px" fill="currentColor">
+                <path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z" />
+            </svg>
+        </i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center; ">
+            
+                <div class="nav-item">
+                    <a href="/" class="menu gt-a-link" target="_self">首页</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/archives/" class="menu gt-a-link" target="_self">归档</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/categories/" class="menu gt-a-link" target="_self">分类</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/map/" class="menu gt-a-link" target="_self">地图</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/tags/" class="menu gt-a-link" target="_self">标签</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/friends/" class="menu gt-a-link" target="_self">友链</a>
+                </div>
+            
+        </div>
+    </div>
+</nav>
+
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = function() {
+        let element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else { 
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+                
+
+<div class="post-wrapper">
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second gt-c-content-color-first">
+            <article class="gt-post-content">
+                
+                <h1 class="post-title">优化建图</h1>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2026-09-02 ·</time>
+                    
+                    <span class="post-wordcount gt-c-content-color-second">
+                        7.8 千字 ·</span>
+                    
+                        
+                            <a href="/tags/Algo/" class="post-tag">
+                                #Algo</a>
+                        
+                    
+                </div>
+                <hr>
+                
+                <div class="post-content gt-c-content-color-first">
+                    <h2 id="P1-模板（线段树优化）">P1 模板（线段树优化）</h2>
+<ul>
+<li><code>CF786B</code>
+<ul>
+<li>n 个点 q 次加边后 求 s 单源最短路</li>
+</ul>
+</li>
+</ul>
+<h2 id="P2-模板（线段树优化）">P2 模板（线段树优化）</h2>
+<ul>
+<li><code>LG_P6348</code>
+<ul>
+<li>n 个点 m 次 r2r 加边后 求 p 单元最短路(边权1)</li>
+</ul>
+</li>
+</ul>
+<h2 id="P3-沙漠-（线段树优化-拓扑序-DP）">P3 沙漠 （线段树优化 + 拓扑序 DP）</h2>
+<ul>
+<li><code>LG_P3588</code>
+<ul>
+<li>给定一个长度为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> 的正整数序列 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span>，每个数都在 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> 到 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mn>9</mn></msup></mrow><annotation encoding="application/x-tex">10^9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">9</span></span></span></span></span></span></span></span></span></span></span> 范围内，告诉你其中 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span> 个数，并给出 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span></span></span></span> 条信息，每条信息包含三个数 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mo separator="true">,</mo><mi>r</mi><mo separator="true">,</mo><mi>k</mi></mrow><annotation encoding="application/x-tex">l,r,k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0197em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.0315em;">k</span></span></span></span> 以及接下来 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.0315em;">k</span></span></span></span> 个正整数，表示 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mi>l</mi></msub><mo separator="true">,</mo><msub><mi>a</mi><mrow><mi>l</mi><mo>+</mo><mn>1</mn></mrow></msub><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>a</mi><mrow><mi>r</mi><mo>−</mo><mn>1</mn></mrow></msub><mo separator="true">,</mo><msub><mi>a</mi><mi>r</mi></msub></mrow><annotation encoding="application/x-tex">a_l, a_{l+1}, \ldots, a_{r-1}, a_r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6389em;vertical-align:-0.2083em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.0197em;">l</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0197em;">l</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0278em;">r</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.0278em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 里这 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.0315em;">k</span></span></span></span> 个数中的任意一个都比任意一个剩下的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo>−</mo><mi>l</mi><mo>+</mo><mn>1</mn><mo>−</mo><mi>k</mi></mrow><annotation encoding="application/x-tex">r-l+1-k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.0197em;">l</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.0315em;">k</span></span></span></span> 个数大（严格大于，即没有等号）。</li>
+<li>若无解，则输出 <code>NIE</code>。否则第一行输出 <code>TAK</code>，第二行输出 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> 个正整数，依次输出序列 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span> 中每个数。</li>
+</ul>
+</li>
+</ul>
+<h2 id="P4-Beautiful-Tree-（树剖优化-本质线段树-）">P4 Beautiful Tree （树剖优化(本质线段树)）</h2>
+<ul>
+<li><code>CF_1904F</code>
+<ul>
+<li>给定一棵树</li>
+<li>有若干限制 t a b c 表示 a b 路径上的 c 是最大/最小值</li>
+<li>求可行解</li>
+</ul>
+</li>
+</ul>
+<h2 id="Codes">Codes</h2>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-keyword">using</span> ll = <span class="hljs-type">long</span> <span class="hljs-type">long</span>;
+<span class="hljs-type">const</span> ll INF = <span class="hljs-number">2e18</span>;
+
+<span class="hljs-keyword">namespace</span> SegG &#123;
+    <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">4e5</span> + <span class="hljs-number">5</span>;
+    <span class="hljs-type">const</span> <span class="hljs-type">int</span> NN = N * (__lg(N)<span class="hljs-number">+2</span>) + <span class="hljs-number">100</span>;
+    
+    <span class="hljs-type">int</span> n, tot;
+    
+    <span class="hljs-type">int</span> lc[NN], rc[NN];
+    <span class="hljs-type">int</span> In, Out;
+
+    vector&lt;pair&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt;&gt; e[NN];
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add_edge</span><span class="hljs-params">(<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> v,<span class="hljs-type">int</span> w)</span> </span>&#123;
+        e[u].<span class="hljs-built_in">push_back</span>(&#123;v, w&#125;);
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">build_in</span><span class="hljs-params">(<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r)</span></span>;
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">build_out</span><span class="hljs-params">(<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r)</span></span>;
+
+    <span class="hljs-comment">// 为了方便 把 init 放在最后吧？</span>
+    <span class="hljs-comment">// 不行， 还是手动吧</span>
+    <span class="hljs-comment">// 不行 还是放前面吧</span>
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-type">int</span> nn)</span> </span>&#123;
+        <span class="hljs-built_in">fill</span>(lc,lc+nn,<span class="hljs-number">0</span>);
+        <span class="hljs-built_in">fill</span>(rc,rc+nn,<span class="hljs-number">0</span>);
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= nn; i++) e[i].<span class="hljs-built_in">clear</span>();
+
+        n = tot = nn;
+
+        In = <span class="hljs-built_in">build_in</span>(<span class="hljs-number">1</span>, n);
+        Out = <span class="hljs-built_in">build_out</span>(<span class="hljs-number">1</span>, n);
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">build_in</span><span class="hljs-params">(<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r)</span> </span>&#123;
+        <span class="hljs-type">int</span> rt;
+        <span class="hljs-keyword">if</span> (l == r) &#123;
+            rt = l;
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            rt = ++tot;
+            <span class="hljs-comment">// cout &lt;&lt; &quot;in&quot; &lt;&lt; tot &lt;&lt; &quot;:&quot; &lt;&lt; l &lt;&lt; &quot; &quot; &lt;&lt; r &lt;&lt; &quot;\n&quot;;</span>
+            <span class="hljs-type">int</span> mid = (l + r) / <span class="hljs-number">2</span>;
+            lc[rt] = <span class="hljs-built_in">build_in</span>(l, mid);
+            rc[rt] = <span class="hljs-built_in">build_in</span>(mid<span class="hljs-number">+1</span>, r);
+            <span class="hljs-built_in">add_edge</span>(rt, lc[rt], <span class="hljs-number">0</span>);
+            <span class="hljs-built_in">add_edge</span>(rt, rc[rt], <span class="hljs-number">0</span>);
+        &#125;
+        <span class="hljs-keyword">return</span> rt;
+    &#125;
+    
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">build_out</span><span class="hljs-params">(<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r)</span> </span>&#123;
+        <span class="hljs-type">int</span> rt;
+        <span class="hljs-keyword">if</span> (l == r) &#123;
+            rt = l;
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            rt = ++tot;
+            <span class="hljs-comment">// cout &lt;&lt; &quot;out&quot; &lt;&lt; tot &lt;&lt; &quot;:&quot; &lt;&lt; l &lt;&lt; &quot; &quot; &lt;&lt; r &lt;&lt; &quot;\n&quot;;</span>
+            <span class="hljs-type">int</span> mid = (l + r) / <span class="hljs-number">2</span>;
+            lc[rt] = <span class="hljs-built_in">build_out</span>(l, mid);
+            rc[rt] = <span class="hljs-built_in">build_out</span>(mid<span class="hljs-number">+1</span>, r);
+            <span class="hljs-built_in">add_edge</span>(lc[rt], rt, <span class="hljs-number">0</span>);
+            <span class="hljs-built_in">add_edge</span>(rc[rt], rt, <span class="hljs-number">0</span>);
+        &#125;
+        <span class="hljs-keyword">return</span> rt;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">x_to_range</span><span class="hljs-params">(<span class="hljs-type">int</span> i,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r,<span class="hljs-type">int</span> jl,<span class="hljs-type">int</span> jr,<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> w)</span> </span>&#123;
+        <span class="hljs-keyword">if</span>(jl&lt;=l&amp;&amp;r&lt;=jr) &#123;
+            <span class="hljs-built_in">add_edge</span>(x, i, w);
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-type">int</span> mid = (l + r) / <span class="hljs-number">2</span>;
+            <span class="hljs-keyword">if</span> (jl &lt;= mid) <span class="hljs-built_in">x_to_range</span>(lc[i], l, mid, jl,jr,x,w);
+            <span class="hljs-keyword">if</span> (jr &gt; mid) <span class="hljs-built_in">x_to_range</span>(rc[i],mid<span class="hljs-number">+1</span>,r,jl,jr,x,w);
+        &#125;
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">range_to_x</span><span class="hljs-params">(<span class="hljs-type">int</span> i,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r,<span class="hljs-type">int</span> jl,<span class="hljs-type">int</span> jr,<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> w)</span> </span>&#123;
+        <span class="hljs-keyword">if</span>(jl&lt;=l&amp;&amp;r&lt;=jr) &#123;
+            <span class="hljs-built_in">add_edge</span>(i, x, w);
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-type">int</span> mid = (l + r) / <span class="hljs-number">2</span>;
+            <span class="hljs-keyword">if</span> (jl &lt;= mid) <span class="hljs-built_in">range_to_x</span>(lc[i], l, mid, jl,jr,x,w);
+            <span class="hljs-keyword">if</span> (jr &gt; mid) <span class="hljs-built_in">range_to_x</span>(rc[i],mid<span class="hljs-number">+1</span>,r,jl,jr,x,w);
+        &#125;
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">x_to_r</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r,<span class="hljs-type">int</span> w)</span> </span>&#123;
+        <span class="hljs-keyword">if</span> (l &gt; r) <span class="hljs-keyword">return</span>;
+        <span class="hljs-built_in">x_to_range</span>(In,<span class="hljs-number">1</span>,n,l,r,x,w);
+    &#125;
+    <span class="hljs-comment">// 更直观！</span>
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">r_to_x</span><span class="hljs-params">(<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r,<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> w)</span> </span>&#123;
+        <span class="hljs-keyword">if</span> (l &gt; r) <span class="hljs-keyword">return</span>;
+        <span class="hljs-built_in">range_to_x</span>(Out,<span class="hljs-number">1</span>,n,l,r,x,w);
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">r_to_r</span><span class="hljs-params">(<span class="hljs-type">int</span> l1,<span class="hljs-type">int</span> r1,<span class="hljs-type">int</span> l2,<span class="hljs-type">int</span> r2,<span class="hljs-type">int</span> w)</span> </span>&#123;
+        <span class="hljs-type">int</span> x = ++tot, y = ++tot;
+        <span class="hljs-built_in">r_to_x</span>(l1,r1,x,<span class="hljs-number">0</span>);
+        <span class="hljs-built_in">add_edge</span>(x, y, w);
+        <span class="hljs-built_in">x_to_r</span>(y,l2,r2,<span class="hljs-number">0</span>);
+    &#125;
+&#125;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">CF_786B</span> &#123;
+    <span class="hljs-comment">// 模板题</span>
+    <span class="hljs-comment">// n 个点 q 次加边后 求 s 单源最短路</span>
+    <span class="hljs-comment">// N 1e5 Q 1e5 </span>
+    <span class="hljs-type">int</span> n, q, s;
+    <span class="hljs-built_in">CF_786B</span>() &#123;
+        cin &gt;&gt; n &gt;&gt; q &gt;&gt; s;
+        SegG::<span class="hljs-built_in">init</span>(n);
+        <span class="hljs-keyword">while</span> (q--) &#123;
+            <span class="hljs-type">int</span> op, u, v, w, l , r;
+            cin &gt;&gt; op;
+            <span class="hljs-keyword">if</span> (op == <span class="hljs-number">1</span>) &#123;
+                cin &gt;&gt; u &gt;&gt; v &gt;&gt; w;
+                SegG::<span class="hljs-built_in">add_edge</span>(u, v, w);
+            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (op == <span class="hljs-number">2</span>) &#123;
+                cin &gt;&gt; u &gt;&gt; l &gt;&gt; r &gt;&gt; w;
+                SegG::<span class="hljs-built_in">x_to_r</span>(u, l, r, w);
+            &#125; <span class="hljs-keyword">else</span> &#123;
+                cin &gt;&gt; u &gt;&gt; l &gt;&gt; r &gt;&gt; w;
+                SegG::<span class="hljs-built_in">r_to_x</span>(l, r, u, w);
+            &#125;
+        &#125;
+        <span class="hljs-function">vector&lt;ll&gt; <span class="hljs-title">dist</span><span class="hljs-params">(SegG::tot<span class="hljs-number">+1</span>, INF)</span></span>;
+        <span class="hljs-function">vector&lt;<span class="hljs-type">bool</span>&gt; <span class="hljs-title">vis</span><span class="hljs-params">(SegG::tot<span class="hljs-number">+1</span>)</span></span>;
+        priority_queue&lt;pair&lt;ll,<span class="hljs-type">int</span>&gt;&gt; Q;
+        Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-number">-0</span>, s&#125;);
+        dist[s] = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">while</span> (Q.<span class="hljs-built_in">size</span>()) &#123;
+            <span class="hljs-type">int</span> u = Q.<span class="hljs-built_in">top</span>().second; Q.<span class="hljs-built_in">pop</span>();
+            <span class="hljs-keyword">if</span> (vis[u]) <span class="hljs-keyword">continue</span>;
+            vis[u] = <span class="hljs-literal">true</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> [v, w]: SegG::e[u]) &#123;
+                <span class="hljs-keyword">if</span> (dist[v] &gt; dist[u] + w) &#123;
+                    dist[v] = dist[u] + w;
+                    Q.<span class="hljs-built_in">push</span>(&#123;-dist[v], v&#125;);
+                &#125;
+            &#125;
+        &#125;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
+            <span class="hljs-keyword">if</span> (dist[i] == INF) dist[i] = <span class="hljs-number">-1</span>;
+            cout &lt;&lt; dist[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;
+        &#125;cout &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+    &#125;
+&#125;;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">LG_P6348</span> &#123;
+    <span class="hljs-comment">// 模板题 </span>
+    <span class="hljs-comment">// n 个点 m 次 r2r 加边后 求 p 单元最短路(边权1)</span>
+    <span class="hljs-comment">// N 5e5 M 1e5</span>
+    <span class="hljs-type">int</span> n, m, p;
+    <span class="hljs-built_in">LG_P6348</span>() &#123;
+        cin &gt;&gt; n &gt;&gt; m &gt;&gt; p;
+        SegG::<span class="hljs-built_in">init</span>(n);
+        <span class="hljs-keyword">while</span>(m--) &#123;
+            <span class="hljs-type">int</span> l1, r1, l2, r2;
+            cin &gt;&gt; l1 &gt;&gt; r1 &gt;&gt; l2 &gt;&gt; r2;
+            SegG::<span class="hljs-built_in">r_to_r</span>(l1, r1, l2, r2, <span class="hljs-number">1</span>);
+            SegG::<span class="hljs-built_in">r_to_r</span>(l2, r2, l1, r1, <span class="hljs-number">1</span>);
+        &#125;
+        deque&lt;<span class="hljs-type">int</span>&gt; Q;
+        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">dist</span><span class="hljs-params">(SegG::tot<span class="hljs-number">+1</span>, <span class="hljs-number">1e9</span>)</span></span>;
+        <span class="hljs-function">vector&lt;<span class="hljs-type">bool</span>&gt; <span class="hljs-title">vis</span><span class="hljs-params">(SegG::tot<span class="hljs-number">+1</span>)</span></span>;
+        Q.<span class="hljs-built_in">push_back</span>(p);
+        dist[p] = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">while</span> (Q.<span class="hljs-built_in">size</span>()) &#123;
+            <span class="hljs-type">int</span> u = Q.<span class="hljs-built_in">front</span>(); Q.<span class="hljs-built_in">pop_front</span>();
+            <span class="hljs-keyword">if</span> (vis[u]) <span class="hljs-keyword">continue</span>;
+            vis[u] = <span class="hljs-literal">true</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> [v, w]: SegG::e[u]) &#123;
+                <span class="hljs-keyword">if</span> (dist[v] &gt; dist[u] + w) &#123;
+                    dist[v] = dist[u] + w;
+                    <span class="hljs-keyword">if</span> (w) Q.<span class="hljs-built_in">push_back</span>(v);
+                    <span class="hljs-keyword">else</span> Q.<span class="hljs-built_in">push_front</span>(v);
+                &#125;
+            &#125;
+        &#125;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) cout &lt;&lt; dist[i] &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+    &#125;
+&#125;;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">LG_P3588</span> &#123;
+    <span class="hljs-comment">// 数字大小约束 构造</span>
+    <span class="hljs-comment">// 注意 mle 有点极限</span>
+    <span class="hljs-keyword">inline</span> <span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>, M = <span class="hljs-number">2e5</span> + <span class="hljs-number">5</span>, K = <span class="hljs-number">3e5</span> + <span class="hljs-number">5</span>, V = <span class="hljs-number">1e9</span>;
+    <span class="hljs-type">int</span> n, s, m;
+    <span class="hljs-type">int</span> mn[N * <span class="hljs-number">20</span>], val[N * <span class="hljs-number">20</span>];
+    <span class="hljs-built_in">LG_P3588</span>() &#123;
+        <span class="hljs-type">bool</span> ok = <span class="hljs-literal">true</span>;
+        cin &gt;&gt; n &gt;&gt; s &gt;&gt; m;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= s; i++) &#123;
+            <span class="hljs-type">int</span> p, d;
+            cin &gt;&gt; p &gt;&gt; d;
+            val[p] = d;
+        &#125;
+        SegG::<span class="hljs-built_in">init</span>(n);
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) &#123;
+            <span class="hljs-type">int</span> l, r, k;
+            cin &gt;&gt; l &gt;&gt; r &gt;&gt; k;
+            <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">p</span><span class="hljs-params">(k<span class="hljs-number">+2</span>)</span></span>;
+            p[<span class="hljs-number">0</span>] = l<span class="hljs-number">-1</span>;
+            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= k;i++) &#123;
+                cin &gt;&gt; p[i];
+            &#125;
+            p[k<span class="hljs-number">+1</span>] = r<span class="hljs-number">+1</span>;
+            <span class="hljs-type">int</span> maxv = ++SegG::tot;
+            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i&lt;=k;i++) &#123;
+                <span class="hljs-type">int</span> l = p[i]<span class="hljs-number">+1</span>, r = p[i<span class="hljs-number">+1</span>]<span class="hljs-number">-1</span>;
+                <span class="hljs-keyword">if</span> (l &lt;= r) &#123;
+                    SegG::<span class="hljs-built_in">r_to_x</span>(l, r, maxv, <span class="hljs-number">0</span>);
+                &#125;
+            &#125;
+            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= k; i++) &#123;
+                SegG::<span class="hljs-built_in">add_edge</span>(maxv, p[i], <span class="hljs-number">1</span>);
+            &#125;
+        &#125;
+        <span class="hljs-type">int</span> tot = SegG::tot;
+        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">deg</span><span class="hljs-params">(tot + <span class="hljs-number">1</span>)</span></span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> u = <span class="hljs-number">1</span>; u &lt;= tot; u++) &#123;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> [v, w]: SegG::e[u]) &#123;
+                deg[v]++;
+            &#125;
+        &#125;
+        <span class="hljs-type">int</span> cnt = <span class="hljs-number">0</span>;
+        queue&lt;<span class="hljs-type">int</span>&gt; Q;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= tot; i++) &#123;
+            <span class="hljs-keyword">if</span> (!deg[i]) &#123;
+                mn[i] = <span class="hljs-number">1</span>;
+                Q.<span class="hljs-built_in">push</span>(i);
+            &#125;
+        &#125;
+        <span class="hljs-keyword">while</span>(Q.<span class="hljs-built_in">size</span>()) &#123;
+            <span class="hljs-type">int</span> u = Q.<span class="hljs-built_in">front</span>(); Q.<span class="hljs-built_in">pop</span>();
+            cnt++;
+            <span class="hljs-keyword">if</span> (val[u]) &#123;
+                ok &amp;= val[u] &gt;= mn[u];
+                mn[u] = val[u];
+            &#125; <span class="hljs-keyword">else</span> &#123;
+                val[u] = mn[u];
+            &#125;
+            ok &amp;= val[u] &lt;= V;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> [v, w]: SegG::e[u]) &#123;
+                mn[v] = <span class="hljs-built_in">max</span>(mn[v], mn[u] + w);
+                <span class="hljs-keyword">if</span> (!--deg[v]) &#123;
+                    Q.<span class="hljs-built_in">push</span>(v);
+                &#125;
+            &#125;
+        &#125;
+        ok &amp;= cnt == tot;
+        <span class="hljs-keyword">if</span> (!ok) &#123;
+            cout &lt;&lt; <span class="hljs-string">&quot;NIE\n&quot;</span>;
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            cout &lt;&lt; <span class="hljs-string">&quot;TAK\n&quot;</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
+                cout &lt;&lt; val[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;
+            &#125;cout &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+        &#125;
+        <span class="hljs-built_in">fill</span>(val, val + <span class="hljs-number">1</span> + tot, <span class="hljs-number">0</span>);
+        <span class="hljs-built_in">fill</span>(mn, mn + <span class="hljs-number">1</span> + tot, <span class="hljs-number">0</span>);
+    &#125;
+&#125;;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">CF_1904F</span> &#123;
+    <span class="hljs-keyword">inline</span> <span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">2e5</span> + <span class="hljs-number">5</span>, M = <span class="hljs-number">2e5</span> + <span class="hljs-number">5</span>;
+    <span class="hljs-type">int</span> n, m, u, v, t, a, b, c;
+    <span class="hljs-type">int</span> dfn[N], dfncnt, son[N], dep[N], top[N], fa[N], sz[N];
+    <span class="hljs-type">int</span> rnk[N];
+    vector&lt;<span class="hljs-type">int</span>&gt; e[N];
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> f)</span> </span>&#123;
+        sz[u] = <span class="hljs-number">1</span>;
+        fa[u] = f;
+        dep[u] = dep[f] + <span class="hljs-number">1</span>;
+        son[u] = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> v: e[u]) <span class="hljs-keyword">if</span>(v!=f)&#123;
+            <span class="hljs-built_in">dfs</span>(v, u);
+            sz[u] += sz[v];
+            <span class="hljs-keyword">if</span> (sz[v] &gt; sz[son[u]]) son[u] = v;
+        &#125;
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs2</span><span class="hljs-params">(<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> tp)</span> </span>&#123;
+        rnk[dfn[u] = ++dfncnt] = u;
+        top[u] = tp;
+        <span class="hljs-keyword">if</span> (son[u]) <span class="hljs-built_in">dfs2</span>(son[u], tp);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> v:e[u]) <span class="hljs-keyword">if</span> (v!=fa[u] &amp;&amp; v!=son[u]) <span class="hljs-built_in">dfs2</span>(v, v);
+    &#125;
+    <span class="hljs-comment">// 【坑点 / 爽点】 </span>
+    <span class="hljs-comment">// 没想到树剖 可以直接批量处理路径</span>
+    <span class="hljs-comment">// 之前一直以为要先求得 lca 才可以</span>
+    <span class="hljs-comment">// 直接就可以维护了， 爽！！！</span>
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">operation</span><span class="hljs-params">(<span class="hljs-type">int</span> op,<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y,<span class="hljs-type">int</span> z)</span> </span>&#123;
+        <span class="hljs-keyword">while</span>(top[x] != top[y]) &#123;
+            <span class="hljs-keyword">if</span> (dep[top[x]] &lt; dep[top[y]]) <span class="hljs-built_in">swap</span>(x, y);
+            <span class="hljs-keyword">if</span> (dfn[z] &lt; dfn[top[x]] || dfn[z] &gt; dfn[x]) &#123;
+                <span class="hljs-keyword">if</span> (op == <span class="hljs-number">1</span>) SegG::<span class="hljs-built_in">x_to_r</span>(dfn[z], dfn[top[x]], dfn[x], <span class="hljs-number">1</span>);
+                <span class="hljs-keyword">else</span> SegG::<span class="hljs-built_in">r_to_x</span>(dfn[top[x]], dfn[x], dfn[z], <span class="hljs-number">1</span>);
+            &#125; <span class="hljs-keyword">else</span> &#123;
+                <span class="hljs-keyword">if</span> (op == <span class="hljs-number">1</span>) &#123;
+                    SegG::<span class="hljs-built_in">x_to_r</span>(dfn[z], dfn[top[x]], dfn[z]<span class="hljs-number">-1</span>, <span class="hljs-number">1</span>);
+                    SegG::<span class="hljs-built_in">x_to_r</span>(dfn[z], dfn[z]<span class="hljs-number">+1</span>, dfn[x], <span class="hljs-number">1</span>);
+                &#125; <span class="hljs-keyword">else</span> &#123;
+                    SegG::<span class="hljs-built_in">r_to_x</span>(dfn[top[x]], dfn[z]<span class="hljs-number">-1</span>, dfn[z], <span class="hljs-number">1</span>);
+                    SegG::<span class="hljs-built_in">r_to_x</span>(dfn[z]<span class="hljs-number">+1</span>, dfn[x], dfn[z], <span class="hljs-number">1</span>);
+                &#125;
+            &#125;
+            x = fa[top[x]];
+        &#125;
+        <span class="hljs-keyword">if</span> (dep[x] &lt; dep[y]) <span class="hljs-built_in">swap</span>(x, y);
+        <span class="hljs-keyword">if</span> (dfn[z] &lt; dfn[y] || dfn[z] &gt; dfn[x]) &#123;
+            <span class="hljs-keyword">if</span> (op == <span class="hljs-number">1</span>) SegG::<span class="hljs-built_in">x_to_r</span>(dfn[z], dfn[y], dfn[x], <span class="hljs-number">1</span>);
+            <span class="hljs-keyword">else</span> SegG::<span class="hljs-built_in">r_to_x</span>(dfn[y], dfn[x], dfn[z], <span class="hljs-number">1</span>);
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-keyword">if</span> (op == <span class="hljs-number">1</span>) &#123;
+                SegG::<span class="hljs-built_in">x_to_r</span>(dfn[z], dfn[y], dfn[z]<span class="hljs-number">-1</span>, <span class="hljs-number">1</span>);
+                SegG::<span class="hljs-built_in">x_to_r</span>(dfn[z], dfn[z]<span class="hljs-number">+1</span>, dfn[x], <span class="hljs-number">1</span>);
+            &#125; <span class="hljs-keyword">else</span> &#123;
+                SegG::<span class="hljs-built_in">r_to_x</span>(dfn[y], dfn[z]<span class="hljs-number">-1</span>, dfn[z], <span class="hljs-number">1</span>);
+                SegG::<span class="hljs-built_in">r_to_x</span>(dfn[z]<span class="hljs-number">+1</span>, dfn[x], dfn[z], <span class="hljs-number">1</span>);
+            &#125;
+        &#125;
+    &#125;
+    <span class="hljs-built_in">CF_1904F</span>() &#123;
+        dfncnt = <span class="hljs-number">0</span>;
+        <span class="hljs-built_in">fill</span>(dfn,dfn<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) e[i].<span class="hljs-built_in">clear</span>();
+        cin &gt;&gt; n &gt;&gt; m;
+        SegG::<span class="hljs-built_in">init</span>(n);
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) &#123;
+            cin &gt;&gt; u &gt;&gt; v;
+            e[u].<span class="hljs-built_in">push_back</span>(v);
+            e[v].<span class="hljs-built_in">push_back</span>(u);
+        &#125;
+        <span class="hljs-built_in">dfs</span>(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+        <span class="hljs-built_in">dfs2</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) &#123;
+            cin &gt;&gt; t &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+            <span class="hljs-built_in">operation</span>(t, a, b, c);
+        &#125;
+        <span class="hljs-type">int</span> tot = SegG::tot;
+        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">deg</span><span class="hljs-params">(tot + <span class="hljs-number">1</span>)</span>, <span class="hljs-title">val</span><span class="hljs-params">(n + <span class="hljs-number">1</span>)</span></span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> u = <span class="hljs-number">1</span>; u &lt;= tot; u++) &#123;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> [v, w]: SegG::e[u]) &#123;
+                deg[v]++;
+            &#125;
+        &#125;
+        queue&lt;<span class="hljs-type">int</span>&gt; Q;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= tot; i++) &#123;
+            <span class="hljs-keyword">if</span> (!deg[i]) Q.<span class="hljs-built_in">push</span>(i); 
+        &#125;
+        <span class="hljs-type">bool</span> ok = <span class="hljs-literal">true</span>;
+        <span class="hljs-type">int</span> cnt = <span class="hljs-number">0</span>, num = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">while</span> (Q.<span class="hljs-built_in">size</span>()) &#123;
+            <span class="hljs-type">int</span> u = Q.<span class="hljs-built_in">front</span>(); Q.<span class="hljs-built_in">pop</span>();
+            cnt++;
+            <span class="hljs-keyword">if</span> (u &lt;= n) val[rnk[u]] = ++num;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> [v, w]: SegG::e[u]) &#123;
+                <span class="hljs-keyword">if</span> (!--deg[v]) Q.<span class="hljs-built_in">push</span>(v);
+            &#125;
+        &#125;
+        ok &amp;= cnt == tot;
+        <span class="hljs-keyword">if</span> (!ok) cout &lt;&lt; <span class="hljs-number">-1</span> &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+        <span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) cout &lt;&lt; val[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>; cout &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+        &#125;
+    &#125;
+&#125;;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-comment">// new CF_786B();</span>
+    <span class="hljs-comment">// new LG_P6348();</span>
+    <span class="hljs-comment">// new LG_P3588();</span>
+    <span class="hljs-keyword">new</span> <span class="hljs-built_in">CF_1904F</span>();
+&#125;</code></pre>
+
+                </div>
+            </article>
+        </div>
+        <br>
+        
+            <div class="next-prev-post">
+                
+                    <div class="prev-post">
+                        <div class="prev gt-c-content-color-first">
+                            上一篇：<a href="/2026/09/02/2-sat%EF%BC%88todo%EF%BC%89/"
+                                class="post-title gt-a-link">2-SAT（TODO）</a>
+                        </div>
+                    </div>
+                
+                
+                    <div class="next-post">
+                        <div class="next gt-c-content-color-first">
+                            下一篇：<a href="/2026/09/01/cactus-%E4%BB%99%E4%BA%BA%E6%8E%8C/"
+                                class="post-title gt-a-link">Cactus 仙人掌</a>
+                        </div>
+                    </div>
+                
+            </div>
+        
+        
+
+        
+    <script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.18.0/js/md5.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+
+    <div id="gitalk-container"></div>
+
+    <script>
+    var gitalk = new Gitalk({
+        clientID: 'Ov23liZH3OYalvv7HzKX',
+        clientSecret: 'b8f25b093a363f12c0bfb88d7aa057a0f6b8b043',
+        repo: 'IA3001.github.io',
+        owner: 'IA3001',
+        admin: ['IA3001'],
+        id: md5(location.pathname),
+        distractionFreeMode: false,
+        proxy: 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token'
+    });
+    gitalk.render('gitalk-container');
+    </script>
+
+
+        
+    </div>
+
+    
+    <aside class="post-outline" id="post-outline">
+        <div class="outline-title">OUTLINE</div>
+        <nav class="outline-nav">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E6%A8%A1%E6%9D%BF%EF%BC%88%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%BC%98%E5%8C%96%EF%BC%89"><span class="toc-text">P1 模板（线段树优化）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P2-%E6%A8%A1%E6%9D%BF%EF%BC%88%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%BC%98%E5%8C%96%EF%BC%89"><span class="toc-text">P2 模板（线段树优化）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P3-%E6%B2%99%E6%BC%A0-%EF%BC%88%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%BC%98%E5%8C%96-%E6%8B%93%E6%89%91%E5%BA%8F-DP%EF%BC%89"><span class="toc-text">P3 沙漠 （线段树优化 + 拓扑序 DP）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P4-Beautiful-Tree-%EF%BC%88%E6%A0%91%E5%89%96%E4%BC%98%E5%8C%96-%E6%9C%AC%E8%B4%A8%E7%BA%BF%E6%AE%B5%E6%A0%91-%EF%BC%89"><span class="toc-text">P4 Beautiful Tree （树剖优化(本质线段树)）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Codes"><span class="toc-text">Codes</span></a></li></ol>
+        </nav>
+    </aside>
+    
+</div>
+
+<style>
+.post-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    padding: 20px;
+    align-items: flex-start;
+}
+.post-wrapper.typst-page {
+    display: block;
+    padding: 0;
+}
+.post-wrapper.typst-page .post-container {
+    width: auto;
+    max-width: none;
+}
+.post-wrapper.typst-page .post-detail {
+    background: transparent !important;
+    padding: 0;
+    margin: 0 auto;
+    width: fit-content;
+    max-width: 100%;
+    overflow-x: auto;
+}
+.post-container { width: 1000px; flex-shrink: 0; }
+
+.post-outline {
+    width: 200px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 24px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    font-size: 13px;
+    border-left: 1px solid var(--border);
+    padding-left: 20px;
+}
+.outline-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--content-second);
+    margin-bottom: 12px;
+}
+.outline-nav { position: relative; }
+.outline-nav .toc { list-style: none; padding: 0; margin: 0; }
+.outline-nav .toc-item { position: relative; }
+.outline-nav .toc-link {
+    display: block;
+    padding: 4px 0 4px 0;
+    color: var(--content-second);
+    text-decoration: none;
+    transition: color .15s;
+    line-height: 1.5;
+}
+.outline-nav .toc-link:hover { color: var(--content-first); }
+.outline-nav .toc-link.active {
+    color: var(--content-first);
+    font-weight: 600;
+}
+.outline-nav .toc-child { padding-left: 16px; }
+.outline-nav .toc-child .toc-link { font-size: 12px; }
+.outline-nav .toc-child .toc-child { padding-left: 16px; }
+.outline-nav .toc-child .toc-child .toc-link { font-size: 11px; }
+.outline-empty { color: var(--content-second); font-size: 12px; padding-left: 12px; }
+
+/* Typst */
+.typst-app { --typst-dom-scale: 1.5; }
+
+.post-outline.visible {
+    display: block;
+    position: fixed;
+    right: 20px;
+    top: 80px;
+    z-index: 999;
+    background: var(--theme-first);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.12);
+    max-height: 70vh;
+    width: 260px;
+}
+@media (max-width: 992px) { .post-outline { display: none; } }
+</style>
+
+<script>
+(function(){
+    var tocBtn = document.getElementById('toc-btn');
+    var outline = document.querySelector('.post-outline');
+    if (tocBtn && outline) {
+        tocBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (window.innerWidth <= 992) {
+                outline.classList.toggle('visible');
+            } else {
+                outline.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    }
+
+    var container = document.querySelector('.post-outline');
+    if (!container) return;
+    var links = [].slice.call(container.querySelectorAll('.toc-link'));
+    var headings = links.map(function(a) {
+        return document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
+    }).filter(Boolean);
+
+    // Intercept TOC clicks: smooth scroll + replaceState (no history pollution)
+    links.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            var id = decodeURIComponent(link.getAttribute('href').slice(1));
+            var target = document.getElementById(id);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                history.replaceState(null, '', '#' + id);
+            }
+        });
+    });
+
+    var activeLink = null;
+    // 首次 update()（页面加载时）不写 URL hash，
+    // 否则会把从地图/外部跳转进来的 #锚点 覆盖成目录第一个标题，导致跳转失效
+    var firstRun = true;
+    function update() {
+        var top = 0;
+        for (var i = headings.length - 1; i >= 0; i--) {
+            if (headings[i].getBoundingClientRect().top < 120) {
+                top = i; break;
+            }
+        }
+        var current = links[top];
+        if (current !== activeLink) {
+            if (activeLink) activeLink.classList.remove('active');
+            current.classList.add('active');
+            var rect = current.getBoundingClientRect();
+            var cr = container.getBoundingClientRect();
+            if (rect.bottom > cr.bottom || rect.top < cr.top) {
+                current.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            }
+            activeLink = current;
+            if (!firstRun) {
+                // Update URL hash without pushing history entry
+                var id = decodeURIComponent(current.getAttribute('href').slice(1));
+                history.replaceState(null, '', '#' + id);
+            }
+        }
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+    firstRun = false;
+})();
+</script>
+
+                <div class="site-footer gt-c-content-color-first">
+    <div class="footer-main">
+        <!-- 建议保留版权信息或者添加主题信息到友链，感谢您的理解 -->
+        <!-- 文件位置：layout/_includes/footer.ejs -->
+        <span style="text-align: right; float: right;">Theme <a 
+            href="https://github.com/renbaoshuo/hexo-theme-pure" target="_blank">Pure</a> | Powered by <a 
+            href="https://hexo.io" target="_blank">Hexo</a></span>
+        <span style="text-align: left;">Footer HTML
+</span>
+    </div>
+</div>
+
+<!-- Buttons -->
+<div class="fab">
+    
+    <a aria-label="文章目录" class="fab-btn" id="toc-btn" href="javascript:;" title="文章目录">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            focusable="false"
+            data-icon="list-ul"
+            class="svg-inline--fa fa-list-ul fa-w-16"
+            role="img"
+            viewBox="0 0 512 512"
+            height="20"
+            width="20"
+        >
+            <path
+                fill="currentColor"
+                d="M48 48a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm448 16H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 160H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z"
+            />
+        </svg>
+    </a>
+    
+    <a aria-label="回到顶部" class="fab-btn" href="#" title="回到顶部">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            focusable="false"
+            role="img"
+            viewBox="0 0 320 512"
+            height="20"
+            width="20"
+        >
+            <path
+                fill="currentColor"
+                d="M168.5 164.2l148 146.8c4.7 4.7 4.7 12.3 0 17l-19.8 19.8c-4.7 4.7-12.3 4.7-17 0L160 229.3 40.3 347.8c-4.7 4.7-12.3 4.7-17 0L3.5 328c-4.7-4.7-4.7-12.3 0-17l148-146.8c4.7-4.7 12.3-4.7 17 0z"
+            />
+        </svg>
+    </a>
+</div>
+
+            </div>
+        </div>
+    </body>
+</html>
