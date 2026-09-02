@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1788281733774">
+<link rel="stylesheet" href="/styles/main.css?v=1788334377554">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -104,7 +104,7 @@
                         · 2026-09-01 ·</time>
                     
                     <span class="post-wordcount gt-c-content-color-second">
-                        5.5 千字 ·</span>
+                        10 千字 ·</span>
                     
                         
                             <a href="/tags/Algo/" class="post-tag">
@@ -482,7 +482,306 @@
     <span class="hljs-keyword">new</span> <span class="hljs-built_in">LG_P5236</span>();
 &#125;</code></pre>
 <h2 id="P3-仙人掌子图直径（圆方树-复杂-DFS）">P3 仙人掌子图直径（圆方树 + 复杂 DFS）</h2>
-<pre><code class="hljs cpp"></code></pre>
+<ul>
+<li>踩了好多坑
+<ul>
+<li>仙人掌图的边要开 4 倍 n</li>
+<li>全体整体都要开 2 倍，不要只改部分</li>
+<li><code>unique</code> 的 cmp 竟然是 <code>==</code></li>
+<li>单调队列使用的时候 下标 不要和其它数据结构 比如 树和图 的下标 混淆！
+<ul>
+<li>一定要最好隔离</li>
+</ul>
+</li>
+<li>不要边递归，边收集 tmp
+<ul>
+<li>仙人掌 约等于 树</li>
+<li>因此可以先递归儿子</li>
+<li>要保证 无 <strong>后效性</strong> 再操纵 静态空间</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code class="hljs cpp"> <span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-keyword">using</span> ll = <span class="hljs-type">long</span> <span class="hljs-type">long</span>;
+
+<span class="hljs-keyword">namespace</span> Cactus &#123;
+    <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">3e5</span> + <span class="hljs-number">5</span>;
+    <span class="hljs-comment">// 【坑点】</span>
+    <span class="hljs-comment">// 终于重大发现：</span>
+    <span class="hljs-comment">// 仙人掌图，边数一定是点数的 1.5 ~ 2 倍</span>
+    <span class="hljs-comment">// 所以要开 3 ~ 4 倍!!!!!!!!!!!</span>
+    <span class="hljs-type">const</span> <span class="hljs-type">int</span> M = N * <span class="hljs-number">4</span>;
+
+    <span class="hljs-type">int</span> n;
+    <span class="hljs-type">int</span> cntn;
+
+    <span class="hljs-keyword">struct</span> <span class="hljs-title class_">Edge</span> &#123;
+        <span class="hljs-type">int</span> to, nxt;
+        <span class="hljs-type">int</span> w;
+    &#125;e[M];
+
+    <span class="hljs-type">int</span> hd[N], cntE;
+
+    <span class="hljs-type">int</span> dfn[N], low[N], dfncnt, stk[N], tp;
+
+    <span class="hljs-comment">// 基本</span>
+    <span class="hljs-type">int</span> from_w[N];
+    ll cycle_len[N];
+
+    <span class="hljs-comment">// 核心</span>
+    vector&lt;pair&lt;<span class="hljs-type">int</span>,ll&gt;&gt; E[N*<span class="hljs-number">2</span>];
+    ll cycle_sum[N*<span class="hljs-number">2</span>];
+    
+    <span class="hljs-comment">// 圆方树 树剖</span>
+    <span class="hljs-comment">// 【坑点】 怎么没有全部开二倍呢？</span>
+    <span class="hljs-type">int</span> dfn2[N*<span class="hljs-number">2</span>], dfncnt2, sz2[N*<span class="hljs-number">2</span>], son2[N*<span class="hljs-number">2</span>], fa2[N*<span class="hljs-number">2</span>], top2[N*<span class="hljs-number">2</span>], dep2[N*<span class="hljs-number">2</span>];
+    <span class="hljs-comment">// 差分</span>
+    ll len2[N*<span class="hljs-number">2</span>];
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-type">int</span> nn)</span> </span>&#123;
+
+        <span class="hljs-built_in">fill</span>(dfn2,dfn2<span class="hljs-number">+1</span>+cntn, <span class="hljs-number">0</span>);
+        <span class="hljs-built_in">fill</span>(len2,len2<span class="hljs-number">+1</span>+cntn, <span class="hljs-number">0</span>);
+        <span class="hljs-built_in">fill</span>(cycle_sum,cycle_sum<span class="hljs-number">+1</span>+cntn,<span class="hljs-number">0</span>);
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= cntn; i++) E[i].<span class="hljs-built_in">clear</span>();
+
+        dfncnt2 = <span class="hljs-number">0</span>;
+
+        <span class="hljs-built_in">fill</span>(hd,hd<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
+        <span class="hljs-built_in">fill</span>(dfn,dfn<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
+        <span class="hljs-built_in">fill</span>(cycle_len,cycle_len<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
+
+        cntn = n = nn;
+        cntE = <span class="hljs-number">1</span>;
+        dfncnt = tp = <span class="hljs-number">0</span>;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add_edge</span><span class="hljs-params">(<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> v,<span class="hljs-type">int</span> w)</span> </span>&#123;
+        e[++cntE] = &#123;v, hd[u], w&#125;;
+        hd[u] = cntE;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">link</span><span class="hljs-params">(<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> v)</span> </span>&#123;
+        ++cntn;
+        E[u].<span class="hljs-built_in">push_back</span>(&#123;cntn, <span class="hljs-number">0</span>&#125;);
+        cycle_sum[cntn] = from_w[u];
+        <span class="hljs-type">int</span> pop, tmp = tp;
+        <span class="hljs-keyword">do</span> &#123;
+            pop = stk[tmp--];
+            cycle_len[pop] = cycle_sum[cntn];
+            cycle_sum[cntn] += from_w[pop];
+        &#125; <span class="hljs-keyword">while</span> (pop != v);
+        <span class="hljs-keyword">do</span> &#123;
+            pop = stk[tp--];
+            E[cntn].<span class="hljs-built_in">push_back</span>(&#123;pop, <span class="hljs-built_in">min</span>(cycle_len[pop], cycle_sum[cntn] - cycle_len[pop])&#125;);
+        &#125; <span class="hljs-keyword">while</span> (pop != v);
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">tarjan</span><span class="hljs-params">(<span class="hljs-type">int</span> u, <span class="hljs-type">int</span> fi)</span> </span>&#123;
+        low[u] = dfn[u] = ++dfncnt;
+        stk[++tp] = u;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = hd[u]; i; i = e[i].nxt) &#123;
+            <span class="hljs-keyword">if</span> ((i^<span class="hljs-number">1</span>) == fi) <span class="hljs-keyword">continue</span>;
+            <span class="hljs-type">int</span> v = e[i].to, w = e[i].w;
+            <span class="hljs-keyword">if</span> (!dfn[v]) &#123;
+                <span class="hljs-built_in">tarjan</span>(v, i);
+                from_w[v] = w;
+                <span class="hljs-keyword">if</span> (low[v] &lt; dfn[u]) &#123;
+                    <span class="hljs-comment">// 没有扎口袋</span>
+                    low[u] = <span class="hljs-built_in">min</span>(low[u], low[v]);
+                &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (low[v] &gt; dfn[u]) &#123;
+                    <span class="hljs-comment">// 割边</span>
+                    E[u].<span class="hljs-built_in">push_back</span>(&#123;v, w&#125;);
+                    tp--;
+                &#125; <span class="hljs-keyword">else</span> &#123;
+                    <span class="hljs-comment">// 扎起了口袋</span>
+                    <span class="hljs-built_in">link</span>(u, v);
+                &#125;
+            &#125; <span class="hljs-keyword">else</span> &#123;
+                <span class="hljs-keyword">if</span> (dfn[v] &lt; dfn[u]) &#123;
+                    <span class="hljs-comment">// 回边</span>
+                    from_w[v] = w;
+                    low[u] = <span class="hljs-built_in">min</span>(low[u], dfn[v]);
+                &#125;    
+            &#125;
+        &#125;
+    &#125;
+
+    <span class="hljs-comment">// 树剖1</span>
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> u, <span class="hljs-type">int</span> f)</span> </span>&#123;
+        dep2[u] = dep2[f] + <span class="hljs-number">1</span>;
+        fa2[u] = f;
+        sz2[u] = <span class="hljs-number">1</span>;
+        son2[u] = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> [v, w]: E[u]) <span class="hljs-keyword">if</span> (v != f) &#123;
+            len2[v] = len2[u] + w;
+            <span class="hljs-built_in">dfs</span>(v, u);
+            sz2[u] += sz2[v];
+            <span class="hljs-keyword">if</span> (sz2[v] &gt; sz2[son2[u]]) son2[u] = v;
+        &#125;
+    &#125;
+
+    <span class="hljs-comment">// 树剖2</span>
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs2</span><span class="hljs-params">(<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> tp)</span> </span>&#123;
+        dfn2[u] = ++dfncnt2;
+        top2[u] = tp;
+        <span class="hljs-keyword">if</span> (son2[u]) <span class="hljs-built_in">dfs2</span>(son2[u], tp);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> [v, w]: E[u]) <span class="hljs-keyword">if</span> (v != fa2[u] &amp;&amp; v != son2[u]) &#123;
+            <span class="hljs-built_in">dfs2</span>(v, v);
+        &#125;
+    &#125;
+
+    <span class="hljs-comment">// 树剖用法1</span>
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">lca</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y)</span> </span>&#123;
+        <span class="hljs-keyword">while</span>(top2[x] != top2[y]) &#123;
+            <span class="hljs-keyword">if</span> (dep2[top2[x]] &lt; dep2[top2[y]]) <span class="hljs-built_in">swap</span>(x, y);
+            x = fa2[top2[x]];
+        &#125;
+        <span class="hljs-keyword">return</span> dep2[x] &lt; dep2[y] ? x : y;
+    &#125;
+
+    <span class="hljs-comment">// 树剖用法2</span>
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> s)</span> </span>&#123;
+        <span class="hljs-type">int</span> pre = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">while</span> (top2[x] != top2[s]) &#123;
+            pre = top2[x];
+            x = fa2[pre];
+        &#125;
+        <span class="hljs-keyword">return</span> x == s ? pre : son2[s];
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">build</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-built_in">tarjan</span>(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+        <span class="hljs-built_in">dfs</span>(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+        <span class="hljs-built_in">dfs2</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+    &#125;
+&#125;
+
+<span class="hljs-keyword">namespace</span> VTree &#123;
+    vector&lt;<span class="hljs-type">int</span>&gt; e[Cactus::N*<span class="hljs-number">2</span>];
+
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">get</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a)</span> </span>&#123;
+        <span class="hljs-built_in">sort</span>(a.<span class="hljs-built_in">begin</span>(), a.<span class="hljs-built_in">end</span>(), [&amp;](<span class="hljs-type">int</span> a,<span class="hljs-type">int</span> b)&#123;
+            <span class="hljs-keyword">return</span> Cactus::dfn2[a] &lt; Cactus::dfn2[b];
+        &#125;);
+        <span class="hljs-type">int</span> sz = a.<span class="hljs-built_in">size</span>();
+        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">b</span><span class="hljs-params">(sz*<span class="hljs-number">2</span><span class="hljs-number">-1</span>)</span></span>;
+        <span class="hljs-type">int</span> p = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i + <span class="hljs-number">1</span> &lt; sz;i++) &#123;
+            b[p++] = a[i];
+            b[p++] = Cactus::<span class="hljs-built_in">lca</span>(a[i], a[i<span class="hljs-number">+1</span>]);
+        &#125;
+        b[p++] = a[sz<span class="hljs-number">-1</span>];
+        <span class="hljs-built_in">sort</span>(b.<span class="hljs-built_in">begin</span>(), b.<span class="hljs-built_in">end</span>(), [&amp;](<span class="hljs-type">int</span> a,<span class="hljs-type">int</span> b) &#123;
+            <span class="hljs-keyword">return</span> Cactus::dfn2[a] &lt; Cactus::dfn2[b];
+        &#125;);
+        <span class="hljs-comment">// 【巨巨巨坑点！】 unique 的比较器是 operator== 啊啊啊啊</span>
+        b.<span class="hljs-built_in">erase</span>(<span class="hljs-built_in">unique</span>(b.<span class="hljs-built_in">begin</span>(), b.<span class="hljs-built_in">end</span>()), b.<span class="hljs-built_in">end</span>());
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> v: b) e[v].<span class="hljs-built_in">clear</span>();
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i + <span class="hljs-number">1</span> &lt; b.<span class="hljs-built_in">size</span>(); i++) &#123;
+            <span class="hljs-type">int</span> z = Cactus::<span class="hljs-built_in">lca</span>(b[i], b[i<span class="hljs-number">+1</span>]);
+            e[z].<span class="hljs-built_in">push_back</span>(b[i<span class="hljs-number">+1</span>]);
+        &#125;
+        <span class="hljs-keyword">return</span> b[<span class="hljs-number">0</span>];
+    &#125;
+&#125;
+
+ll diameter;
+ll dist[Cactus::N*<span class="hljs-number">2</span>];
+
+<span class="hljs-type">int</span> tmp[Cactus::N*<span class="hljs-number">2</span>];
+ll val[Cactus::N*<span class="hljs-number">4</span>], pre[Cactus::N*<span class="hljs-number">4</span>];
+<span class="hljs-type">int</span> Q[Cactus::N*<span class="hljs-number">4</span>];
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dp_on_cycle</span><span class="hljs-params">(<span class="hljs-type">int</span> u, <span class="hljs-type">int</span> siz)</span> </span>&#123;
+    ll sum = Cactus::cycle_sum[u];
+    <span class="hljs-built_in">sort</span>(tmp<span class="hljs-number">+1</span>,tmp<span class="hljs-number">+1</span>+siz, [&amp;](<span class="hljs-type">int</span> a,<span class="hljs-type">int</span> b) &#123;
+        <span class="hljs-keyword">return</span> Cactus::cycle_len[a] &lt; Cactus::cycle_len[b];
+    &#125;);
+    <span class="hljs-comment">// 【坑点坑点】 我是 sb 吧：</span>
+    <span class="hljs-comment">// 单调队列 下标 和 图标号 混了</span>
+    <span class="hljs-comment">// 根本说不清楚了</span>
+    <span class="hljs-comment">// 可以这样：想象成为另一个问题，必须用 val[i] 隔离两种数据结构</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= siz; i++) &#123;
+        <span class="hljs-type">int</span> u = tmp[i];
+        val[i] = dist[u];
+        val[i+siz] = dist[u];
+        pre[i] = Cactus::cycle_len[u];
+        pre[i+siz] = pre[i] + sum;
+    &#125;
+    <span class="hljs-type">int</span> l = <span class="hljs-number">1</span>, r = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= siz * <span class="hljs-number">2</span>; i++) &#123;
+        <span class="hljs-keyword">while</span> (l &lt;= r &amp;&amp; (pre[i] - pre[Q[l]]) * <span class="hljs-number">2</span> &gt; sum) l++;
+        <span class="hljs-keyword">if</span> (l &lt;= r) diameter = <span class="hljs-built_in">max</span>(diameter, val[i] + pre[i] + val[Q[l]] - pre[Q[l]]);
+        <span class="hljs-keyword">while</span> (l &lt;= r &amp;&amp; val[i] - pre[i] &gt; val[Q[r]] - pre[Q[r]]) r--;
+        Q[++r] = i;
+    &#125;
+&#125;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">cal</span><span class="hljs-params">(<span class="hljs-type">int</span> u)</span> </span>&#123;
+    dist[u] = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span> (u &lt;= Cactus::n) &#123;
+        <span class="hljs-comment">// 圆点</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> v: VTree::e[u]) &#123;
+            <span class="hljs-built_in">cal</span>(v);
+            ll w = Cactus::len2[v] - Cactus::len2[u];
+            diameter = <span class="hljs-built_in">max</span>(diameter, dist[u] + dist[v] + w);
+            dist[u] = <span class="hljs-built_in">max</span>(dist[u], dist[v] + w);
+        &#125;
+    &#125; <span class="hljs-keyword">else</span> &#123;
+        <span class="hljs-comment">// 方点</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> v: VTree::e[u]) &#123;
+            <span class="hljs-built_in">cal</span>(v);
+            ll w = Cactus::len2[v] - Cactus::len2[u];
+            <span class="hljs-comment">// 不计答案</span>
+            dist[u] = <span class="hljs-built_in">max</span>(dist[u], dist[v] + w);
+        &#125;
+        <span class="hljs-comment">// 【坑点】不要边递归边收集啊</span>
+        <span class="hljs-comment">// 保证无后效性！</span>
+        <span class="hljs-type">int</span> idx = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> v: VTree::e[u]) &#123;
+            <span class="hljs-type">int</span> fv = Cactus::<span class="hljs-built_in">find</span>(v, u);
+            dist[fv] = dist[v] + Cactus::len2[v] - Cactus::len2[fv];
+            tmp[++idx] = fv;
+        &#125;
+        <span class="hljs-built_in">dp_on_cycle</span>(u, idx);
+    &#125;
+&#125;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span> </span>&#123;
+    <span class="hljs-type">int</span> n, m;
+    cin &gt;&gt; n &gt;&gt; m;
+    Cactus::<span class="hljs-built_in">init</span>(n);
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) &#123;
+        <span class="hljs-type">int</span> u, v, w;
+        cin &gt;&gt; u &gt;&gt; v &gt;&gt; w;
+        Cactus::<span class="hljs-built_in">add_edge</span>(u, v, w);
+        Cactus::<span class="hljs-built_in">add_edge</span>(v, u, w);
+    &#125;
+    Cactus::<span class="hljs-built_in">build</span>();
+    <span class="hljs-type">int</span> Q;
+    cin &gt;&gt; Q;
+    <span class="hljs-keyword">while</span> (Q--) &#123;
+        <span class="hljs-type">int</span> cnt;
+        cin &gt;&gt; cnt;
+        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">a</span><span class="hljs-params">(cnt)</span></span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; v: a) &#123;
+            cin &gt;&gt; v;
+        &#125;
+        <span class="hljs-type">int</span> root = VTree::<span class="hljs-built_in">get</span>(a);
+        diameter = <span class="hljs-number">0</span>;
+        <span class="hljs-built_in">cal</span>(root);
+        cout &lt;&lt; diameter &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+    &#125;
+&#125;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-built_in">solve</span>();
+&#125;</code></pre>
                 </div>
             </article>
         </div>
