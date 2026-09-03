@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1788367265385">
+<link rel="stylesheet" href="/styles/main.css?v=1788413985127">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -104,7 +104,7 @@
                         · 2026-09-02 ·</time>
                     
                     <span class="post-wordcount gt-c-content-color-second">
-                        7.8 千字 ·</span>
+                        11 千字 ·</span>
                     
                         
                             <a href="/tags/Algo/" class="post-tag">
@@ -140,7 +140,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="P4-Beautiful-Tree-（树剖优化-本质线段树-）">P4 Beautiful Tree （树剖优化(本质线段树)）</h2>
+<h2 id="P4-Beautiful-Tree-（树剖优化-本质线段树-倍增优化）">P4 Beautiful Tree （树剖优化(本质线段树) / 倍增优化）</h2>
 <ul>
 <li><code>CF_1904F</code>
 <ul>
@@ -527,7 +527,189 @@
     <span class="hljs-comment">// new LG_P3588();</span>
     <span class="hljs-keyword">new</span> <span class="hljs-built_in">CF_1904F</span>();
 &#125;</code></pre>
+<ul>
+<li>倍增优化</li>
+</ul>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> endl <span class="hljs-string">&#x27;\n&#x27;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-keyword">using</span> ll = <span class="hljs-type">long</span> <span class="hljs-type">long</span>;
+<span class="hljs-type">const</span> ll INF = <span class="hljs-number">2e18</span>;
 
+<span class="hljs-keyword">namespace</span> StG &#123;
+    <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">2e5</span> + <span class="hljs-number">5</span>;
+    <span class="hljs-type">const</span> <span class="hljs-type">int</span> NN = N * <span class="hljs-number">18</span> + <span class="hljs-number">5</span>;
+
+    <span class="hljs-keyword">struct</span> <span class="hljs-title class_">Edge</span> &#123;
+        <span class="hljs-type">int</span> to, nxt;
+    &#125;edge[NN*<span class="hljs-number">2</span> + NN*<span class="hljs-number">2</span> + NN]; <span class="hljs-comment">// 两个树结构 + 2logN * N 个新的边</span>
+    <span class="hljs-comment">// 【chovy】神秘加 2N 大小就过了</span>
+    <span class="hljs-type">int</span> hd[N + NN*<span class="hljs-number">2</span>], cntE;
+    
+    <span class="hljs-type">int</span> n, tot, P;
+    vector&lt;<span class="hljs-type">int</span>&gt; e[N];
+    <span class="hljs-comment">// vector&lt;int&gt; E[NN*2];</span>
+    <span class="hljs-type">int</span> fa[N][__lg(N)<span class="hljs-number">+1</span>], stin[N][__lg(N)<span class="hljs-number">+1</span>], stout[N][__lg(N)<span class="hljs-number">+1</span>];
+    <span class="hljs-type">int</span> dep[N];
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-type">int</span> nn)</span> </span>&#123;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) e[i].<span class="hljs-built_in">clear</span>();
+        
+        <span class="hljs-built_in">fill</span>(hd, hd + <span class="hljs-number">1</span> + tot, <span class="hljs-number">0</span>);
+        <span class="hljs-comment">// for (int i = 1; i &lt;= tot; i++) E[i].clear();</span>
+        
+        tot = n = nn;
+        P = __lg(n);
+
+        cntE = <span class="hljs-number">1</span>;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">connect</span><span class="hljs-params">(<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> v)</span> </span>&#123;
+        e[u].<span class="hljs-built_in">push_back</span>(v);
+        e[v].<span class="hljs-built_in">push_back</span>(u);
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add_edge</span><span class="hljs-params">(<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> v)</span> </span>&#123;
+        <span class="hljs-comment">// E[u].push_back(v);</span>
+        edge[++cntE] = &#123;v, hd[u]&#125;;
+        hd[u] = cntE;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> f)</span> </span>&#123;
+        dep[u] = dep[f] + <span class="hljs-number">1</span>; 
+        fa[u][<span class="hljs-number">0</span>] = f;
+        stin[u][<span class="hljs-number">0</span>] = stout[u][<span class="hljs-number">0</span>] = u;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> p = <span class="hljs-number">1</span>; p &lt;= P; p++) &#123;
+            <span class="hljs-type">int</span> ed = fa[u][p<span class="hljs-number">-1</span>];
+            <span class="hljs-comment">// 【坑点】 忘了这个填写倍增了</span>
+            fa[u][p] = fa[ed][p<span class="hljs-number">-1</span>];
+            stin[u][p] = ++tot;
+            <span class="hljs-built_in">add_edge</span>(tot, stin[u][p<span class="hljs-number">-1</span>]);
+            <span class="hljs-built_in">add_edge</span>(tot, stin[ed][p<span class="hljs-number">-1</span>]);
+            stout[u][p] = ++tot;
+            <span class="hljs-built_in">add_edge</span>(stout[u][p<span class="hljs-number">-1</span>], tot);
+            <span class="hljs-built_in">add_edge</span>(stout[ed][p<span class="hljs-number">-1</span>], tot);
+        &#125;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> v: e[u]) <span class="hljs-keyword">if</span> (v!=f) &#123;
+            <span class="hljs-built_in">dfs</span>(v, u);
+        &#125;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">build</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-built_in">dfs</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">jump</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> d)</span> </span>&#123;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> p = <span class="hljs-number">0</span>;d;d&gt;&gt;=<span class="hljs-number">1</span>,p++) <span class="hljs-keyword">if</span>(d&amp;<span class="hljs-number">1</span>) x = fa[x][p];
+        <span class="hljs-keyword">return</span> x;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">lca</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y)</span> </span>&#123;
+        <span class="hljs-keyword">if</span> (dep[x] &lt; dep[y]) <span class="hljs-built_in">swap</span>(x, y);
+        x = <span class="hljs-built_in">jump</span>(x, dep[x]-dep[y]);
+        <span class="hljs-keyword">if</span> (x == y) &#123;
+            <span class="hljs-keyword">return</span> x;
+        &#125;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> p = P;p&gt;=<span class="hljs-number">0</span>;p--) <span class="hljs-keyword">if</span> (fa[x][p]!=fa[y][p]) x=fa[x][p],y=fa[y][p];
+        <span class="hljs-keyword">return</span> fa[x][<span class="hljs-number">0</span>];
+    &#125;
+
+
+    <span class="hljs-comment">// 已知 x y 不同 求 x y 路径上距离 y 最近的 </span>
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">nearst</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y)</span> </span>&#123;
+        <span class="hljs-type">int</span> z = <span class="hljs-built_in">lca</span>(x, y);
+        <span class="hljs-comment">// 要么 y 是顶部</span>
+        <span class="hljs-keyword">if</span> (z == y) <span class="hljs-keyword">return</span> <span class="hljs-built_in">jump</span>(x, dep[x] - dep[y] - <span class="hljs-number">1</span>);
+        <span class="hljs-comment">// 要么 y 不是顶部 </span>
+        <span class="hljs-keyword">return</span> fa[y][<span class="hljs-number">0</span>];
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">xud_in</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> d,<span class="hljs-type">int</span> w)</span> </span>&#123;
+        <span class="hljs-keyword">if</span>(d&lt;=<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> p=<span class="hljs-number">0</span>;d;d&gt;&gt;=<span class="hljs-number">1</span>,p++) <span class="hljs-keyword">if</span>(d&amp;<span class="hljs-number">1</span>) &#123;
+            <span class="hljs-built_in">add_edge</span>(x, stin[u][p]);
+            u = fa[u][p];
+        &#125;
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">xud_out</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> d,<span class="hljs-type">int</span> w)</span> </span>&#123;
+        <span class="hljs-keyword">if</span>(d&lt;=<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> p=<span class="hljs-number">0</span>;d;d&gt;&gt;=<span class="hljs-number">1</span>,p++) <span class="hljs-keyword">if</span>(d&amp;<span class="hljs-number">1</span>) &#123;
+            <span class="hljs-built_in">add_edge</span>(stout[u][p], x);
+            u = fa[u][p];
+        &#125;
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">path_in</span><span class="hljs-params">(<span class="hljs-type">int</span> v, <span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y,<span class="hljs-type">int</span> w)</span> </span>&#123;
+        <span class="hljs-type">int</span> z = <span class="hljs-built_in">lca</span>(x, y);
+        <span class="hljs-built_in">xud_in</span>(v, x, dep[x]-dep[z]<span class="hljs-number">+1</span>, w);
+        <span class="hljs-comment">// 【坑点】 你复制给我复制好的啊 y 改一下</span>
+        <span class="hljs-built_in">xud_in</span>(v, y, dep[y]-dep[z], w);
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">path_out</span><span class="hljs-params">(<span class="hljs-type">int</span> v,<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y,<span class="hljs-type">int</span> w)</span> </span>&#123;
+        <span class="hljs-type">int</span> z = <span class="hljs-built_in">lca</span>(x, y);
+        <span class="hljs-built_in">xud_out</span>(v, x, dep[x]-dep[z]<span class="hljs-number">+1</span>, w);
+        <span class="hljs-comment">// 【坑点】 你复制给我复制好的啊 y 改一下</span>
+        <span class="hljs-built_in">xud_out</span>(v, y, dep[y]-dep[z], w);
+    &#125;
+&#125;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">CF_1904F_2</span> &#123;
+    <span class="hljs-keyword">inline</span> <span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">2e5</span> + <span class="hljs-number">5</span>, M = <span class="hljs-number">2e5</span> + <span class="hljs-number">5</span>;
+    <span class="hljs-type">int</span> n, m, u, v, t, a, b, c;
+    <span class="hljs-built_in">CF_1904F_2</span>() &#123;
+        cin &gt;&gt; n &gt;&gt; m;
+        StG::<span class="hljs-built_in">init</span>(n);
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) &#123;
+            cin &gt;&gt; u &gt;&gt; v;
+            StG::<span class="hljs-built_in">connect</span>(u, v);
+        &#125;
+        <span class="hljs-comment">// 建立 st 表</span>
+        StG::<span class="hljs-built_in">build</span>();
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) &#123;
+            cin &gt;&gt; t &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+            <span class="hljs-keyword">if</span> (t == <span class="hljs-number">1</span>) &#123;
+                <span class="hljs-keyword">if</span> (a != c) &#123;
+                    StG::<span class="hljs-built_in">path_in</span>(c, a, StG::<span class="hljs-built_in">nearst</span>(a, c), <span class="hljs-number">1</span>);
+                &#125; 
+                <span class="hljs-keyword">if</span> (b != c) &#123;
+                    StG::<span class="hljs-built_in">path_in</span>(c, b, StG::<span class="hljs-built_in">nearst</span>(b, c), <span class="hljs-number">1</span>);
+                &#125;
+            &#125; <span class="hljs-keyword">else</span> &#123;
+                <span class="hljs-keyword">if</span> (a != c) &#123;
+                    StG::<span class="hljs-built_in">path_out</span>(c, a, StG::<span class="hljs-built_in">nearst</span>(a, c), <span class="hljs-number">1</span>);
+                &#125; 
+                <span class="hljs-keyword">if</span> (b != c) &#123;
+                    StG::<span class="hljs-built_in">path_out</span>(c, b, StG::<span class="hljs-built_in">nearst</span>(b, c), <span class="hljs-number">1</span>);
+                &#125;
+            &#125;
+        &#125;
+        <span class="hljs-type">int</span> tot = StG::tot;
+        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">deg</span><span class="hljs-params">(tot + <span class="hljs-number">1</span>)</span>, <span class="hljs-title">val</span><span class="hljs-params">(n + <span class="hljs-number">1</span>)</span></span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> u = <span class="hljs-number">1</span>; u &lt;= tot; u++) &#123;
+            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = StG::hd[u];i;i=StG::edge[i].nxt) deg[StG::edge[i].to]++;
+        &#125;
+        <span class="hljs-type">int</span> cnt = <span class="hljs-number">0</span>, num = <span class="hljs-number">0</span>;
+        queue&lt;<span class="hljs-type">int</span>&gt; Q;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= tot; i++) <span class="hljs-keyword">if</span> (!deg[i]) &#123;
+            Q.<span class="hljs-built_in">push</span>(i);
+        &#125;
+        <span class="hljs-keyword">while</span> (Q.<span class="hljs-built_in">size</span>()) &#123;
+            <span class="hljs-type">int</span> u = Q.<span class="hljs-built_in">front</span>(); Q.<span class="hljs-built_in">pop</span>();
+            cnt++;
+            <span class="hljs-keyword">if</span> (u &lt;= n) val[u] = ++num;
+            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = StG::hd[u]; i; i = StG::edge[i].nxt) &#123;
+                <span class="hljs-keyword">if</span> (!--deg[StG::edge[i].to]) Q.<span class="hljs-built_in">push</span>(StG::edge[i].to);
+            &#125;
+        &#125;
+        <span class="hljs-keyword">if</span> (cnt != tot) cout &lt;&lt; <span class="hljs-number">-1</span> &lt;&lt; endl;
+        <span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) cout &lt;&lt; val[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>; cout &lt;&lt; endl;
+        &#125;
+    &#125;
+&#125;;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">new</span> <span class="hljs-built_in">CF_1904F_2</span>();
+&#125;</code></pre>
                 </div>
             </article>
         </div>
@@ -537,8 +719,8 @@
                 
                     <div class="prev-post">
                         <div class="prev gt-c-content-color-first">
-                            上一篇：<a href="/2026/09/02/2-sat%EF%BC%88todo%EF%BC%89/"
-                                class="post-title gt-a-link">2-SAT（TODO）</a>
+                            上一篇：<a href="/2026/09/02/2-sat/"
+                                class="post-title gt-a-link">2-SAT</a>
                         </div>
                     </div>
                 
@@ -583,7 +765,7 @@
     <aside class="post-outline" id="post-outline">
         <div class="outline-title">OUTLINE</div>
         <nav class="outline-nav">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E6%A8%A1%E6%9D%BF%EF%BC%88%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%BC%98%E5%8C%96%EF%BC%89"><span class="toc-text">P1 模板（线段树优化）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P2-%E6%A8%A1%E6%9D%BF%EF%BC%88%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%BC%98%E5%8C%96%EF%BC%89"><span class="toc-text">P2 模板（线段树优化）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P3-%E6%B2%99%E6%BC%A0-%EF%BC%88%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%BC%98%E5%8C%96-%E6%8B%93%E6%89%91%E5%BA%8F-DP%EF%BC%89"><span class="toc-text">P3 沙漠 （线段树优化 + 拓扑序 DP）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P4-Beautiful-Tree-%EF%BC%88%E6%A0%91%E5%89%96%E4%BC%98%E5%8C%96-%E6%9C%AC%E8%B4%A8%E7%BA%BF%E6%AE%B5%E6%A0%91-%EF%BC%89"><span class="toc-text">P4 Beautiful Tree （树剖优化(本质线段树)）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Codes"><span class="toc-text">Codes</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E6%A8%A1%E6%9D%BF%EF%BC%88%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%BC%98%E5%8C%96%EF%BC%89"><span class="toc-text">P1 模板（线段树优化）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P2-%E6%A8%A1%E6%9D%BF%EF%BC%88%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%BC%98%E5%8C%96%EF%BC%89"><span class="toc-text">P2 模板（线段树优化）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P3-%E6%B2%99%E6%BC%A0-%EF%BC%88%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%BC%98%E5%8C%96-%E6%8B%93%E6%89%91%E5%BA%8F-DP%EF%BC%89"><span class="toc-text">P3 沙漠 （线段树优化 + 拓扑序 DP）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P4-Beautiful-Tree-%EF%BC%88%E6%A0%91%E5%89%96%E4%BC%98%E5%8C%96-%E6%9C%AC%E8%B4%A8%E7%BA%BF%E6%AE%B5%E6%A0%91-%E5%80%8D%E5%A2%9E%E4%BC%98%E5%8C%96%EF%BC%89"><span class="toc-text">P4 Beautiful Tree （树剖优化(本质线段树) &#x2F; 倍增优化）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Codes"><span class="toc-text">Codes</span></a></li></ol>
         </nav>
     </aside>
     

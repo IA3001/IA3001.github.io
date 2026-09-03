@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- Title -->
-<title>2-SAT（TODO） - IA3001&#39;s Blog</title>
+<title>2-SAT - IA3001&#39;s Blog</title>
 
 <!-- Icon -->
 <link rel="icon" href="/img/favicon.ico">
@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1788367265385">
+<link rel="stylesheet" href="/styles/main.css?v=1788413985127">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -98,13 +98,13 @@
         <div class="post-detail gt-bg-theme-color-second gt-c-content-color-first">
             <article class="gt-post-content">
                 
-                <h1 class="post-title">2-SAT（TODO）</h1>
+                <h1 class="post-title">2-SAT</h1>
                 <div class="post-info">
                     <time class="post-time gt-c-content-color-first">
                         · 2026-09-02 ·</time>
                     
                     <span class="post-wordcount gt-c-content-color-second">
-                        0 字 ·</span>
+                        1.6 千字 ·</span>
                     
                         
                             <a href="/tags/Algo/" class="post-tag">
@@ -115,7 +115,107 @@
                 <hr>
                 
                 <div class="post-content gt-c-content-color-first">
-                    
+                    <h2 id="P1-模板题">P1 模板题</h2>
+<ul>
+<li><code>LG_P4782</code></li>
+</ul>
+<h2 id="Codes">Codes</h2>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">namespace</span> SAT &#123;
+    <span class="hljs-comment">// 【坑点】</span>
+    <span class="hljs-comment">// N 一定要开二倍啊啊啊啊啊啊</span>
+    <span class="hljs-comment">// M 也是！ 因为有正反孪生约束</span>
+    <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = (<span class="hljs-number">1e6</span> + <span class="hljs-number">5</span>) * <span class="hljs-number">2</span>, M = (<span class="hljs-number">1e6</span> + <span class="hljs-number">5</span>) * <span class="hljs-number">2</span>;
+    
+    <span class="hljs-type">int</span> n;
+
+    <span class="hljs-keyword">struct</span> <span class="hljs-title class_">Edge</span> &#123;
+        <span class="hljs-type">int</span> to, nxt;
+    &#125;e[M];
+    <span class="hljs-type">int</span> hd[N], cntE;
+    <span class="hljs-type">int</span> dfn[N], dfncnt, low[N], stk[N], tp;
+    <span class="hljs-type">int</span> scc[N], sc;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-type">int</span> nn)</span> </span>&#123;
+        <span class="hljs-built_in">fill</span>(hd,hd<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
+        <span class="hljs-built_in">fill</span>(dfn,dfn<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
+        <span class="hljs-built_in">fill</span>(scc,scc<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
+        n = nn;
+        cntE = <span class="hljs-number">1</span>;
+        dfncnt = sc = tp = <span class="hljs-number">0</span>;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add_edge</span><span class="hljs-params">(<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> v)</span> </span>&#123;
+        e[++cntE] = &#123;v, hd[u]&#125;;
+        hd[u] = cntE;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">tarjan</span><span class="hljs-params">(<span class="hljs-type">int</span> u)</span> </span>&#123;
+        low[u] = dfn[u] = ++dfncnt; stk[++tp] = u;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = hd[u]; i; i = e[i].nxt) &#123;
+            <span class="hljs-type">int</span> v = e[i].to;
+            <span class="hljs-keyword">if</span> (!dfn[v]) &#123;
+                <span class="hljs-built_in">tarjan</span>(v);
+                low[u] = <span class="hljs-built_in">min</span>(low[u], low[v]);
+            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!scc[v]) &#123;
+                low[u] = <span class="hljs-built_in">min</span>(low[u], dfn[v]);
+            &#125;
+        &#125;
+        <span class="hljs-keyword">if</span> (low[u] == dfn[u]) &#123;
+            sc++;
+            <span class="hljs-type">int</span> pop;
+            <span class="hljs-keyword">do</span> &#123;
+                pop = stk[tp--];
+                scc[pop] = sc;
+            &#125; <span class="hljs-keyword">while</span>(pop != u);
+        &#125;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">build</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
+            <span class="hljs-keyword">if</span> (!dfn[i]) <span class="hljs-built_in">tarjan</span>(i);
+        &#125;
+    &#125;
+&#125;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">LG_P4782</span> &#123;
+    <span class="hljs-comment">// 模板题 </span>
+    <span class="hljs-comment">// i==a or j==b</span>
+    <span class="hljs-keyword">inline</span> <span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e6</span> + <span class="hljs-number">5</span>, M = <span class="hljs-number">1e6</span> + <span class="hljs-number">5</span>;
+    <span class="hljs-type">int</span> n, m;
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">other</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-keyword">return</span> x &lt;= n ? x + n : x - n;
+    &#125;
+    <span class="hljs-built_in">LG_P4782</span>() &#123;
+        <span class="hljs-type">bool</span> ok = <span class="hljs-literal">true</span>;
+        cin &gt;&gt; n &gt;&gt; m;
+        <span class="hljs-comment">// 【坑点】 chovy!!! 节点数量是二倍包括正反！！！</span>
+        SAT::<span class="hljs-built_in">init</span>(n*<span class="hljs-number">2</span>);
+        <span class="hljs-keyword">while</span> (m--) &#123;
+            <span class="hljs-type">int</span> i, a, j , b;
+            cin &gt;&gt; i &gt;&gt; a &gt;&gt; j &gt;&gt; b;
+            <span class="hljs-type">int</span> I = i + (a==<span class="hljs-number">0</span>?n:<span class="hljs-number">0</span>), J = j + (b==<span class="hljs-number">0</span>?n:<span class="hljs-number">0</span>);
+            SAT::<span class="hljs-built_in">add_edge</span>(<span class="hljs-built_in">other</span>(I), J);
+            SAT::<span class="hljs-built_in">add_edge</span>(<span class="hljs-built_in">other</span>(J), I);
+        &#125;
+        SAT::<span class="hljs-built_in">build</span>();
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) ok &amp;= SAT::scc[i] != SAT::scc[i+n];
+        <span class="hljs-keyword">if</span> (!ok) cout &lt;&lt; <span class="hljs-string">&quot;IMPOSSIBLE\n&quot;</span>;
+        <span class="hljs-keyword">else</span>  &#123;
+            cout &lt;&lt; <span class="hljs-string">&quot;POSSIBLE\n&quot;</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n;i++) &#123;
+                cout &lt;&lt; (SAT::scc[i] &lt; SAT::scc[i+n]) &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;
+            &#125;cout &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+        &#125;
+    &#125;
+&#125;;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">new</span> <span class="hljs-built_in">LG_P4782</span>();
+&#125;</code></pre>
                 </div>
             </article>
         </div>
@@ -164,7 +264,7 @@
     <aside class="post-outline" id="post-outline">
         <div class="outline-title">OUTLINE</div>
         <nav class="outline-nav">
-            <div class="outline-empty">-</div>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E6%A8%A1%E6%9D%BF%E9%A2%98"><span class="toc-text">P1 模板题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Codes"><span class="toc-text">Codes</span></a></li></ol>
         </nav>
     </aside>
     
