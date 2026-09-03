@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1788414007661">
+<link rel="stylesheet" href="/styles/main.css?v=1788447613660">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -103,8 +103,10 @@
                     <time class="post-time gt-c-content-color-first">
                         · 2026-09-02 ·</time>
                     
+                        <span class="post-updated">更新于 2026-09-03</span>
+                    
                     <span class="post-wordcount gt-c-content-color-second">
-                        1.6 千字 ·</span>
+                        4.2 千字 ·</span>
                     
                         
                             <a href="/tags/Algo/" class="post-tag">
@@ -119,6 +121,14 @@
 <ul>
 <li><code>LG_P4782</code></li>
 </ul>
+<h2 id="P2-最多选一个：前缀优化建图">P2 最多选一个：前缀优化建图</h2>
+<ul>
+<li><code>LG_P6378</code></li>
+</ul>
+<h2 id="P3-数学互质：前缀优化建图">P3 数学互质：前缀优化建图</h2>
+<ul>
+<li><code>AT_abc210_f</code></li>
+</ul>
 <h2 id="Codes">Codes</h2>
 <pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
 <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
@@ -127,7 +137,7 @@
     <span class="hljs-comment">// 【坑点】</span>
     <span class="hljs-comment">// N 一定要开二倍啊啊啊啊啊啊</span>
     <span class="hljs-comment">// M 也是！ 因为有正反孪生约束</span>
-    <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = (<span class="hljs-number">1e6</span> + <span class="hljs-number">5</span>) * <span class="hljs-number">2</span>, M = (<span class="hljs-number">1e6</span> + <span class="hljs-number">5</span>) * <span class="hljs-number">2</span>;
+    <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = (<span class="hljs-number">2e6</span> + <span class="hljs-number">5</span>) * <span class="hljs-number">2</span>, M = (<span class="hljs-number">4e6</span> + <span class="hljs-number">5</span>) * <span class="hljs-number">2</span>;
     
     <span class="hljs-type">int</span> n;
 
@@ -138,11 +148,15 @@
     <span class="hljs-type">int</span> dfn[N], dfncnt, low[N], stk[N], tp;
     <span class="hljs-type">int</span> scc[N], sc;
 
-    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-type">int</span> nn)</span> </span>&#123;
+    <span class="hljs-comment">// 【感悟！】</span>
+    <span class="hljs-comment">// 我现在才发现，其实</span>
+    <span class="hljs-comment">// 除非 BIT DSU（不太符合） 之类的东西</span>
+    <span class="hljs-comment">// 不要用 init 而是用 clear 命名 这样便于动态扩展</span>
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">clear</span><span class="hljs-params">()</span> </span>&#123;
         <span class="hljs-built_in">fill</span>(hd,hd<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
         <span class="hljs-built_in">fill</span>(dfn,dfn<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
         <span class="hljs-built_in">fill</span>(scc,scc<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
-        n = nn;
+        n = <span class="hljs-number">0</span>;
         cntE = <span class="hljs-number">1</span>;
         dfncnt = sc = tp = <span class="hljs-number">0</span>;
     &#125;
@@ -173,7 +187,8 @@
         &#125;
     &#125;
 
-    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">build</span><span class="hljs-params">()</span> </span>&#123;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">build</span><span class="hljs-params">(<span class="hljs-type">int</span> nn)</span> </span>&#123;
+        n = nn;
         <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
             <span class="hljs-keyword">if</span> (!dfn[i]) <span class="hljs-built_in">tarjan</span>(i);
         &#125;
@@ -189,10 +204,10 @@
         <span class="hljs-keyword">return</span> x &lt;= n ? x + n : x - n;
     &#125;
     <span class="hljs-built_in">LG_P4782</span>() &#123;
+        <span class="hljs-comment">// 【坑点】 chovy!!! 节点数量是二倍包括正反！！！</span>
+        SAT::<span class="hljs-built_in">clear</span>();
         <span class="hljs-type">bool</span> ok = <span class="hljs-literal">true</span>;
         cin &gt;&gt; n &gt;&gt; m;
-        <span class="hljs-comment">// 【坑点】 chovy!!! 节点数量是二倍包括正反！！！</span>
-        SAT::<span class="hljs-built_in">init</span>(n*<span class="hljs-number">2</span>);
         <span class="hljs-keyword">while</span> (m--) &#123;
             <span class="hljs-type">int</span> i, a, j , b;
             cin &gt;&gt; i &gt;&gt; a &gt;&gt; j &gt;&gt; b;
@@ -200,7 +215,7 @@
             SAT::<span class="hljs-built_in">add_edge</span>(<span class="hljs-built_in">other</span>(I), J);
             SAT::<span class="hljs-built_in">add_edge</span>(<span class="hljs-built_in">other</span>(J), I);
         &#125;
-        SAT::<span class="hljs-built_in">build</span>();
+        SAT::<span class="hljs-built_in">build</span>(n*<span class="hljs-number">2</span>);
         <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) ok &amp;= SAT::scc[i] != SAT::scc[i+n];
         <span class="hljs-keyword">if</span> (!ok) cout &lt;&lt; <span class="hljs-string">&quot;IMPOSSIBLE\n&quot;</span>;
         <span class="hljs-keyword">else</span>  &#123;
@@ -212,10 +227,140 @@
     &#125;
 &#125;;
 
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">CF_1697</span> &#123;
+    <span class="hljs-comment">// 太难了 现在 CF 太卡了 鸽了</span>
+&#125;;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">LG_P6378</span> &#123;
+    <span class="hljs-comment">// 结合前缀优化建图</span>
+    <span class="hljs-comment">// 题意 k 个阵营的点，每一个阵营选一个</span>
+    <span class="hljs-comment">// m 个边至少有一端被选中</span>
+    <span class="hljs-comment">// 其实如果有阵营 全不选 的方案一定可以再选一个</span>
+    <span class="hljs-comment">// 注意开</span>
+    <span class="hljs-comment">// 点个数: 基础 2*N + 2 * N</span>
+    <span class="hljs-comment">// 边个数: 基础 2*M + 6 * N </span>
+    <span class="hljs-keyword">inline</span> <span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e6</span> + <span class="hljs-number">5</span>, M = <span class="hljs-number">1e6</span> + <span class="hljs-number">5</span>;
+    <span class="hljs-type">int</span> n, m, k;
+    <span class="hljs-type">int</span> tot;
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">other</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-keyword">return</span> x &lt;= n ? x + n : x - n;
+    &#125;
+    <span class="hljs-built_in">LG_P6378</span>() &#123;
+        SAT::<span class="hljs-built_in">clear</span>();
+        <span class="hljs-type">bool</span> ok = <span class="hljs-literal">true</span>;
+        cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;
+        tot = n * <span class="hljs-number">2</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) &#123;
+            <span class="hljs-type">int</span> u, v;
+            cin &gt;&gt; u &gt;&gt; v;
+            SAT::<span class="hljs-built_in">add_edge</span>(<span class="hljs-built_in">other</span>(u), v);
+            SAT::<span class="hljs-built_in">add_edge</span>(<span class="hljs-built_in">other</span>(v), u);
+        &#125;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= k; i++) &#123;
+            <span class="hljs-type">int</span> w; cin &gt;&gt; w;
+            <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">a</span><span class="hljs-params">(w)</span>, <span class="hljs-title">pre_not_in</span><span class="hljs-params">(w)</span>, <span class="hljs-title">suf_not_in</span><span class="hljs-params">(w)</span></span>;
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; v:a) cin &gt;&gt; v;
+            pre_not_in[<span class="hljs-number">0</span>] = <span class="hljs-built_in">other</span>(a[<span class="hljs-number">0</span>]);
+            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; w;i++) &#123;
+                pre_not_in[i] = ++tot;
+                SAT::<span class="hljs-built_in">add_edge</span>(tot, pre_not_in[i<span class="hljs-number">-1</span>]);
+                SAT::<span class="hljs-built_in">add_edge</span>(tot, <span class="hljs-built_in">other</span>(a[i]));    
+                <span class="hljs-comment">// 选这个不选前面的</span>
+                SAT::<span class="hljs-built_in">add_edge</span>(a[i], pre_not_in[i<span class="hljs-number">-1</span>]);    
+            &#125;
+            suf_not_in[w<span class="hljs-number">-1</span>] = <span class="hljs-built_in">other</span>(a[w<span class="hljs-number">-1</span>]);
+            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = w<span class="hljs-number">-2</span>;i&gt;=<span class="hljs-number">0</span>;i--) &#123;
+                suf_not_in[i] = ++tot;
+                SAT::<span class="hljs-built_in">add_edge</span>(tot, suf_not_in[i<span class="hljs-number">+1</span>]);    
+                SAT::<span class="hljs-built_in">add_edge</span>(tot, <span class="hljs-built_in">other</span>(a[i]));    
+                <span class="hljs-comment">// 选这个不选后面的</span>
+                SAT::<span class="hljs-built_in">add_edge</span>(a[i], suf_not_in[i<span class="hljs-number">+1</span>]);    
+            &#125;
+        &#125;
+        SAT::<span class="hljs-built_in">build</span>(tot);
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) ok &amp;= SAT::scc[i] != SAT::scc[i+n];
+        <span class="hljs-keyword">if</span> (!ok) cout &lt;&lt; <span class="hljs-string">&quot;NIE\n&quot;</span>;
+        <span class="hljs-keyword">else</span> cout &lt;&lt; <span class="hljs-string">&quot;TAK\n&quot;</span>;
+    &#125;
+&#125;;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">AT_abc210_f</span> &#123;
+    <span class="hljs-comment">// 选数字 二选一 不能互质</span>
+    <span class="hljs-keyword">inline</span> <span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">3e4</span> + <span class="hljs-number">5</span>, V = <span class="hljs-number">2e6</span> + <span class="hljs-number">5</span>;
+    
+    <span class="hljs-type">int</span> factor[V], primes[V], cntP;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">2</span>; i &lt; V; i++) &#123;
+            <span class="hljs-keyword">if</span> (!factor[i]) &#123;
+                primes[++cntP] = factor[i] = i;
+            &#125;
+            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= cntP; j++) &#123;
+                <span class="hljs-type">int</span> p = primes[j], pi = p*i;
+                <span class="hljs-keyword">if</span> (pi &gt;= V) <span class="hljs-keyword">break</span>;
+                factor[pi] = p;
+                <span class="hljs-keyword">if</span>(i % p == <span class="hljs-number">0</span>) <span class="hljs-keyword">break</span>;
+            &#125;
+        &#125;
+    &#125;
+
+    <span class="hljs-type">int</span> n, tot;
+    vector&lt;<span class="hljs-type">int</span>&gt; buf[V];
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span> </span>&#123;
+        SAT::<span class="hljs-built_in">clear</span>();
+        <span class="hljs-type">bool</span> ok = <span class="hljs-literal">true</span>;
+        cin &gt;&gt; n;
+        <span class="hljs-keyword">auto</span> other = [&amp;](<span class="hljs-type">int</span> x) &#123;<span class="hljs-keyword">return</span> x &lt;= n ? x + n : x - n;&#125;;
+        <span class="hljs-keyword">auto</span> collect = [&amp;](<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> i) &#123;
+            <span class="hljs-keyword">while</span>(a &gt; <span class="hljs-number">1</span>) &#123;
+                <span class="hljs-type">int</span> p = factor[a];
+                buf[p].<span class="hljs-built_in">push_back</span>(i);
+                <span class="hljs-keyword">while</span>(a%p==<span class="hljs-number">0</span>) a/=p;
+            &#125;
+        &#125;;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
+            <span class="hljs-type">int</span> a, b;
+            cin &gt;&gt; a &gt;&gt; b;
+            <span class="hljs-built_in">collect</span>(a, i);
+            <span class="hljs-built_in">collect</span>(b, i+n);
+        &#125;
+        tot = n * <span class="hljs-number">2</span>;
+        <span class="hljs-keyword">auto</span> set_pre = [&amp;](vector&lt;<span class="hljs-type">int</span>&gt;&amp; a) &#123;
+            <span class="hljs-type">int</span> n = a.<span class="hljs-built_in">size</span>();
+            <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span>;
+            <span class="hljs-type">int</span> pre_not = <span class="hljs-built_in">other</span>(a[<span class="hljs-number">0</span>]);
+            <span class="hljs-comment">// 【超威】 作秀用 lambda ，直接没有注意到 0-base 越界了</span>
+            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; n;i++) &#123;
+                SAT::<span class="hljs-built_in">add_edge</span>(a[i], pre_not);
+                ++tot;
+                SAT::<span class="hljs-built_in">add_edge</span>(tot, pre_not);
+                SAT::<span class="hljs-built_in">add_edge</span>(tot, <span class="hljs-built_in">other</span>(a[i]));
+                pre_not = tot;
+            &#125;
+        &#125;;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; V; i++) &#123;
+            <span class="hljs-built_in">set_pre</span>(buf[i]);
+            <span class="hljs-built_in">reverse</span>(buf[i].<span class="hljs-built_in">begin</span>(), buf[i].<span class="hljs-built_in">end</span>());
+            <span class="hljs-built_in">set_pre</span>(buf[i]);
+        &#125;
+        SAT::<span class="hljs-built_in">build</span>(tot);
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) ok &amp;= SAT::scc[i] != SAT::scc[i+n];
+        cout &lt;&lt; (ok ? <span class="hljs-string">&quot;Yes&quot;</span> : <span class="hljs-string">&quot;No&quot;</span>) &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+    &#125;
+
+    <span class="hljs-built_in">AT_abc210_f</span>() &#123;
+        <span class="hljs-built_in">init</span>();
+        <span class="hljs-built_in">solve</span>();
+    &#125;
+&#125;;
+
 <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
-    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
-    <span class="hljs-keyword">new</span> <span class="hljs-built_in">LG_P4782</span>();
+    <span class="hljs-comment">// ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);</span>
+    <span class="hljs-comment">// new LG_P4782();</span>
+    <span class="hljs-comment">// new LG_P6378();</span>
+    <span class="hljs-keyword">new</span> <span class="hljs-built_in">AT_abc210_f</span>();
 &#125;</code></pre>
+
                 </div>
             </article>
         </div>
@@ -264,7 +409,7 @@
     <aside class="post-outline" id="post-outline">
         <div class="outline-title">OUTLINE</div>
         <nav class="outline-nav">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E6%A8%A1%E6%9D%BF%E9%A2%98"><span class="toc-text">P1 模板题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Codes"><span class="toc-text">Codes</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E6%A8%A1%E6%9D%BF%E9%A2%98"><span class="toc-text">P1 模板题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P2-%E6%9C%80%E5%A4%9A%E9%80%89%E4%B8%80%E4%B8%AA%EF%BC%9A%E5%89%8D%E7%BC%80%E4%BC%98%E5%8C%96%E5%BB%BA%E5%9B%BE"><span class="toc-text">P2 最多选一个：前缀优化建图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P3-%E6%95%B0%E5%AD%A6%E4%BA%92%E8%B4%A8%EF%BC%9A%E5%89%8D%E7%BC%80%E4%BC%98%E5%8C%96%E5%BB%BA%E5%9B%BE"><span class="toc-text">P3 数学互质：前缀优化建图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Codes"><span class="toc-text">Codes</span></a></li></ol>
         </nav>
     </aside>
     
