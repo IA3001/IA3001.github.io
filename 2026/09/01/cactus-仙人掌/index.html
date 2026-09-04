@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1788533071160">
+<link rel="stylesheet" href="/styles/main.css?v=1788538621323">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -103,7 +103,7 @@
                     <time class="post-time gt-c-content-color-first">
                         · 2026-09-01 ·</time>
                     
-                        <span class="post-updated">更新于 2026-09-03</span>
+                        <span class="post-updated">更新于 2026-09-04</span>
                     
                     <span class="post-wordcount gt-c-content-color-second">
                         10 千字 ·</span>
@@ -486,7 +486,7 @@
     ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
     <span class="hljs-keyword">new</span> <span class="hljs-built_in">LG_P5236</span>();
 &#125;</code></pre>
-<h2 id="P3-仙人掌子图直径（仙人掌树-带-树剖-虚树-DP）">P3 仙人掌子图直径（仙人掌树 带 树剖 + 虚树 + DP）</h2>
+<h2 id="P3-仙人掌子图小直径（仙人掌树-带-树剖-虚树-DP）">P3 仙人掌子图小直径（仙人掌树 带 树剖 + 虚树 + DP）</h2>
 <ul>
 <li>踩了好多坑
 <ul>
@@ -842,7 +842,7 @@ ll val[Cactus::N*<span class="hljs-number">4</span>], pre[Cactus::N*<span class=
     <aside class="post-outline" id="post-outline">
         <div class="outline-title">OUTLINE</div>
         <nav class="outline-nav">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E8%A7%A3"><span class="toc-text">图解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Link-%E6%9C%80%E7%9F%AD%E8%B7%AF"><span class="toc-text">Link 最短路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Circle-%E6%9C%80%E7%9F%AD%E8%B7%AF"><span class="toc-text">Circle 最短路</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E4%BB%99%E4%BA%BA%E6%8E%8C%E6%9C%80%E5%A4%A7%E6%9D%83%E7%8B%AC%E7%AB%8B%E9%9B%86%EF%BC%88%E7%9B%B4%E6%8E%A5DP%EF%BC%89"><span class="toc-text">P1 仙人掌最大权独立集（直接DP）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P2-%E4%BB%99%E4%BA%BA%E6%8E%8C%E9%9D%99%E6%80%81%E6%9C%80%E7%9F%AD%E8%B7%AF%EF%BC%88%E4%BB%99%E4%BA%BA%E6%8E%8C%E6%A0%91-%E6%A0%91%E5%89%96%EF%BC%89"><span class="toc-text">P2 仙人掌静态最短路（仙人掌树 + 树剖）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P3-%E4%BB%99%E4%BA%BA%E6%8E%8C%E5%AD%90%E5%9B%BE%E7%9B%B4%E5%BE%84%EF%BC%88%E4%BB%99%E4%BA%BA%E6%8E%8C%E6%A0%91-%E5%B8%A6-%E6%A0%91%E5%89%96-%E8%99%9A%E6%A0%91-DP%EF%BC%89"><span class="toc-text">P3 仙人掌子图直径（仙人掌树 带 树剖 + 虚树 + DP）</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E8%A7%A3"><span class="toc-text">图解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Link-%E6%9C%80%E7%9F%AD%E8%B7%AF"><span class="toc-text">Link 最短路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Circle-%E6%9C%80%E7%9F%AD%E8%B7%AF"><span class="toc-text">Circle 最短路</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E4%BB%99%E4%BA%BA%E6%8E%8C%E6%9C%80%E5%A4%A7%E6%9D%83%E7%8B%AC%E7%AB%8B%E9%9B%86%EF%BC%88%E7%9B%B4%E6%8E%A5DP%EF%BC%89"><span class="toc-text">P1 仙人掌最大权独立集（直接DP）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P2-%E4%BB%99%E4%BA%BA%E6%8E%8C%E9%9D%99%E6%80%81%E6%9C%80%E7%9F%AD%E8%B7%AF%EF%BC%88%E4%BB%99%E4%BA%BA%E6%8E%8C%E6%A0%91-%E6%A0%91%E5%89%96%EF%BC%89"><span class="toc-text">P2 仙人掌静态最短路（仙人掌树 + 树剖）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P3-%E4%BB%99%E4%BA%BA%E6%8E%8C%E5%AD%90%E5%9B%BE%E5%B0%8F%E7%9B%B4%E5%BE%84%EF%BC%88%E4%BB%99%E4%BA%BA%E6%8E%8C%E6%A0%91-%E5%B8%A6-%E6%A0%91%E5%89%96-%E8%99%9A%E6%A0%91-DP%EF%BC%89"><span class="toc-text">P3 仙人掌子图小直径（仙人掌树 带 树剖 + 虚树 + DP）</span></a></li></ol>
         </nav>
     </aside>
     

@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1788533071160">
+<link rel="stylesheet" href="/styles/main.css?v=1788538621324">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -103,10 +103,10 @@
                     <time class="post-time gt-c-content-color-first">
                         · 2026-08-21 ·</time>
                     
-                        <span class="post-updated">更新于 2026-09-04</span>
+                        <span class="post-updated">更新于 2026-09-05</span>
                     
                     <span class="post-wordcount gt-c-content-color-second">
-                        3.1 千字 ·</span>
+                        3.3 千字 ·</span>
                     
                         
                             <a href="/tags/Algo/" class="post-tag">
@@ -270,12 +270,33 @@
 </ul>
 </li>
 </ul>
-<h2 id="P1-模板题">P1 模板题</h2>
+<h2 id="P1-路径求和（带-rev-make-root-split-link-cut）">P1 路径求和（带 rev / make_root - split - link - cut）</h2>
 <ul>
 <li><code>LG_P3690</code></li>
 </ul>
+<h2 id="P2-连通性-LCA-（无需-rev-前提：定根-link-fa-cut-fa）">P2 连通性 - LCA （无需 rev / 前提：定根 / link_fa - cut_fa）</h2>
+<ul>
+<li><code>SP_8791</code>
+<ul>
+<li>我的猜想没有问题！</li>
+<li>这种定根的最好写了
+<ul>
+<li>不用写 rev 和 stk 和 down！！！</li>
+</ul>
+</li>
+<li>什么时候可以用这种简单 LCT：
+<ul>
+<li>有确定的根的时候</li>
+<li>即，是一个有根树，有一定的规律的</li>
+<li>不是无根树</li>
+</ul>
+</li>
+<li>有了 LCA 其实也可以轻度的 路径求和</li>
+</ul>
+</li>
+</ul>
 <h2 id="Codes">Codes</h2>
-<h2 id="P1-模板题-2">P1 模板题</h2>
+<h2 id="P1-路径求和（带-rev-make-root-split-link-cut）-2">P1 路径求和（带 rev / make_root - split - link - cut）</h2>
 <pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
 <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
 
@@ -482,7 +503,7 @@
     <aside class="post-outline" id="post-outline">
         <div class="outline-title">OUTLINE</div>
         <nav class="outline-nav">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%85%E5%8A%A9%E5%87%BD%E6%95%B0"><span class="toc-text">辅助函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%87%BD%E6%95%B0%EF%BC%88%E5%8D%95%E5%8F%82%E6%95%B0%EF%BC%89"><span class="toc-text">核心函数（单参数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E5%87%BD%E6%95%B0%EF%BC%88%E5%8F%8C%E5%8F%82%E6%95%B0%EF%BC%89"><span class="toc-text">接口函数（双参数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E6%A8%A1%E6%9D%BF%E9%A2%98"><span class="toc-text">P1 模板题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Codes"><span class="toc-text">Codes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E6%A8%A1%E6%9D%BF%E9%A2%98-2"><span class="toc-text">P1 模板题</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%85%E5%8A%A9%E5%87%BD%E6%95%B0"><span class="toc-text">辅助函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%87%BD%E6%95%B0%EF%BC%88%E5%8D%95%E5%8F%82%E6%95%B0%EF%BC%89"><span class="toc-text">核心函数（单参数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E5%87%BD%E6%95%B0%EF%BC%88%E5%8F%8C%E5%8F%82%E6%95%B0%EF%BC%89"><span class="toc-text">接口函数（双参数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E8%B7%AF%E5%BE%84%E6%B1%82%E5%92%8C%EF%BC%88%E5%B8%A6-rev-make-root-split-link-cut%EF%BC%89"><span class="toc-text">P1 路径求和（带 rev &#x2F; make_root - split - link - cut）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P2-%E8%BF%9E%E9%80%9A%E6%80%A7-LCA-%EF%BC%88%E6%97%A0%E9%9C%80-rev-%E5%89%8D%E6%8F%90%EF%BC%9A%E5%AE%9A%E6%A0%B9-link-fa-cut-fa%EF%BC%89"><span class="toc-text">P2 连通性 - LCA （无需 rev &#x2F; 前提：定根 &#x2F; link_fa - cut_fa）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Codes"><span class="toc-text">Codes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E8%B7%AF%E5%BE%84%E6%B1%82%E5%92%8C%EF%BC%88%E5%B8%A6-rev-make-root-split-link-cut%EF%BC%89-2"><span class="toc-text">P1 路径求和（带 rev &#x2F; make_root - split - link - cut）</span></a></li></ol>
         </nav>
     </aside>
     
