@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1788511576870">
+<link rel="stylesheet" href="/styles/main.css?v=1788512471514">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -104,7 +104,7 @@
                         · 2026-09-04 ·</time>
                     
                     <span class="post-wordcount gt-c-content-color-second">
-                        3.8 千字 ·</span>
+                        4 千字 ·</span>
                     
                         
                             <a href="/tags/Algo/" class="post-tag">
@@ -194,6 +194,33 @@
 <blockquote>
 <p>我已瘫坐眩晕！！！</p>
 </blockquote>
+<h2 id="P3-基环树的大直径">P3 基环树的大直径</h2>
+<ul>
+<li><code>LG_P4381</code>
+<ul>
+<li>气笑了</li>
+<li>上一题写了半天假思路</li>
+<li>到这一题直接能用</li>
+<li><strong>不过</strong> <strong>要重点区分</strong> 基环树的 3 种直径
+<ul>
+<li>绝对直径（上一题）
+<ul>
+<li>跟直径八竿子打不着的关系</li>
+<li>有两种含义
+<ol>
+<li>选定一个基环树内部点，可以在边上，使得内部点到最远的点的距离最短的半径的二倍</li>
+<li>删掉基环树的一条环上边，使得生成的树的直径最小，对应的直径</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>最短路的小直径（这个在仙人掌专题有考）</li>
+<li>简单路的大直径（此题）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h2 id="Codes">Codes</h2>
 <pre><code class="hljs cpp"><span class="hljs-comment">// 基环树 其实叫 pseudotree</span>
 <span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
@@ -411,7 +438,7 @@
     <aside class="post-outline" id="post-outline">
         <div class="outline-title">OUTLINE</div>
         <nav class="outline-nav">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E9%AA%91%E5%A3%AB"><span class="toc-text">P1 骑士</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P2-%E5%9F%BA%E7%8E%AF%E6%A0%91%E7%9A%84%E7%BB%9D%E5%AF%B9%E7%9B%B4%E5%BE%84"><span class="toc-text">P2 基环树的绝对直径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Codes"><span class="toc-text">Codes</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E9%AA%91%E5%A3%AB"><span class="toc-text">P1 骑士</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P2-%E5%9F%BA%E7%8E%AF%E6%A0%91%E7%9A%84%E7%BB%9D%E5%AF%B9%E7%9B%B4%E5%BE%84"><span class="toc-text">P2 基环树的绝对直径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P3-%E5%9F%BA%E7%8E%AF%E6%A0%91%E7%9A%84%E5%A4%A7%E7%9B%B4%E5%BE%84"><span class="toc-text">P3 基环树的大直径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Codes"><span class="toc-text">Codes</span></a></li></ol>
         </nav>
     </aside>
     
