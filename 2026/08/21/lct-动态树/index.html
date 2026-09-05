@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1788588651089">
+<link rel="stylesheet" href="/styles/main.css?v=1788595460319">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -106,7 +106,7 @@
                         <span class="post-updated">更新于 2026-09-05</span>
                     
                     <span class="post-wordcount gt-c-content-color-second">
-                        6 千字 ·</span>
+                        13 千字 ·</span>
                     
                         
                             <a href="/tags/Algo/" class="post-tag">
@@ -312,36 +312,64 @@
 </ul>
 </li>
 </ul>
+<h2 id="P4-无向树-路径加乘-（有-rev-有懒标记）">P4 无向树 - 路径加乘 （有 rev / 有懒标记）</h2>
+<ul>
+<li><code>LG_P1501</code>
+<ul>
+<li>路径加</li>
+<li>路径乘</li>
+<li>查询路径和</li>
+<li>连边 断边</li>
+</ul>
+</li>
+</ul>
+<h2 id="P5-无向树-路径染色（有-rev-有懒标记）">P5 无向树 - 路径染色（有 rev / 有懒标记）</h2>
+<ul>
+<li><code>LG_P2486</code>
+<ul>
+<li>曾经是树剖的模板题</li>
+<li>坑点：
+<ul>
+<li>懒标记不要施加于空节点啊！！！</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h2 id="Codes">Codes</h2>
-<h3 id="P1-无向树带-rev">P1 无向树带 rev</h3>
+<h3 id="P1-无向树-有-rev-无懒标记">P1 无向树 / 有 rev / 无懒标记</h3>
+<blockquote>
+<p>带懒标记的就不要封装模板了</p>
+</blockquote>
 <pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
 <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
 
-<span class="hljs-keyword">namespace</span> LCT &#123;
-    <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">2e6</span> + <span class="hljs-number">5</span>, M = <span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>;
-
-    <span class="hljs-comment">// 基本信息</span>
+<span class="hljs-comment">// 无向树版 有 rev / make_root - split - link - cut </span>
+<span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>, <span class="hljs-keyword">class</span> <span class="hljs-title class_">V</span>, <span class="hljs-keyword">class</span> <span class="hljs-title class_">M</span>, <span class="hljs-type">int</span> N&gt;
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">LCT</span> &#123;
     <span class="hljs-type">int</span> ch[N][<span class="hljs-number">2</span>], fa[N];
     <span class="hljs-meta">#<span class="hljs-keyword">define</span> lc(x) ch[x][0]</span>
     <span class="hljs-meta">#<span class="hljs-keyword">define</span> rc(x) ch[x][1]</span>
     <span class="hljs-meta">#<span class="hljs-keyword">define</span> ch(x, y) ch[x][y]</span>
     
-    <span class="hljs-type">int</span> sum[N], val[N];
     <span class="hljs-type">bool</span> rev[N];
-
     <span class="hljs-type">int</span> stk[N], tp;
+
+    T sum[N];
+    V val[N];
+    M merge;
 
     <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">reserve</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;
         <span class="hljs-built_in">memset</span>(ch,<span class="hljs-number">0</span>,<span class="hljs-built_in">sizeof</span>(ch[<span class="hljs-number">0</span>])*(n<span class="hljs-number">+1</span>));
-        <span class="hljs-built_in">fill</span>(fa,fa<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
+        <span class="hljs-built_in">memset</span>(fa,<span class="hljs-number">0</span>,<span class="hljs-built_in">sizeof</span>(fa[<span class="hljs-number">0</span>])*(n<span class="hljs-number">+1</span>));
+        <span class="hljs-built_in">memset</span>(rev,<span class="hljs-number">0</span>,<span class="hljs-built_in">sizeof</span>(rev[<span class="hljs-number">0</span>])*(n<span class="hljs-number">+1</span>));
         
-        <span class="hljs-built_in">fill</span>(sum,sum<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
-        <span class="hljs-built_in">fill</span>(val,val<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
-        <span class="hljs-built_in">fill</span>(rev,rev<span class="hljs-number">+1</span>+n,<span class="hljs-literal">false</span>);
+        <span class="hljs-built_in">memset</span>(sum,<span class="hljs-number">0</span>,<span class="hljs-built_in">sizeof</span>(sum[<span class="hljs-number">0</span>])*(n<span class="hljs-number">+1</span>));
+        <span class="hljs-built_in">memset</span>(val,<span class="hljs-number">0</span>,<span class="hljs-built_in">sizeof</span>(val[<span class="hljs-number">0</span>])*(n<span class="hljs-number">+1</span>));
     &#125;
 
     <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">up</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
-        sum[x] = val[x] ^ sum[<span class="hljs-built_in">lc</span>(x)] ^ sum[<span class="hljs-built_in">rc</span>(x)];
+        sum[x] = <span class="hljs-built_in">merge</span>(sum[<span class="hljs-built_in">lc</span>(x)], val[x], sum[<span class="hljs-built_in">rc</span>(x)]);
     &#125;
 
     <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">reverse</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
@@ -430,55 +458,94 @@
             <span class="hljs-built_in">up</span>(x);
         &#125;
     &#125;
-&#125;
+
+    <span class="hljs-comment">// 扩展</span>
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">modify</span><span class="hljs-params">(<span class="hljs-type">int</span> x, V v)</span> </span>&#123;
+        <span class="hljs-built_in">make_root</span>(x);
+        val[x] = v;
+        <span class="hljs-built_in">up</span>(x);
+    &#125;
+&#125;;
 
 <span class="hljs-keyword">struct</span> <span class="hljs-title class_">LG_P3690</span> &#123;
+    <span class="hljs-comment">// 路径查询 + 连/断无向边 + 单点修改 </span>
     <span class="hljs-keyword">inline</span> <span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>, M = <span class="hljs-number">3e5</span> + <span class="hljs-number">5</span>;
     <span class="hljs-type">int</span> n, m;
+    <span class="hljs-keyword">struct</span> <span class="hljs-title class_">mg</span> &#123;<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">(<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> m,<span class="hljs-type">int</span> r)</span> </span>&#123; <span class="hljs-keyword">return</span> l ^ m ^ r;&#125;&#125;;
+    LCT&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>,mg,N&gt;* T;
     <span class="hljs-built_in">LG_P3690</span>() &#123;
+        T = <span class="hljs-keyword">new</span> <span class="hljs-built_in">LCT</span>&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>,mg,N&gt;();
         cin &gt;&gt; n &gt;&gt; m;
         <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
-            cin &gt;&gt; LCT::val[i];
-            LCT::sum[i] = LCT::val[i];
+            cin &gt;&gt; T-&gt;val[i];
+            T-&gt;sum[i] = T-&gt;val[i];
         &#125;
         <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) &#123;
             <span class="hljs-type">int</span> op, x, y;
             cin &gt;&gt; op &gt;&gt; x &gt;&gt; y;
             <span class="hljs-keyword">if</span> (op == <span class="hljs-number">0</span>) &#123;
-                LCT::<span class="hljs-built_in">split</span>(x, y);
-                cout &lt;&lt; LCT::sum[y] &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+                T-&gt;<span class="hljs-built_in">split</span>(x, y);
+                cout &lt;&lt; T-&gt;sum[y] &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
             &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (op == <span class="hljs-number">1</span>) &#123;
-                LCT::<span class="hljs-built_in">link</span>(x, y);
+                T-&gt;<span class="hljs-built_in">link</span>(x, y);
             &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (op == <span class="hljs-number">2</span>) &#123;
-                LCT::<span class="hljs-built_in">cut</span>(x, y);
+                T-&gt;<span class="hljs-built_in">cut</span>(x, y);
             &#125; <span class="hljs-keyword">else</span> &#123;
-                LCT::<span class="hljs-built_in">make_root</span>(x);
-                LCT::val[x] = y;
-                LCT::<span class="hljs-built_in">up</span>(x);
+                T-&gt;<span class="hljs-built_in">modify</span>(x, y);
             &#125;
         &#125;
-        LCT::<span class="hljs-built_in">reserve</span>(n);
+        T-&gt;<span class="hljs-built_in">reserve</span>(n);
+    &#125;
+&#125;;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">LG_P2147</span> &#123;
+    <span class="hljs-comment">// 连/断无向边 + 查询连通性</span>
+    <span class="hljs-keyword">inline</span> <span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e4</span> + <span class="hljs-number">5</span>, M = <span class="hljs-number">2e5</span> + <span class="hljs-number">5</span>;
+    <span class="hljs-type">int</span> n, m;
+    <span class="hljs-keyword">struct</span> <span class="hljs-title class_">mg</span> &#123;<span class="hljs-function"><span class="hljs-type">char</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">(<span class="hljs-type">char</span> l,<span class="hljs-type">char</span> m,<span class="hljs-type">char</span> r)</span></span>&#123;<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;&#125;&#125;;
+    LCT&lt;<span class="hljs-type">char</span>,<span class="hljs-type">char</span>,mg,N&gt;* T;
+    <span class="hljs-built_in">LG_P2147</span>() &#123;
+        T = <span class="hljs-keyword">new</span> <span class="hljs-built_in">LCT</span>&lt;<span class="hljs-type">char</span>,<span class="hljs-type">char</span>,mg,N&gt;();
+        cin &gt;&gt; n &gt;&gt; m;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) &#123;
+            string op; <span class="hljs-type">int</span> u, v;
+            cin &gt;&gt; op &gt;&gt; u &gt;&gt; v;
+            <span class="hljs-keyword">if</span> (op == <span class="hljs-string">&quot;Connect&quot;</span>) &#123;
+                T-&gt;<span class="hljs-built_in">link</span>(u, v);
+            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (op == <span class="hljs-string">&quot;Destroy&quot;</span>) &#123; <span class="hljs-comment">// 【chovy】 拼写错了</span>
+                T-&gt;<span class="hljs-built_in">cut</span>(u, v);
+            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (op == <span class="hljs-string">&quot;Query&quot;</span>)&#123;
+                cout &lt;&lt; (T-&gt;<span class="hljs-built_in">find_root</span>(u) == T-&gt;<span class="hljs-built_in">find_root</span>(v) ? <span class="hljs-string">&quot;Yes&quot;</span> : <span class="hljs-string">&quot;No&quot;</span>) &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+            &#125;
+        &#125;
+        T-&gt;<span class="hljs-built_in">reserve</span>(n);
     &#125;
 &#125;;
 
 <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
     ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
     <span class="hljs-keyword">new</span> <span class="hljs-built_in">LG_P3690</span>();
+    <span class="hljs-comment">// new LG_P2147();</span>
 &#125;</code></pre>
-<h3 id="P2-P3-有向树-无需-rev">P2 - P3 有向树 无需 rev</h3>
+<h3 id="P2-P3-有向树-无-rev-无懒标记">P2 - P3 有向树 / 无 rev / 无懒标记</h3>
+<blockquote>
+<p>带懒标记的就不要封装模板了</p>
+</blockquote>
 <pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
 <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
 
-<span class="hljs-comment">// 无 rev 标记 / 定根版 </span>
+<span class="hljs-comment">// 有向树版 无 rev / link_fa - cut_fa</span>
 <span class="hljs-comment">// 可以艰难地使用路径查询 借助 lca 需要差分 </span>
-<span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>, <span class="hljs-type">int</span> N&gt;
+<span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>, <span class="hljs-keyword">class</span> <span class="hljs-title class_">V</span>, <span class="hljs-keyword">class</span> <span class="hljs-title class_">M</span>, <span class="hljs-type">int</span> N&gt;
 <span class="hljs-keyword">struct</span> <span class="hljs-title class_">LCT</span> &#123;
-    <span class="hljs-comment">// inline static const int N = 2e6 + 5, M = 2e6 + 5;</span>
     <span class="hljs-type">int</span> ch[N][<span class="hljs-number">2</span>], fa[N];
-    T sum[N], val[N];
     <span class="hljs-meta">#<span class="hljs-keyword">define</span> lc(x) ch[x][0]</span>
     <span class="hljs-meta">#<span class="hljs-keyword">define</span> rc(x) ch[x][1]</span>
     <span class="hljs-meta">#<span class="hljs-keyword">define</span> ch(x, y) ch[x][y]</span>
+    
+    T sum[N];
+    V val[N];
+    M merge;
 
     <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">reserve</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;
         <span class="hljs-built_in">memset</span>(ch,<span class="hljs-number">0</span>,<span class="hljs-built_in">sizeof</span>(ch[<span class="hljs-number">0</span>])*(n<span class="hljs-number">+1</span>));
@@ -496,7 +563,7 @@
     &#125;
 
     <span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">void</span> <span class="hljs-title">up</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
-        sum[x] = sum[<span class="hljs-built_in">lc</span>(x)] + sum[<span class="hljs-built_in">rc</span>(x)] + val[x];
+        sum[x] = <span class="hljs-built_in">merge</span>(sum[<span class="hljs-built_in">lc</span>(x)], val[x], sum[<span class="hljs-built_in">rc</span>(x)]);
     &#125;
 
     <span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">void</span> <span class="hljs-title">rotate</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
@@ -558,14 +625,29 @@
         <span class="hljs-built_in">lc</span>(x) = <span class="hljs-number">0</span>;
         <span class="hljs-built_in">up</span>(x); <span class="hljs-comment">// 【chovy】 忘了</span>
     &#125;
+
+    <span class="hljs-comment">// 扩展</span>
+    <span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">void</span> <span class="hljs-title">modify</span><span class="hljs-params">(<span class="hljs-type">int</span> x, V v)</span> </span>&#123;
+        <span class="hljs-built_in">access</span>(x); <span class="hljs-comment">// ??? 建议保留</span>
+        <span class="hljs-built_in">splay</span>(x);
+        val[x] = v;
+        <span class="hljs-built_in">up</span>(x);
+    &#125;
+
+    <span class="hljs-comment">// 扩展: 有向树</span>
+    <span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title">lca</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y)</span> </span>&#123;
+        <span class="hljs-built_in">access</span>(x);
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">access</span>(y);
+    &#125;
 &#125;;
 
 <span class="hljs-keyword">struct</span> <span class="hljs-title class_">SP_8791</span> &#123;
     <span class="hljs-keyword">inline</span> <span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>, M = <span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>;
-    LCT&lt;<span class="hljs-type">char</span>,N&gt;* T;
+    <span class="hljs-keyword">struct</span> <span class="hljs-title class_">mg</span> &#123;<span class="hljs-function"><span class="hljs-type">char</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">(<span class="hljs-type">char</span> l,<span class="hljs-type">char</span> m,<span class="hljs-type">char</span> r)</span></span>&#123;<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;&#125;&#125;;
+    LCT&lt;<span class="hljs-type">char</span>,<span class="hljs-type">char</span>,mg,N&gt;* T;
     <span class="hljs-type">int</span> n, m;
     <span class="hljs-built_in">SP_8791</span>() &#123;
-        T = <span class="hljs-keyword">new</span> <span class="hljs-built_in">LCT</span>&lt;<span class="hljs-type">char</span>,N&gt;();
+        T = <span class="hljs-keyword">new</span> <span class="hljs-built_in">LCT</span>&lt;<span class="hljs-type">char</span>,<span class="hljs-type">char</span>,mg,N&gt;();
         cin &gt;&gt; n &gt;&gt; m;
         <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) &#123;
             string op; <span class="hljs-type">int</span> x, y;
@@ -578,8 +660,7 @@
                 T-&gt;<span class="hljs-built_in">cut_fa</span>(x);
             &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (op == <span class="hljs-string">&quot;lca&quot;</span>) &#123;
                 cin &gt;&gt; x &gt;&gt; y;
-                T-&gt;<span class="hljs-built_in">access</span>(x);
-                cout &lt;&lt; T-&gt;<span class="hljs-built_in">access</span>(y) &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+                cout &lt;&lt; T-&gt;<span class="hljs-built_in">lca</span>(x, y) &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
             &#125;
         &#125;
         T-&gt;<span class="hljs-built_in">reserve</span>(n);
@@ -588,10 +669,11 @@
 
 <span class="hljs-keyword">struct</span> <span class="hljs-title class_">LG_3203</span> &#123;
     <span class="hljs-keyword">inline</span> <span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">2e5</span> + <span class="hljs-number">5</span>, M = <span class="hljs-number">2e5</span> + <span class="hljs-number">5</span>;
-    LCT&lt;<span class="hljs-type">int</span>,N&gt;* T;
+    <span class="hljs-keyword">struct</span> <span class="hljs-title class_">mg</span> &#123;<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">(<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> m,<span class="hljs-type">int</span> r)</span></span>&#123;<span class="hljs-keyword">return</span> l+m+r;&#125;&#125;;
+    LCT&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>,mg,N&gt;* T;
     <span class="hljs-type">int</span> n, m, a[N];
     <span class="hljs-built_in">LG_3203</span>() &#123;
-        T = <span class="hljs-keyword">new</span> <span class="hljs-built_in">LCT</span>&lt;<span class="hljs-type">int</span>,N&gt;();
+        T = <span class="hljs-keyword">new</span> <span class="hljs-built_in">LCT</span>&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>,mg,N&gt;();
         cin &gt;&gt; n;
         <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) T-&gt;sum[i] = T-&gt;val[i] = <span class="hljs-number">1</span>;
         <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
@@ -622,6 +704,344 @@
     ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
     <span class="hljs-keyword">new</span> <span class="hljs-built_in">SP_8791</span>();
     <span class="hljs-comment">// new LG_3203();</span>
+&#125;</code></pre>
+<h3 id="P4-无向树-有-rev-有懒标记">P4 无向树 / 有 rev / 有懒标记</h3>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>;
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> mod = <span class="hljs-number">51061</span>;
+
+<span class="hljs-comment">// 日常普通手搓 现做现卖版 特别是带懒标记</span>
+<span class="hljs-keyword">namespace</span> LCT &#123;
+    <span class="hljs-type">int</span> ch[N][<span class="hljs-number">2</span>], fa[N];
+    <span class="hljs-meta">#<span class="hljs-keyword">define</span> lc(x) ch[x][0]</span>
+    <span class="hljs-meta">#<span class="hljs-keyword">define</span> rc(x) ch[x][1]</span>
+    <span class="hljs-meta">#<span class="hljs-keyword">define</span> ch(x, y) ch[x][y]</span>
+
+    <span class="hljs-type">bool</span> rev[N];
+    <span class="hljs-type">int</span> stk[N], tp;
+
+    <span class="hljs-type">int</span> sum[N], val[N], sz[N];
+    <span class="hljs-type">int</span> add_tag[N], mul_tag[N];
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">clear</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;
+        <span class="hljs-built_in">memset</span>(ch,<span class="hljs-number">0</span>,<span class="hljs-built_in">sizeof</span>(ch[<span class="hljs-number">0</span>])*(n<span class="hljs-number">+1</span>));
+        <span class="hljs-built_in">memset</span>(fa,<span class="hljs-number">0</span>,<span class="hljs-built_in">sizeof</span>(fa[<span class="hljs-number">0</span>])*(n<span class="hljs-number">+1</span>));
+        <span class="hljs-built_in">memset</span>(rev,<span class="hljs-number">0</span>,<span class="hljs-built_in">sizeof</span>(rev[<span class="hljs-number">0</span>])*(n<span class="hljs-number">+1</span>));
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">is_root</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-keyword">return</span> x != <span class="hljs-built_in">lc</span>(fa[x]) &amp;&amp; x != <span class="hljs-built_in">rc</span>(fa[x]);
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">lr</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">rc</span>(fa[x]) == x;
+    &#125;
+    
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">up</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-comment">// TODO</span>
+        sz[x] = <span class="hljs-number">1</span> + sz[<span class="hljs-built_in">lc</span>(x)] + sz[<span class="hljs-built_in">rc</span>(x)];
+        sum[x] = (val[x] + sum[<span class="hljs-built_in">lc</span>(x)] + sum[<span class="hljs-built_in">rc</span>(x)]) % mod;
+    &#125;
+
+    <span class="hljs-comment">// 【事实上】 一般情 况使用的是懒标记时，改变生效</span>
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">reverse</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-built_in">swap</span>(<span class="hljs-built_in">lc</span>(x), <span class="hljs-built_in">rc</span>(x));
+        rev[x] ^= <span class="hljs-number">1</span>;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> v)</span> </span>&#123;
+        val[x] = (val[x] + v) % mod;
+        sum[x] = (sum[x] + (<span class="hljs-type">long</span> <span class="hljs-type">long</span>) sz[x] * v) % mod;
+        add_tag[x] = (add_tag[x] + v) % mod;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">mul</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> v)</span> </span>&#123;
+        val[x] = (<span class="hljs-type">long</span> <span class="hljs-type">long</span>) val[x] * v % mod;
+        sum[x] = (<span class="hljs-type">long</span> <span class="hljs-type">long</span>) sum[x] * v % mod;
+        add_tag[x] = (<span class="hljs-type">long</span> <span class="hljs-type">long</span>) add_tag[x] * v % mod;
+        mul_tag[x] = (<span class="hljs-type">long</span> <span class="hljs-type">long</span>) mul_tag[x] * v % mod;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">down</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-comment">// TODO</span>
+        <span class="hljs-keyword">if</span>(rev[x]) &#123;
+            <span class="hljs-built_in">reverse</span>(<span class="hljs-built_in">lc</span>(x));
+            <span class="hljs-built_in">reverse</span>(<span class="hljs-built_in">rc</span>(x));
+            rev[x] = <span class="hljs-number">0</span>;
+        &#125;
+        <span class="hljs-keyword">if</span> (mul_tag[x] != <span class="hljs-number">1</span>) &#123;
+            <span class="hljs-built_in">mul</span>(<span class="hljs-built_in">lc</span>(x), mul_tag[x]);
+            <span class="hljs-built_in">mul</span>(<span class="hljs-built_in">rc</span>(x), mul_tag[x]);
+            mul_tag[x] = <span class="hljs-number">1</span>;
+        &#125;
+        <span class="hljs-keyword">if</span> (add_tag[x]) &#123;
+            <span class="hljs-built_in">add</span>(<span class="hljs-built_in">lc</span>(x), add_tag[x]);
+            <span class="hljs-built_in">add</span>(<span class="hljs-built_in">rc</span>(x), add_tag[x]);
+            add_tag[x] = <span class="hljs-number">0</span>;
+        &#125;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">rotate</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-type">int</span> f = fa[x], g = fa[f];
+        <span class="hljs-type">bool</span> d = <span class="hljs-built_in">lr</span>(x);
+        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">ch</span>(f,d) = <span class="hljs-built_in">ch</span>(x,!d)) fa[<span class="hljs-built_in">ch</span>(f,d)] = f;
+        <span class="hljs-built_in">ch</span>(x,!d) = f;
+        <span class="hljs-keyword">if</span>(!<span class="hljs-built_in">is_root</span>(f)) <span class="hljs-built_in">ch</span>(g,<span class="hljs-built_in">lr</span>(f)) = x;
+        fa[f] = x;
+        fa[x] = g;
+        <span class="hljs-built_in">up</span>(f);
+        <span class="hljs-built_in">up</span>(x);
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">splay</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-comment">// </span>
+        stk[++tp] = x;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> y = x;!<span class="hljs-built_in">is_root</span>(y);y=fa[y]) stk[++tp] = fa[y];
+        <span class="hljs-keyword">while</span>(tp) <span class="hljs-built_in">down</span>(stk[tp--]);
+        
+        <span class="hljs-keyword">while</span>(!<span class="hljs-built_in">is_root</span>(x)) &#123;
+            <span class="hljs-type">int</span> f = fa[x];
+            <span class="hljs-comment">// 【chovy】f 写成 x 了！</span>
+            <span class="hljs-keyword">if</span>(!<span class="hljs-built_in">is_root</span>(f)) <span class="hljs-built_in">rotate</span>(<span class="hljs-built_in">lr</span>(x)==<span class="hljs-built_in">lr</span>(f)?f:x);
+            <span class="hljs-built_in">rotate</span>(x);
+        &#125;
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">access</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> y = <span class="hljs-number">0</span>; x; y=x,x=fa[x]) &#123;
+            <span class="hljs-built_in">splay</span>(x);
+            <span class="hljs-built_in">rc</span>(x)=y;
+            <span class="hljs-built_in">up</span>(x);
+        &#125;
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find_root</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-built_in">access</span>(x);
+        <span class="hljs-built_in">splay</span>(x);
+        <span class="hljs-built_in">down</span>(x);
+        <span class="hljs-keyword">while</span>(<span class="hljs-built_in">lc</span>(x)) <span class="hljs-built_in">down</span>(x=<span class="hljs-built_in">lc</span>(x));
+        <span class="hljs-built_in">splay</span>(x);
+        <span class="hljs-keyword">return</span> x;
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">make_root</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-built_in">access</span>(x);
+        <span class="hljs-built_in">splay</span>(x);
+        <span class="hljs-built_in">reverse</span>(x);
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">split</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y)</span> </span>&#123;
+        <span class="hljs-built_in">make_root</span>(x);
+        <span class="hljs-built_in">access</span>(y);
+        <span class="hljs-built_in">splay</span>(y);
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">link</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y)</span> </span>&#123;
+        <span class="hljs-built_in">make_root</span>(x);
+        <span class="hljs-keyword">if</span> (!fa[x]) &#123;
+            fa[x] = y;
+        &#125;
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">cut</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y)</span> </span>&#123;
+        <span class="hljs-built_in">make_root</span>(x);
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">find_root</span>(y) == x &amp;&amp; <span class="hljs-built_in">rc</span>(x) == y &amp;&amp; !<span class="hljs-built_in">lc</span>(y) &amp;&amp; fa[y] == x) &#123;
+            <span class="hljs-built_in">rc</span>(x) = fa[y] = <span class="hljs-number">0</span>;
+            <span class="hljs-built_in">up</span>(x); <span class="hljs-comment">// 【chovy】!!!</span>
+        &#125;
+    &#125;
+&#125;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">LG_P1501</span> &#123;
+    <span class="hljs-type">int</span> n, m;
+    <span class="hljs-built_in">LG_P1501</span>() &#123;
+        cin &gt;&gt; n &gt;&gt; m;
+        <span class="hljs-type">char</span> op; <span class="hljs-type">int</span> u,v,c,u1,v1,u2,v2;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
+            LCT::sum[i] = LCT::val[i] = LCT::mul_tag[i] = LCT::sz[i] = <span class="hljs-number">1</span>;
+        &#125;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) &#123;
+            cin &gt;&gt; u &gt;&gt; v;
+            LCT::<span class="hljs-built_in">link</span>(u, v);
+        &#125;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) &#123;
+            cin &gt;&gt; op;
+            <span class="hljs-keyword">if</span> (op == <span class="hljs-string">&#x27;+&#x27;</span>) &#123;
+                cin &gt;&gt; u &gt;&gt; v &gt;&gt; c;
+                LCT::<span class="hljs-built_in">split</span>(u, v);
+                LCT::<span class="hljs-built_in">add</span>(v, c);
+            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (op == <span class="hljs-string">&#x27;-&#x27;</span>) &#123;
+                cin &gt;&gt; u1 &gt;&gt; v1 &gt;&gt; u2 &gt;&gt; v2;
+                LCT::<span class="hljs-built_in">cut</span>(u1, v1);
+                LCT::<span class="hljs-built_in">link</span>(u2, v2);
+            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (op == <span class="hljs-string">&#x27;*&#x27;</span>) &#123;
+                cin &gt;&gt; u &gt;&gt; v &gt;&gt; c;
+                LCT::<span class="hljs-built_in">split</span>(u, v);
+                LCT::<span class="hljs-built_in">mul</span>(v, c);
+            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (op == <span class="hljs-string">&#x27;/&#x27;</span>) &#123;
+                cin &gt;&gt; u &gt;&gt; v;
+                LCT::<span class="hljs-built_in">split</span>(u, v);
+                cout &lt;&lt; LCT::sum[v] &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+            &#125;
+        &#125;
+        LCT::<span class="hljs-built_in">clear</span>(n);
+    &#125;
+&#125;;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    <span class="hljs-comment">// cout &lt;&lt; mod * mod &lt;&lt; &quot;\n&quot;;</span>
+    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">new</span> <span class="hljs-built_in">LG_P1501</span>();
+&#125;</code></pre>
+<h3 id="P5-无向树-有-rev-有懒标记">P5 无向树 / 有 rev / 有懒标记</h3>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">namespace</span> LCT &#123;
+    <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>;
+    <span class="hljs-type">int</span> ch[N][<span class="hljs-number">2</span>], fa[N];
+    <span class="hljs-meta">#<span class="hljs-keyword">define</span> lc(x) ch[x][0]</span>
+    <span class="hljs-meta">#<span class="hljs-keyword">define</span> rc(x) ch[x][1]</span>
+    <span class="hljs-meta">#<span class="hljs-keyword">define</span> ch(x,y) ch[x][y]</span>
+    
+    <span class="hljs-type">bool</span> rev[N];
+    <span class="hljs-type">int</span> C[N], L[N], R[N], num[N];
+    <span class="hljs-type">int</span> C_tag[N];
+
+    <span class="hljs-type">int</span> stk[N], tp;
+
+    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">is_root</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-keyword">return</span> x != <span class="hljs-built_in">lc</span>(fa[x]) &amp;&amp; x != <span class="hljs-built_in">rc</span>(fa[x]);
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">lr</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">rc</span>(fa[x]) == x;
+    &#125;
+    
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">up</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        L[x] = <span class="hljs-built_in">lc</span>(x) ? L[<span class="hljs-built_in">lc</span>(x)] : C[x];
+        R[x] = <span class="hljs-built_in">rc</span>(x) ? R[<span class="hljs-built_in">rc</span>(x)] : C[x];
+        num[x] = <span class="hljs-number">1</span> + num[<span class="hljs-built_in">lc</span>(x)] + num[<span class="hljs-built_in">rc</span>(x)];
+        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">lc</span>(x)) num[x] -= (C[x] == R[<span class="hljs-built_in">lc</span>(x)]);
+        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">rc</span>(x)) num[x] -= (C[x] == L[<span class="hljs-built_in">rc</span>(x)]);
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">reverse</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-comment">// 【坑点】卧槽 忘了</span>
+        <span class="hljs-built_in">swap</span>(L[x], R[x]);
+        <span class="hljs-built_in">swap</span>(<span class="hljs-built_in">lc</span>(x), <span class="hljs-built_in">rc</span>(x));
+        rev[x] ^= <span class="hljs-number">1</span>;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">color</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> c)</span> </span>&#123;
+        <span class="hljs-comment">// 【坑坑坑！！！】 空节点 tmd 被懒标记污染了 </span>
+        <span class="hljs-keyword">if</span> (x == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span>; 
+        C[x] = L[x] = R[x] = c;
+        <span class="hljs-comment">// ！</span>
+        num[x] = <span class="hljs-number">1</span>;
+        C_tag[x] = c;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">down</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-keyword">if</span> (rev[x]) &#123;
+            <span class="hljs-built_in">reverse</span>(<span class="hljs-built_in">lc</span>(x));
+            <span class="hljs-built_in">reverse</span>(<span class="hljs-built_in">rc</span>(x));
+            rev[x] = <span class="hljs-number">0</span>;
+        &#125;
+        <span class="hljs-keyword">if</span>(C_tag[x]) &#123;
+            <span class="hljs-built_in">color</span>(<span class="hljs-built_in">lc</span>(x), C_tag[x]);
+            <span class="hljs-built_in">color</span>(<span class="hljs-built_in">rc</span>(x), C_tag[x]);
+            C_tag[x] = <span class="hljs-number">0</span>;
+        &#125;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">rotate</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-type">int</span> f = fa[x], g = fa[f];
+        <span class="hljs-type">bool</span> d = <span class="hljs-built_in">lr</span>(x);
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">ch</span>(f,d) = <span class="hljs-built_in">ch</span>(x,!d)) fa[<span class="hljs-built_in">ch</span>(f,d)] = f;
+        <span class="hljs-built_in">ch</span>(x,!d) = f;
+        <span class="hljs-keyword">if</span>(!<span class="hljs-built_in">is_root</span>(f)) <span class="hljs-built_in">ch</span>(g,<span class="hljs-built_in">lr</span>(f)) = x;
+        fa[f] = x;
+        fa[x] = g;
+        <span class="hljs-built_in">up</span>(f);
+        <span class="hljs-built_in">up</span>(x);
+    &#125; 
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">splay</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        stk[++tp] = x;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> y = x;!<span class="hljs-built_in">is_root</span>(y);y=fa[y]) stk[++tp] = fa[y];
+        <span class="hljs-keyword">while</span>(tp) <span class="hljs-built_in">down</span>(stk[tp--]);
+        <span class="hljs-keyword">while</span>(!<span class="hljs-built_in">is_root</span>(x)) &#123;
+            <span class="hljs-type">int</span> f = fa[x];
+            <span class="hljs-keyword">if</span>(!<span class="hljs-built_in">is_root</span>(f)) <span class="hljs-built_in">rotate</span>(<span class="hljs-built_in">lr</span>(x)==<span class="hljs-built_in">lr</span>(f)?f:x);
+            <span class="hljs-built_in">rotate</span>(x);
+        &#125;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">access</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> y = <span class="hljs-number">0</span>;x;y=x,x=fa[x]) &#123;
+            <span class="hljs-built_in">splay</span>(x);
+            <span class="hljs-built_in">rc</span>(x)=y;
+            <span class="hljs-built_in">up</span>(x);
+        &#125;
+    &#125;
+    
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find_root</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-built_in">access</span>(x);
+        <span class="hljs-built_in">splay</span>(x);
+        <span class="hljs-built_in">down</span>(x);
+        <span class="hljs-keyword">while</span>(<span class="hljs-built_in">lc</span>(x)) <span class="hljs-built_in">down</span>(x=<span class="hljs-built_in">lc</span>(x));
+        <span class="hljs-built_in">splay</span>(x);
+        <span class="hljs-keyword">return</span> x;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">make_root</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-built_in">access</span>(x);
+        <span class="hljs-built_in">splay</span>(x);
+        <span class="hljs-built_in">reverse</span>(x);
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">split</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y)</span> </span>&#123;
+        <span class="hljs-built_in">make_root</span>(x);
+        <span class="hljs-built_in">access</span>(y);
+        <span class="hljs-built_in">splay</span>(y);
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">link</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y)</span> </span>&#123;
+        <span class="hljs-built_in">make_root</span>(x);
+        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">find_root</span>(y) != x) fa[x] = y;
+    &#125;
+&#125;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">LG_P2486</span> &#123;
+    <span class="hljs-keyword">inline</span> <span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>;
+    <span class="hljs-type">int</span> n, m;
+
+    <span class="hljs-built_in">LG_P2486</span>() &#123;
+        cin &gt;&gt; n &gt;&gt; m;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
+            cin &gt;&gt; LCT::C[i];
+            LCT::L[i] = LCT::R[i] = LCT::C[i];
+            LCT::num[i] = <span class="hljs-number">1</span>;
+        &#125;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; n ;i++) &#123;
+            <span class="hljs-type">int</span> u, v;
+            cin &gt;&gt; u &gt;&gt; v;
+            LCT::<span class="hljs-built_in">link</span>(u, v);
+        &#125;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i =<span class="hljs-number">1</span> ; i&lt;= m; i++) &#123;
+            <span class="hljs-type">char</span> op; <span class="hljs-type">int</span> a, b, c;
+            cin &gt;&gt; op;
+            <span class="hljs-keyword">if</span> (op == <span class="hljs-string">&#x27;C&#x27;</span>) &#123;
+                cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+                LCT::<span class="hljs-built_in">split</span>(a, b);
+                LCT::<span class="hljs-built_in">color</span>(b, c);
+            &#125; <span class="hljs-keyword">else</span> &#123;
+                cin &gt;&gt; a &gt;&gt; b;
+                LCT::<span class="hljs-built_in">split</span>(a, b);
+                cout &lt;&lt; LCT::num[b] &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+            &#125;
+        &#125;
+    &#125;
+&#125;;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">new</span> <span class="hljs-built_in">LG_P2486</span>();
 &#125;</code></pre>
                 </div>
             </article>
@@ -678,7 +1098,7 @@
     <aside class="post-outline" id="post-outline">
         <div class="outline-title">OUTLINE</div>
         <nav class="outline-nav">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%85%E5%8A%A9%E5%87%BD%E6%95%B0"><span class="toc-text">辅助函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%87%BD%E6%95%B0%EF%BC%88%E5%8D%95%E5%8F%82%E6%95%B0%EF%BC%89"><span class="toc-text">核心函数（单参数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E5%87%BD%E6%95%B0%EF%BC%88%E5%8F%8C%E5%8F%82%E6%95%B0%EF%BC%89"><span class="toc-text">接口函数（双参数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E6%97%A0%E5%90%91%E6%A0%91-%E8%B7%AF%E5%BE%84%E6%B1%82%E5%92%8C-%EF%BC%88%E5%B8%A6-rev-make-root-split-link-cut%EF%BC%89"><span class="toc-text">P1 无向树 - 路径求和 - （带 rev &#x2F; make_root - split - link - cut）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P2-%E6%9C%89%E5%90%91%E6%A0%91-LCA-%EF%BC%88%E6%97%A0%E9%9C%80-rev-link-fa-cut-fa%EF%BC%89"><span class="toc-text">P2 有向树 - LCA （无需 rev &#x2F; link_fa - cut_fa）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P3-%E6%9C%89%E5%90%91%E6%A0%91-%E5%89%8D%E7%BC%80%E6%9F%A5%E8%AF%A2-%EF%BC%88%E6%97%A0%E9%9C%80-rev-link-fa-cut-fa%EF%BC%89"><span class="toc-text">P3 有向树 - 前缀查询 （无需 rev &#x2F; link_fa - cut_fa）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Codes"><span class="toc-text">Codes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#P1-%E6%97%A0%E5%90%91%E6%A0%91%E5%B8%A6-rev"><span class="toc-text">P1 无向树带 rev</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P2-P3-%E6%9C%89%E5%90%91%E6%A0%91-%E6%97%A0%E9%9C%80-rev"><span class="toc-text">P2 - P3 有向树 无需 rev</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%85%E5%8A%A9%E5%87%BD%E6%95%B0"><span class="toc-text">辅助函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%87%BD%E6%95%B0%EF%BC%88%E5%8D%95%E5%8F%82%E6%95%B0%EF%BC%89"><span class="toc-text">核心函数（单参数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E5%87%BD%E6%95%B0%EF%BC%88%E5%8F%8C%E5%8F%82%E6%95%B0%EF%BC%89"><span class="toc-text">接口函数（双参数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E6%97%A0%E5%90%91%E6%A0%91-%E8%B7%AF%E5%BE%84%E6%B1%82%E5%92%8C-%EF%BC%88%E5%B8%A6-rev-make-root-split-link-cut%EF%BC%89"><span class="toc-text">P1 无向树 - 路径求和 - （带 rev &#x2F; make_root - split - link - cut）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P2-%E6%9C%89%E5%90%91%E6%A0%91-LCA-%EF%BC%88%E6%97%A0%E9%9C%80-rev-link-fa-cut-fa%EF%BC%89"><span class="toc-text">P2 有向树 - LCA （无需 rev &#x2F; link_fa - cut_fa）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P3-%E6%9C%89%E5%90%91%E6%A0%91-%E5%89%8D%E7%BC%80%E6%9F%A5%E8%AF%A2-%EF%BC%88%E6%97%A0%E9%9C%80-rev-link-fa-cut-fa%EF%BC%89"><span class="toc-text">P3 有向树 - 前缀查询 （无需 rev &#x2F; link_fa - cut_fa）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P4-%E6%97%A0%E5%90%91%E6%A0%91-%E8%B7%AF%E5%BE%84%E5%8A%A0%E4%B9%98-%EF%BC%88%E6%9C%89-rev-%E6%9C%89%E6%87%92%E6%A0%87%E8%AE%B0%EF%BC%89"><span class="toc-text">P4 无向树 - 路径加乘 （有 rev &#x2F; 有懒标记）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P5-%E6%97%A0%E5%90%91%E6%A0%91-%E8%B7%AF%E5%BE%84%E6%9F%93%E8%89%B2%EF%BC%88%E6%9C%89-rev-%E6%9C%89%E6%87%92%E6%A0%87%E8%AE%B0%EF%BC%89"><span class="toc-text">P5 无向树 - 路径染色（有 rev &#x2F; 有懒标记）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Codes"><span class="toc-text">Codes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#P1-%E6%97%A0%E5%90%91%E6%A0%91-%E6%9C%89-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P1 无向树 &#x2F; 有 rev &#x2F; 无懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P2-P3-%E6%9C%89%E5%90%91%E6%A0%91-%E6%97%A0-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P2 - P3 有向树 &#x2F; 无 rev &#x2F; 无懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P4-%E6%97%A0%E5%90%91%E6%A0%91-%E6%9C%89-rev-%E6%9C%89%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P4 无向树 &#x2F; 有 rev &#x2F; 有懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P5-%E6%97%A0%E5%90%91%E6%A0%91-%E6%9C%89-rev-%E6%9C%89%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P5 无向树 &#x2F; 有 rev &#x2F; 有懒标记</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
