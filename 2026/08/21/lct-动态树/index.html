@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1788773926533">
+<link rel="stylesheet" href="/styles/main.css?v=1788798685872">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -103,10 +103,10 @@
                     <time class="post-time gt-c-content-color-first">
                         · 2026-08-21 ·</time>
                     
-                        <span class="post-updated">更新于 2026-09-07</span>
+                        <span class="post-updated">更新于 2026-09-08</span>
                     
                     <span class="post-wordcount gt-c-content-color-second">
-                        25 千字 ·</span>
+                        31 千字 ·</span>
                     
                         
                             <a href="/tags/Algo/" class="post-tag">
@@ -400,6 +400,28 @@
 <li>3 <strong>边双缩点树</strong> 上查询路径点权和</li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+<h2 id="P10-无向树-动态边双缩点树-带缩点信息-结合时光倒流">P10 无向树 - 动态边双缩点树 - 带缩点信息 - 结合时光倒流</h2>
+<ul>
+<li><code>LG_P2542</code>
+<ul>
+<li>1 断边</li>
+<li>0 查询 <strong>边双缩点树</strong> 路径边 个数</li>
+<li>结合时光大佬</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>LCT 维护 <strong>边权</strong> / <strong>生成树</strong></p>
+<h2 id="P11-无向树-动态最小生成树-动态换边-结合时光倒流">P11 无向树 - 动态最小生成树 - 动态换边 - 结合时光倒流</h2>
+<ul>
+<li><code>LG_P4172</code>
+<ul>
+<li>1 查询路径最小最大边权</li>
+<li>2 断边</li>
+<li>依然类似上一题 结合时光倒流</li>
 </ul>
 </li>
 </ul>
@@ -1878,7 +1900,361 @@
     ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
     <span class="hljs-keyword">new</span> <span class="hljs-built_in">LG_P10658</span>();
 &#125;</code></pre>
+<h3 id="P10-无向树-动态边双缩点树-带缩点信息-结合时光倒流-2">P10 无向树 - 动态边双缩点树 - 带缩点信息 - 结合时光倒流</h3>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">3e4</span> + <span class="hljs-number">5</span>, M = <span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>;
+<span class="hljs-type">int</span> n, m;
 
+<span class="hljs-keyword">namespace</span> LCT &#123;
+    <span class="hljs-comment">// TODO</span>
+    <span class="hljs-type">int</span> val[N], sum[N]; <span class="hljs-comment">// 点的权值 0/1 与 总和</span>
+    <span class="hljs-keyword">namespace</span> DSU &#123;
+        <span class="hljs-type">int</span> f[N];
+        <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;
+            <span class="hljs-built_in">iota</span>(f,f<span class="hljs-number">+1</span>+n,<span class="hljs-number">0</span>);
+        &#125;
+        <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;<span class="hljs-keyword">return</span> f[x] == x ? x : f[x] = <span class="hljs-built_in">find</span>(f[x]);&#125;
+        <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">move</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y)</span> </span>&#123;
+            f[y] = x;
+            <span class="hljs-comment">// TODO</span>
+            val[y] = <span class="hljs-number">0</span>; <span class="hljs-comment">// 清零</span>
+        &#125;
+    &#125;
+    <span class="hljs-type">int</span> ch[N][<span class="hljs-number">2</span>], fa[N];
+    <span class="hljs-meta">#<span class="hljs-keyword">define</span> lc(x) ch[x][0]</span>
+    <span class="hljs-meta">#<span class="hljs-keyword">define</span> rc(x) ch[x][1]</span>
+    <span class="hljs-meta">#<span class="hljs-keyword">define</span> ch(x, y) ch[x][y]</span>
+    <span class="hljs-type">int</span> stk[N], tp;
+    <span class="hljs-type">bool</span> rev[N];
+
+    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">is_root</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;<span class="hljs-keyword">return</span> x != <span class="hljs-built_in">lc</span>(fa[x]) &amp;&amp; x != <span class="hljs-built_in">rc</span>(fa[x]);&#125;
+    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">lr</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;<span class="hljs-keyword">return</span> <span class="hljs-built_in">rc</span>(fa[x]) == x;&#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">up</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-comment">// TODO</span>
+        sum[x] = sum[<span class="hljs-built_in">lc</span>(x)] + sum[<span class="hljs-built_in">rc</span>(x)] + val[x];
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">reverse</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-built_in">swap</span>(<span class="hljs-built_in">lc</span>(x),<span class="hljs-built_in">rc</span>(x));
+        rev[x] ^= <span class="hljs-number">1</span>;
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">down</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-keyword">if</span>(rev[x]) &#123;
+            <span class="hljs-built_in">reverse</span>(<span class="hljs-built_in">lc</span>(x));
+            <span class="hljs-built_in">reverse</span>(<span class="hljs-built_in">rc</span>(x));
+            rev[x] = <span class="hljs-number">0</span>;
+        &#125;
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">rotate</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-type">int</span> f = fa[x], g = fa[f];
+        <span class="hljs-type">bool</span> d = <span class="hljs-built_in">lr</span>(x);
+        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">ch</span>(f,d) = <span class="hljs-built_in">ch</span>(x,!d)) fa[<span class="hljs-built_in">ch</span>(f,d)] = f;
+        <span class="hljs-built_in">ch</span>(x,!d) = f;
+        <span class="hljs-keyword">if</span>(!<span class="hljs-built_in">is_root</span>(f)) <span class="hljs-built_in">ch</span>(g,<span class="hljs-built_in">lr</span>(f)) = x;
+        fa[f] = x;
+        fa[x] = g;
+        <span class="hljs-built_in">up</span>(f);
+        <span class="hljs-built_in">up</span>(x); 
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">splay</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        stk[++tp] = x;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> y = x; !<span class="hljs-built_in">is_root</span>(y);y=fa[y]) stk[++tp] = fa[y];
+        <span class="hljs-keyword">while</span>(tp) <span class="hljs-built_in">down</span>(stk[tp--]);
+        <span class="hljs-keyword">while</span>(!<span class="hljs-built_in">is_root</span>(x)) &#123;
+            <span class="hljs-type">int</span> f = fa[x];
+            <span class="hljs-comment">// 【卧槽】 我怎么这么唐啊 三连写错名 f -&gt; x</span>
+            <span class="hljs-keyword">if</span>(!<span class="hljs-built_in">is_root</span>(f)) <span class="hljs-built_in">rotate</span>(<span class="hljs-built_in">lr</span>(x)==<span class="hljs-built_in">lr</span>(f)?f:x);
+            <span class="hljs-built_in">rotate</span>(x);
+        &#125;
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">access</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> y = <span class="hljs-number">0</span>; x; y = x, x = fa[x]) &#123;
+            <span class="hljs-built_in">splay</span>(x);
+            <span class="hljs-built_in">rc</span>(x) = y;
+            <span class="hljs-built_in">up</span>(x);
+            fa[x] = DSU::<span class="hljs-built_in">find</span>(fa[x]);
+        &#125;
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find_root</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-built_in">access</span>(x);
+        <span class="hljs-built_in">splay</span>(x);
+        <span class="hljs-built_in">down</span>(x);
+        <span class="hljs-keyword">while</span>(<span class="hljs-built_in">lc</span>(x)) <span class="hljs-built_in">down</span>(x=<span class="hljs-built_in">lc</span>(x));
+        <span class="hljs-built_in">splay</span>(x);
+        <span class="hljs-keyword">return</span> x;
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">make_root</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-built_in">access</span>(x);
+        <span class="hljs-built_in">splay</span>(x);
+        <span class="hljs-built_in">reverse</span>(x);
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">condense</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> f)</span> </span>&#123;
+        <span class="hljs-keyword">if</span>(x) &#123;
+            DSU::<span class="hljs-built_in">move</span>(f, x);
+            <span class="hljs-built_in">condense</span>(<span class="hljs-built_in">lc</span>(x),f);
+            <span class="hljs-built_in">condense</span>(<span class="hljs-built_in">rc</span>(x),f);
+        &#125;
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">link</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span> </span>&#123;
+        <span class="hljs-type">int</span> fx = DSU::<span class="hljs-built_in">find</span>(x), fy = DSU::<span class="hljs-built_in">find</span>(y);
+        <span class="hljs-keyword">if</span>(fx == fy) &#123;
+            <span class="hljs-comment">// TODO</span>
+            <span class="hljs-keyword">return</span> ;
+        &#125;
+        <span class="hljs-built_in">make_root</span>(fx);
+        <span class="hljs-comment">// 【卧槽】 我怎么这么唐啊 三连写错名 fx -&gt; x</span>
+        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">find_root</span>(fy) != fx) &#123;
+            fa[fx] = fy;
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-built_in">condense</span>(<span class="hljs-built_in">rc</span>(fx), fx);
+            <span class="hljs-built_in">rc</span>(fx) = <span class="hljs-number">0</span>;
+            <span class="hljs-built_in">up</span>(fx);
+            <span class="hljs-comment">// TODO</span>
+        &#125;
+    &#125;
+
+    <span class="hljs-comment">// 业务方法</span>
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y)</span> </span>&#123;
+        <span class="hljs-type">int</span> fx = DSU::<span class="hljs-built_in">find</span>(x), fy = DSU::<span class="hljs-built_in">find</span>(y);
+        <span class="hljs-built_in">make_root</span>(fx);
+        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">find_root</span>(fy) != fx) &#123;
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-comment">// 已经 access fy 并且 splay fx</span>
+            <span class="hljs-keyword">return</span> sum[fx] - <span class="hljs-number">1</span>; 
+        &#125;
+    &#125;
+&#125;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">LG_P2542</span> &#123;
+    <span class="hljs-built_in">LG_P2542</span>() &#123;
+        cin &gt;&gt; n &gt;&gt; m;
+        LCT::DSU::<span class="hljs-built_in">init</span>(n);
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) LCT::val[i] = LCT::sum[i] = <span class="hljs-number">1</span>;
+        set&lt;pair&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt;&gt; edge;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) &#123;
+            <span class="hljs-type">int</span> u, v;
+            cin &gt;&gt; u &gt;&gt; v;
+            <span class="hljs-keyword">if</span>(u &gt; v) <span class="hljs-built_in">swap</span>(u, v);
+            edge.<span class="hljs-built_in">insert</span>(&#123;u, v&#125;);
+        &#125;
+        <span class="hljs-type">int</span> op;
+        vector&lt;array&lt;<span class="hljs-type">int</span>,3&gt;&gt; tmp;
+        <span class="hljs-keyword">while</span>(cin &gt;&gt; op &amp;&amp; op != <span class="hljs-number">-1</span>) &#123;
+            <span class="hljs-type">int</span> u, v;
+            cin &gt;&gt; u &gt;&gt; v;
+            <span class="hljs-keyword">if</span>(u &gt; v) <span class="hljs-built_in">swap</span>(u, v);
+            <span class="hljs-keyword">if</span>(op == <span class="hljs-number">0</span>) edge.<span class="hljs-built_in">erase</span>(&#123;u, v&#125;);
+            tmp.<span class="hljs-built_in">push_back</span>(&#123;op,u,v&#125;);
+        &#125;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> [u, v] : edge) LCT::<span class="hljs-built_in">link</span>(u, v); <span class="hljs-comment">// 连接已有的 </span>
+        <span class="hljs-built_in">reverse</span>(tmp.<span class="hljs-built_in">begin</span>(), tmp.<span class="hljs-built_in">end</span>());
+        vector&lt;<span class="hljs-type">int</span>&gt; sna;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> [op,u,v]: tmp) &#123;
+            <span class="hljs-keyword">if</span> (op == <span class="hljs-number">1</span>) &#123; <span class="hljs-comment">// query 点数量 - 1</span>
+                <span class="hljs-type">int</span> ans;
+                ans = LCT::<span class="hljs-built_in">query</span>(u, v);
+                sna.<span class="hljs-built_in">push_back</span>(ans);
+            &#125; <span class="hljs-keyword">else</span> &#123; <span class="hljs-comment">// 连接 u v</span>
+                LCT::<span class="hljs-built_in">link</span>(u, v);
+            &#125;
+        &#125;
+        <span class="hljs-built_in">reverse</span>(sna.<span class="hljs-built_in">begin</span>(), sna.<span class="hljs-built_in">end</span>());
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> a:sna) cout &lt;&lt; a &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+    &#125;
+&#125;;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">new</span> <span class="hljs-built_in">LG_P2542</span>();
+&#125;</code></pre>
+<h3 id="P11-无向树-动态最小生成树-动态换边-结合时光倒流-2">P11 无向树 - 动态最小生成树 - 动态换边 - 结合时光倒流</h3>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e3</span> + <span class="hljs-number">5</span> + (<span class="hljs-number">1e5</span>), M = <span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>;
+
+<span class="hljs-type">int</span> n, m, q;
+
+<span class="hljs-type">int</span> tot;
+map&lt;pair&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt;, <span class="hljs-type">int</span>&gt; id; <span class="hljs-comment">// 正向映射</span>
+array&lt;<span class="hljs-type">int</span>,3&gt; uvw[M]; <span class="hljs-comment">// 反向映射</span>
+array&lt;<span class="hljs-type">int</span>,3&gt; no[M]; <span class="hljs-comment">// 询问</span>
+set&lt;<span class="hljs-type">int</span>&gt; S; <span class="hljs-comment">// 当前边集</span>
+
+<span class="hljs-keyword">namespace</span> LCT &#123;
+    <span class="hljs-type">int</span> ch[N][<span class="hljs-number">2</span>], fa[N];
+    <span class="hljs-meta">#<span class="hljs-keyword">define</span> lc(x) ch[x][0]</span>
+    <span class="hljs-meta">#<span class="hljs-keyword">define</span> rc(x) ch[x][1]</span>
+    <span class="hljs-meta">#<span class="hljs-keyword">define</span> ch(x, y) ch[x][y]</span>
+
+    <span class="hljs-type">int</span> stk[N], tp;
+    <span class="hljs-type">bool</span> rev[N];
+
+    <span class="hljs-type">int</span> val[N], mx[N], mxi[N];
+    
+    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">is_root</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;<span class="hljs-keyword">return</span> x != <span class="hljs-built_in">lc</span>(fa[x]) &amp;&amp; x != <span class="hljs-built_in">rc</span>(fa[x]);&#125;
+    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">lr</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;<span class="hljs-keyword">return</span> x == <span class="hljs-built_in">rc</span>(fa[x]);&#125;
+    
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">reverse</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-built_in">swap</span>(<span class="hljs-built_in">lc</span>(x),<span class="hljs-built_in">rc</span>(x));
+        rev[x] ^= <span class="hljs-number">1</span>;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">up</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-comment">// TODO</span>
+        mx[x] = val[x];
+        mxi[x] = x;
+        <span class="hljs-keyword">if</span>(mx[x] &lt; mx[<span class="hljs-built_in">lc</span>(x)]) &#123;
+            mx[x] = mx[<span class="hljs-built_in">lc</span>(x)];
+            mxi[x] = mxi[<span class="hljs-built_in">lc</span>(x)];
+        &#125;        
+        <span class="hljs-keyword">if</span>(mx[x] &lt; mx[<span class="hljs-built_in">rc</span>(x)]) &#123;
+            mx[x] = mx[<span class="hljs-built_in">rc</span>(x)];
+            mxi[x] = mxi[<span class="hljs-built_in">rc</span>(x)];
+        &#125;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">down</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-keyword">if</span>(rev[x]) &#123;
+            <span class="hljs-built_in">reverse</span>(<span class="hljs-built_in">lc</span>(x));
+            <span class="hljs-built_in">reverse</span>(<span class="hljs-built_in">rc</span>(x));
+            rev[x] = <span class="hljs-number">0</span>;
+        &#125;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">rotate</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-type">int</span> f = fa[x], g = fa[f];
+        <span class="hljs-type">bool</span> d = <span class="hljs-built_in">lr</span>(x);
+        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">ch</span>(f,d) = <span class="hljs-built_in">ch</span>(x,!d)) fa[<span class="hljs-built_in">ch</span>(f,d)] = f;
+        <span class="hljs-built_in">ch</span>(x,!d) = f;
+        <span class="hljs-keyword">if</span>(!<span class="hljs-built_in">is_root</span>(f)) <span class="hljs-built_in">ch</span>(g,<span class="hljs-built_in">lr</span>(f)) = x;
+        fa[f] = x;
+        fa[x] = g;
+        <span class="hljs-built_in">up</span>(f);
+        <span class="hljs-comment">// 【卧槽】 我怎么这么唐啊 三连写错名 x -&gt; g</span>
+        <span class="hljs-built_in">up</span>(x);
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">splay</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        stk[++tp] = x;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> y = x;!<span class="hljs-built_in">is_root</span>(y);y=fa[y]) stk[++tp] = fa[y];
+        <span class="hljs-keyword">while</span>(tp) <span class="hljs-built_in">down</span>(stk[tp--]);
+        <span class="hljs-keyword">while</span>(!<span class="hljs-built_in">is_root</span>(x)) &#123;
+            <span class="hljs-type">int</span> f = fa[x];
+            <span class="hljs-keyword">if</span>(!<span class="hljs-built_in">is_root</span>(f)) <span class="hljs-built_in">rotate</span>(<span class="hljs-built_in">lr</span>(x)==<span class="hljs-built_in">lr</span>(f) ? f : x);
+            <span class="hljs-built_in">rotate</span>(x);
+        &#125;
+    &#125;
+    
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">access</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> y = <span class="hljs-number">0</span>; x;y=x,x=fa[x]) &#123;
+            <span class="hljs-built_in">splay</span>(x);
+            <span class="hljs-built_in">rc</span>(x) = y;
+            <span class="hljs-built_in">up</span>(x);
+        &#125;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find_root</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-built_in">access</span>(x);
+        <span class="hljs-built_in">splay</span>(x);
+        <span class="hljs-built_in">down</span>(x);
+        <span class="hljs-keyword">while</span>(<span class="hljs-built_in">lc</span>(x)) <span class="hljs-built_in">down</span>(x=<span class="hljs-built_in">lc</span>(x));
+        <span class="hljs-built_in">splay</span>(x);
+        <span class="hljs-keyword">return</span> x;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">make_root</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-built_in">access</span>(x);
+        <span class="hljs-built_in">splay</span>(x);
+        <span class="hljs-built_in">reverse</span>(x);
+    &#125;
+
+    <span class="hljs-function">pair&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt; <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y)</span> </span>&#123;
+        <span class="hljs-comment">// x y 路径上 最大权值</span>
+        <span class="hljs-built_in">make_root</span>(x);
+        <span class="hljs-built_in">access</span>(y);
+        <span class="hljs-built_in">splay</span>(y);
+        <span class="hljs-keyword">return</span> &#123;mx[y], mxi[y]&#125;;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">cut</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y)</span> </span>&#123;
+        <span class="hljs-built_in">make_root</span>(x);
+        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">find_root</span>(y) == x &amp;&amp; fa[y] == x &amp;&amp; <span class="hljs-built_in">lc</span>(y) == <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-built_in">rc</span>(x) == y) &#123;
+            fa[y] = <span class="hljs-built_in">rc</span>(x) = <span class="hljs-number">0</span>;
+            <span class="hljs-built_in">up</span>(x);
+        &#125;
+    &#125;
+    
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">link</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y)</span> </span>&#123;
+        <span class="hljs-built_in">make_root</span>(x);
+        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">find_root</span>(y) != x) &#123;
+            fa[x] = y;
+        &#125;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">connect</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y,<span class="hljs-type">int</span> i, <span class="hljs-type">int</span> w)</span> </span>&#123;
+        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">find_root</span>(x) != <span class="hljs-built_in">find_root</span>(y)) &#123;            
+            val[i+n] = mx[i+n] = w;
+            mxi[i+n] = i + n;
+            <span class="hljs-built_in">link</span>(i+n, x);
+            <span class="hljs-built_in">link</span>(i+n, y);
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-comment">// TODO</span>
+            <span class="hljs-comment">// 环</span>
+            <span class="hljs-keyword">auto</span> [_w, _ni] = <span class="hljs-built_in">query</span>(x, y);
+            <span class="hljs-keyword">if</span> (_w &lt;= w) <span class="hljs-keyword">return</span>;
+            <span class="hljs-built_in">cut</span>(_ni, uvw[_ni-n][<span class="hljs-number">0</span>]);
+            <span class="hljs-built_in">cut</span>(_ni, uvw[_ni-n][<span class="hljs-number">1</span>]);
+
+            val[i+n] = mx[i+n] = w;
+            mxi[i+n] = i + n;
+            <span class="hljs-built_in">link</span>(i+n, x);
+            <span class="hljs-built_in">link</span>(i+n, y);
+        &#125;
+    &#125;
+
+&#125;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">LG_P4172</span> &#123;
+    <span class="hljs-built_in">LG_P4172</span>() &#123;
+        cin &gt;&gt; n &gt;&gt; m &gt;&gt; q;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) &#123;
+            <span class="hljs-type">int</span> u, v, w;
+            cin &gt;&gt; u &gt;&gt; v &gt;&gt; w;
+            <span class="hljs-keyword">if</span>(u &gt; v) <span class="hljs-built_in">swap</span>(u, v);
+            id[&#123;u, v&#125;] = ++tot;
+            uvw[tot] = &#123;u, v, w&#125;;
+            S.<span class="hljs-built_in">insert</span>(tot);
+        &#125;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= q;i ++) &#123;
+            <span class="hljs-keyword">auto</span>&amp; [op, u, v] = no[i];
+            cin &gt;&gt; op &gt;&gt; u &gt;&gt; v;
+            <span class="hljs-keyword">if</span> (u &gt; v) <span class="hljs-built_in">swap</span>(u, v);
+            <span class="hljs-keyword">if</span>(op == <span class="hljs-number">2</span>) S.<span class="hljs-built_in">erase</span>(id[&#123;u, v&#125;]);
+        &#125;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> i: S) &#123;
+            <span class="hljs-keyword">auto</span> [u, v, w] = uvw[i];
+            LCT::<span class="hljs-built_in">connect</span>(u, v, i, w);
+        &#125;
+        vector&lt;<span class="hljs-type">int</span>&gt; sna;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = q;i &gt;= <span class="hljs-number">1</span>; i--) &#123;
+            <span class="hljs-keyword">auto</span> [op, u, v] = no[i];
+            <span class="hljs-keyword">if</span> (op == <span class="hljs-number">1</span>) &#123; <span class="hljs-comment">// query u, v max</span>
+                sna.<span class="hljs-built_in">push_back</span>(u == v ? <span class="hljs-number">0</span> : LCT::<span class="hljs-built_in">query</span>(u, v).first);
+            &#125; <span class="hljs-keyword">else</span> &#123; <span class="hljs-comment">// connect u, v </span>
+                <span class="hljs-type">int</span> i = id[&#123;u, v&#125;];
+                LCT::<span class="hljs-built_in">connect</span>(u, v, i, uvw[i][<span class="hljs-number">2</span>]);
+            &#125;
+        &#125;
+        <span class="hljs-built_in">reverse</span>(sna.<span class="hljs-built_in">begin</span>(), sna.<span class="hljs-built_in">end</span>());
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> a:sna) cout &lt;&lt; a &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+    &#125;
+&#125;;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">new</span> <span class="hljs-built_in">LG_P4172</span>();
+&#125;</code></pre>
                 </div>
             </article>
         </div>
@@ -1934,7 +2310,7 @@
     <aside class="post-outline" id="post-outline">
         <div class="outline-title">OUTLINE</div>
         <nav class="outline-nav">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%85%E5%8A%A9%E5%87%BD%E6%95%B0"><span class="toc-text">辅助函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%87%BD%E6%95%B0%EF%BC%88%E5%8D%95%E5%8F%82%E6%95%B0%EF%BC%89"><span class="toc-text">核心函数（单参数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E5%87%BD%E6%95%B0%EF%BC%88%E5%8F%8C%E5%8F%82%E6%95%B0%EF%BC%89"><span class="toc-text">接口函数（双参数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E6%97%A0%E5%90%91%E6%A0%91-%E8%B7%AF%E5%BE%84%E6%B1%82%E5%92%8C-%EF%BC%88%E5%B8%A6-rev-make-root-split-link-cut%EF%BC%89"><span class="toc-text">P1 无向树 - 路径求和 - （带 rev &#x2F; make_root - split - link - cut）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P2-%E6%9C%89%E5%90%91%E6%A0%91-LCA-%EF%BC%88%E6%97%A0%E9%9C%80-rev-link-fa-cut-fa%EF%BC%89"><span class="toc-text">P2 有向树 - LCA （无需 rev &#x2F; link_fa - cut_fa）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P3-%E6%9C%89%E5%90%91%E6%A0%91-%E5%89%8D%E7%BC%80%E6%9F%A5%E8%AF%A2-%EF%BC%88%E6%97%A0%E9%9C%80-rev-link-fa-cut-fa%EF%BC%89"><span class="toc-text">P3 有向树 - 前缀查询 （无需 rev &#x2F; link_fa - cut_fa）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P4-%E6%97%A0%E5%90%91%E6%A0%91-%E8%B7%AF%E5%BE%84%E5%8A%A0%E4%B9%98-%EF%BC%88%E6%9C%89-rev-%E6%9C%89%E6%87%92%E6%A0%87%E8%AE%B0%EF%BC%89"><span class="toc-text">P4 无向树 - 路径加乘 （有 rev &#x2F; 有懒标记）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P5-%E6%97%A0%E5%90%91%E6%A0%91-%E8%B7%AF%E5%BE%84%E6%9F%93%E8%89%B2%EF%BC%88%E6%9C%89-rev-%E6%9C%89%E6%87%92%E6%A0%87%E8%AE%B0%EF%BC%89"><span class="toc-text">P5 无向树 - 路径染色（有 rev &#x2F; 有懒标记）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P6-%E6%9C%89%E5%90%91%E6%A0%91-%E2%80%9C%E4%B8%89%E5%8F%89%E6%8A%95%E7%A5%A8%E2%80%9D-%EF%BC%88%E5%8F%AF%E4%BB%A5%E7%94%A8%E6%97%A0%E5%90%91%E8%8E%BD%EF%BC%89"><span class="toc-text">P6 有向树 - “三叉投票” （可以用无向莽）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P7-%E6%9C%89%E5%90%91%E6%A0%91-%E6%96%B0%E9%A2%9C%E8%89%B2%E6%9F%93%E8%89%B2-%E7%BB%B4%E6%8A%A4%E5%AE%9E%E9%93%BE-%EF%BC%88%E6%97%A0-rev%EF%BC%89"><span class="toc-text">P7 有向树 - 新颜色染色&#x2F;维护实链 （无 rev）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P8-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E8%BE%B9%E5%8F%8C%E7%BC%A9%E7%82%B9%E6%A0%91%EF%BC%88%E5%B8%A6-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0%EF%BC%89"><span class="toc-text">P8 无向树 - 动态边双缩点树（带 rev &#x2F; 无懒标记）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P9-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E8%BE%B9%E5%8F%8C%E7%BC%A9%E7%82%B9%E6%A0%91-%EF%BC%88%E5%B8%A6-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0-%E4%BD%86%E6%98%AF%E5%B8%A6%E7%BC%A9%E7%82%B9%E4%BF%A1%E6%81%AF%EF%BC%89"><span class="toc-text">P9 无向树 - 动态边双缩点树 （带 rev &#x2F; 无懒标记 但是带缩点信息）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Codes"><span class="toc-text">Codes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#P1-%E6%97%A0%E5%90%91%E6%A0%91-%E6%9C%89-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P1 无向树 &#x2F; 有 rev &#x2F; 无懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P2-P3-%E6%9C%89%E5%90%91%E6%A0%91-%E6%97%A0-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P2 - P3 有向树 &#x2F; 无 rev &#x2F; 无懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P4-%E6%97%A0%E5%90%91%E6%A0%91-%E6%9C%89-rev-%E6%9C%89%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P4 无向树 &#x2F; 有 rev &#x2F; 有懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P5-%E6%97%A0%E5%90%91%E6%A0%91-%E6%9C%89-rev-%E6%9C%89%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P5 无向树 &#x2F; 有 rev &#x2F; 有懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P6-%E6%97%A0%E5%90%91%E6%A0%91%E7%9B%B4%E6%8E%A5%E8%8E%BD-%E6%9C%89-rev-%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P6 无向树直接莽 &#x2F; 有 rev &#x2F; 懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P7-%E6%9C%89%E5%90%91%E6%A0%91-%E6%97%A0-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P7 有向树 &#x2F; 无 rev &#x2F; 无懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P8-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E8%BE%B9%E5%8F%8C%E7%BC%A9%E7%82%B9%E6%A0%91-%E5%B8%A6-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P8 无向树 - 动态边双缩点树 - 带 rev &#x2F; 无懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P9-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E8%BE%B9%E5%8F%8C%E7%BC%A9%E7%82%B9%E6%A0%91-%E5%B8%A6-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0-%E4%BD%86%E6%98%AF%E5%B8%A6%E7%BC%A9%E7%82%B9%E4%BF%A1%E6%81%AF"><span class="toc-text">P9 无向树 - 动态边双缩点树 - 带 rev &#x2F; 无懒标记 但是带缩点信息</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%85%E5%8A%A9%E5%87%BD%E6%95%B0"><span class="toc-text">辅助函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%87%BD%E6%95%B0%EF%BC%88%E5%8D%95%E5%8F%82%E6%95%B0%EF%BC%89"><span class="toc-text">核心函数（单参数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E5%87%BD%E6%95%B0%EF%BC%88%E5%8F%8C%E5%8F%82%E6%95%B0%EF%BC%89"><span class="toc-text">接口函数（双参数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E6%97%A0%E5%90%91%E6%A0%91-%E8%B7%AF%E5%BE%84%E6%B1%82%E5%92%8C-%EF%BC%88%E5%B8%A6-rev-make-root-split-link-cut%EF%BC%89"><span class="toc-text">P1 无向树 - 路径求和 - （带 rev &#x2F; make_root - split - link - cut）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P2-%E6%9C%89%E5%90%91%E6%A0%91-LCA-%EF%BC%88%E6%97%A0%E9%9C%80-rev-link-fa-cut-fa%EF%BC%89"><span class="toc-text">P2 有向树 - LCA （无需 rev &#x2F; link_fa - cut_fa）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P3-%E6%9C%89%E5%90%91%E6%A0%91-%E5%89%8D%E7%BC%80%E6%9F%A5%E8%AF%A2-%EF%BC%88%E6%97%A0%E9%9C%80-rev-link-fa-cut-fa%EF%BC%89"><span class="toc-text">P3 有向树 - 前缀查询 （无需 rev &#x2F; link_fa - cut_fa）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P4-%E6%97%A0%E5%90%91%E6%A0%91-%E8%B7%AF%E5%BE%84%E5%8A%A0%E4%B9%98-%EF%BC%88%E6%9C%89-rev-%E6%9C%89%E6%87%92%E6%A0%87%E8%AE%B0%EF%BC%89"><span class="toc-text">P4 无向树 - 路径加乘 （有 rev &#x2F; 有懒标记）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P5-%E6%97%A0%E5%90%91%E6%A0%91-%E8%B7%AF%E5%BE%84%E6%9F%93%E8%89%B2%EF%BC%88%E6%9C%89-rev-%E6%9C%89%E6%87%92%E6%A0%87%E8%AE%B0%EF%BC%89"><span class="toc-text">P5 无向树 - 路径染色（有 rev &#x2F; 有懒标记）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P6-%E6%9C%89%E5%90%91%E6%A0%91-%E2%80%9C%E4%B8%89%E5%8F%89%E6%8A%95%E7%A5%A8%E2%80%9D-%EF%BC%88%E5%8F%AF%E4%BB%A5%E7%94%A8%E6%97%A0%E5%90%91%E8%8E%BD%EF%BC%89"><span class="toc-text">P6 有向树 - “三叉投票” （可以用无向莽）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P7-%E6%9C%89%E5%90%91%E6%A0%91-%E6%96%B0%E9%A2%9C%E8%89%B2%E6%9F%93%E8%89%B2-%E7%BB%B4%E6%8A%A4%E5%AE%9E%E9%93%BE-%EF%BC%88%E6%97%A0-rev%EF%BC%89"><span class="toc-text">P7 有向树 - 新颜色染色&#x2F;维护实链 （无 rev）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P8-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E8%BE%B9%E5%8F%8C%E7%BC%A9%E7%82%B9%E6%A0%91%EF%BC%88%E5%B8%A6-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0%EF%BC%89"><span class="toc-text">P8 无向树 - 动态边双缩点树（带 rev &#x2F; 无懒标记）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P9-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E8%BE%B9%E5%8F%8C%E7%BC%A9%E7%82%B9%E6%A0%91-%EF%BC%88%E5%B8%A6-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0-%E4%BD%86%E6%98%AF%E5%B8%A6%E7%BC%A9%E7%82%B9%E4%BF%A1%E6%81%AF%EF%BC%89"><span class="toc-text">P9 无向树 - 动态边双缩点树 （带 rev &#x2F; 无懒标记 但是带缩点信息）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P10-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E8%BE%B9%E5%8F%8C%E7%BC%A9%E7%82%B9%E6%A0%91-%E5%B8%A6%E7%BC%A9%E7%82%B9%E4%BF%A1%E6%81%AF-%E7%BB%93%E5%90%88%E6%97%B6%E5%85%89%E5%80%92%E6%B5%81"><span class="toc-text">P10 无向树 - 动态边双缩点树 - 带缩点信息 - 结合时光倒流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P11-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-%E5%8A%A8%E6%80%81%E6%8D%A2%E8%BE%B9-%E7%BB%93%E5%90%88%E6%97%B6%E5%85%89%E5%80%92%E6%B5%81"><span class="toc-text">P11 无向树 - 动态最小生成树 - 动态换边 - 结合时光倒流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Codes"><span class="toc-text">Codes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#P1-%E6%97%A0%E5%90%91%E6%A0%91-%E6%9C%89-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P1 无向树 &#x2F; 有 rev &#x2F; 无懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P2-P3-%E6%9C%89%E5%90%91%E6%A0%91-%E6%97%A0-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P2 - P3 有向树 &#x2F; 无 rev &#x2F; 无懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P4-%E6%97%A0%E5%90%91%E6%A0%91-%E6%9C%89-rev-%E6%9C%89%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P4 无向树 &#x2F; 有 rev &#x2F; 有懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P5-%E6%97%A0%E5%90%91%E6%A0%91-%E6%9C%89-rev-%E6%9C%89%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P5 无向树 &#x2F; 有 rev &#x2F; 有懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P6-%E6%97%A0%E5%90%91%E6%A0%91%E7%9B%B4%E6%8E%A5%E8%8E%BD-%E6%9C%89-rev-%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P6 无向树直接莽 &#x2F; 有 rev &#x2F; 懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P7-%E6%9C%89%E5%90%91%E6%A0%91-%E6%97%A0-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P7 有向树 &#x2F; 无 rev &#x2F; 无懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P8-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E8%BE%B9%E5%8F%8C%E7%BC%A9%E7%82%B9%E6%A0%91-%E5%B8%A6-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P8 无向树 - 动态边双缩点树 - 带 rev &#x2F; 无懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P9-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E8%BE%B9%E5%8F%8C%E7%BC%A9%E7%82%B9%E6%A0%91-%E5%B8%A6-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0-%E4%BD%86%E6%98%AF%E5%B8%A6%E7%BC%A9%E7%82%B9%E4%BF%A1%E6%81%AF"><span class="toc-text">P9 无向树 - 动态边双缩点树 - 带 rev &#x2F; 无懒标记 但是带缩点信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P10-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E8%BE%B9%E5%8F%8C%E7%BC%A9%E7%82%B9%E6%A0%91-%E5%B8%A6%E7%BC%A9%E7%82%B9%E4%BF%A1%E6%81%AF-%E7%BB%93%E5%90%88%E6%97%B6%E5%85%89%E5%80%92%E6%B5%81-2"><span class="toc-text">P10 无向树 - 动态边双缩点树 - 带缩点信息 - 结合时光倒流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P11-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-%E5%8A%A8%E6%80%81%E6%8D%A2%E8%BE%B9-%E7%BB%93%E5%90%88%E6%97%B6%E5%85%89%E5%80%92%E6%B5%81-2"><span class="toc-text">P11 无向树 - 动态最小生成树 - 动态换边 - 结合时光倒流</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
