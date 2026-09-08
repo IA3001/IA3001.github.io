@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1788831202257">
+<link rel="stylesheet" href="/styles/main.css?v=1788831357161">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -106,7 +106,7 @@
                         <span class="post-updated">更新于 2026-09-08</span>
                     
                     <span class="post-wordcount gt-c-content-color-second">
-                        34 千字 ·</span>
+                        35 千字 ·</span>
                     
                         
                             <a href="/tags/Algo/" class="post-tag">
@@ -416,6 +416,9 @@
 <hr>
 <p>LCT 维护 <strong>边权</strong> / <strong>生成树</strong></p>
 <h2 id="P11-无向树-动态最小生成树-动态换边-结合时光倒流">P11 无向树 - 动态最小生成树 - 动态换边 - 结合时光倒流</h2>
+<blockquote>
+<p>初步探索维护边权的写法</p>
+</blockquote>
 <ul>
 <li><code>LG_P4172</code>
 <ul>
@@ -426,11 +429,18 @@
 </li>
 </ul>
 <h2 id="P12-无向树-最小差值生成树-动态换边-结合滑动窗口（bushi）">P12 无向树 - 最小差值生成树 - 动态换边 - 结合滑动窗口（bushi）</h2>
+<blockquote>
+<p>维护边权的写法走向成熟：<br>
+使用 <code>pair&lt;int,int&gt; wi;</code><br>
+LCT 使用 <code>pair&lt;int,int&gt; p[N], mn[N];</code></p>
+</blockquote>
 <ul>
 <li><code>LG_P4234</code>
 <ul>
 <li>给定 n 个点 m 条边 有边权</li>
 <li>求最小查值生成树的最小差值</li>
+<li>从小到大来连接</li>
+<li>贪心移除连接路径上最小的边权竟然就可以</li>
 </ul>
 </li>
 </ul>
