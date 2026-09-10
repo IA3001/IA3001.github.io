@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1788879759127">
+<link rel="stylesheet" href="/styles/main.css?v=1789014323111">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -103,10 +103,10 @@
                     <time class="post-time gt-c-content-color-first">
                         · 2026-08-21 ·</time>
                     
-                        <span class="post-updated">更新于 2026-09-08</span>
+                        <span class="post-updated">更新于 2026-09-10</span>
                     
                     <span class="post-wordcount gt-c-content-color-second">
-                        56 千字 ·</span>
+                        62 千字 ·</span>
                     
                         
                             <a href="/tags/Algo/" class="post-tag">
@@ -528,7 +528,7 @@ LCT 使用 <code>pair&lt;int,int&gt; p[N], mn[N];</code></p>
 </ul>
 <hr>
 <p>LCT 维护 子树/图结构</p>
-<h2 id="P18-无向树-维护子树-虚子树信息-连通区查询">P18 无向树 - 维护子树 - 虚子树信息 - 连通区查询</h2>
+<h2 id="P18-纯树-维护子树-虚子树信息-颜色连通区查询">P18 纯树 - 维护子树 - 虚子树信息 - 颜色连通区查询</h2>
 <blockquote>
 <p>初步尝试 vir 虚子树维护</p>
 </blockquote>
@@ -540,7 +540,7 @@ LCT 使用 <code>pair&lt;int,int&gt; p[N], mn[N];</code></p>
 </ul>
 </li>
 </ul>
-<h2 id="P19-有向树-维护子树-菊花图预防-连通区查询">P19 有向树 - 维护子树 - 菊花图预防 - 连通区查询</h2>
+<h2 id="P19-纯树-维护子树-菊花图预防-颜色连通区查询">P19 纯树 - 维护子树 - 菊花图预防 - 颜色连通区查询</h2>
 <blockquote>
 <p>对 vir 更更新的时机有了成熟的认识<br>
 vir 的更新 视为 单点修改</p>
@@ -556,7 +556,7 @@ vir 的更新 视为 单点修改</p>
 <li>手动的 up 一定要保证 这个 x 已经是顶部了</li>
 </ul>
 </li>
-<li>？？？但是还有不懂的
+<li>？？？但是还有不懂的？？？？？
 <ul>
 <li>vir 为什么我只写 splay() 不行？</li>
 <li>还得需要前面加 access() ？？？</li>
@@ -565,6 +565,38 @@ vir 的更新 视为 单点修改</p>
 </ul>
 </li>
 </ul>
+<h2 id="P20-纯树-维护子树-有序表维护不可差分虚儿子信息-颜色连通区最大权查询">P20 纯树 - 维护子树 - 有序表维护不可差分虚儿子信息 - 颜色连通区最大权查询</h2>
+<blockquote>
+<p>对 vir 结合 有序表 有了初步的理解</p>
+</blockquote>
+<ul>
+<li><code>SP_QTREE7</code>
+<ul>
+<li>给定一个 n 个点的树 有3种操作 初始 n 个点的颜色</li>
+<li>0 查询 u 节点颜色连通区的最大权</li>
+<li>1 翻转 u 的颜色</li>
+<li>2 修改 u 的权值为 w</li>
+</ul>
+</li>
+</ul>
+<h2 id="P21-纯树-维护子树-菊花图预防-最近关键点查询">P21 纯树 - 维护子树 - 菊花图预防 - 最近关键点查询</h2>
+<blockquote>
+<p>对 vir 的更新时机、前驱条件 的认识基本成熟</p>
+</blockquote>
+<ul>
+<li><code>SP_QTREE5</code>
+<ul>
+<li>给定一个 n 个点的树 有两种操作 初始 n 个点的颜色为黑色</li>
+<li>0 翻转 u 的颜色</li>
+<li>1 查询 u 到最近的白色点的 距离</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>小结</p>
+<p>原来还有动态子树 Top Tree ？<br>
+<img src="assets/LCT/file-20260910121620656.png" alt=""></p>
+</blockquote>
 <h2 id="Codes">Codes</h2>
 <h3 id="P1-无向树-有-rev-无懒标记">P1 无向树 / 有 rev / 无懒标记</h3>
 <blockquote>
@@ -3659,7 +3691,7 @@ ll sum;
     ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
     <span class="hljs-keyword">new</span> <span class="hljs-built_in">LG_P4219</span>();
 &#125;</code></pre>
-<h3 id="P19-有向树-维护子树-菊花图预防-连通区查询-2">P19 有向树 - 维护子树 - 菊花图预防 - 连通区查询</h3>
+<h3 id="P19-有向树-维护子树-菊花图预防-连通区查询">P19 有向树 - 维护子树 - 菊花图预防 - 连通区查询</h3>
 <pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
 <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
 <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = (<span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>) * <span class="hljs-number">2</span>;
@@ -3796,6 +3828,303 @@ vector&lt;<span class="hljs-type">int</span>&gt; e[N];
     ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
     <span class="hljs-keyword">new</span> <span class="hljs-built_in">SP_QTREE6</span>();
 &#125;</code></pre>
+<h3 id="P20-纯树-维护子树-有序表维护不可差分虚儿子信息-颜色连通区最大权查询-2">P20 纯树 - 维护子树 - 有序表维护不可差分虚儿子信息 - 颜色连通区最大权查询</h3>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = (<span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>) * <span class="hljs-number">2</span>, M = <span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>;
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> inf = <span class="hljs-number">2e9</span>; <span class="hljs-comment">// !!! |w| &lt;= 1e9</span>
+
+<span class="hljs-type">int</span> n, m;
+vector&lt;<span class="hljs-type">int</span>&gt; e[N];
+<span class="hljs-type">int</span> parent[N];
+<span class="hljs-type">int</span> tmpc[N];
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> f)</span> </span>&#123;
+    parent[u] = f;
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> v:e[u]) <span class="hljs-keyword">if</span> (v!=f) <span class="hljs-built_in">dfs</span>(v,u);
+&#125;
+
+<span class="hljs-keyword">namespace</span> LCT &#123;
+    <span class="hljs-type">int</span> ch[N][<span class="hljs-number">2</span>], fa[N];
+    <span class="hljs-meta">#<span class="hljs-keyword">define</span> lc(x) ch[x][0]</span>
+    <span class="hljs-meta">#<span class="hljs-keyword">define</span> rc(x) ch[x][1]</span>
+    <span class="hljs-meta">#<span class="hljs-keyword">define</span> ch(x, y) ch[x][y]</span>
+
+    <span class="hljs-type">int</span> mx[N], val[N];
+    <span class="hljs-type">bool</span> color[N];
+    multiset&lt;<span class="hljs-type">int</span>&gt; vir[N];
+
+    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">is_root</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123; <span class="hljs-keyword">return</span> x != <span class="hljs-built_in">lc</span>(fa[x]) &amp;&amp; x != <span class="hljs-built_in">rc</span>(fa[x]);&#125;
+    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">lr</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;<span class="hljs-keyword">return</span> x == <span class="hljs-built_in">rc</span>(fa[x]);&#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">up</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        mx[x] = <span class="hljs-built_in">max</span>(mx[<span class="hljs-built_in">lc</span>(x)], mx[<span class="hljs-built_in">rc</span>(x)]);
+        mx[x] = <span class="hljs-built_in">max</span>(mx[x], val[x]);
+        <span class="hljs-keyword">if</span> (vir[x].<span class="hljs-built_in">size</span>()) mx[x] = <span class="hljs-built_in">max</span>(mx[x], *vir[x].<span class="hljs-built_in">rbegin</span>());
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">rotate</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-type">int</span> f = fa[x], g = fa[f];
+        <span class="hljs-type">bool</span> d = <span class="hljs-built_in">lr</span>(x);
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">ch</span>(f, d) = <span class="hljs-built_in">ch</span>(x, !d)) fa[<span class="hljs-built_in">ch</span>(f,d)] = f;
+        <span class="hljs-built_in">ch</span>(x,!d) = f;
+        <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">is_root</span>(f)) <span class="hljs-built_in">ch</span>(g,<span class="hljs-built_in">lr</span>(f)) = x;
+        fa[f] = x;
+        fa[x] = g;
+        <span class="hljs-built_in">up</span>(f);
+        <span class="hljs-built_in">up</span>(x);
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">splay</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-keyword">while</span>(!<span class="hljs-built_in">is_root</span>(x)) &#123;
+            <span class="hljs-type">int</span> f = fa[x];
+            <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">is_root</span>(f)) <span class="hljs-built_in">rotate</span>(<span class="hljs-built_in">lr</span>(x)==<span class="hljs-built_in">lr</span>(f)?f:x);
+            <span class="hljs-built_in">rotate</span>(x);
+        &#125;
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">access</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> y = <span class="hljs-number">0</span>;x;y=x,x=fa[x]) &#123;
+            <span class="hljs-built_in">splay</span>(x);
+            <span class="hljs-comment">// TODO</span>
+            <span class="hljs-keyword">if</span> (<span class="hljs-built_in">rc</span>(x)) vir[x].<span class="hljs-built_in">insert</span>(mx[<span class="hljs-built_in">rc</span>(x)]);
+            <span class="hljs-keyword">if</span> (y) vir[x].<span class="hljs-built_in">erase</span>(vir[x].<span class="hljs-built_in">find</span>(mx[y]));
+            <span class="hljs-built_in">rc</span>(x) = y;
+            <span class="hljs-built_in">up</span>(x);
+        &#125;
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find_root</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-built_in">access</span>(x);
+        <span class="hljs-built_in">splay</span>(x);
+        <span class="hljs-keyword">while</span>(<span class="hljs-built_in">lc</span>(x)) x=<span class="hljs-built_in">lc</span>(x);
+        <span class="hljs-built_in">splay</span>(x);
+        <span class="hljs-keyword">return</span> x;
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">link_fa</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y)</span> </span>&#123;
+        <span class="hljs-built_in">access</span>(x);
+        <span class="hljs-built_in">splay</span>(x);
+        fa[x] = y;
+
+        <span class="hljs-comment">// TODO</span>
+        <span class="hljs-built_in">access</span>(y); <span class="hljs-comment">// !!!</span>
+        <span class="hljs-built_in">splay</span>(y); <span class="hljs-comment">// !!!</span>
+        vir[y].<span class="hljs-built_in">insert</span>(mx[x]);
+        <span class="hljs-built_in">up</span>(y);
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">cut_fa</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-built_in">access</span>(x);
+        <span class="hljs-built_in">splay</span>(x);
+        fa[<span class="hljs-built_in">lc</span>(x)] = <span class="hljs-number">0</span>;
+        <span class="hljs-built_in">lc</span>(x) = <span class="hljs-number">0</span>;
+        <span class="hljs-built_in">up</span>(x);
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-type">int</span> xs = color[x] ? x : x + n;
+        <span class="hljs-type">int</span> ys = <span class="hljs-built_in">find_root</span>(xs);
+        <span class="hljs-keyword">return</span> color[ys] ? mx[ys] : mx[<span class="hljs-built_in">rc</span>(ys)];
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">toggle</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-type">int</span> curx = color[x] ? x : x + n;
+        <span class="hljs-type">int</span> otherx = color[x] ? x + n : x;
+        <span class="hljs-keyword">if</span> (parent[x]) &#123;
+            <span class="hljs-built_in">cut_fa</span>(curx);
+            <span class="hljs-built_in">link_fa</span>(otherx,otherx-x+parent[x]);
+        &#125;
+        color[x] ^= <span class="hljs-number">1</span>; <span class="hljs-comment">// !</span>
+        color[x+n] ^= <span class="hljs-number">1</span>; <span class="hljs-comment">// !</span>
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">modify</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> v)</span> </span>&#123;
+        <span class="hljs-built_in">access</span>(x);
+        <span class="hljs-built_in">splay</span>(x);
+        val[x] = v;
+        <span class="hljs-built_in">up</span>(x);
+        
+        <span class="hljs-built_in">access</span>(x+n);
+        <span class="hljs-built_in">splay</span>(x+n);
+        val[x+n] = v;
+        <span class="hljs-built_in">up</span>(x+n);
+    &#125;
+&#125;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">SP_QTREE7</span> &#123;
+    <span class="hljs-built_in">SP_QTREE7</span>() &#123;
+        cin &gt;&gt; n;
+        LCT::mx[<span class="hljs-number">0</span>] = LCT::val[<span class="hljs-number">0</span>] = -inf;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) &#123;
+            <span class="hljs-type">int</span> u, v;
+            cin &gt;&gt; u &gt;&gt; v;
+            e[u].<span class="hljs-built_in">push_back</span>(v);
+            e[v].<span class="hljs-built_in">push_back</span>(u);
+        &#125;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) cin &gt;&gt; tmpc[i];
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
+            <span class="hljs-type">int</span> v; cin &gt;&gt; v;
+            <span class="hljs-comment">// 【坑点】 chovy！！ 对面的点也要改</span>
+            LCT::mx[i]=LCT::val[i] = LCT::mx[i+n] = LCT::val[i+n] = v;
+            LCT::color[i] = <span class="hljs-number">1</span>;
+        &#125;
+        <span class="hljs-built_in">dfs</span>(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">2</span>; i &lt;= n; i++) LCT::<span class="hljs-built_in">link_fa</span>(i,parent[i]);
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) <span class="hljs-keyword">if</span> (!tmpc[i]) LCT::<span class="hljs-built_in">toggle</span>(i);
+        cin &gt;&gt; m;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) &#123;
+            <span class="hljs-type">int</span> op,u,w;
+            cin &gt;&gt; op &gt;&gt; u;
+            <span class="hljs-keyword">if</span> (op == <span class="hljs-number">0</span>) &#123;
+                cout &lt;&lt; LCT::<span class="hljs-built_in">query</span>(u) &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (op == <span class="hljs-number">1</span>) &#123;
+                LCT::<span class="hljs-built_in">toggle</span>(u);
+            &#125; <span class="hljs-keyword">else</span> &#123;
+                cin &gt;&gt; w;
+                LCT::<span class="hljs-built_in">modify</span>(u, w);
+            &#125;
+        &#125;
+    &#125;
+&#125;;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">new</span> <span class="hljs-built_in">SP_QTREE7</span>();
+&#125;</code></pre>
+<h3 id="P21-纯树-维护子树-菊花图预防-最近关键点查询-2">P21 纯树 - 维护子树 - 菊花图预防 - 最近关键点查询</h3>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>, M = <span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>, inf = <span class="hljs-number">1e9</span>;
+
+<span class="hljs-type">int</span> n, q;
+vector&lt;<span class="hljs-type">int</span>&gt; e[N];
+<span class="hljs-type">int</span> parent[N];
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> f)</span> </span>&#123;
+    parent[u] = f;
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> v:e[u]) <span class="hljs-keyword">if</span> (v!=f) <span class="hljs-built_in">dfs</span>(v, u);
+&#125;
+<span class="hljs-keyword">namespace</span> LCT &#123;
+    <span class="hljs-type">int</span> ch[N][<span class="hljs-number">2</span>], fa[N];
+    <span class="hljs-meta">#<span class="hljs-keyword">define</span> lc(x) ch[x][0]</span>
+    <span class="hljs-meta">#<span class="hljs-keyword">define</span> rc(x) ch[x][1]</span>
+    <span class="hljs-meta">#<span class="hljs-keyword">define</span> ch(x,y) ch[x][y]</span>
+
+    <span class="hljs-comment">// 0 白 1 黑</span>
+    <span class="hljs-type">bool</span> color[N];
+    <span class="hljs-comment">// sz 不用说</span>
+    <span class="hljs-comment">// lm 是指的是 x 子树管辖的实链中的 链顶开始 到 最近的 白色点 的距离</span>
+    <span class="hljs-comment">// rm 指的是 x 子树管辖的实链中的 链底开始 到 最近的白色的点的距离 </span>
+    <span class="hljs-type">int</span> sz[N], lm[N], rm[N];
+    <span class="hljs-comment">// vir 指的是 x 的虚子树(当然是 splay 的根) 的链顶 到最近的白色点的距离</span>
+    multiset&lt;<span class="hljs-type">int</span>&gt; vir[N];
+
+    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">is_root</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;<span class="hljs-keyword">return</span> x != <span class="hljs-built_in">lc</span>(fa[x]) &amp;&amp; x != <span class="hljs-built_in">rc</span>(fa[x]);&#125;
+    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">lr</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;<span class="hljs-keyword">return</span> x == <span class="hljs-built_in">rc</span>(fa[x]);&#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">up</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-comment">// TODO</span>
+        sz[x] = sz[<span class="hljs-built_in">lc</span>(x)] + sz[<span class="hljs-built_in">rc</span>(x)] + <span class="hljs-number">1</span>;
+        <span class="hljs-comment">// 如何更新 lm[x] ?</span>
+        <span class="hljs-comment">// 首先 lm[lc(x)] 是一个 </span>
+        <span class="hljs-comment">// 然后 如果 x 是白色点 那么 sz[lc(x)] 是一个</span>
+        <span class="hljs-comment">// 否则 要么去 x 的虚子树 sz[lc(x)] + 1 + min vir[x]</span>
+        <span class="hljs-comment">// 要么 直接用的是 跨过 x 的下方的 lm[rc(x)] + sz[lc(x)] + 1</span>
+        <span class="hljs-comment">// rm 同理~~~</span>
+        lm[x] = lm[<span class="hljs-built_in">lc</span>(x)];
+        rm[x] = rm[<span class="hljs-built_in">rc</span>(x)];
+        <span class="hljs-keyword">if</span> (!color[x]) &#123;
+            lm[x] = <span class="hljs-built_in">min</span>(lm[x], sz[<span class="hljs-built_in">lc</span>(x)]);
+            rm[x] = <span class="hljs-built_in">min</span>(rm[x], sz[<span class="hljs-built_in">rc</span>(x)]);
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-keyword">if</span>(vir[x].<span class="hljs-built_in">size</span>()) &#123;
+                lm[x] = <span class="hljs-built_in">min</span>(lm[x], sz[<span class="hljs-built_in">lc</span>(x)] + <span class="hljs-number">1</span> + *vir[x].<span class="hljs-built_in">begin</span>());
+                rm[x] = <span class="hljs-built_in">min</span>(rm[x], sz[<span class="hljs-built_in">rc</span>(x)] + <span class="hljs-number">1</span> + *vir[x].<span class="hljs-built_in">begin</span>());
+            &#125;
+            lm[x] = <span class="hljs-built_in">min</span>(lm[x], lm[<span class="hljs-built_in">rc</span>(x)] + sz[<span class="hljs-built_in">lc</span>(x)] + <span class="hljs-number">1</span>);
+            rm[x] = <span class="hljs-built_in">min</span>(rm[x], rm[<span class="hljs-built_in">lc</span>(x)] + sz[<span class="hljs-built_in">rc</span>(x)] + <span class="hljs-number">1</span>);
+        &#125;
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">rotate</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-type">int</span> f = fa[x], g = fa[f];
+        <span class="hljs-type">bool</span> d = <span class="hljs-built_in">lr</span>(x);
+        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">ch</span>(f,d) = <span class="hljs-built_in">ch</span>(x,!d)) fa[<span class="hljs-built_in">ch</span>(f,d)] = f;
+        <span class="hljs-built_in">ch</span>(x,!d) = f;
+        <span class="hljs-keyword">if</span>(!<span class="hljs-built_in">is_root</span>(f)) <span class="hljs-built_in">ch</span>(g,<span class="hljs-built_in">lr</span>(f)) = x;
+        fa[f] = x; fa[x] = g;
+        <span class="hljs-built_in">up</span>(f); <span class="hljs-built_in">up</span>(x);
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">splay</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-keyword">while</span>(!<span class="hljs-built_in">is_root</span>(x)) &#123;
+            <span class="hljs-type">int</span> f = fa[x];
+            <span class="hljs-keyword">if</span>(!<span class="hljs-built_in">is_root</span>(f)) <span class="hljs-built_in">rotate</span>(<span class="hljs-built_in">lr</span>(x)==<span class="hljs-built_in">lr</span>(f)?f:x);
+            <span class="hljs-built_in">rotate</span>(x);
+        &#125;
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">access</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> y = <span class="hljs-number">0</span>;x;y=x,x=fa[x]) &#123;
+            <span class="hljs-built_in">splay</span>(x);
+            <span class="hljs-comment">// TODO</span>
+            <span class="hljs-keyword">if</span> (<span class="hljs-built_in">rc</span>(x)) vir[x].<span class="hljs-built_in">insert</span>(lm[<span class="hljs-built_in">rc</span>(x)]);
+            <span class="hljs-keyword">if</span> (y) vir[x].<span class="hljs-built_in">erase</span>(vir[x].<span class="hljs-built_in">find</span>(lm[y]));
+            <span class="hljs-built_in">rc</span>(x) = y;
+            <span class="hljs-built_in">up</span>(x);
+        &#125;
+    &#125;
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">link_fa</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span> </span>&#123;
+        <span class="hljs-built_in">access</span>(x);
+        <span class="hljs-built_in">splay</span>(x);
+        fa[x] = y;
+        <span class="hljs-comment">// TODO</span>
+        <span class="hljs-comment">// 终于知道为什么要 access y 因为这样这个实链才不会被当作儿子</span>
+        <span class="hljs-built_in">access</span>(y);
+        <span class="hljs-comment">// 终于知道这个 splay y 的效果了 因为这样在实链中 y 才不会被当作儿子</span>
+        <span class="hljs-built_in">splay</span>(y);
+        <span class="hljs-comment">// TODO</span>
+        vir[y].<span class="hljs-built_in">insert</span>(lm[x]);
+        <span class="hljs-built_in">up</span>(y);
+    &#125;
+    <span class="hljs-comment">// [妙啊]</span>
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">toggle</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-comment">// 登顶第一步</span>
+        <span class="hljs-built_in">access</span>(x);
+        <span class="hljs-comment">// 登顶第二步</span>
+        <span class="hljs-built_in">splay</span>(x);
+        <span class="hljs-comment">// 无人知我：</span>
+        <span class="hljs-comment">// sz lm rm 什么的 只在我的范围内被考虑</span>
+        <span class="hljs-comment">// 不存在 实链父亲 vir 里面有我</span>
+        color[x] ^= <span class="hljs-number">1</span>;
+        <span class="hljs-built_in">up</span>(x);
+    &#125;
+    <span class="hljs-comment">// [妙啊]</span>
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-built_in">access</span>(x); <span class="hljs-comment">// 让 x 所在实链 拥有 整棵树 的信息</span>
+        <span class="hljs-built_in">splay</span>(x); <span class="hljs-comment">// 让 x 拥有 整个实链 的信息</span>
+        <span class="hljs-keyword">return</span> rm[x] != inf ? rm[x] : <span class="hljs-number">-1</span>;
+    &#125;
+&#125;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">SP_QTREE5</span> &#123;
+    <span class="hljs-built_in">SP_QTREE5</span>() &#123;
+        cin &gt;&gt; n;
+        LCT::color[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;
+        LCT::sz[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>; <span class="hljs-comment">// 注意哦~~~</span>
+        LCT::lm[<span class="hljs-number">0</span>] = LCT::rm[<span class="hljs-number">0</span>] = inf;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
+            LCT::color[i] = LCT::sz[i] = <span class="hljs-number">1</span>;
+            LCT::lm[i] = LCT::rm[i] = inf;
+        &#125;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) &#123;
+            <span class="hljs-type">int</span> u, v;
+            cin &gt;&gt; u &gt;&gt; v;
+            e[u].<span class="hljs-built_in">push_back</span>(v);
+            e[v].<span class="hljs-built_in">push_back</span>(u);
+        &#125;
+        <span class="hljs-built_in">dfs</span>(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">2</span>; i &lt;= n; i++) LCT::<span class="hljs-built_in">link_fa</span>(i, parent[i]);
+        cin &gt;&gt; q;
+        <span class="hljs-keyword">while</span>(q--) &#123;
+            <span class="hljs-type">int</span> op, v;
+            cin &gt;&gt; op &gt;&gt; v;
+            <span class="hljs-keyword">if</span> (op == <span class="hljs-number">0</span>) LCT::<span class="hljs-built_in">toggle</span>(v);
+            <span class="hljs-keyword">else</span> cout &lt;&lt; LCT::<span class="hljs-built_in">query</span>(v) &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+        &#125;
+    &#125;
+&#125;;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">new</span> <span class="hljs-built_in">SP_QTREE5</span>();
+&#125;</code></pre>
 
                 </div>
             </article>
@@ -3852,7 +4181,7 @@ vector&lt;<span class="hljs-type">int</span>&gt; e[N];
     <aside class="post-outline" id="post-outline">
         <div class="outline-title">OUTLINE</div>
         <nav class="outline-nav">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%85%E5%8A%A9%E5%87%BD%E6%95%B0"><span class="toc-text">辅助函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%87%BD%E6%95%B0%EF%BC%88%E5%8D%95%E5%8F%82%E6%95%B0%EF%BC%89"><span class="toc-text">核心函数（单参数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E5%87%BD%E6%95%B0%EF%BC%88%E5%8F%8C%E5%8F%82%E6%95%B0%EF%BC%89"><span class="toc-text">接口函数（双参数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E6%97%A0%E5%90%91%E6%A0%91-%E8%B7%AF%E5%BE%84%E6%B1%82%E5%92%8C-%EF%BC%88%E5%B8%A6-rev-make-root-split-link-cut%EF%BC%89"><span class="toc-text">P1 无向树 - 路径求和 - （带 rev &#x2F; make_root - split - link - cut）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P2-%E6%9C%89%E5%90%91%E6%A0%91-LCA-%EF%BC%88%E6%97%A0%E9%9C%80-rev-link-fa-cut-fa%EF%BC%89"><span class="toc-text">P2 有向树 - LCA （无需 rev &#x2F; link_fa - cut_fa）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P3-%E6%9C%89%E5%90%91%E6%A0%91-%E5%89%8D%E7%BC%80%E6%9F%A5%E8%AF%A2-%EF%BC%88%E6%97%A0%E9%9C%80-rev-link-fa-cut-fa%EF%BC%89"><span class="toc-text">P3 有向树 - 前缀查询 （无需 rev &#x2F; link_fa - cut_fa）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P4-%E6%97%A0%E5%90%91%E6%A0%91-%E8%B7%AF%E5%BE%84%E5%8A%A0%E4%B9%98-%EF%BC%88%E6%9C%89-rev-%E6%9C%89%E6%87%92%E6%A0%87%E8%AE%B0%EF%BC%89"><span class="toc-text">P4 无向树 - 路径加乘 （有 rev &#x2F; 有懒标记）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P5-%E6%97%A0%E5%90%91%E6%A0%91-%E8%B7%AF%E5%BE%84%E6%9F%93%E8%89%B2%EF%BC%88%E6%9C%89-rev-%E6%9C%89%E6%87%92%E6%A0%87%E8%AE%B0%EF%BC%89"><span class="toc-text">P5 无向树 - 路径染色（有 rev &#x2F; 有懒标记）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P6-%E6%9C%89%E5%90%91%E6%A0%91-%E2%80%9C%E4%B8%89%E5%8F%89%E6%8A%95%E7%A5%A8%E2%80%9D-%EF%BC%88%E5%8F%AF%E4%BB%A5%E7%94%A8%E6%97%A0%E5%90%91%E8%8E%BD%EF%BC%89"><span class="toc-text">P6 有向树 - “三叉投票” （可以用无向莽）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P7-%E6%9C%89%E5%90%91%E6%A0%91-%E6%96%B0%E9%A2%9C%E8%89%B2%E6%9F%93%E8%89%B2-%E7%BB%B4%E6%8A%A4%E5%AE%9E%E9%93%BE-%EF%BC%88%E6%97%A0-rev%EF%BC%89"><span class="toc-text">P7 有向树 - 新颜色染色&#x2F;维护实链 （无 rev）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P8-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E8%BE%B9%E5%8F%8C%E7%BC%A9%E7%82%B9%E6%A0%91%EF%BC%88%E5%B8%A6-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0%EF%BC%89"><span class="toc-text">P8 无向树 - 动态边双缩点树（带 rev &#x2F; 无懒标记）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P9-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E8%BE%B9%E5%8F%8C%E7%BC%A9%E7%82%B9%E6%A0%91-%EF%BC%88%E5%B8%A6-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0-%E4%BD%86%E6%98%AF%E5%B8%A6%E7%BC%A9%E7%82%B9%E4%BF%A1%E6%81%AF%EF%BC%89"><span class="toc-text">P9 无向树 - 动态边双缩点树 （带 rev &#x2F; 无懒标记 但是带缩点信息）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P10-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E8%BE%B9%E5%8F%8C%E7%BC%A9%E7%82%B9%E6%A0%91-%E5%B8%A6%E7%BC%A9%E7%82%B9%E4%BF%A1%E6%81%AF-%E7%BB%93%E5%90%88%E6%97%B6%E5%85%89%E5%80%92%E6%B5%81"><span class="toc-text">P10 无向树 - 动态边双缩点树 - 带缩点信息 - 结合时光倒流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P11-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-%E5%8A%A8%E6%80%81%E6%8D%A2%E8%BE%B9-%E7%BB%93%E5%90%88%E6%97%B6%E5%85%89%E5%80%92%E6%B5%81"><span class="toc-text">P11 无向树 - 动态最小生成树 - 动态换边 - 结合时光倒流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P12-%E6%97%A0%E5%90%91%E6%A0%91-%E6%9C%80%E5%B0%8F%E5%B7%AE%E5%80%BC%E7%94%9F%E6%88%90%E6%A0%91%EF%BC%88%E5%AE%9E%E8%B4%A8%E5%9C%A8%E7%BA%BF%E6%9C%80%E5%A4%A7%E7%94%9F%E6%88%90%E6%A0%91%EF%BC%89-%E5%8A%A8%E6%80%81%E6%8D%A2%E8%BE%B9-%E7%BB%93%E5%90%88%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%EF%BC%88bushi%EF%BC%89"><span class="toc-text">P12 无向树 - 最小差值生成树（实质在线最大生成树） - 动态换边 - 结合滑动窗口（bushi）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P13-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-%E5%8A%A8%E6%80%81%E6%8D%A2%E8%BE%B9-%E5%8F%8C%E6%8C%87%E6%A0%87%E7%BA%A6%E6%9D%9F-but-%E5%8F%AA%E9%9C%80%E8%B7%AF%E5%BE%84%E8%BF%9E%E9%80%9A"><span class="toc-text">P13 无向树 - 动态最小生成树 - 动态换边 - 双指标约束 - but 只需路径连通</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P14-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E6%9C%80%E5%A4%A7%E7%94%9F%E6%88%90%E6%A0%91-%E5%8A%A8%E6%80%81%E6%8D%A2%E8%BE%B9-%E5%B8%A6%E4%BF%AE%E6%94%B9%E8%BE%B9%E6%9D%83-%E8%B7%AF%E5%BE%84%E6%9F%A5%E8%AF%A2"><span class="toc-text">P14 无向树 - 动态最大生成树 - 动态换边 - 带修改边权 - 路径查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P15-%E6%97%A0%E5%90%91%E6%A0%91-%E4%B8%A5%E6%A0%BC%E6%AC%A1%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-%E4%BB%85%E8%B7%AF%E5%BE%84%E6%9F%A5%E8%AF%A2"><span class="toc-text">P15 无向树 - 严格次小生成树 - 仅路径查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P16-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-%E6%9C%89%E6%97%B6%E9%99%90-%E7%BB%93%E5%90%88%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%88%86%E6%B2%BB"><span class="toc-text">P16 无向树 - 动态最小生成树(有时限) - 结合线段树分治</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P17-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-%E5%B8%A6%E4%BF%AE%E6%94%B9-%E7%BB%93%E5%90%88%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%88%86%E6%B2%BB"><span class="toc-text">P17 无向树 - 动态最小生成树(带修改) - 结合线段树分治</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P18-%E6%97%A0%E5%90%91%E6%A0%91-%E7%BB%B4%E6%8A%A4%E5%AD%90%E6%A0%91-%E8%99%9A%E5%AD%90%E6%A0%91%E4%BF%A1%E6%81%AF-%E8%BF%9E%E9%80%9A%E5%8C%BA%E6%9F%A5%E8%AF%A2"><span class="toc-text">P18 无向树 - 维护子树 - 虚子树信息 - 连通区查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P19-%E6%9C%89%E5%90%91%E6%A0%91-%E7%BB%B4%E6%8A%A4%E5%AD%90%E6%A0%91-%E8%8F%8A%E8%8A%B1%E5%9B%BE%E9%A2%84%E9%98%B2-%E8%BF%9E%E9%80%9A%E5%8C%BA%E6%9F%A5%E8%AF%A2"><span class="toc-text">P19 有向树 - 维护子树 - 菊花图预防 - 连通区查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Codes"><span class="toc-text">Codes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#P1-%E6%97%A0%E5%90%91%E6%A0%91-%E6%9C%89-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P1 无向树 &#x2F; 有 rev &#x2F; 无懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P2-P3-%E6%9C%89%E5%90%91%E6%A0%91-%E6%97%A0-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P2 - P3 有向树 &#x2F; 无 rev &#x2F; 无懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P4-%E6%97%A0%E5%90%91%E6%A0%91-%E6%9C%89-rev-%E6%9C%89%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P4 无向树 &#x2F; 有 rev &#x2F; 有懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P5-%E6%97%A0%E5%90%91%E6%A0%91-%E6%9C%89-rev-%E6%9C%89%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P5 无向树 &#x2F; 有 rev &#x2F; 有懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P6-%E6%97%A0%E5%90%91%E6%A0%91%E7%9B%B4%E6%8E%A5%E8%8E%BD-%E6%9C%89-rev-%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P6 无向树直接莽 &#x2F; 有 rev &#x2F; 懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P7-%E6%9C%89%E5%90%91%E6%A0%91-%E6%97%A0-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P7 有向树 &#x2F; 无 rev &#x2F; 无懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P8-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E8%BE%B9%E5%8F%8C%E7%BC%A9%E7%82%B9%E6%A0%91-%E5%B8%A6-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P8 无向树 - 动态边双缩点树 - 带 rev &#x2F; 无懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P9-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E8%BE%B9%E5%8F%8C%E7%BC%A9%E7%82%B9%E6%A0%91-%E5%B8%A6-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0-%E4%BD%86%E6%98%AF%E5%B8%A6%E7%BC%A9%E7%82%B9%E4%BF%A1%E6%81%AF"><span class="toc-text">P9 无向树 - 动态边双缩点树 - 带 rev &#x2F; 无懒标记 但是带缩点信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P10-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E8%BE%B9%E5%8F%8C%E7%BC%A9%E7%82%B9%E6%A0%91-%E5%B8%A6%E7%BC%A9%E7%82%B9%E4%BF%A1%E6%81%AF-%E7%BB%93%E5%90%88%E6%97%B6%E5%85%89%E5%80%92%E6%B5%81-2"><span class="toc-text">P10 无向树 - 动态边双缩点树 - 带缩点信息 - 结合时光倒流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P11-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-%E5%8A%A8%E6%80%81%E6%8D%A2%E8%BE%B9-%E7%BB%93%E5%90%88%E6%97%B6%E5%85%89%E5%80%92%E6%B5%81-2"><span class="toc-text">P11 无向树 - 动态最小生成树 - 动态换边 - 结合时光倒流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P12-%E6%97%A0%E5%90%91%E6%A0%91-%E6%9C%80%E5%B0%8F%E5%B7%AE%E5%80%BC%E7%94%9F%E6%88%90%E6%A0%91%EF%BC%88%E5%AE%9E%E8%B4%A8%E5%9C%A8%E7%BA%BF%E6%9C%80%E5%A4%A7%E7%94%9F%E6%88%90%E6%A0%91%EF%BC%89-%E5%8A%A8%E6%80%81%E6%8D%A2%E8%BE%B9-%E7%BB%93%E5%90%88%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%EF%BC%88bushi%EF%BC%89-2"><span class="toc-text">P12 无向树 - 最小差值生成树（实质在线最大生成树） - 动态换边 - 结合滑动窗口（bushi）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P13-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-%E5%8A%A8%E6%80%81%E6%8D%A2%E8%BE%B9-%E5%8F%8C%E6%8C%87%E6%A0%87%E7%BA%A6%E6%9D%9F-but-%E5%8F%AA%E9%9C%80%E8%B7%AF%E5%BE%84%E8%BF%9E%E9%80%9A-2"><span class="toc-text">P13 无向树 - 动态最小生成树 - 动态换边 - 双指标约束 - but 只需路径连通</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P14-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E6%9C%80%E5%A4%A7%E7%94%9F%E6%88%90%E6%A0%91-%E5%8A%A8%E6%80%81%E6%8D%A2%E8%BE%B9-%E5%B8%A6%E4%BF%AE%E6%94%B9%E8%BE%B9%E6%9D%83-%E8%B7%AF%E5%BE%84%E6%9F%A5%E8%AF%A2-2"><span class="toc-text">P14 无向树 - 动态最大生成树 - 动态换边 - 带修改边权 - 路径查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P15-%E6%97%A0%E5%90%91%E6%A0%91-%E4%B8%A5%E6%A0%BC%E6%AC%A1%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-%E4%BB%85%E8%B7%AF%E5%BE%84%E6%9F%A5%E8%AF%A2-2"><span class="toc-text">P15 无向树 - 严格次小生成树 - 仅路径查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P16-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-%E6%9C%89%E6%97%B6%E9%99%90-%E7%BB%93%E5%90%88%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%88%86%E6%B2%BB-2"><span class="toc-text">P16 无向树 - 动态最小生成树(有时限) - 结合线段树分治</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P17-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-%E5%B8%A6%E4%BF%AE%E6%94%B9-%E7%BB%93%E5%90%88%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%88%86%E6%B2%BB-2"><span class="toc-text">P17 无向树 - 动态最小生成树(带修改) - 结合线段树分治</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P18-%E6%97%A0%E5%90%91%E6%A0%91-%E7%BB%B4%E6%8A%A4%E5%AD%90%E6%A0%91-%E8%99%9A%E5%AD%90%E6%A0%91%E4%BF%A1%E6%81%AF"><span class="toc-text">P18 无向树 - 维护子树 - 虚子树信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P19-%E6%9C%89%E5%90%91%E6%A0%91-%E7%BB%B4%E6%8A%A4%E5%AD%90%E6%A0%91-%E8%8F%8A%E8%8A%B1%E5%9B%BE%E9%A2%84%E9%98%B2-%E8%BF%9E%E9%80%9A%E5%8C%BA%E6%9F%A5%E8%AF%A2-2"><span class="toc-text">P19 有向树 - 维护子树 - 菊花图预防 - 连通区查询</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%85%E5%8A%A9%E5%87%BD%E6%95%B0"><span class="toc-text">辅助函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%87%BD%E6%95%B0%EF%BC%88%E5%8D%95%E5%8F%82%E6%95%B0%EF%BC%89"><span class="toc-text">核心函数（单参数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E5%87%BD%E6%95%B0%EF%BC%88%E5%8F%8C%E5%8F%82%E6%95%B0%EF%BC%89"><span class="toc-text">接口函数（双参数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E6%97%A0%E5%90%91%E6%A0%91-%E8%B7%AF%E5%BE%84%E6%B1%82%E5%92%8C-%EF%BC%88%E5%B8%A6-rev-make-root-split-link-cut%EF%BC%89"><span class="toc-text">P1 无向树 - 路径求和 - （带 rev &#x2F; make_root - split - link - cut）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P2-%E6%9C%89%E5%90%91%E6%A0%91-LCA-%EF%BC%88%E6%97%A0%E9%9C%80-rev-link-fa-cut-fa%EF%BC%89"><span class="toc-text">P2 有向树 - LCA （无需 rev &#x2F; link_fa - cut_fa）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P3-%E6%9C%89%E5%90%91%E6%A0%91-%E5%89%8D%E7%BC%80%E6%9F%A5%E8%AF%A2-%EF%BC%88%E6%97%A0%E9%9C%80-rev-link-fa-cut-fa%EF%BC%89"><span class="toc-text">P3 有向树 - 前缀查询 （无需 rev &#x2F; link_fa - cut_fa）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P4-%E6%97%A0%E5%90%91%E6%A0%91-%E8%B7%AF%E5%BE%84%E5%8A%A0%E4%B9%98-%EF%BC%88%E6%9C%89-rev-%E6%9C%89%E6%87%92%E6%A0%87%E8%AE%B0%EF%BC%89"><span class="toc-text">P4 无向树 - 路径加乘 （有 rev &#x2F; 有懒标记）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P5-%E6%97%A0%E5%90%91%E6%A0%91-%E8%B7%AF%E5%BE%84%E6%9F%93%E8%89%B2%EF%BC%88%E6%9C%89-rev-%E6%9C%89%E6%87%92%E6%A0%87%E8%AE%B0%EF%BC%89"><span class="toc-text">P5 无向树 - 路径染色（有 rev &#x2F; 有懒标记）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P6-%E6%9C%89%E5%90%91%E6%A0%91-%E2%80%9C%E4%B8%89%E5%8F%89%E6%8A%95%E7%A5%A8%E2%80%9D-%EF%BC%88%E5%8F%AF%E4%BB%A5%E7%94%A8%E6%97%A0%E5%90%91%E8%8E%BD%EF%BC%89"><span class="toc-text">P6 有向树 - “三叉投票” （可以用无向莽）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P7-%E6%9C%89%E5%90%91%E6%A0%91-%E6%96%B0%E9%A2%9C%E8%89%B2%E6%9F%93%E8%89%B2-%E7%BB%B4%E6%8A%A4%E5%AE%9E%E9%93%BE-%EF%BC%88%E6%97%A0-rev%EF%BC%89"><span class="toc-text">P7 有向树 - 新颜色染色&#x2F;维护实链 （无 rev）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P8-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E8%BE%B9%E5%8F%8C%E7%BC%A9%E7%82%B9%E6%A0%91%EF%BC%88%E5%B8%A6-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0%EF%BC%89"><span class="toc-text">P8 无向树 - 动态边双缩点树（带 rev &#x2F; 无懒标记）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P9-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E8%BE%B9%E5%8F%8C%E7%BC%A9%E7%82%B9%E6%A0%91-%EF%BC%88%E5%B8%A6-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0-%E4%BD%86%E6%98%AF%E5%B8%A6%E7%BC%A9%E7%82%B9%E4%BF%A1%E6%81%AF%EF%BC%89"><span class="toc-text">P9 无向树 - 动态边双缩点树 （带 rev &#x2F; 无懒标记 但是带缩点信息）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P10-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E8%BE%B9%E5%8F%8C%E7%BC%A9%E7%82%B9%E6%A0%91-%E5%B8%A6%E7%BC%A9%E7%82%B9%E4%BF%A1%E6%81%AF-%E7%BB%93%E5%90%88%E6%97%B6%E5%85%89%E5%80%92%E6%B5%81"><span class="toc-text">P10 无向树 - 动态边双缩点树 - 带缩点信息 - 结合时光倒流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P11-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-%E5%8A%A8%E6%80%81%E6%8D%A2%E8%BE%B9-%E7%BB%93%E5%90%88%E6%97%B6%E5%85%89%E5%80%92%E6%B5%81"><span class="toc-text">P11 无向树 - 动态最小生成树 - 动态换边 - 结合时光倒流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P12-%E6%97%A0%E5%90%91%E6%A0%91-%E6%9C%80%E5%B0%8F%E5%B7%AE%E5%80%BC%E7%94%9F%E6%88%90%E6%A0%91%EF%BC%88%E5%AE%9E%E8%B4%A8%E5%9C%A8%E7%BA%BF%E6%9C%80%E5%A4%A7%E7%94%9F%E6%88%90%E6%A0%91%EF%BC%89-%E5%8A%A8%E6%80%81%E6%8D%A2%E8%BE%B9-%E7%BB%93%E5%90%88%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%EF%BC%88bushi%EF%BC%89"><span class="toc-text">P12 无向树 - 最小差值生成树（实质在线最大生成树） - 动态换边 - 结合滑动窗口（bushi）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P13-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-%E5%8A%A8%E6%80%81%E6%8D%A2%E8%BE%B9-%E5%8F%8C%E6%8C%87%E6%A0%87%E7%BA%A6%E6%9D%9F-but-%E5%8F%AA%E9%9C%80%E8%B7%AF%E5%BE%84%E8%BF%9E%E9%80%9A"><span class="toc-text">P13 无向树 - 动态最小生成树 - 动态换边 - 双指标约束 - but 只需路径连通</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P14-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E6%9C%80%E5%A4%A7%E7%94%9F%E6%88%90%E6%A0%91-%E5%8A%A8%E6%80%81%E6%8D%A2%E8%BE%B9-%E5%B8%A6%E4%BF%AE%E6%94%B9%E8%BE%B9%E6%9D%83-%E8%B7%AF%E5%BE%84%E6%9F%A5%E8%AF%A2"><span class="toc-text">P14 无向树 - 动态最大生成树 - 动态换边 - 带修改边权 - 路径查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P15-%E6%97%A0%E5%90%91%E6%A0%91-%E4%B8%A5%E6%A0%BC%E6%AC%A1%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-%E4%BB%85%E8%B7%AF%E5%BE%84%E6%9F%A5%E8%AF%A2"><span class="toc-text">P15 无向树 - 严格次小生成树 - 仅路径查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P16-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-%E6%9C%89%E6%97%B6%E9%99%90-%E7%BB%93%E5%90%88%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%88%86%E6%B2%BB"><span class="toc-text">P16 无向树 - 动态最小生成树(有时限) - 结合线段树分治</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P17-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-%E5%B8%A6%E4%BF%AE%E6%94%B9-%E7%BB%93%E5%90%88%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%88%86%E6%B2%BB"><span class="toc-text">P17 无向树 - 动态最小生成树(带修改) - 结合线段树分治</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P18-%E7%BA%AF%E6%A0%91-%E7%BB%B4%E6%8A%A4%E5%AD%90%E6%A0%91-%E8%99%9A%E5%AD%90%E6%A0%91%E4%BF%A1%E6%81%AF-%E9%A2%9C%E8%89%B2%E8%BF%9E%E9%80%9A%E5%8C%BA%E6%9F%A5%E8%AF%A2"><span class="toc-text">P18 纯树 - 维护子树 - 虚子树信息 - 颜色连通区查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P19-%E7%BA%AF%E6%A0%91-%E7%BB%B4%E6%8A%A4%E5%AD%90%E6%A0%91-%E8%8F%8A%E8%8A%B1%E5%9B%BE%E9%A2%84%E9%98%B2-%E9%A2%9C%E8%89%B2%E8%BF%9E%E9%80%9A%E5%8C%BA%E6%9F%A5%E8%AF%A2"><span class="toc-text">P19 纯树 - 维护子树 - 菊花图预防 - 颜色连通区查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P20-%E7%BA%AF%E6%A0%91-%E7%BB%B4%E6%8A%A4%E5%AD%90%E6%A0%91-%E6%9C%89%E5%BA%8F%E8%A1%A8%E7%BB%B4%E6%8A%A4%E4%B8%8D%E5%8F%AF%E5%B7%AE%E5%88%86%E8%99%9A%E5%84%BF%E5%AD%90%E4%BF%A1%E6%81%AF-%E9%A2%9C%E8%89%B2%E8%BF%9E%E9%80%9A%E5%8C%BA%E6%9C%80%E5%A4%A7%E6%9D%83%E6%9F%A5%E8%AF%A2"><span class="toc-text">P20 纯树 - 维护子树 - 有序表维护不可差分虚儿子信息 - 颜色连通区最大权查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P21-%E7%BA%AF%E6%A0%91-%E7%BB%B4%E6%8A%A4%E5%AD%90%E6%A0%91-%E8%8F%8A%E8%8A%B1%E5%9B%BE%E9%A2%84%E9%98%B2-%E6%9C%80%E8%BF%91%E5%85%B3%E9%94%AE%E7%82%B9%E6%9F%A5%E8%AF%A2"><span class="toc-text">P21 纯树 - 维护子树 - 菊花图预防 - 最近关键点查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Codes"><span class="toc-text">Codes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#P1-%E6%97%A0%E5%90%91%E6%A0%91-%E6%9C%89-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P1 无向树 &#x2F; 有 rev &#x2F; 无懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P2-P3-%E6%9C%89%E5%90%91%E6%A0%91-%E6%97%A0-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P2 - P3 有向树 &#x2F; 无 rev &#x2F; 无懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P4-%E6%97%A0%E5%90%91%E6%A0%91-%E6%9C%89-rev-%E6%9C%89%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P4 无向树 &#x2F; 有 rev &#x2F; 有懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P5-%E6%97%A0%E5%90%91%E6%A0%91-%E6%9C%89-rev-%E6%9C%89%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P5 无向树 &#x2F; 有 rev &#x2F; 有懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P6-%E6%97%A0%E5%90%91%E6%A0%91%E7%9B%B4%E6%8E%A5%E8%8E%BD-%E6%9C%89-rev-%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P6 无向树直接莽 &#x2F; 有 rev &#x2F; 懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P7-%E6%9C%89%E5%90%91%E6%A0%91-%E6%97%A0-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P7 有向树 &#x2F; 无 rev &#x2F; 无懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P8-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E8%BE%B9%E5%8F%8C%E7%BC%A9%E7%82%B9%E6%A0%91-%E5%B8%A6-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0"><span class="toc-text">P8 无向树 - 动态边双缩点树 - 带 rev &#x2F; 无懒标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P9-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E8%BE%B9%E5%8F%8C%E7%BC%A9%E7%82%B9%E6%A0%91-%E5%B8%A6-rev-%E6%97%A0%E6%87%92%E6%A0%87%E8%AE%B0-%E4%BD%86%E6%98%AF%E5%B8%A6%E7%BC%A9%E7%82%B9%E4%BF%A1%E6%81%AF"><span class="toc-text">P9 无向树 - 动态边双缩点树 - 带 rev &#x2F; 无懒标记 但是带缩点信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P10-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E8%BE%B9%E5%8F%8C%E7%BC%A9%E7%82%B9%E6%A0%91-%E5%B8%A6%E7%BC%A9%E7%82%B9%E4%BF%A1%E6%81%AF-%E7%BB%93%E5%90%88%E6%97%B6%E5%85%89%E5%80%92%E6%B5%81-2"><span class="toc-text">P10 无向树 - 动态边双缩点树 - 带缩点信息 - 结合时光倒流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P11-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-%E5%8A%A8%E6%80%81%E6%8D%A2%E8%BE%B9-%E7%BB%93%E5%90%88%E6%97%B6%E5%85%89%E5%80%92%E6%B5%81-2"><span class="toc-text">P11 无向树 - 动态最小生成树 - 动态换边 - 结合时光倒流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P12-%E6%97%A0%E5%90%91%E6%A0%91-%E6%9C%80%E5%B0%8F%E5%B7%AE%E5%80%BC%E7%94%9F%E6%88%90%E6%A0%91%EF%BC%88%E5%AE%9E%E8%B4%A8%E5%9C%A8%E7%BA%BF%E6%9C%80%E5%A4%A7%E7%94%9F%E6%88%90%E6%A0%91%EF%BC%89-%E5%8A%A8%E6%80%81%E6%8D%A2%E8%BE%B9-%E7%BB%93%E5%90%88%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%EF%BC%88bushi%EF%BC%89-2"><span class="toc-text">P12 无向树 - 最小差值生成树（实质在线最大生成树） - 动态换边 - 结合滑动窗口（bushi）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P13-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-%E5%8A%A8%E6%80%81%E6%8D%A2%E8%BE%B9-%E5%8F%8C%E6%8C%87%E6%A0%87%E7%BA%A6%E6%9D%9F-but-%E5%8F%AA%E9%9C%80%E8%B7%AF%E5%BE%84%E8%BF%9E%E9%80%9A-2"><span class="toc-text">P13 无向树 - 动态最小生成树 - 动态换边 - 双指标约束 - but 只需路径连通</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P14-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E6%9C%80%E5%A4%A7%E7%94%9F%E6%88%90%E6%A0%91-%E5%8A%A8%E6%80%81%E6%8D%A2%E8%BE%B9-%E5%B8%A6%E4%BF%AE%E6%94%B9%E8%BE%B9%E6%9D%83-%E8%B7%AF%E5%BE%84%E6%9F%A5%E8%AF%A2-2"><span class="toc-text">P14 无向树 - 动态最大生成树 - 动态换边 - 带修改边权 - 路径查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P15-%E6%97%A0%E5%90%91%E6%A0%91-%E4%B8%A5%E6%A0%BC%E6%AC%A1%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-%E4%BB%85%E8%B7%AF%E5%BE%84%E6%9F%A5%E8%AF%A2-2"><span class="toc-text">P15 无向树 - 严格次小生成树 - 仅路径查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P16-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-%E6%9C%89%E6%97%B6%E9%99%90-%E7%BB%93%E5%90%88%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%88%86%E6%B2%BB-2"><span class="toc-text">P16 无向树 - 动态最小生成树(有时限) - 结合线段树分治</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P17-%E6%97%A0%E5%90%91%E6%A0%91-%E5%8A%A8%E6%80%81%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-%E5%B8%A6%E4%BF%AE%E6%94%B9-%E7%BB%93%E5%90%88%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%88%86%E6%B2%BB-2"><span class="toc-text">P17 无向树 - 动态最小生成树(带修改) - 结合线段树分治</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P18-%E6%97%A0%E5%90%91%E6%A0%91-%E7%BB%B4%E6%8A%A4%E5%AD%90%E6%A0%91-%E8%99%9A%E5%AD%90%E6%A0%91%E4%BF%A1%E6%81%AF"><span class="toc-text">P18 无向树 - 维护子树 - 虚子树信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P19-%E6%9C%89%E5%90%91%E6%A0%91-%E7%BB%B4%E6%8A%A4%E5%AD%90%E6%A0%91-%E8%8F%8A%E8%8A%B1%E5%9B%BE%E9%A2%84%E9%98%B2-%E8%BF%9E%E9%80%9A%E5%8C%BA%E6%9F%A5%E8%AF%A2"><span class="toc-text">P19 有向树 - 维护子树 - 菊花图预防 - 连通区查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P20-%E7%BA%AF%E6%A0%91-%E7%BB%B4%E6%8A%A4%E5%AD%90%E6%A0%91-%E6%9C%89%E5%BA%8F%E8%A1%A8%E7%BB%B4%E6%8A%A4%E4%B8%8D%E5%8F%AF%E5%B7%AE%E5%88%86%E8%99%9A%E5%84%BF%E5%AD%90%E4%BF%A1%E6%81%AF-%E9%A2%9C%E8%89%B2%E8%BF%9E%E9%80%9A%E5%8C%BA%E6%9C%80%E5%A4%A7%E6%9D%83%E6%9F%A5%E8%AF%A2-2"><span class="toc-text">P20 纯树 - 维护子树 - 有序表维护不可差分虚儿子信息 - 颜色连通区最大权查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P21-%E7%BA%AF%E6%A0%91-%E7%BB%B4%E6%8A%A4%E5%AD%90%E6%A0%91-%E8%8F%8A%E8%8A%B1%E5%9B%BE%E9%A2%84%E9%98%B2-%E6%9C%80%E8%BF%91%E5%85%B3%E9%94%AE%E7%82%B9%E6%9F%A5%E8%AF%A2-2"><span class="toc-text">P21 纯树 - 维护子树 - 菊花图预防 - 最近关键点查询</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
