@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1790872799720">
+<link rel="stylesheet" href="/styles/main.css?v=1790915514951">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -106,7 +106,7 @@
                         <span class="post-updated">更新于 2026-10-02</span>
                     
                     <span class="post-wordcount gt-c-content-color-second">
-                        31 千字 ·</span>
+                        35 千字 ·</span>
                     
                         
                             <a href="/tags/Algo/" class="post-tag">
@@ -340,6 +340,19 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
 <li>必须带上 <code>i</code> 否则的话，就会挤占到同一个树上，导致查询多乘以一个 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo>⁡</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">\log{n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mop">lo<span style="margin-right:0.0139em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">n</span></span></span></span></span> 的复杂度</li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+<h2 id="P11-动态-在线二维区间第-k-大">P11 动态 - 在线二维区间第 k 大</h2>
+<blockquote>
+<p>传统的线段树值域二分 + K-D 树上个数查询</p>
+</blockquote>
+<ul>
+<li><code>LG_P4848</code>
+<ul>
+<li>给定 n x n 的网格， q 条操作，<strong>强制在线</strong></li>
+<li>1 值 v 加入 (x, y) 位置</li>
+<li>2 查询 x1 y1 x2 y2 区间内 第 k 大值，不存在打印 orz~</li>
 </ul>
 </li>
 </ul>
@@ -2112,6 +2125,212 @@ array&lt;<span class="hljs-type">int</span>,4&gt; abcd[N];
     ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
     <span class="hljs-keyword">new</span> <span class="hljs-built_in">LG_P3769</span>();
 &#125;</code></pre>
+<h3 id="P11-动态-L-R-sz">P11 动态 - L - R - sz</h3>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">5e5</span> + <span class="hljs-number">5</span>;
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> K = <span class="hljs-number">2</span>;
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> inf = <span class="hljs-number">1e9</span> + <span class="hljs-number">1</span>;
+<span class="hljs-type">const</span> <span class="hljs-type">double</span> alpha = <span class="hljs-number">0.7</span>;
+
+<span class="hljs-keyword">namespace</span> KDT &#123;
+    <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = (<span class="hljs-number">5e5</span><span class="hljs-number">+5</span>) * <span class="hljs-number">30</span> * <span class="hljs-number">3</span>;
+    array&lt;<span class="hljs-type">int</span>,K&gt; p[N], L[N], R[N];
+    
+    <span class="hljs-type">int</span> tot;
+    <span class="hljs-type">int</span> lc[N], rc[N];
+    
+    <span class="hljs-type">int</span> *tp, tpd;
+    <span class="hljs-type">int</span> buf[N], idx;
+
+    <span class="hljs-type">int</span> sz[N];
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> d = <span class="hljs-number">0</span>; d &lt; K; d++) &#123;
+            L[<span class="hljs-number">0</span>][d] = inf;
+            R[<span class="hljs-number">0</span>][d] = -inf;
+        &#125;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">new_node</span><span class="hljs-params">(array&lt;<span class="hljs-type">int</span>,K&gt; no)</span> </span>&#123;
+        <span class="hljs-type">int</span> i = ++tot;
+        sz[i] = <span class="hljs-number">1</span>;
+        L[i] = R[i] = p[i] = no;
+        lc[i] = rc[i] = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">return</span> i;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">up</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span> </span>&#123;
+        L[i] = R[i] = p[i];
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> d = <span class="hljs-number">0</span>; d &lt; K; d++) &#123;
+            L[i][d] = <span class="hljs-built_in">min</span>(L[i][d], L[lc[i]][d]);
+            R[i][d] = <span class="hljs-built_in">max</span>(R[i][d], R[lc[i]][d]);
+            L[i][d] = <span class="hljs-built_in">min</span>(L[i][d], L[rc[i]][d]);
+            R[i][d] = <span class="hljs-built_in">max</span>(R[i][d], R[rc[i]][d]);
+        &#125;
+        sz[i] = sz[lc[i]] + sz[rc[i]] + <span class="hljs-number">1</span>;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">collect</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span> </span>&#123;
+        <span class="hljs-keyword">if</span> (i) &#123;
+            buf[++idx] = i;
+            <span class="hljs-built_in">collect</span>(lc[i]);
+            <span class="hljs-built_in">collect</span>(rc[i]);
+        &#125;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">rebuild</span><span class="hljs-params">(<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r,<span class="hljs-type">int</span> d)</span> </span>&#123;
+        <span class="hljs-keyword">if</span> (l &gt; r) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        <span class="hljs-type">int</span> mid = (l + r) / <span class="hljs-number">2</span>;
+        <span class="hljs-built_in">nth_element</span>(buf+l,buf+mid,buf+r<span class="hljs-number">+1</span>,[&amp;](<span class="hljs-type">int</span> a,<span class="hljs-type">int</span> b) &#123;
+            <span class="hljs-keyword">return</span> p[a][d] &lt; p[b][d];
+        &#125;);
+        <span class="hljs-type">int</span> i = buf[mid];
+        d = (d == K - <span class="hljs-number">1</span> ? <span class="hljs-number">0</span> : d + <span class="hljs-number">1</span>);
+        lc[i] = <span class="hljs-built_in">rebuild</span>(l,mid<span class="hljs-number">-1</span>,d);
+        rc[i] = <span class="hljs-built_in">rebuild</span>(mid<span class="hljs-number">+1</span>,r,d);
+        <span class="hljs-built_in">up</span>(i);
+        <span class="hljs-keyword">return</span> i;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">balance</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span> </span>&#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(sz[lc[i]], sz[rc[i]]) &lt; sz[i] * alpha;
+    &#125;
+
+    <span class="hljs-type">void</span> _insert(<span class="hljs-type">int</span>&amp; i,<span class="hljs-type">int</span> d, array&lt;<span class="hljs-type">int</span>,K&gt; no) &#123;
+        <span class="hljs-keyword">if</span> (!i) i = <span class="hljs-built_in">new_node</span>(no);
+        <span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-keyword">if</span> (no[d] &lt; p[i][d]) &#123;
+                _insert(lc[i],(d<span class="hljs-number">+1</span>)%K,no);
+            &#125; <span class="hljs-keyword">else</span> &#123;
+                _insert(rc[i],(d<span class="hljs-number">+1</span>)%K,no);
+            &#125;
+            <span class="hljs-built_in">up</span>(i);
+            <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">balance</span>(i)) &#123;
+                tp = &amp;i;
+                tpd = d;
+            &#125;
+        &#125;
+    &#125;
+
+    <span class="hljs-type">int</span> _query(<span class="hljs-type">int</span> i,<span class="hljs-type">int</span> d, array&lt;<span class="hljs-type">int</span>,K&gt; jL, array&lt;<span class="hljs-type">int</span>,K&gt; jR) &#123;
+        <span class="hljs-keyword">if</span> (!i) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        <span class="hljs-type">bool</span> contain = <span class="hljs-literal">true</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> d = <span class="hljs-number">0</span>; d &lt; K; d++) &#123;
+            contain &amp;= jL[d] &lt;= L[i][d] &amp;&amp; R[i][d] &lt;= jR[d];
+            <span class="hljs-keyword">if</span> (jL[d] &gt; R[i][d] || L[i][d] &gt; jR[d]) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        &#125;
+        <span class="hljs-keyword">if</span> (contain) <span class="hljs-keyword">return</span> sz[i];
+        <span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-type">bool</span> contain = <span class="hljs-literal">true</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> d = <span class="hljs-number">0</span>; d &lt; K; d++) &#123;
+                contain &amp;= jL[d] &lt;= p[i][d] &amp;&amp; p[i][d] &lt;= jR[d];
+            &#125;
+            <span class="hljs-type">int</span> res = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">if</span> (contain) res = <span class="hljs-number">1</span>;
+            d = (d == K - <span class="hljs-number">1</span> ? <span class="hljs-number">0</span> : d + <span class="hljs-number">1</span>);
+            res += _query(lc[i],d,jL,jR);
+            res += _query(rc[i],d,jL,jR);
+            <span class="hljs-keyword">return</span> res;
+        &#125;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-type">int</span>&amp; i,array&lt;<span class="hljs-type">int</span>,K&gt; no)</span> </span>&#123;
+        _insert(i,<span class="hljs-number">0</span>,no);
+        <span class="hljs-keyword">if</span> (tp) &#123;
+            idx = <span class="hljs-number">0</span>;
+            <span class="hljs-built_in">collect</span>(*tp);
+            *tp = <span class="hljs-built_in">rebuild</span>(<span class="hljs-number">1</span>,idx,tpd);
+            tp = <span class="hljs-number">0</span>;
+        &#125;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">int</span> i, array&lt;<span class="hljs-type">int</span>,K&gt; jL,array&lt;<span class="hljs-type">int</span>,K&gt; jR)</span> </span>&#123;
+        <span class="hljs-keyword">return</span> _query(i,<span class="hljs-number">0</span>,jL,jR);
+    &#125;
+&#125;
+
+<span class="hljs-keyword">namespace</span> SegT &#123;
+    <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = (<span class="hljs-number">5e5</span><span class="hljs-number">+5</span>) * <span class="hljs-number">30</span>;
+    <span class="hljs-type">int</span> tot;
+    <span class="hljs-type">int</span> rt;
+    <span class="hljs-type">int</span> lc[N], rc[N];
+    <span class="hljs-type">int</span> root[N];
+
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">new_node</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-type">int</span> i = ++tot;
+        lc[i] = rc[i] = <span class="hljs-number">0</span>;
+        root[i] = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">return</span> i;
+    &#125;
+
+    <span class="hljs-comment">// 强制在线的 所以 需要在 p 权值位置 添加一个点 no</span>
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> i,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r,<span class="hljs-type">int</span> p,array&lt;<span class="hljs-type">int</span>,K&gt; no)</span> </span>&#123;
+        <span class="hljs-keyword">if</span> (!i) i = <span class="hljs-built_in">new_node</span>();
+        KDT::<span class="hljs-built_in">insert</span>(root[i], no);
+        <span class="hljs-keyword">if</span> (l == r) &#123;
+            <span class="hljs-keyword">return</span> i;
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-type">int</span> mid = (l + r) / <span class="hljs-number">2</span>;
+            <span class="hljs-keyword">if</span> (p &lt;= mid) lc[i] = <span class="hljs-built_in">add</span>(lc[i], l,mid,p,no);
+            <span class="hljs-keyword">else</span> rc[i] = <span class="hljs-built_in">add</span>(rc[i], mid<span class="hljs-number">+1</span>,r,p,no);
+        &#125;
+        <span class="hljs-keyword">return</span> i;
+    &#125;
+
+    <span class="hljs-comment">// 保证调用的时候 k &gt;= 1 即必须要有答案</span>
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query_suf_k</span><span class="hljs-params">(<span class="hljs-type">int</span> i,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r,<span class="hljs-type">int</span> k,array&lt;<span class="hljs-type">int</span>,K&gt; jL, array&lt;<span class="hljs-type">int</span>,K&gt; jR)</span> </span>&#123;
+        <span class="hljs-keyword">if</span> (!i) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+        <span class="hljs-keyword">if</span> (l == r) &#123;
+            <span class="hljs-type">int</span> tmp = KDT::<span class="hljs-built_in">query</span>(root[i], jL, jR);
+            <span class="hljs-keyword">return</span> k &lt;= tmp ? l : <span class="hljs-number">-1</span>;
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-type">int</span> mid = (l + r) / <span class="hljs-number">2</span>;
+            <span class="hljs-type">int</span> rsz = KDT::<span class="hljs-built_in">query</span>(root[rc[i]], jL, jR);
+            <span class="hljs-keyword">if</span> (k &lt;= rsz) &#123;
+                <span class="hljs-keyword">return</span> <span class="hljs-built_in">query_suf_k</span>(rc[i],mid<span class="hljs-number">+1</span>,r,k,jL,jR);
+            &#125; <span class="hljs-keyword">else</span> &#123;
+                <span class="hljs-keyword">return</span> <span class="hljs-built_in">query_suf_k</span>(lc[i],l,mid,k-rsz,jL,jR);
+            &#125;
+        &#125;
+    &#125;
+&#125;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">LG_P4848</span> &#123;
+    <span class="hljs-type">int</span> n, lst, q;
+    <span class="hljs-built_in">LG_P4848</span>() &#123;
+        KDT::<span class="hljs-built_in">init</span>();
+        lst = <span class="hljs-number">0</span>;
+        cin &gt;&gt; n &gt;&gt; q;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= q; i++) &#123;
+            <span class="hljs-type">int</span> op;
+            cin &gt;&gt; op;
+            <span class="hljs-keyword">if</span> (op == <span class="hljs-number">1</span>) &#123;
+                <span class="hljs-type">int</span> a, b, v;
+                cin &gt;&gt; a &gt;&gt; b &gt;&gt; v;
+                a ^= lst; b ^= lst; v ^= lst;
+                SegT::rt = SegT::<span class="hljs-built_in">add</span>(SegT::rt,<span class="hljs-number">1</span>,<span class="hljs-number">1e9</span>,v,&#123;a,b&#125;);
+            &#125; <span class="hljs-keyword">else</span> &#123;
+                <span class="hljs-type">int</span> a, b, c, d, k;
+                cin &gt;&gt; a &gt;&gt; b &gt;&gt; c &gt;&gt; d &gt;&gt; k;
+                a ^= lst; b ^= lst; c ^= lst; d ^= lst; k ^= lst;
+                lst = SegT::<span class="hljs-built_in">query_suf_k</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1e9</span>,k,&#123;a,b&#125;,&#123;c,d&#125;);
+                <span class="hljs-keyword">if</span> (lst == <span class="hljs-number">-1</span>) &#123;
+                    cout &lt;&lt; <span class="hljs-string">&quot;NAIVE!ORZzyz.\n&quot;</span>;
+                    lst = <span class="hljs-number">0</span>;
+                &#125; <span class="hljs-keyword">else</span> &#123;
+                    cout &lt;&lt; lst &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+&#125;;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">new</span> <span class="hljs-built_in">LG_P4848</span>();
+&#125;</code></pre>
                 </div>
             </article>
         </div>
@@ -2167,7 +2386,7 @@ array&lt;<span class="hljs-type">int</span>,4&gt; abcd[N];
     <aside class="post-outline" id="post-outline">
         <div class="outline-title">OUTLINE</div>
         <nav class="outline-nav">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%B2%E8%A7%A3"><span class="toc-text">讲解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#KDT-%E5%8F%AF%E4%BB%A5%E8%A7%A3%E5%86%B3%E7%9A%84%E9%A2%98%E7%9B%AE"><span class="toc-text">KDT 可以解决的题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E9%9D%99%E6%80%81-%E5%B9%B3%E9%9D%A2%E6%9C%80%E8%BF%91%E7%82%B9%E5%AF%B9%EF%BC%88%E5%89%AA%E6%9E%9D%EF%BC%89"><span class="toc-text">P1 静态 - 平面最近点对（剪枝）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P2-%E9%9D%99%E6%80%81-Kth-%E8%BF%9C%E6%9F%A5%E8%AF%A2%EF%BC%88%E5%89%AA%E6%9E%9D%EF%BC%89"><span class="toc-text">P2 静态 - Kth 远查询（剪枝）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P3-%E9%9D%99%E6%80%81-%E4%BA%8C%E7%BB%B4%E5%8D%8A%E5%B9%B3%E9%9D%A2%E6%9F%A5%E8%AF%A2%EF%BC%88%E5%89%AA%E6%9E%9D%EF%BC%89"><span class="toc-text">P3 静态 - 二维半平面查询（剪枝）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P4-%E5%8A%A8%E6%80%81-%E4%BA%8C%E7%BB%B4%E7%9F%A9%E5%BD%A2%E5%8A%A8%E6%80%81%E6%9F%A5%E8%AF%A2"><span class="toc-text">P4 动态 - 二维矩形动态查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P5-%E5%8A%A8%E6%80%81-K-%E7%BB%B4%E7%9F%A9%E5%BD%A2%E5%8A%A8%E6%80%81%E6%9F%A5%E8%AF%A2-%E6%A8%A1%E6%9D%BF%E5%9E%8B-%E5%8C%BA%E9%97%B4%E5%8A%A0"><span class="toc-text">P5 动态 - K 维矩形动态查询(模板型) + 区间加</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P6-%E5%8A%A8%E6%80%81-%E4%BA%8C%E7%BB%B4%E5%8A%A8%E6%80%81%E5%93%88%E5%A4%AB%E6%9B%BC%E8%B7%9D%E7%A6%BB%E6%9F%A5%E8%AF%A2%EF%BC%88%E5%89%AA%E6%9E%9D%EF%BC%89"><span class="toc-text">P6 动态 - 二维动态哈夫曼距离查询（剪枝）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P7-%E5%8A%A8%E6%80%81-%E4%B8%89%E7%BB%B4%E5%81%8F%E5%BA%8F%EF%BC%88%E9%99%8D%E4%B8%80%E7%BB%B4%EF%BC%89"><span class="toc-text">P7 动态 - 三维偏序（降一维）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P8-%E5%8A%A8%E6%80%81-%E4%BA%8C%E7%BB%B4%E7%9F%A9%E5%BD%A2-RMQ-%E5%B8%A6%E5%88%A0%E9%99%A4"><span class="toc-text">P8 动态 - 二维矩形 RMQ - 带删除</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P9-%E5%8A%A8%E6%80%81-%E4%B8%89%E7%BB%B4-%E7%90%83%E5%A3%B3%E6%9F%A5%E8%AF%A2%EF%BC%88%E5%8A%A8%E6%80%81-EPS-%E7%B2%BE%E5%BA%A6%E8%8C%83%E5%9B%B4%E6%9F%A5%E8%AF%A2%EF%BC%89"><span class="toc-text">P9 动态 - 三维 - 球壳查询（动态 EPS &#x2F; 精度范围查询）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P10-%E5%8A%A8%E6%80%81-%E5%9B%9B%E7%BB%B4%E5%81%8F%E5%BA%8F-DP%EF%BC%88KD-%E6%A0%91%E6%8B%BF%E6%8D%8F%E6%8E%89-2-%E7%BB%B4%EF%BC%89"><span class="toc-text">P10 动态 - 四维偏序 DP（KD 树拿捏掉 2 维）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Codes"><span class="toc-text">Codes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#P1-%E9%9D%99%E6%80%81-L-R"><span class="toc-text">P1 静态 - L - R</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P2-%E9%9D%99%E6%80%81-L-R"><span class="toc-text">P2 静态 - L - R</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P3-%E9%9D%99%E6%80%81-L-R-sum-val"><span class="toc-text">P3 静态 - L - R - sum - val</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P4-%E5%8A%A8%E6%80%81-L-R-sum-val-sz"><span class="toc-text">P4 动态 - L - R - sum - val - sz</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P5-%E5%8A%A8%E6%80%81-L-R-sum-val-sz-Template"><span class="toc-text">P5 动态 - L - R - sum - val - sz - Template</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P6-%E5%8A%A8%E6%80%81-L-R-sz"><span class="toc-text">P6 动态 - L - R - sz</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P7-%E5%8A%A8%E6%80%81-%E4%B8%89%E7%BB%B4%E5%81%8F%E5%BA%8F%EF%BC%88%E9%99%8D%E4%B8%80%E7%BB%B4%EF%BC%89-2"><span class="toc-text">P7 动态 - 三维偏序（降一维）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P8-%E5%8A%A8%E6%80%81-%E4%BA%8C%E7%BB%B4%E7%9F%A9%E5%BD%A2-RMQ-%E5%B8%A6%E5%88%A0%E9%99%A4-L-R-cnt-has-mn"><span class="toc-text">P8 动态 - 二维矩形 RMQ - 带删除 - L - R - cnt - has - mn</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P9-%E5%8A%A8%E6%80%81-K-3-%E6%B5%AE%E7%82%B9-L-R-cnt-has"><span class="toc-text">P9 动态 - K&#x3D;3 - 浮点 - L - R - cnt - has</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P10-%E5%8A%A8%E6%80%81-L-R-sz-mx-val"><span class="toc-text">P10 动态 - L - R - sz - mx - val</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%B2%E8%A7%A3"><span class="toc-text">讲解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#KDT-%E5%8F%AF%E4%BB%A5%E8%A7%A3%E5%86%B3%E7%9A%84%E9%A2%98%E7%9B%AE"><span class="toc-text">KDT 可以解决的题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-%E9%9D%99%E6%80%81-%E5%B9%B3%E9%9D%A2%E6%9C%80%E8%BF%91%E7%82%B9%E5%AF%B9%EF%BC%88%E5%89%AA%E6%9E%9D%EF%BC%89"><span class="toc-text">P1 静态 - 平面最近点对（剪枝）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P2-%E9%9D%99%E6%80%81-Kth-%E8%BF%9C%E6%9F%A5%E8%AF%A2%EF%BC%88%E5%89%AA%E6%9E%9D%EF%BC%89"><span class="toc-text">P2 静态 - Kth 远查询（剪枝）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P3-%E9%9D%99%E6%80%81-%E4%BA%8C%E7%BB%B4%E5%8D%8A%E5%B9%B3%E9%9D%A2%E6%9F%A5%E8%AF%A2%EF%BC%88%E5%89%AA%E6%9E%9D%EF%BC%89"><span class="toc-text">P3 静态 - 二维半平面查询（剪枝）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P4-%E5%8A%A8%E6%80%81-%E4%BA%8C%E7%BB%B4%E7%9F%A9%E5%BD%A2%E5%8A%A8%E6%80%81%E6%9F%A5%E8%AF%A2"><span class="toc-text">P4 动态 - 二维矩形动态查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P5-%E5%8A%A8%E6%80%81-K-%E7%BB%B4%E7%9F%A9%E5%BD%A2%E5%8A%A8%E6%80%81%E6%9F%A5%E8%AF%A2-%E6%A8%A1%E6%9D%BF%E5%9E%8B-%E5%8C%BA%E9%97%B4%E5%8A%A0"><span class="toc-text">P5 动态 - K 维矩形动态查询(模板型) + 区间加</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P6-%E5%8A%A8%E6%80%81-%E4%BA%8C%E7%BB%B4%E5%8A%A8%E6%80%81%E5%93%88%E5%A4%AB%E6%9B%BC%E8%B7%9D%E7%A6%BB%E6%9F%A5%E8%AF%A2%EF%BC%88%E5%89%AA%E6%9E%9D%EF%BC%89"><span class="toc-text">P6 动态 - 二维动态哈夫曼距离查询（剪枝）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P7-%E5%8A%A8%E6%80%81-%E4%B8%89%E7%BB%B4%E5%81%8F%E5%BA%8F%EF%BC%88%E9%99%8D%E4%B8%80%E7%BB%B4%EF%BC%89"><span class="toc-text">P7 动态 - 三维偏序（降一维）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P8-%E5%8A%A8%E6%80%81-%E4%BA%8C%E7%BB%B4%E7%9F%A9%E5%BD%A2-RMQ-%E5%B8%A6%E5%88%A0%E9%99%A4"><span class="toc-text">P8 动态 - 二维矩形 RMQ - 带删除</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P9-%E5%8A%A8%E6%80%81-%E4%B8%89%E7%BB%B4-%E7%90%83%E5%A3%B3%E6%9F%A5%E8%AF%A2%EF%BC%88%E5%8A%A8%E6%80%81-EPS-%E7%B2%BE%E5%BA%A6%E8%8C%83%E5%9B%B4%E6%9F%A5%E8%AF%A2%EF%BC%89"><span class="toc-text">P9 动态 - 三维 - 球壳查询（动态 EPS &#x2F; 精度范围查询）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P10-%E5%8A%A8%E6%80%81-%E5%9B%9B%E7%BB%B4%E5%81%8F%E5%BA%8F-DP%EF%BC%88KD-%E6%A0%91%E6%8B%BF%E6%8D%8F%E6%8E%89-2-%E7%BB%B4%EF%BC%89"><span class="toc-text">P10 动态 - 四维偏序 DP（KD 树拿捏掉 2 维）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P11-%E5%8A%A8%E6%80%81-%E5%9C%A8%E7%BA%BF%E4%BA%8C%E7%BB%B4%E5%8C%BA%E9%97%B4%E7%AC%AC-k-%E5%A4%A7"><span class="toc-text">P11 动态 - 在线二维区间第 k 大</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Codes"><span class="toc-text">Codes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#P1-%E9%9D%99%E6%80%81-L-R"><span class="toc-text">P1 静态 - L - R</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P2-%E9%9D%99%E6%80%81-L-R"><span class="toc-text">P2 静态 - L - R</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P3-%E9%9D%99%E6%80%81-L-R-sum-val"><span class="toc-text">P3 静态 - L - R - sum - val</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P4-%E5%8A%A8%E6%80%81-L-R-sum-val-sz"><span class="toc-text">P4 动态 - L - R - sum - val - sz</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P5-%E5%8A%A8%E6%80%81-L-R-sum-val-sz-Template"><span class="toc-text">P5 动态 - L - R - sum - val - sz - Template</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P6-%E5%8A%A8%E6%80%81-L-R-sz"><span class="toc-text">P6 动态 - L - R - sz</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P7-%E5%8A%A8%E6%80%81-%E4%B8%89%E7%BB%B4%E5%81%8F%E5%BA%8F%EF%BC%88%E9%99%8D%E4%B8%80%E7%BB%B4%EF%BC%89-2"><span class="toc-text">P7 动态 - 三维偏序（降一维）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P8-%E5%8A%A8%E6%80%81-%E4%BA%8C%E7%BB%B4%E7%9F%A9%E5%BD%A2-RMQ-%E5%B8%A6%E5%88%A0%E9%99%A4-L-R-cnt-has-mn"><span class="toc-text">P8 动态 - 二维矩形 RMQ - 带删除 - L - R - cnt - has - mn</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P9-%E5%8A%A8%E6%80%81-K-3-%E6%B5%AE%E7%82%B9-L-R-cnt-has"><span class="toc-text">P9 动态 - K&#x3D;3 - 浮点 - L - R - cnt - has</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P10-%E5%8A%A8%E6%80%81-L-R-sz-mx-val"><span class="toc-text">P10 动态 - L - R - sz - mx - val</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P11-%E5%8A%A8%E6%80%81-L-R-sz"><span class="toc-text">P11 动态 - L - R - sz</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
