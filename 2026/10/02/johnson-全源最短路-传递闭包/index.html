@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1790963793231">
+<link rel="stylesheet" href="/styles/main.css?v=1790967428869">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -104,7 +104,7 @@
                         · 2026-10-02 ·</time>
                     
                     <span class="post-wordcount gt-c-content-color-second">
-                        8 千字 ·</span>
+                        8.4 千字 ·</span>
                     
                         
                             <a href="/tags/Algo/" class="post-tag">
@@ -225,6 +225,20 @@
 </ul>
 </li>
 </ul>
+<blockquote>
+<p>问了 AI 我最后好像被 windows 坑死了</p>
+</blockquote>
+<pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">XXX</span> &#123;  
+T f[N];  
+T* g;  
+<span class="hljs-built_in">XXX</span> () &#123;&#125; <span class="hljs-comment">// 空构造手动覆写 </span>
+&#125;;</code></pre>
+<p>如果你像上面那样，覆写了 空构造方法，<br>
+这样的结构体，你 new XXX(); 得到的对象在 windows 上，如果 N 很大（占用大），那么 f g 都清零，否则 f g 不清零，<br>
+如果想在 windows 上跑通，就必须注释掉 空构造，或者手动设置初始化值 比如 T* g = NULL;</p>
+<p>我本地调试的时候，恰好最后一题是一个小数据量的题目， N 小， windows 不给我清零， debug 半天</p>
+<p>如果这时候交上去，其实可以 AC， 因为 OJ 是 Linux。<br>
+我专门测试了 Linux ，发现无论是大空间还是小空间，无论是否覆写空构造， Linux 的 new XXX(); 的所有数据都是初始化为 0 的；</p>
 <h2 id="Codes">Codes</h2>
 <h3 id="P1-Johnson-模板">P1 Johnson 模板</h3>
 <pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
