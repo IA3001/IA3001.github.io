@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Title -->
+<title>Johnson 全源最短路 &amp; 传递闭包 - IA3001&#39;s Blog</title>
+
+<!-- Icon -->
+<link rel="icon" href="/img/favicon.ico">
+
+<!-- Fonts -->
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" as="style" onload="this.onload=null, this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"></noscript>
+
+
+    <!-- KaTeX -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.18.1/dist/katex.min.css" as="style" onload="this.onload=null, this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.1/dist/katex.min.css"></noscript>
+
+
+<!-- Style -->
+<link rel="stylesheet" href="/styles/main.css?v=1790949200360">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
+
+
+
+
+
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+
+    <meta name="generator" content="Hexo 8.1.2"></head>
+    <body>
+        <div class="main gt-bg-theme-color-first">
+            <div class="main-content">
+                <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <div class="site-name gt-c-content-color-first">
+            IA3001&#39;s Blog
+        </div>
+    </a>
+    <button aria-label="Navbar Toggler" class="navbar-toggler" type="button" id="changeNavbar">
+        <i class="gt-c-content-color-first" style="font-size: 18px;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="18px" fill="currentColor">
+                <path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z" />
+            </svg>
+        </i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center; ">
+            
+                <div class="nav-item">
+                    <a href="/" class="menu gt-a-link" target="_self">首页</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/archives/" class="menu gt-a-link" target="_self">归档</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/categories/" class="menu gt-a-link" target="_self">分类</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/map/" class="menu gt-a-link" target="_self">地图</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/tags/" class="menu gt-a-link" target="_self">标签</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/friends/" class="menu gt-a-link" target="_self">友链</a>
+                </div>
+            
+        </div>
+    </div>
+</nav>
+
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = function() {
+        let element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else { 
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+                
+
+<div class="post-wrapper">
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second gt-c-content-color-first">
+            <article class="gt-post-content">
+                
+                <h1 class="post-title">Johnson 全源最短路 &amp; 传递闭包</h1>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2026-10-02 ·</time>
+                    
+                    <span class="post-wordcount gt-c-content-color-second">
+                        2 千字 ·</span>
+                    
+                        
+                            <a href="/tags/Algo/" class="post-tag">
+                                #Algo</a>
+                        
+                    
+                </div>
+                <hr>
+                
+                <div class="post-content gt-c-content-color-first">
+                    <h2 id="讲解：Johnson">讲解：Johnson</h2>
+<p><img src="assets/Johnson%20&amp;%20%E4%BC%A0%E9%80%92%E9%97%AD%E5%8C%85/file-20261002210524054.png" alt=""></p>
+<h2 id="P1-Johnson-模板题">P1 Johnson 模板题</h2>
+<ul>
+<li><code>LG_P5905</code>
+<ul>
+<li>求 n 个点，m 个边可以带负权， 求全源最短路</li>
+</ul>
+</li>
+</ul>
+<h2 id="讲解：传递闭包">讲解：传递闭包</h2>
+<h2 id="P2">P2</h2>
+<h2 id="P3">P3</h2>
+<h2 id="P4">P4</h2>
+<h2 id="P5">P5</h2>
+<h2 id="P6">P6</h2>
+<h2 id="P7">P7</h2>
+<h2 id="Codes">Codes</h2>
+<h3 id="P1-Johnson-模板">P1 Johnson 模板</h3>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/extc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-keyword">using</span> ll = <span class="hljs-type">long</span> <span class="hljs-type">long</span>;
+
+<span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;
+<span class="hljs-keyword">using</span> PQ = __gnu_pbds::priority_queue&lt;T&gt;;
+
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">3e3</span> + <span class="hljs-number">5</span>, M = <span class="hljs-number">6e3</span> + <span class="hljs-number">5</span>;
+<span class="hljs-type">const</span> ll INF = <span class="hljs-number">1e9</span>;
+
+<span class="hljs-type">int</span> n, m;
+
+vector&lt;pair&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt;&gt; e[N];
+
+<span class="hljs-comment">// 最短路</span>
+ll h[N];
+<span class="hljs-comment">// spfa</span>
+<span class="hljs-type">bool</span> inq[N];
+<span class="hljs-comment">// 判断负环</span>
+<span class="hljs-type">int</span> vis[N];
+
+<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">spfa</span><span class="hljs-params">()</span> </span>&#123;
+    queue&lt;<span class="hljs-type">int</span>&gt; Q;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
+        h[i] = <span class="hljs-number">0</span>;
+        vis[i] = <span class="hljs-number">1</span>;
+        Q.<span class="hljs-built_in">push</span>(i);
+        inq[i] = <span class="hljs-literal">true</span>;
+    &#125;
+    <span class="hljs-keyword">while</span> (Q.<span class="hljs-built_in">size</span>()) &#123;
+        <span class="hljs-keyword">auto</span> u = Q.<span class="hljs-built_in">front</span>(); Q.<span class="hljs-built_in">pop</span>();
+        inq[u] = <span class="hljs-literal">false</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> [v, w]: e[u]) &#123;
+            <span class="hljs-keyword">if</span> (h[v] &gt; h[u] + w) &#123;
+                <span class="hljs-keyword">if</span> (++vis[v] &gt; n) &#123;
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; <span class="hljs-comment">// 发现负环</span>
+                &#125;
+                h[v] = h[u] + w;
+                <span class="hljs-keyword">if</span> (!inq[v]) &#123;
+                    Q.<span class="hljs-built_in">push</span>(v);
+                    inq[v] = <span class="hljs-literal">true</span>;
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+&#125;
+
+ll dist[N][N];
+<span class="hljs-comment">// 有了这玩意，就不需要 vis 了~~~</span>
+<span class="hljs-comment">// 但是 好像又得需要 inq 了~~~~~~~~~~~~~</span>
+PQ&lt;pair&lt;ll,<span class="hljs-type">int</span>&gt;&gt;::point_iterator pit[N];
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dijk</span><span class="hljs-params">(<span class="hljs-type">int</span> s, ll* dist)</span> </span>&#123;
+    PQ&lt;pair&lt;ll,<span class="hljs-type">int</span>&gt;&gt; Q;
+    <span class="hljs-built_in">fill</span>(dist,dist<span class="hljs-number">+1</span>+n,INF);
+    <span class="hljs-built_in">fill</span>(inq,inq<span class="hljs-number">+1</span>+n,<span class="hljs-literal">false</span>);
+    dist[s] = <span class="hljs-number">0</span>;
+    pit[s] = Q.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-number">-0</span>, s&#125;);
+    inq[s] = <span class="hljs-literal">true</span>;
+    <span class="hljs-keyword">while</span> (Q.<span class="hljs-built_in">size</span>()) &#123;
+        <span class="hljs-keyword">auto</span> [d, u] = Q.<span class="hljs-built_in">top</span>(); Q.<span class="hljs-built_in">pop</span>();
+        <span class="hljs-comment">// 这里就不需要 vis 了</span>
+        inq[u] = <span class="hljs-literal">false</span>;
+        d = -d;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> [v, _w]: e[u]) &#123;
+            <span class="hljs-comment">// 注意嗷！！！ 这里的 w 要改良！！！</span>
+            ll w = _w + h[u] - h[v];
+            <span class="hljs-keyword">if</span> (dist[v] &gt; d + w) &#123;
+                dist[v] = d + w;
+                <span class="hljs-keyword">if</span> (!inq[v]) &#123;
+                    <span class="hljs-comment">// 没有入队，正常来</span>
+                    pit[v] = Q.<span class="hljs-built_in">push</span>(&#123;-dist[v], v&#125;);
+                    inq[v] = <span class="hljs-literal">true</span>;
+                &#125; <span class="hljs-keyword">else</span> &#123;
+                    <span class="hljs-comment">// 入队了，使用强大的 modify</span>
+                    Q.<span class="hljs-built_in">modify</span>(pit[v], &#123;-dist[v], v&#125;);
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+&#125;
+
+<span class="hljs-comment">// 【加一层接口是对的】</span>
+<span class="hljs-function">ll <span class="hljs-title">dis</span><span class="hljs-params">(<span class="hljs-type">int</span> i,<span class="hljs-type">int</span> j)</span> </span>&#123;
+    <span class="hljs-keyword">return</span> dist[i][j] == INF ? INF : dist[i][j] - h[i] + h[j];
+&#125;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">LG_P5905</span> &#123;
+    <span class="hljs-built_in">LG_P5905</span>() &#123;
+        cin &gt;&gt; n &gt;&gt; m;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) &#123;
+            <span class="hljs-type">int</span> u, v, w;
+            cin &gt;&gt; u &gt;&gt; v &gt;&gt; w;
+            e[u].<span class="hljs-built_in">push_back</span>(&#123;v, w&#125;);
+        &#125;
+        <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">spfa</span>()) &#123;
+            cout &lt;&lt; <span class="hljs-number">-1</span> &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+            <span class="hljs-keyword">return</span>;
+        &#125;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
+            <span class="hljs-built_in">dijk</span>(i, dist[i]);
+        &#125;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;
+            ll sum = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j++) &#123;
+                sum += <span class="hljs-built_in">dis</span>(i, j) * j;
+            &#125;
+            cout &lt;&lt; sum &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+        &#125;
+    &#125;
+&#125;;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>); cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">new</span> <span class="hljs-built_in">LG_P5905</span>();
+&#125;</code></pre>
+<h3 id="P2-2">P2</h3>
+<h3 id="P3-2">P3</h3>
+<h3 id="P4-2">P4</h3>
+<h3 id="P5-2">P5</h3>
+<h3 id="P6-2">P6</h3>
+<h3 id="P7-2">P7</h3>
+
+                </div>
+            </article>
+        </div>
+        <br>
+        
+            <div class="next-prev-post">
+                
+                
+                    <div class="next-post">
+                        <div class="next gt-c-content-color-first">
+                            下一篇：<a href="/2026/10/01/vp%EF%BC%9Aautumn%EF%BC%882%EF%BC%89%E5%9B%BD%E5%BA%861/"
+                                class="post-title gt-a-link">VP：Autumn（2）国庆1</a>
+                        </div>
+                    </div>
+                
+            </div>
+        
+        
+
+        
+    <script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.18.0/js/md5.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+
+    <div id="gitalk-container"></div>
+
+    <script>
+    var gitalk = new Gitalk({
+        clientID: 'Ov23liZH3OYalvv7HzKX',
+        clientSecret: 'b8f25b093a363f12c0bfb88d7aa057a0f6b8b043',
+        repo: 'IA3001.github.io',
+        owner: 'IA3001',
+        admin: ['IA3001'],
+        id: md5(location.pathname),
+        distractionFreeMode: false,
+        proxy: 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token'
+    });
+    gitalk.render('gitalk-container');
+    </script>
+
+
+        
+    </div>
+
+    
+    <aside class="post-outline" id="post-outline">
+        <div class="outline-title">OUTLINE</div>
+        <nav class="outline-nav">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%B2%E8%A7%A3%EF%BC%9AJohnson"><span class="toc-text">讲解：Johnson</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1-Johnson-%E6%A8%A1%E6%9D%BF%E9%A2%98"><span class="toc-text">P1 Johnson 模板题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%B2%E8%A7%A3%EF%BC%9A%E4%BC%A0%E9%80%92%E9%97%AD%E5%8C%85"><span class="toc-text">讲解：传递闭包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P2"><span class="toc-text">P2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P3"><span class="toc-text">P3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P4"><span class="toc-text">P4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P5"><span class="toc-text">P5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P6"><span class="toc-text">P6</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P7"><span class="toc-text">P7</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Codes"><span class="toc-text">Codes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#P1-Johnson-%E6%A8%A1%E6%9D%BF"><span class="toc-text">P1 Johnson 模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P2-2"><span class="toc-text">P2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P3-2"><span class="toc-text">P3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P4-2"><span class="toc-text">P4</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P5-2"><span class="toc-text">P5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P6-2"><span class="toc-text">P6</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P7-2"><span class="toc-text">P7</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+</div>
+
+<style>
+.post-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    padding: 20px;
+    align-items: flex-start;
+}
+.post-wrapper.typst-page {
+    display: block;
+    padding: 0;
+}
+.post-wrapper.typst-page .post-container {
+    width: auto;
+    max-width: none;
+}
+.post-wrapper.typst-page .post-detail {
+    background: transparent !important;
+    padding: 0;
+    margin: 0 auto;
+    width: fit-content;
+    max-width: 100%;
+    overflow-x: auto;
+}
+.post-container { width: 1000px; flex-shrink: 0; }
+
+.post-outline {
+    width: 200px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 24px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    font-size: 13px;
+    border-left: 1px solid var(--border);
+    padding-left: 20px;
+}
+.outline-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--content-second);
+    margin-bottom: 12px;
+}
+.outline-nav { position: relative; }
+.outline-nav .toc { list-style: none; padding: 0; margin: 0; }
+.outline-nav .toc-item { position: relative; }
+.outline-nav .toc-link {
+    display: block;
+    padding: 4px 0 4px 0;
+    color: var(--content-second);
+    text-decoration: none;
+    transition: color .15s;
+    line-height: 1.5;
+}
+.outline-nav .toc-link:hover { color: var(--content-first); }
+.outline-nav .toc-link.active {
+    color: var(--content-first);
+    font-weight: 600;
+}
+.outline-nav .toc-child { padding-left: 16px; }
+.outline-nav .toc-child .toc-link { font-size: 12px; }
+.outline-nav .toc-child .toc-child { padding-left: 16px; }
+.outline-nav .toc-child .toc-child .toc-link { font-size: 11px; }
+.outline-empty { color: var(--content-second); font-size: 12px; padding-left: 12px; }
+
+/* Typst */
+.typst-app { --typst-dom-scale: 1.5; }
+
+.post-outline.visible {
+    display: block;
+    position: fixed;
+    right: 20px;
+    top: 80px;
+    z-index: 999;
+    background: var(--theme-first);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.12);
+    max-height: 70vh;
+    width: 260px;
+}
+@media (max-width: 992px) { .post-outline { display: none; } }
+</style>
+
+<script>
+(function(){
+    var tocBtn = document.getElementById('toc-btn');
+    var outline = document.querySelector('.post-outline');
+    if (tocBtn && outline) {
+        tocBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (window.innerWidth <= 992) {
+                outline.classList.toggle('visible');
+            } else {
+                outline.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    }
+
+    var container = document.querySelector('.post-outline');
+    if (!container) return;
+    var links = [].slice.call(container.querySelectorAll('.toc-link'));
+    var headings = links.map(function(a) {
+        return document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
+    }).filter(Boolean);
+
+    // Intercept TOC clicks: smooth scroll + replaceState (no history pollution)
+    links.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            var id = decodeURIComponent(link.getAttribute('href').slice(1));
+            var target = document.getElementById(id);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                history.replaceState(null, '', '#' + id);
+            }
+        });
+    });
+
+    var activeLink = null;
+    // 首次 update()（页面加载时）不写 URL hash，
+    // 否则会把从地图/外部跳转进来的 #锚点 覆盖成目录第一个标题，导致跳转失效
+    var firstRun = true;
+    function update() {
+        var top = 0;
+        for (var i = headings.length - 1; i >= 0; i--) {
+            if (headings[i].getBoundingClientRect().top < 120) {
+                top = i; break;
+            }
+        }
+        var current = links[top];
+        if (current !== activeLink) {
+            if (activeLink) activeLink.classList.remove('active');
+            current.classList.add('active');
+            var rect = current.getBoundingClientRect();
+            var cr = container.getBoundingClientRect();
+            if (rect.bottom > cr.bottom || rect.top < cr.top) {
+                current.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            }
+            activeLink = current;
+            if (!firstRun) {
+                // Update URL hash without pushing history entry
+                var id = decodeURIComponent(current.getAttribute('href').slice(1));
+                history.replaceState(null, '', '#' + id);
+            }
+        }
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+    firstRun = false;
+})();
+</script>
+
+                <div class="site-footer gt-c-content-color-first">
+    <div class="footer-main">
+        <!-- 建议保留版权信息或者添加主题信息到友链，感谢您的理解 -->
+        <!-- 文件位置：layout/_includes/footer.ejs -->
+        <span style="text-align: right; float: right;">Theme <a 
+            href="https://github.com/renbaoshuo/hexo-theme-pure" target="_blank">Pure</a> | Powered by <a 
+            href="https://hexo.io" target="_blank">Hexo</a></span>
+        <span style="text-align: left;">Footer HTML
+</span>
+    </div>
+</div>
+
+<!-- Buttons -->
+<div class="fab">
+    
+    <a aria-label="文章目录" class="fab-btn" id="toc-btn" href="javascript:;" title="文章目录">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            focusable="false"
+            data-icon="list-ul"
+            class="svg-inline--fa fa-list-ul fa-w-16"
+            role="img"
+            viewBox="0 0 512 512"
+            height="20"
+            width="20"
+        >
+            <path
+                fill="currentColor"
+                d="M48 48a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm448 16H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 160H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z"
+            />
+        </svg>
+    </a>
+    
+    <a aria-label="回到顶部" class="fab-btn" href="#" title="回到顶部">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            focusable="false"
+            role="img"
+            viewBox="0 0 320 512"
+            height="20"
+            width="20"
+        >
+            <path
+                fill="currentColor"
+                d="M168.5 164.2l148 146.8c4.7 4.7 4.7 12.3 0 17l-19.8 19.8c-4.7 4.7-12.3 4.7-17 0L160 229.3 40.3 347.8c-4.7 4.7-12.3 4.7-17 0L3.5 328c-4.7-4.7-4.7-12.3 0-17l148-146.8c4.7-4.7 12.3-4.7 17 0z"
+            />
+        </svg>
+    </a>
+</div>
+
+            </div>
+        </div>
+    </body>
+</html>
