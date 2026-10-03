@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- Title -->
-<title>Kevin的矩阵 - IA3001&#39;s Blog</title>
+<title>namespace IO 摸索 - IA3001&#39;s Blog</title>
 
 <!-- Icon -->
 <link rel="icon" href="/img/favicon.ico">
@@ -21,7 +21,7 @@
 
 
 <!-- Style -->
-<link rel="stylesheet" href="/styles/main.css?v=1791000530856">
+<link rel="stylesheet" href="/styles/main.css?v=1791000530853">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-pure@1.0.1/dist/main.css"> -->
 
 
@@ -98,15 +98,13 @@
         <div class="post-detail gt-bg-theme-color-second gt-c-content-color-first">
             <article class="gt-post-content">
                 
-                <h1 class="post-title">Kevin的矩阵</h1>
+                <h1 class="post-title">namespace IO 摸索</h1>
                 <div class="post-info">
                     <time class="post-time gt-c-content-color-first">
-                        · 2026-08-01 ·</time>
-                    
-                        <span class="post-updated">更新于 2026-08-10</span>
+                        · 2026-10-03 ·</time>
                     
                     <span class="post-wordcount gt-c-content-color-second">
-                        347 字 ·</span>
+                        724 字 ·</span>
                     
                         
                             <a href="/tags/NC/" class="post-tag">
@@ -120,38 +118,58 @@
                 <hr>
                 
                 <div class="post-content gt-c-content-color-first">
-                    <h2 id="Kevin的矩阵">Kevin的矩阵</h2>
-<h3 id="Problem-Description">Problem Description</h3>
-<p>给定一个长度为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> 的数组，初始时排列在一个 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span></span></span></span> 列的表格中，你可以 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>+</mo><mo>+</mo><mi>m</mi></mrow><annotation encoding="application/x-tex">++m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span></span></span></span>、<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mo>−</mo><mi>m</mi></mrow><annotation encoding="application/x-tex">--m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span></span></span></span> 或者改变一个元素的值，问将某一列的元素全部变为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.0315em;">k</span></span></span></span> 的最小操作次数是多少。</p>
-<p>数据范围：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>≤</mo><mi>n</mi><mo>≤</mo><mn>2</mn><mo>×</mo><msup><mn>10</mn><mn>5</mn></msup></mrow><annotation encoding="application/x-tex">1 \le n \le 2 \times 10^5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.7804em;vertical-align:-0.136em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span></span></span></span></span></span></span></span></p>
-<h3 id="Solution">Solution</h3>
-<p><strong>复杂度诈骗、暴力剪枝</strong></p>
-<ul>
-<li>因为总个数有限，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>ans</mtext><mo>=</mo><mi>O</mi><mo stretchy="false">(</mo><mi mathvariant="normal">Δ</mi><mo>+</mo><mtext>cnt</mtext><mo stretchy="false">)</mo><mo>=</mo><mi>O</mi><mo stretchy="false">(</mo><mi mathvariant="normal">Δ</mi><mo>+</mo><mi>n</mi><mi mathvariant="normal">/</mi><mo stretchy="false">(</mo><mi>m</mi><mo>±</mo><mi mathvariant="normal">Δ</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\text{ans} = O(\Delta + \text{cnt}) = O(\Delta + n / (m \pm \Delta))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord text"><span class="mord">ans</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">O</span><span class="mopen">(</span><span class="mord">Δ</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">cnt</span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">O</span><span class="mopen">(</span><span class="mord">Δ</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">n</span><span class="mord">/</span><span class="mopen">(</span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">±</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">Δ</span><span class="mclose">))</span></span></span></span></li>
-<li>因为移动 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msqrt><mi>n</mi></msqrt><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(\sqrt{n})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1.0503em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">O</span><span class="mopen">(</span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8003em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord mathnormal">n</span></span></span><span style="top:-2.7603em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg xmlns="http://www.w3.org/2000/svg" width="400em" height="1.08em" viewBox="0 0 400000 1080" preserveAspectRatio="xMinYMin slice"><path d="M95,702
-c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
-c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
-c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
-s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
-c69,-144,104.5,-217.7,106.5,-221
-l0 -0
-c5.3,-9.3,12,-14,20,-14
-H400000v40H845.2724
-s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
-c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
-M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2397em;"><span></span></span></span></span></span><span class="mclose">)</span></span></span></span> 次列长度就必然收敛到 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msqrt><mi>n</mi></msqrt><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(\sqrt{n})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1.0503em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">O</span><span class="mopen">(</span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8003em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord mathnormal">n</span></span></span><span style="top:-2.7603em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg xmlns="http://www.w3.org/2000/svg" width="400em" height="1.08em" viewBox="0 0 400000 1080" preserveAspectRatio="xMinYMin slice"><path d="M95,702
-c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
-c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
-c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
-s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
-c69,-144,104.5,-217.7,106.5,-221
-l0 -0
-c5.3,-9.3,12,-14,20,-14
-H400000v40H845.2724
-s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
-c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
-M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2397em;"><span></span></span></span></span></span><span class="mclose">)</span></span></span></span> 级别了</li>
-</ul>
+                    <pre><code class="hljs cpp">
+<span class="hljs-keyword">namespace</span> IO &#123;
+    <span class="hljs-type">const</span> <span class="hljs-type">int</span> B = <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">22</span>;
+    
+    <span class="hljs-type">char</span> in[B];
+    <span class="hljs-type">char</span>* l=in, *r=in;
+
+    <span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">char</span> <span class="hljs-title">gc</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-keyword">if</span> (l == r) &#123;
+            l = in;
+            <span class="hljs-comment">// 程序内的数组, size, n, FILE* 返回值是 真实 n</span>
+            r = in + <span class="hljs-built_in">fread</span>(in,<span class="hljs-number">1</span>,N,stdin);
+        &#125; 
+        <span class="hljs-keyword">return</span> l == r ? EOF : *l++;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title">read</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-type">int</span> f = <span class="hljs-number">0</span>;
+        <span class="hljs-type">int</span> x = <span class="hljs-number">0</span>;
+        <span class="hljs-type">char</span> c = <span class="hljs-built_in">gc</span>();
+        <span class="hljs-keyword">while</span>(c &lt; <span class="hljs-string">&#x27;0&#x27;</span> || c &gt; <span class="hljs-string">&#x27;9&#x27;</span>) &#123;
+            f |= c == <span class="hljs-string">&#x27;-&#x27;</span>;
+            c = <span class="hljs-built_in">gc</span>();
+        &#125;
+        <span class="hljs-keyword">while</span>(c &gt;= <span class="hljs-string">&#x27;0&#x27;</span> &amp;&amp; c &lt;= <span class="hljs-string">&#x27;9&#x27;</span>) &#123;
+            x = x * <span class="hljs-number">10</span> + c-<span class="hljs-string">&#x27;0&#x27;</span>;
+            c = <span class="hljs-built_in">gc</span>();
+        &#125;
+        <span class="hljs-keyword">return</span> f ? -x : x;
+    &#125;
+
+    <span class="hljs-type">char</span> out[B];
+    <span class="hljs-type">char</span>* sz = out;
+
+    <span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">void</span> <span class="hljs-title">write</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;
+        <span class="hljs-type">static</span> <span class="hljs-type">char</span> S[<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">8</span>];
+        <span class="hljs-type">static</span> <span class="hljs-type">char</span>* tp = S;
+        <span class="hljs-keyword">do</span> &#123;
+            *tp++ = <span class="hljs-string">&#x27;0&#x27;</span> + x % <span class="hljs-number">10</span>;
+            x/=<span class="hljs-number">10</span>;
+        &#125; <span class="hljs-keyword">while</span>(x);
+        <span class="hljs-keyword">while</span>(tp!=S) &#123;
+            *sz++=*--tp;
+        &#125;
+        *sz++=<span class="hljs-string">&#x27; &#x27;</span>;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">void</span> <span class="hljs-title">flush</span><span class="hljs-params">()</span> </span>&#123;
+	    <span class="hljs-comment">// 程序内的数组, size, n, FILE*</span>
+        <span class="hljs-built_in">fwrite</span>(out,<span class="hljs-number">1</span>,sz-out,stdout);
+    &#125;
+&#125;</code></pre>
 
                 </div>
             </article>
@@ -160,18 +178,11 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
         
             <div class="next-prev-post">
                 
-                    <div class="prev-post">
-                        <div class="prev gt-c-content-color-first">
-                            上一篇：<a href="/2026/08/01/neu-2026spring%EF%BC%885%EF%BC%89/"
-                                class="post-title gt-a-link">NEU 2026Spring（5）</a>
-                        </div>
-                    </div>
-                
                 
                     <div class="next-post">
                         <div class="next gt-c-content-color-first">
-                            下一篇：<a href="/2026/08/01/codeforces-round-2092/"
-                                class="post-title gt-a-link">Codeforces Round 2092</a>
+                            下一篇：<a href="/2026/10/02/johnson-%E5%85%A8%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF-%E4%BC%A0%E9%80%92%E9%97%AD%E5%8C%85/"
+                                class="post-title gt-a-link">Johnson 全源最短路 & 传递闭包</a>
                         </div>
                     </div>
                 
@@ -208,7 +219,7 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
     <aside class="post-outline" id="post-outline">
         <div class="outline-title">OUTLINE</div>
         <nav class="outline-nav">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Kevin%E7%9A%84%E7%9F%A9%E9%98%B5"><span class="toc-text">Kevin的矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description"><span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution"><span class="toc-text">Solution</span></a></li></ol></li></ol>
+            <div class="outline-empty">-</div>
         </nav>
     </aside>
     

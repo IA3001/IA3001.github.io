@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>namespace IO 摸索</title>
+      <link href="/2026/10/03/namespace-io-%E6%91%B8%E7%B4%A2/"/>
+      <url>/2026/10/03/namespace-io-%E6%91%B8%E7%B4%A2/</url>
+      
+        <content type="html"><![CDATA[<pre><code class="hljs cpp"><span class="hljs-keyword">namespace</span> IO &#123;    <span class="hljs-type">const</span> <span class="hljs-type">int</span> B = <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">22</span>;        <span class="hljs-type">char</span> in[B];    <span class="hljs-type">char</span>* l=in, *r=in;    <span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">char</span> <span class="hljs-title">gc</span><span class="hljs-params">()</span> </span>&#123;        <span class="hljs-keyword">if</span> (l == r) &#123;            l = in;            <span class="hljs-comment">// 程序内的数组, size, n, FILE* 返回值是 真实 n</span>            r = in + <span class="hljs-built_in">fread</span>(in,<span class="hljs-number">1</span>,N,stdin);        &#125;         <span class="hljs-keyword">return</span> l == r ? EOF : *l++;    &#125;    <span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title">read</span><span class="hljs-params">()</span> </span>&#123;        <span class="hljs-type">int</span> f = <span class="hljs-number">0</span>;        <span class="hljs-type">int</span> x = <span class="hljs-number">0</span>;        <span class="hljs-type">char</span> c = <span class="hljs-built_in">gc</span>();        <span class="hljs-keyword">while</span>(c &lt; <span class="hljs-string">&#x27;0&#x27;</span> || c &gt; <span class="hljs-string">&#x27;9&#x27;</span>) &#123;            f |= c == <span class="hljs-string">&#x27;-&#x27;</span>;            c = <span class="hljs-built_in">gc</span>();        &#125;        <span class="hljs-keyword">while</span>(c &gt;= <span class="hljs-string">&#x27;0&#x27;</span> &amp;&amp; c &lt;= <span class="hljs-string">&#x27;9&#x27;</span>) &#123;            x = x * <span class="hljs-number">10</span> + c-<span class="hljs-string">&#x27;0&#x27;</span>;            c = <span class="hljs-built_in">gc</span>();        &#125;        <span class="hljs-keyword">return</span> f ? -x : x;    &#125;    <span class="hljs-type">char</span> out[B];    <span class="hljs-type">char</span>* sz = out;    <span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">void</span> <span class="hljs-title">write</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;        <span class="hljs-type">static</span> <span class="hljs-type">char</span> S[<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">8</span>];        <span class="hljs-type">static</span> <span class="hljs-type">char</span>* tp = S;        <span class="hljs-keyword">do</span> &#123;            *tp++ = <span class="hljs-string">&#x27;0&#x27;</span> + x % <span class="hljs-number">10</span>;            x/=<span class="hljs-number">10</span>;        &#125; <span class="hljs-keyword">while</span>(x);        <span class="hljs-keyword">while</span>(tp!=S) &#123;            *sz++=*--tp;        &#125;        *sz++=<span class="hljs-string">&#x27; &#x27;</span>;    &#125;    <span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">void</span> <span class="hljs-title">flush</span><span class="hljs-params">()</span> </span>&#123;    <span class="hljs-comment">// 程序内的数组, size, n, FILE*</span>        <span class="hljs-built_in">fwrite</span>(out,<span class="hljs-number">1</span>,sz-out,stdout);    &#125;&#125;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> NC </category>
+          
+          <category> Daily </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> NC </tag>
+            
+            <tag> Tracker </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Johnson 全源最短路 &amp; 传递闭包</title>
       <link href="/2026/10/02/johnson-%E5%85%A8%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF-%E4%BC%A0%E9%80%92%E9%97%AD%E5%8C%85/"/>
       <url>/2026/10/02/johnson-%E5%85%A8%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF-%E4%BC%A0%E9%80%92%E9%97%AD%E5%8C%85/</url>
@@ -672,9 +701,9 @@
       
         <tags>
             
-            <tag> HDU </tag>
-            
             <tag> TODO </tag>
+            
+            <tag> HDU </tag>
             
             <tag> 杭电多校 </tag>
             
@@ -1435,9 +1464,9 @@
       
         <tags>
             
-            <tag> HDU </tag>
-            
             <tag> TODO </tag>
+            
+            <tag> HDU </tag>
             
             <tag> 2026杭电暑期多校 </tag>
             
