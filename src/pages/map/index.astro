@@ -1,0 +1,60 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { SITE_TITLE } from '../../consts';
+
+const skipped = new Set(['templates', 'excalidraw', 'notes', '板子', '.obsidian']);
+const groups = new Map<string, Map<string, { title: string; url: string; problems: { text: string; slug: string }[] }[]>>();
+const posts = await getCollection('posts', ({ data }) => data.published);
+for (const post of posts) {
+	const parts = post.id.split('/');
+	if (parts.length < 2 || skipped.has(parts[0].toLocaleLowerCase())) continue;
+	const series = parts[0];
+	const season = parts.length > 2 ? parts[1] : '未分类';
+	const seriesLabel = /^[a-z]+$/i.test(series) ? series.toUpperCase() : series;
+	const seasonLabel = season.replace(/(spring|summer|fall|winter)/gi, (name) => name[0].toUpperCase() + name.slice(1));
+	const { headings } = await render(post);
+	const contest = {
+		title: post.data.title,
+		url: `/posts/${post.id}/`,
+		problems: headings.filter(({ depth }) => depth === 2).map(({ text, slug }) => ({ text, slug })),
+	};
+	if (!groups.has(seriesLabel)) groups.set(seriesLabel, new Map());
+	const seasons = groups.get(seriesLabel)!;
+	if (!seasons.has(seasonLabel)) seasons.set(seasonLabel, []);
+	seasons.get(seasonLabel)!.push(contest);
+}
+const orderedGroups = [...groups.entries()].sort(([a], [b]) => a.localeCompare(b, 'zh-CN'));
+for (const [, seasons] of orderedGroups) {
+	for (const contests of seasons.values()) contests.sort((a, b) => a.title.localeCompare(b.title, 'zh-CN'));
+}
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head><BaseHead title={`比赛地图 | ${SITE_TITLE}`} description="按比赛系列和赛季浏览题解" /></head>
+	<body>
+		<Header />
+		<main>
+			<h1>比赛地图</h1>
+			{orderedGroups.length === 0 && <p>还没有可加入地图的已发布文章。</p>}
+			{orderedGroups.map(([series, seasons]) => (
+				<section id={series}>
+					<h2>{series}</h2>
+					{[...seasons.entries()].sort(([a], [b]) => a.localeCompare(b, 'zh-CN')).map(([season, contests]) => (
+						<div><h3>{season}</h3><ul>{contests.map((contest) => (
+							<li><a href={contest.url}>{contest.title}</a>
+								{contest.problems.length > 0 && <ul>{contest.problems.map((problem) => (
+									<li><a href={`${contest.url}#${problem.slug}`}>{problem.text}</a></li>
+								))}</ul>}
+							</li>
+						))}</ul></div>
+					))}
+				</section>
+			))}
+		</main>
+		<Footer />
+	</body>
+</html>

@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { SITE_TITLE } from '../../consts';
+
+const posts = await getCollection('posts', ({ data }) => data.published);
+const tags = new Map<string, number>();
+for (const post of posts) for (const tag of post.data.tags) tags.set(tag, (tags.get(tag) ?? 0) + 1);
+const entries = [...tags.entries()].sort(([a], [b]) => a.localeCompare(b, 'zh-CN'));
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head><BaseHead title={`标签 | ${SITE_TITLE}`} description="按标签浏览博客文章" /></head>
+	<body>
+		<Header />
+		<main>
+			<h1>标签</h1>
+			{entries.length === 0 ? <p>还没有带标签的已发布文章。</p> : (
+				<ul>{entries.map(([tag, count]) => <li><a href={`/tags/${encodeURIComponent(tag)}/`}>{tag}</a>（{count}）</li>)}</ul>
+			)}
+		</main>
+		<Footer />
+	</body>
+</html>

@@ -1,0 +1,33 @@
+---
+interface TreeNode {
+	name: string;
+	href?: string;
+	children: TreeNode[];
+}
+
+interface Props {
+	node: TreeNode;
+	level?: number;
+}
+
+const { node, level = 0 } = Astro.props;
+const isFolder = node.children.length > 0;
+---
+
+<li>
+	{isFolder ? (
+		<details open={level === 0}>
+			<summary>{node.name}</summary>
+			<ul>{node.children.map((child) => <Astro.self node={child} level={level + 1} />)}</ul>
+		</details>
+	) : (
+		<a href={node.href}>{node.name}</a>
+	)}
+</li>
+
+<style>
+	li { margin: 0.35rem 0; }
+	summary { cursor: pointer; font-weight: 600; }
+	ul { margin: 0.35rem 0 0.35rem 1.25rem; padding-left: 1rem; }
+	li > a { color: inherit; }
+</style>

@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import DirectoryTree from '../../components/DirectoryTree.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { SITE_TITLE } from '../../consts';
+import { getCategoryLabel } from '../../lib/categories';
+
+const posts = await getCollection('posts', ({ data }) => data.published);
+interface TreeNode { name: string; href?: string; children: TreeNode[] }
+interface BuilderNode { name: string; href?: string; childrenMap: Map<string, BuilderNode> }
+const root = new Map<string, BuilderNode>();
+for (const post of posts) {
+	const folders = post.id.split('/').slice(0, -1);
+	let level = root;
+	for (const folder of folders) {
+		if (!level.has(folder)) level.set(folder, { name: folder, childrenMap: new Map() });
+		const node = level.get(folder)!;
+		level = node.childrenMap;
+	}
+	if (folders.length > 0) level.set(`\u0000${post.id}`, { name: post.data.title, href: `/posts/${post.id}/`, childrenMap: new Map() });
+}
+
+function formatFolder(name: string, depth: number): string {
+	if (depth === 0) return getCategoryLabel(name);
+	return name.replace(/^(\d{4})(spring|summer|fall|winter)$/i, (_, year, season) => `${year}${season[0].toUpperCase()}${season.slice(1)}`)
+		.replace(/^daily$/i, 'Daily');
+}
+
+function toNodes(map: Map<string, BuilderNode>, depth = 0): TreeNode[] {
+	return [...map.values()]
+		.sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'))
+		.map((node) => node.href
+			? { name: node.name, href: node.href, children: [] }
+			: { name: formatFolder(node.name, depth), children: toNodes(node.childrenMap, depth + 1) });
+}
+
+const folders = toNodes(root);
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head><BaseHead title={`分类 | ${SITE_TITLE}`} description="按分类浏览博客文章" /></head>
+	<body>
+		<Header />
+		<main>
+			<h1>分类</h1>
+			<p>按文章文件夹展示目录层级。展开文件夹可浏览文章。</p>
+			{folders.length === 0 ? <p>还没有已发布文章。</p> : <ul class="directory">{folders.map((node) => <DirectoryTree node={node} />)}</ul>}
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.directory { list-style: none; padding-left: 0; }
+</style>

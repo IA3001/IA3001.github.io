@@ -1,0 +1,31 @@
+---
+import { SITE_TITLE } from '../consts';
+---
+
+<header>
+	<a class="brand" href="/">{SITE_TITLE}</a>
+	<nav aria-label="主导航">
+		<a href="/archives/">归档</a>
+		<a href="/categories/">分类</a>
+		<a href="/map/">比赛地图</a>
+		<a href="/tags/">标签</a>
+		<a href="/friends/">友链</a>
+	</nav>
+</header>
+
+<style>
+	header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 1rem max(1rem, calc((100% - 960px) / 2));
+		border-bottom: 1px solid rgb(var(--gray-light));
+	}
+	nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; }
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
+	.brand { font-weight: 700; }
+</style>

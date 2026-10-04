@@ -1,7 +1,0 @@
----
-title: 2026牛客暑期多校训练营1
-tags:
-  - 2026牛客多校
-  - NC
-published: true
----

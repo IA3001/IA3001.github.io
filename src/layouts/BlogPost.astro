@@ -1,0 +1,77 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+
+type Props = CollectionEntry<'posts'>['data'] & {
+	headings: { depth: number; slug: string; text: string }[];
+};
+
+const { title, description, tags, headings } = Astro.props;
+---
+
+<html lang="zh-CN">
+	<head>
+		<BaseHead title={title} description={description} />
+		<style>
+			main { width: 100%; max-width: none; margin: 0; padding: 0; }
+			.article-layout {
+				display: grid;
+				grid-template-columns: minmax(0, 1fr) minmax(180px, 240px);
+				grid-template-areas: 'title toc' 'content toc';
+				align-items: start;
+				gap: 0 2rem;
+				width: calc(100% - 2rem);
+				max-width: 1180px;
+				margin: 2rem auto;
+			}
+			.title { grid-area: title; margin-bottom: 0.75rem; min-width: 0; }
+			.article-content { grid-area: content; min-width: 0; color: rgb(var(--gray-dark)); }
+			.toc-sidebar {
+				grid-area: toc;
+				position: sticky;
+				top: 1rem;
+				max-height: calc(100vh - 2rem);
+				overflow-y: auto;
+			}
+			@media (max-width: 560px) {
+				.article-layout {
+					grid-template-columns: minmax(0, 1fr);
+					grid-template-areas: 'title' 'toc' 'content';
+				}
+				.toc-sidebar { position: static; max-height: none; overflow: visible; }
+			}
+		</style>
+	</head>
+
+	<body>
+		<Header />
+		<main>
+			<article class="article-layout">
+				<div class="title">
+					<h1>{title}</h1>
+					{tags.length > 0 && <p class="tags">{tags.map((tag) => <a href={`/tags/${encodeURIComponent(tag)}/`}>#{tag}</a>)}</p>}
+					<hr />
+				</div>
+				<aside class="toc-sidebar" aria-label="题目目录侧栏">
+					<TableOfContents headings={headings} />
+				</aside>
+				<div class="article-content"><slot /></div>
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.tags {
+		color: rgb(var(--gray));
+		font-size: 0.8em;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+	.tags a { color: inherit; }
+</style>

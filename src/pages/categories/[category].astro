@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { SITE_TITLE } from '../../consts';
+import { getCategoryLabel, getPostCategories } from '../../lib/categories';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('posts', ({ data }) => data.published);
+	const categories = [...new Set(posts.flatMap(getPostCategories))];
+	return categories.map((category) => ({ params: { category }, props: { category } }));
+}
+
+const { category } = Astro.props;
+const posts = await getCollection('posts', (post) => post.data.published && getPostCategories(post).includes(category));
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head><BaseHead title={`分类：${category} | ${SITE_TITLE}`} description={`浏览分类 ${category} 下的文章`} /></head>
+	<body>
+		<Header />
+		<main>
+			<h1>分类：{getCategoryLabel(category)}</h1>
+			<ul>{posts.map((post) => <li><a href={`/posts/${post.id}/`}>{post.data.title}</a></li>)}</ul>
+		</main>
+		<Footer />
+	</body>
+</html>
