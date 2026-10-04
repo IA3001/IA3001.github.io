@@ -34,4 +34,4 @@ npm run preview
 
 ## 发布
 
-把改动提交并推送到 `main` 后，GitHub Actions 会自动构建 Astro 并发布到 GitHub Pages。工作流配置在 `.github/workflows/deploy-astro.yml`。
+把改动提交并推送到 `main` 后，GitHub Actions 会自动构建 Astro 并发布到 GitHub Pages。工作流配置在 `.github/workflows/deploy-astro.yml`！
