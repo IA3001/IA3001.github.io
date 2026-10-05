@@ -19,15 +19,16 @@ const { title, description, tags, headings } = Astro.props;
 			main { width: 100%; max-width: none; margin: 0; padding: 0; }
 			.article-layout {
 				display: grid;
-				grid-template-columns: minmax(0, 1fr) minmax(180px, 240px);
+				grid-template-columns: minmax(0, 1fr) minmax(190px, 230px);
 				grid-template-areas: 'title toc' 'content toc';
 				align-items: start;
-				gap: 0 2rem;
+				gap: 0 2.5rem;
 				width: calc(100% - 2rem);
-				max-width: 1180px;
+				max-width: 1280px;
 				margin: 2rem auto;
 			}
 			.title { grid-area: title; margin-bottom: 0.75rem; min-width: 0; }
+			.title h1 { font-size: clamp(2rem, 3.2vw, 3.25rem); line-height: 1.12; }
 			.article-content { grid-area: content; min-width: 0; color: rgb(var(--gray-dark)); }
 			.toc-sidebar {
 				grid-area: toc;
@@ -35,13 +36,15 @@ const { title, description, tags, headings } = Astro.props;
 				top: 1rem;
 				max-height: calc(100vh - 2rem);
 				overflow-y: auto;
+				font-size: 0.9em;
 			}
-			@media (max-width: 560px) {
+			@media (max-width: 760px) {
 				.article-layout {
 					grid-template-columns: minmax(0, 1fr);
 					grid-template-areas: 'title' 'toc' 'content';
 				}
 				.toc-sidebar { position: static; max-height: none; overflow: visible; }
+				.title h1 { font-size: clamp(1.9rem, 7vw, 2.5rem); }
 			}
 		</style>
 	</head>
