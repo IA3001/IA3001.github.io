@@ -1,0 +1,92 @@
+---
+title: VP：Autumn（7）国庆6
+date: 2026-09-19
+updated: 2026-09-19T00:50:42+08:00
+tags:
+  - 递归计算
+  - 数学期望
+  - 建模：建图
+published: true
+---
+## F. 抽奖
+
+- 给定 n 个奖金， 基础费用 c 惩罚费用 k
+- 第 i 次抽奖费用 `c + k * i`
+- 至少抽一次奖，并且只保留最后一次抽的奖
+- 问最大收益期望
+
+### Solution
+
+- **一定要先写清楚递推式啊，数学公式一定要写清楚，摆明了！！！**
+- **然后，递归实现，永远比 主动 循环 来得简单！！！**
+	- 而且，递归蕴含着要处理边界剪枝情况，引发你的思考！！！
+
+### Code
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+using ll = long long;
+using db = double;
+
+const int N = 4e5 + 5;
+
+ll n, c, k;
+ll a[N], suf[N];
+ll mx;
+
+// 当代价达到一定程度的时候，会走向固定值！！！
+db f(int i) {
+    ll ncost = c + k * (i + 1);
+    if (ncost >= mx) {
+        return suf[1] / db(n);
+    } else {
+        db nxt = f(i + 1) - ncost; // !!!
+        // 有 cnt 个无法继续了, 
+        auto cnt = lower_bound(a+1,a+1+n,nxt) - a - 1;
+        // 因为对 nxt 与 a[j] 取 max
+        return (nxt * cnt + suf[cnt+1]) / db(n);
+    }
+}
+
+void solve() {
+    cin >> n >> c >> k;
+    for (int i = 1; i <= n; i++) cin >> a[i];
+    sort(a+1,a+1+n);
+    mx = *max_element(a+1,a+1+n);
+    for (int i = n; i >= 1; i--) suf[i] = suf[i+1] + a[i];
+    if (k == 0) {
+        // 0 的时候，怎么做？
+        // 这样的话，就无法收敛到固定值了怎么办？
+        db ans = -2e18;
+        for (int j = 1; j <= n; j++) {
+            ans = max(ans, suf[n-j+1]/db(j) - c - c * (n - j) / db(j));
+            // cout << j << ": " << ans << "\n";
+        }
+        cout << ans << "\n";
+    } else {
+        // 这个分隔抽奖 与 预扣款 太妙了
+        cout << (f(0) - c) << "\n";
+    }
+}
+
+int main() {
+    cout << setprecision(9) << fixed;
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+    solve();
+}
+```
+
+## K. 重复序列消除
+
+- 
+
+### Solution
+
+
+
+### Code
+
+```cpp
+
+```
