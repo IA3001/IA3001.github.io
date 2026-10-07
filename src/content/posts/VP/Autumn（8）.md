@@ -1,8 +1,8 @@
 ---
-title:  VP：Autumn（8）国庆7
+title: VP：Autumn（8）国庆7
 date: 2026-10-07
 published: true
-updated: "2026-10-07T22:59:35+08:00"
+updated: "2026-10-07T23:04:25+08:00"
 ---
 
 ## A. 华容道
