@@ -23,6 +23,13 @@ const { title, description = SITE_TITLE, image } = Astro.props;
 <link rel="icon" href="/favicon.ico" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <meta name="generator" content={Astro.generator} />
+<script is:inline>
+	try {
+		const appearance = JSON.parse(localStorage.getItem('ia3001-appearance-v1') || '{}');
+		if (appearance.mode === 'dark') document.documentElement.dataset.theme = 'dark';
+		if (/^#[0-9a-f]{6}$/i.test(appearance.accent || '')) document.documentElement.style.setProperty('--accent', appearance.accent);
+	} catch {}
+</script>
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />

@@ -11,13 +11,88 @@ import { SITE_TITLE } from '../consts';
 		<a href="/tags/">标签</a>
 		<a href="/friends/">友链</a>
 	</nav>
+	<div class="theme-controls">
+		<button class="theme-toggle" type="button" data-theme-toggle aria-label="切换深色模式" title="切换明暗模式">☾</button>
+		<div class="theme-picker">
+			<button class="theme-picker-button" type="button" data-theme-picker aria-expanded="false" aria-haspopup="dialog">
+				<span class="theme-current" data-theme-current></span><span>主题色</span>
+			</button>
+			<section class="theme-popover" data-theme-popover role="dialog" aria-label="外观设置" hidden>
+				<strong>主题色</strong>
+				<div class="theme-swatches">
+					<button type="button" data-accent="#2563eb" aria-label="蓝色" title="蓝色"></button>
+					<button type="button" data-accent="#7c3aed" aria-label="紫色" title="紫色"></button>
+					<button type="button" data-accent="#0f9f83" aria-label="青绿" title="青绿"></button>
+					<button type="button" data-accent="#db2777" aria-label="玫红" title="玫红"></button>
+					<button type="button" data-accent="#d97706" aria-label="琥珀" title="琥珀"></button>
+					<button type="button" data-accent="#0891b2" aria-label="青蓝" title="青蓝"></button>
+				</div>
+				<label>自定义颜色 <input type="color" data-custom-accent value="#2563eb" /></label>
+			</section>
+		</div>
+	</div>
 </header>
+
+<script>
+	const KEY = 'ia3001-appearance-v1';
+	const header = document.querySelector('header');
+	if (header) {
+		const toggle = header.querySelector('[data-theme-toggle]');
+		const picker = header.querySelector('[data-theme-picker]');
+		const popover = header.querySelector('[data-theme-popover]');
+		const current = header.querySelector('[data-theme-current]');
+		const custom = header.querySelector('[data-custom-accent]');
+		let appearance = { mode: 'light', accent: '#2563eb' };
+		try {
+			const saved = JSON.parse(localStorage.getItem(KEY) || '{}');
+			appearance = { mode: saved.mode === 'dark' ? 'dark' : 'light', accent: /^#[0-9a-f]{6}$/i.test(saved.accent || '') ? saved.accent : '#2563eb' };
+		} catch {}
+		const apply = () => {
+			document.documentElement.dataset.theme = appearance.mode;
+			document.documentElement.style.setProperty('--accent', appearance.accent);
+			document.documentElement.style.setProperty('--accent-dark', `color-mix(in srgb, ${appearance.accent} 66%, #000)`);
+			if (toggle) {
+				toggle.textContent = appearance.mode === 'dark' ? '☀' : '☾';
+				toggle.setAttribute('aria-label', `切换到${appearance.mode === 'dark' ? '浅色' : '深色'}模式`);
+			}
+			if (current) current.style.background = appearance.accent;
+			if (custom) custom.value = appearance.accent;
+			popover?.querySelectorAll('[data-accent]').forEach((button) => {
+				const selected = button.getAttribute('data-accent')?.toLowerCase() === appearance.accent.toLowerCase();
+				button.setAttribute('aria-pressed', String(selected));
+			});
+			try { localStorage.setItem(KEY, JSON.stringify(appearance)); } catch {}
+		};
+		apply();
+		toggle?.addEventListener('click', () => { appearance.mode = appearance.mode === 'dark' ? 'light' : 'dark'; apply(); });
+		picker?.addEventListener('click', () => {
+			if (!popover) return;
+			popover.hidden = !popover.hidden;
+			picker.setAttribute('aria-expanded', String(!popover.hidden));
+		});
+		popover?.querySelectorAll('[data-accent]').forEach((button) => button.addEventListener('click', () => {
+			appearance.accent = button.getAttribute('data-accent') || '#2563eb'; apply();
+		}));
+		custom?.addEventListener('input', () => { appearance.accent = custom.value; apply(); });
+		document.addEventListener('pointerdown', (event) => {
+			if (popover && !popover.hidden && !event.target.closest('.theme-picker')) {
+				popover.hidden = true; picker?.setAttribute('aria-expanded', 'false');
+			}
+		});
+		window.addEventListener('keydown', (event) => {
+			if (event.key === 'Escape' && popover && !popover.hidden) {
+				popover.hidden = true; picker?.setAttribute('aria-expanded', 'false');
+			}
+		});
+	}
+</script>
 
 <style>
 	header {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		flex-wrap: wrap;
 		gap: 1rem;
 		padding: 1rem max(1rem, calc((100% - 960px) / 2));
 		border-bottom: 1px solid rgb(var(--gray-light));
@@ -28,4 +103,34 @@ import { SITE_TITLE } from '../consts';
 		text-decoration: none;
 	}
 	.brand { font-weight: 700; }
+	.theme-controls { display: flex; align-items: center; gap: .4rem; }
+	.theme-toggle, .theme-picker-button {
+		display: inline-flex; align-items: center; justify-content: center; gap: .45rem;
+		min-height: 2.25rem; padding: .35rem .65rem; border: 1px solid rgb(var(--gray-light));
+		border-radius: .6rem; background: transparent; color: inherit; font: inherit; cursor: pointer;
+	}
+	.theme-toggle { width: 2.25rem; font-size: 1.05rem; }
+	.theme-toggle:hover, .theme-picker-button:hover { background: rgba(var(--gray-light), .45); }
+	.theme-current { width: .7rem; height: .7rem; border-radius: 50%; background: var(--accent); }
+	.theme-picker { position: relative; }
+	.theme-popover {
+		position: absolute; z-index: 20; top: calc(100% + .65rem); right: 0; width: 225px;
+		padding: 1rem; border: 1px solid rgb(var(--gray-light)); border-radius: .85rem;
+		background: rgb(var(--surface, 255, 255, 255)); color: rgb(var(--gray-dark));
+		box-shadow: 0 14px 40px rgba(20, 30, 50, .18);
+	}
+	.theme-popover[hidden] { display: none; }
+	.theme-popover strong { display: block; margin-bottom: .8rem; font-size: .9rem; }
+	.theme-swatches { display: flex; justify-content: space-between; gap: .45rem; }
+	.theme-swatches button { width: 1.55rem; height: 1.55rem; border: 2px solid transparent; border-radius: 50%; cursor: pointer; }
+	.theme-swatches button:nth-child(1) { background: #2563eb; }
+	.theme-swatches button:nth-child(2) { background: #7c3aed; }
+	.theme-swatches button:nth-child(3) { background: #0f9f83; }
+	.theme-swatches button:nth-child(4) { background: #db2777; }
+	.theme-swatches button:nth-child(5) { background: #d97706; }
+	.theme-swatches button:nth-child(6) { background: #0891b2; }
+	.theme-swatches button:hover { outline: 2px solid currentColor; outline-offset: 2px; }
+	.theme-popover label { display: flex; justify-content: space-between; align-items: center; margin-top: .9rem; padding-top: .75rem; border-top: 1px solid rgb(var(--gray-light)); font-size: .78rem; }
+	.theme-popover input { width: 2.2rem; height: 1.6rem; padding: 0; border: 1px solid rgb(var(--gray-light)); border-radius: .35rem; background: transparent; cursor: pointer; }
+	@media (max-width: 720px) { nav { order: 3; width: 100%; } .theme-controls { margin-left: auto; } }
 </style>
