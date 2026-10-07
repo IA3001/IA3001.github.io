@@ -12,7 +12,14 @@ import { SITE_TITLE } from '../consts';
 		<a href="/friends/">友链</a>
 	</nav>
 	<div class="theme-controls">
-		<button class="theme-toggle" type="button" data-theme-toggle aria-label="切换深色模式" title="切换明暗模式">☾</button>
+		<label class="theme-mode-label">
+			<span class="sr-only">界面模式</span>
+			<select data-theme-mode aria-label="界面模式">
+				<option value="system">跟随系统</option>
+				<option value="light">浅色</option>
+				<option value="dark">深色</option>
+			</select>
+		</label>
 		<div class="theme-picker">
 			<button class="theme-picker-button" type="button" data-theme-picker aria-expanded="false" aria-haspopup="dialog">
 				<span class="theme-current" data-theme-current></span><span>主题色</span>
@@ -37,24 +44,24 @@ import { SITE_TITLE } from '../consts';
 	const KEY = 'ia3001-appearance-v1';
 	const header = document.querySelector('header');
 	if (header) {
-		const toggle = header.querySelector('[data-theme-toggle]');
+		const modeSelect = header.querySelector('[data-theme-mode]');
 		const picker = header.querySelector('[data-theme-picker]');
 		const popover = header.querySelector('[data-theme-popover]');
 		const current = header.querySelector('[data-theme-current]');
 		const custom = header.querySelector('[data-custom-accent]');
-		let appearance = { mode: 'light', accent: '#2563eb' };
+		let appearance = { mode: 'system', accent: '#2563eb' };
 		try {
 			const saved = JSON.parse(localStorage.getItem(KEY) || '{}');
-			appearance = { mode: saved.mode === 'dark' ? 'dark' : 'light', accent: /^#[0-9a-f]{6}$/i.test(saved.accent || '') ? saved.accent : '#2563eb' };
+			appearance = { mode: ['system', 'light', 'dark'].includes(saved.mode) ? saved.mode : 'system', accent: /^#[0-9a-f]{6}$/i.test(saved.accent || '') ? saved.accent : '#2563eb' };
 		} catch {}
 		const apply = () => {
-			document.documentElement.dataset.theme = appearance.mode;
+			const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+			const effectiveMode = appearance.mode === 'system' ? (systemDark ? 'dark' : 'light') : appearance.mode;
+			document.documentElement.dataset.theme = effectiveMode;
+			document.documentElement.dataset.themePreference = appearance.mode;
 			document.documentElement.style.setProperty('--accent', appearance.accent);
 			document.documentElement.style.setProperty('--accent-dark', `color-mix(in srgb, ${appearance.accent} 66%, #000)`);
-			if (toggle) {
-				toggle.textContent = appearance.mode === 'dark' ? '☀' : '☾';
-				toggle.setAttribute('aria-label', `切换到${appearance.mode === 'dark' ? '浅色' : '深色'}模式`);
-			}
+			if (modeSelect) modeSelect.value = appearance.mode;
 			if (current) current.style.background = appearance.accent;
 			if (custom) custom.value = appearance.accent;
 			popover?.querySelectorAll('[data-accent]').forEach((button) => {
@@ -64,7 +71,7 @@ import { SITE_TITLE } from '../consts';
 			try { localStorage.setItem(KEY, JSON.stringify(appearance)); } catch {}
 		};
 		apply();
-		toggle?.addEventListener('click', () => { appearance.mode = appearance.mode === 'dark' ? 'light' : 'dark'; apply(); });
+		modeSelect?.addEventListener('change', () => { appearance.mode = modeSelect.value || 'system'; apply(); });
 		picker?.addEventListener('click', () => {
 			if (!popover) return;
 			popover.hidden = !popover.hidden;
@@ -74,6 +81,9 @@ import { SITE_TITLE } from '../consts';
 			appearance.accent = button.getAttribute('data-accent') || '#2563eb'; apply();
 		}));
 		custom?.addEventListener('input', () => { appearance.accent = custom.value; apply(); });
+		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+			if (appearance.mode === 'system') apply();
+		});
 		document.addEventListener('pointerdown', (event) => {
 			if (popover && !popover.hidden && !event.target.closest('.theme-picker')) {
 				popover.hidden = true; picker?.setAttribute('aria-expanded', 'false');
@@ -104,13 +114,14 @@ import { SITE_TITLE } from '../consts';
 	}
 	.brand { font-weight: 700; }
 	.theme-controls { display: flex; align-items: center; gap: .4rem; }
-	.theme-toggle, .theme-picker-button {
+	.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+	.theme-mode-label select, .theme-picker-button {
 		display: inline-flex; align-items: center; justify-content: center; gap: .45rem;
 		min-height: 2.25rem; padding: .35rem .65rem; border: 1px solid rgb(var(--gray-light));
 		border-radius: .6rem; background: transparent; color: inherit; font: inherit; cursor: pointer;
 	}
-	.theme-toggle { width: 2.25rem; font-size: 1.05rem; }
-	.theme-toggle:hover, .theme-picker-button:hover { background: rgba(var(--gray-light), .45); }
+	.theme-mode-label select { color-scheme: light dark; }
+	.theme-mode-label select:hover, .theme-picker-button:hover { background: rgba(var(--gray-light), .45); }
 	.theme-current { width: .7rem; height: .7rem; border-radius: 50%; background: var(--accent); }
 	.theme-picker { position: relative; }
 	.theme-popover {

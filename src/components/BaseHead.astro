@@ -26,7 +26,10 @@ const { title, description = SITE_TITLE, image } = Astro.props;
 <script is:inline>
 	try {
 		const appearance = JSON.parse(localStorage.getItem('ia3001-appearance-v1') || '{}');
-		if (appearance.mode === 'dark') document.documentElement.dataset.theme = 'dark';
+		const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+		const mode = ['light', 'dark', 'system'].includes(appearance.mode) ? appearance.mode : 'system';
+		document.documentElement.dataset.theme = mode === 'system' ? (systemDark ? 'dark' : 'light') : mode;
+		document.documentElement.dataset.themePreference = mode;
 		if (/^#[0-9a-f]{6}$/i.test(appearance.accent || '')) document.documentElement.style.setProperty('--accent', appearance.accent);
 	} catch {}
 </script>
