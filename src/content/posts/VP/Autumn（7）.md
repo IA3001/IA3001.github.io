@@ -1,7 +1,7 @@
 ---
 title: VP：Autumn（7）国庆6
 date: 2026-09-19
-updated: 2026-09-19T00:50:42+08:00
+updated: "2026-10-07T10:11:21+08:00"
 tags:
   - 递归计算
   - 数学期望
@@ -79,14 +79,114 @@ int main() {
 
 ## K. 重复序列消除
 
-- 
+- 给定长度为 n 的序列 s 和对应的权值 a
+- 将 s, a 拷贝任意 m 份之后
+- 你可以任意进行操作：
+- 选择 `i < j && s[i] == s[j]`
+  - 删除 `a[i+1...j], s[i+1...j]`
+-  求得到的序列权值和 a 最小的权值 及其 m
+
 
 ### Solution
 
-
+- 这一个建图思维实在是妙
+- 跟网络流建模一桌的
+- 不过，好像官方题解说法太简单，
+  - 还得是前缀优化建图 + 双关键字 Dijkstra
 
 ### Code
 
 ```cpp
+#include<bits/stdc++.h>
+using namespace std;
+using ll = long long;
 
+const int N = 3e5 + 5;
+const int V = 3e5;
+
+int n;
+int s[N];
+ll a[N];
+vector<int> pos[N];
+int cntn;
+vector<pair<int,ll>> e[N*3];
+
+void solve() {
+    cin >> n;
+
+    // n + 1 !!!
+    cntn = n + 1;
+
+    for (int i = 1; i <= n; i++) {
+        cin >> s[i];
+        pos[s[i]].push_back(i);
+    }
+
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+        a[i] *= V;
+    }
+
+    for (int i = 1; i < N; i++) {
+        if (pos[i].size()) {
+            int pre = 0;
+            for (auto p: pos[i]) {
+                // 建立中介点
+                int cur = ++cntn;
+                if (pre) {
+                    // 我支持去往前面，需要支付 (a[p] * V + 1) 费用
+                    e[p].push_back({pre, a[p] + 1});
+                    // cur 不仅支持去往前面
+                    e[cur].push_back({pre, 0});
+                }
+                // 而且支持去往这里
+                e[cur].push_back({p+1, 0});
+                pre = cur;
+            }
+            pre = 0;
+            for (auto p: ranges::reverse_view(pos[i])) {
+                int cur = ++cntn;
+                if (pre) {
+                    // cur 不仅支持去往后面
+                    e[cur].push_back({pre, 0});
+                }
+                // 而且支持去往这里
+                e[cur].push_back({p+1, 0});
+                pre = cur;
+                // 【chovy】 pre 没连上
+                // 我支持去往后面，需要支付 a[p] * V + 0 费用
+                e[p].push_back({pre, a[p]});
+            }
+        }
+    }
+    // 关键字压缩在同一维： cost * V + step
+    // 第一关键字：最短路
+    // 第二关键字：最少跳转
+    vector<ll> dist(cntn + 1, 2e18);
+    vector<bool> vis(cntn + 1);
+    priority_queue<pair<ll,int>> Q;
+    dist[1] = 0;
+    Q.push({-dist[1], 1});
+    while (Q.size()) {
+        auto [_, u] = Q.top(); Q.pop();
+        if (vis[u]) continue;
+        vis[u] = true;
+        for (auto [v, w]: e[u]) {
+            if (dist[v] > dist[u] + w) {
+                dist[v] = dist[u] + w;
+                Q.push({-dist[v], v});
+            }
+        }
+    }
+    ll cost = dist[n + 1] / V;
+    ll step = dist[n + 1] % V + 1;
+    cout << cost << " " << step << "\n";
+}
+
+int main() {
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+    int T = 1;
+    // cin >> T;
+    while (T--) solve();
+}
 ```
