@@ -2,7 +2,9 @@
 title: VP：Autumn（8）国庆7
 date: 2026-10-07
 published: true
-updated: "2026-10-07T23:04:25+08:00"
+updated: "2026-10-08T01:37:38+08:00"
+tags:
+  - bitset
 ---
 
 ## A. 华容道

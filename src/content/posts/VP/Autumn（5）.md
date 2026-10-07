@@ -1,10 +1,11 @@
 ---
 title: VP：Autumn（5）国庆4
 date: 2026-10-04
-updated: "2026-10-04T21:19:37+08:00"
+updated: "2026-10-08T01:12:59+08:00"
 tags: []
 published: true
 ---
+
 ## C. Palindrome 【lcp 二分哈希法 - pam 求以 i 结尾的回文串】
 
 - 给定长度为 n 的字符串，有 m 次询问

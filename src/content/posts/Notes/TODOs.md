@@ -1,7 +1,7 @@
 ---
 title: TODOs
 date: 2026-08-20
-updated: "2026-10-07T12:53:43+08:00"
+updated: "2026-10-08T01:39:26+08:00"
 tags:
   - 笔记
   - TODO
@@ -49,5 +49,5 @@ published: true
 
 ## Op
 
+- [x] 目前我的 BlogEditor 基本完成了
 - [ ] 左神算法已跟进，该打印新一轮的板子了
-- [ ] 
