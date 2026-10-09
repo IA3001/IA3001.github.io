@@ -14,7 +14,7 @@
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.4.2",
     "@astrojs/sitemap": "^3.7.4",
-    "astro": "^7.3.5",
+    "astro": "^7.3.6",
     "satteri-katex": "^0.1.1",
     "sharp": "^0.35.0"
   },
