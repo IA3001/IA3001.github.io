@@ -8,6 +8,7 @@ tags:
   - TODO
 published: true
 ---
+
 ## 1001 Signal 【Minmax 容斥 / 半平面交求凸包交 / "clip 动态维护凸包半平面交" / “继承性 dfs”】
 
 ### Problem Description
@@ -610,6 +611,7 @@ DeepSeek：你刚才描述的现象，正是 **“欧拉回路定理”（Euler
 	- 【坑点2：init 要在 cntV cntC 之前初始化】
 	- 【坑点3：为了维持对齐，必要时 ++cntE】
 	- 【坑点4：dfn 序处在线理方式，自环 / 返祖边】
+
 ### Code
 
 ```cpp

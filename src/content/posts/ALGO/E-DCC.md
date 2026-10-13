@@ -27,7 +27,7 @@ published: true
 
 ## Codes
 
-## P1 - P2
+### P1 - P2
 
 ```cpp
 #include<bits/stdc++.h>
