@@ -1,8 +1,8 @@
 ---
-title: 【秋日影】Autumn2 H. Horrible Restaurants
+title: 【秋日影】 Autumn2 H. Horrible Restaurants
 date: 2026-10-13
 published: true
-updated: "2026-10-13T22:20:07+08:00"
+updated: "2026-10-13T22:21:26+08:00"
 ---
 
 > 我的 这个 Blog Editor 显得有点鸡肋了
