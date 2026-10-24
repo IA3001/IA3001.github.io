@@ -2,7 +2,7 @@
 title: 【秋日影】 Autumn8 J. 最小格点相似三角形
 date: 2026-10-13
 published: true
-updated: 2026-10-13T22:25:04+08:00
+updated: "2026-10-15T00:05:49+08:00"
 tags:
   - 高斯gcd
 ---
@@ -99,5 +99,6 @@ LLONG_MAX
 
 9e18
 2e9*2e9 = 4e18 ok
+
 */
 ```
