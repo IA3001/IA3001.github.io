@@ -15,7 +15,7 @@
     "@astrojs/markdown-satteri": "^0.4.2",
     "@astrojs/sitemap": "^3.7.4",
     "astro": "^7.3.5",
-    "satteri-katex": "^0.1.1",
+    "satteri-katex": "^0.2.0",
     "sharp": "^0.35.0"
   },
   "allowScripts": {
